@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>SNK AI Academy | Course Management</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#050505;
+  --bg2:#0a0a0a;
+  --card:#141414;
+  --card2:#181818;
+  --border:rgba(183,255,0,.14);
+  --text:#ffffff;
+  --muted:#999999;
+  --primary:#b7ff00;
+  --primary2:#ccff4d;
+  --success:#20c997;
+  --danger:#ff4545;
+  --warning:#ffbd59;
+  --info:#4dabf7;
+  --shadow:0 18px 50px rgba(0,0,0,.5);
+}
+
+body.light{
+  --bg:#f4f7fb;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card2:#f7f9fc;
+  --border:#dce3ee;
+  --text:#182235;
+  --muted:#68758a;
+  --primary:#5a8a00;
+  --primary2:#446b00;
+  --shadow:0 15px 40px rgba(27,39,67,.10);
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(183,255,0,.12),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(183,255,0,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input{ font:inherit; }
+button{ cursor:pointer; }
+a{ color:inherit; text-decoration:none; }
+
+.app{ display:flex; min-height:100vh; }
+
+.sidebar{
+  width:260px;
+  position:fixed;
+  left:0; top:0; bottom:0;
+  background:rgba(10,15,27,.96);
+  border-right:1px solid var(--border);
+  z-index:1000;
+  overflow-y:auto;
+  transition:.25s ease;
+}
+
+body.light .sidebar{ background:#fff; }
+
+.sidebar-head{ padding:22px 18px; border-bottom:1px solid var(--border); }
+
+.brand{ display:flex; align-items:center; gap:12px; }
+
+.logo{
+  width:46px; height:46px; border-radius:13px;
+  display:flex; align-items:center; justify-content:center;
+  background:#b7ff00; color:#050505; font-weight:900; font-size:15px;
+}
+
+.brand-title{ font-size:16px; font-weight:800; }
+.brand-sub{ color:var(--muted); font-size:12px; margin-top:3px; }
+
+.nav{ padding:14px 10px 30px; }
+
+.nav-label{
+  color:#6f7c91; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  padding:14px 12px 7px;
+}
+
+.nav a{
+  display:flex; align-items:center; gap:11px;
+  padding:11px 12px; border-radius:11px;
+  color:#aeb9ca; font-size:14px; margin:3px 0; transition:.2s;
+}
+
+body.light .nav a{ color:#5d687b; }
+
+.nav a:hover, .nav a.active{
+  background:rgba(183,255,0,.15); color:var(--primary);
+}
+
+body.light .nav a:hover, body.light .nav a.active{ color:var(--primary); }
+
+.nav-icon{ width:23px; text-align:center; font-size:16px; }
+
+.main{
+  width:calc(100% - 260px);
+  margin-left:260px;
+  min-width:0;
+}
+
+.topbar{
+  height:70px; position:sticky; top:0; z-index:900;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 25px;
+  background:rgba(7,11,20,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+body.light .topbar{ background:rgba(255,255,255,.88); }
+
+.top-left{ display:flex; align-items:center; gap:13px; }
+
+.menu-btn{
+  display:none; border:1px solid var(--border);
+  background:var(--card); color:var(--text);
+  width:40px; height:40px; border-radius:10px;
+}
+
+.page-title{ font-size:18px; font-weight:800; }
+.page-subtitle{ font-size:12px; color:var(--muted); margin-top:3px; }
+
+.top-actions{ display:flex; gap:8px; align-items:center; }
+
+.icon-btn{
+  width:40px; height:40px; border-radius:10px;
+  border:1px solid var(--border); background:var(--card); color:var(--text);
+}
+
+.container{ max-width:1100px; margin:auto; padding:25px; }
+
+.btn{
+  border:0; border-radius:10px; padding:11px 16px;
+  font-weight:700; font-size:13px; transition:.2s;
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn-primary{ background:var(--primary); color:#050505; font-weight:800; }
+.btn-danger{ background:var(--danger); color:#fff; }
+.btn-secondary{ background:var(--card2); border:1px solid var(--border); color:var(--text); }
+.btn-sm{ padding:8px 10px; font-size:12px; }
+
+.card{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; box-shadow:var(--shadow); overflow:hidden;
+}
+
+.card-head{
+  padding:20px 22px; border-bottom:1px solid var(--border);
+}
+
+.card-title{ font-size:17px; font-weight:800; }
+.card-sub{ color:var(--muted); font-size:12px; margin-top:5px; line-height:1.6; }
+
+.card-body{ padding:22px; }
+
+.add-form{
+  display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px;
+}
+
+.add-form input{
+  flex:1; min-width:220px; height:46px;
+  border:1px solid var(--border); border-radius:11px;
+  background:var(--bg2); color:var(--text);
+  padding:0 15px; font-size:14px; outline:none;
+}
+
+.add-form input:focus{ border-color:var(--primary); }
+
+.course-list{ display:flex; flex-direction:column; gap:12px; }
+
+.course-row{
+  display:flex; align-items:center; gap:14px;
+  padding:16px; border:1px solid var(--border); border-radius:14px;
+  background:var(--card2);
+}
+
+.course-name{
+  flex:1; font-size:14px; font-weight:700;
+}
+
+.course-name input{
+  width:100%; height:38px;
+  border:1px solid var(--border); border-radius:9px;
+  background:var(--bg2); color:var(--text);
+  padding:0 12px; font-size:13px; outline:none;
+  display:none;
+}
+
+.course-row.editing .course-name span{ display:none; }
+.course-row.editing .course-name input{ display:block; }
+
+.course-count{
+  font-size:11px; color:var(--muted);
+  background:var(--bg2); border:1px solid var(--border);
+  padding:5px 10px; border-radius:999px; white-space:nowrap;
+}
+
+.course-actions{ display:flex; gap:8px; }
+
+.empty-note{
+  text-align:center; color:var(--muted); padding:40px 10px; font-size:13px;
+}
+
+.info-box{
+  margin-top:20px; padding:15px 16px; border:1px dashed var(--border);
+  border-radius:14px; color:var(--muted); font-size:12px; line-height:1.7;
+}
+.info-box strong{ color:var(--text); }
+
+.footer{ text-align:center; color:var(--muted); padding:30px 0 10px; font-size:11px; }
+
+@media(max-width:900px){
+  .sidebar{ transform:translateX(-100%); }
+  .sidebar.open{ transform:translateX(0); }
+  .main{ width:100%; margin-left:0; }
+  .menu-btn{ display:block; }
+}
+
+@media(max-width:650px){
+  .topbar{ padding:0 14px; }
+  .container{ padding:14px; }
+  .add-form{ flex-direction:column; }
+  .course-row{ flex-wrap:wrap; }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-head">
+    <div class="brand">
+      <div class="logo">SNK</div>
+      <div>
+        <div class="brand-title">SNK AI Academy</div>
+        <div class="brand-sub">Admin Control Panel</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+
+    <div class="nav-label">Main</div>
+
+    <a href="admin-dashboard.html">
+      <span class="nav-icon">🏠</span>
+      <span>Admin Dashboard</span>
+    </a>
+
+    <a href="admin.html">
+      <span class="nav-icon">📊</span>
+      <span>Quiz Management</span>
+    </a>
+
+    <a href="students.html">
+      <span class="nav-icon">👨‍🎓</span>
+      <span>Students</span>
+    </a>
+
+    <a href="admin-courses.html" class="active">
+      <span class="nav-icon">📚</span>
+      <span>Course Management</span>
+    </a>
+
+    <a href="admin-schedule.html">
+      <span class="nav-icon">⏰</span>
+      <span>Exam / Quiz Schedule</span>
+    </a>
+
+    <a href="admin-profile.html">
+      <span class="nav-icon">🛠️</span>
+      <span>Site Settings</span>
+    </a>
+
+    <div class="nav-label">Academic</div>
+
+    <a href="assignments.html">
+      <span class="nav-icon">📝</span>
+      <span>Assignments</span>
+    </a>
+
+    <a href="admin-submissions.html">
+      <span class="nav-icon">📥</span>
+      <span>Submissions</span>
+    </a>
+
+    <a href="admin-quiz-results.html">
+      <span class="nav-icon">📈</span>
+      <span>Quiz Results</span>
+    </a>
+
+    <div class="nav-label">Exam & Attendance</div>
+
+    <a href="admin-attendance.html">
+      <span class="nav-icon">✅</span>
+      <span>Attendance</span>
+    </a>
+
+    <a href="attendance-dashboard.html">
+      <span class="nav-icon">📅</span>
+      <span>Attendance Dashboard</span>
+    </a>
+
+  </nav>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div class="top-left">
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu">☰</button>
+      <div>
+        <div class="page-title">Course Management</div>
+        <div class="page-subtitle">Course যোগ, এডিট ও মুছে ফেলুন</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" type="button" title="Theme">🌙</button>
+      <button class="icon-btn" id="logoutBtn" type="button" title="Logout">⏻</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">➕ নতুন Course যোগ করুন</div>
+        <div class="card-sub">নাম দিয়ে Add বাটনে ক্লিক করুন। এই লিস্ট থেকেই Students পেজের Course dropdown আপডেট হবে।</div>
+      </div>
+
+      <div class="card-body">
+        <div class="add-form">
+          <input type="text" id="newCourseInput" placeholder="যেমন: Video Editing" maxlength="80">
+          <button class="btn btn-primary" type="button" id="addCourseBtn">➕ Add Course</button>
+        </div>
+
+        <div class="course-list" id="courseList"></div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>নোট:</strong> কোনো course-এর নাম বদলালে (Rename), যেসব student আগে থেকে ওই course-এ ভর্তি আছে তাদের রেকর্ডে পুরনো নামই থেকে যাবে — সেটা আলাদাভাবে Students পেজে গিয়ে আপডেট করতে হবে। Delete করলেও student record মোছে না, শুধু নতুন dropdown থেকে course-টা বাদ পড়বে।
+    </div>
+
+    <div class="footer">
+      SNK AI Academy Admin Panel • Course Management v1.0
+    </div>
+
+  </div>
+
+</main>
+
+</div>
+
+<script>
+"use strict";
+
+const STORAGE = {
+  theme: "snkTheme",
+  students: "snkStudents",
+  courses: "snkCourses"
+};
+
+const ADMIN_LOGIN_KEY = "snkAdminLoggedIn";
+
+(function guardAdminSession(){
+  const loggedIn = sessionStorage.getItem(ADMIN_LOGIN_KEY);
+  if(loggedIn !== "true"){
+    window.location.replace("admin-login.html");
+  }
+})();
+
+const DEFAULT_COURSES = [
+  "Computer Office Application",
+  "Graphics Design",
+  "Digital Marketing",
+  "Web Design & Development"
+];
+
+function readJSON(key, fallback){
+  try{
+    const value = localStorage.getItem(key);
+    if(!value) return fallback;
+    return JSON.parse(value);
+  }catch(error){
+    console.warn("Storage read error:", key, error);
+    return fallback;
+  }
+}
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function getStudents(){
+  const saved = readJSON(STORAGE.students, []);
+  return Array.isArray(saved) ? saved : [];
+}
+
+function getCourses(){
+  const saved = readJSON(STORAGE.courses, null);
+  if(Array.isArray(saved)) return saved;
+
+  /* প্রথমবার — পুরনো ডিফল্ট লিস্ট দিয়ে শুরু করা হচ্ছে */
+  const students = getStudents();
+  const merged = [...new Set([
+    ...DEFAULT_COURSES,
+    ...students.map(s => s.course).filter(Boolean)
+  ])];
+  saveCourses(merged);
+  return merged;
+}
+
+function saveCourses(list){
+  localStorage.setItem(STORAGE.courses, JSON.stringify(list));
+}
+
+function studentCountFor(courseName){
+  return getStudents().filter(s => s.course === courseName).length;
+}
+
+/* =========================================================
+   RENDER
+========================================================= */
+function renderCourses(){
+  const list = document.getElementById("courseList");
+  const courses = getCourses();
+
+  if(!courses.length){
+    list.innerHTML = `<div class="empty-note">এখনো কোনো Course যোগ করা হয়নি। উপরে ফর্ম থেকে যোগ করুন।</div>`;
+    return;
+  }
+
+  list.innerHTML = courses.map((course, index) => `
+    <div class="course-row" data-index="${index}">
+      <div class="course-name">
+        <span>${escapeHTML(course)}</span>
+        <input type="text" value="${escapeHTML(course)}" maxlength="80">
+      </div>
+      <div class="course-count">${studentCountFor(course)} জন student</div>
+      <div class="course-actions">
+        <button class="btn btn-secondary btn-sm" type="button" onclick="startEdit(${index})">✏️ Edit</button>
+        <button class="btn btn-primary btn-sm" type="button" style="display:none" onclick="saveEdit(${index})">✔ Save</button>
+        <button class="btn btn-danger btn-sm" type="button" onclick="deleteCourse(${index})">🗑️</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+function addCourse(){
+  const input = document.getElementById("newCourseInput");
+  const name = input.value.trim();
+
+  if(!name){
+    alert("Course-এর নাম লিখুন।");
+    return;
+  }
+
+  const courses = getCourses();
+
+  if(courses.some(c => c.toLowerCase() === name.toLowerCase())){
+    alert("এই নামে একটা Course আগে থেকেই আছে।");
+    return;
+  }
+
+  courses.push(name);
+  saveCourses(courses);
+  input.value = "";
+  renderCourses();
+}
+
+function startEdit(index){
+  const row = document.querySelector(`.course-row[data-index="${index}"]`);
+  if(!row) return;
+  row.classList.add("editing");
+  row.querySelector(".course-actions .btn-secondary").style.display = "none";
+  row.querySelector(".course-actions .btn-primary").style.display = "inline-flex";
+  row.querySelector(".course-name input").focus();
+}
+
+function saveEdit(index){
+  const row = document.querySelector(`.course-row[data-index="${index}"]`);
+  if(!row) return;
+
+  const newName = row.querySelector(".course-name input").value.trim();
+  if(!newName){
+    alert("Course-এর নাম খালি রাখা যাবে না।");
+    return;
+  }
+
+  const courses = getCourses();
+  courses[index] = newName;
+  saveCourses(courses);
+  renderCourses();
+}
+
+function deleteCourse(index){
+  const courses = getCourses();
+  const name = courses[index];
+  const count = studentCountFor(name);
+
+  const msg = count > 0
+    ? `"${name}" এ এখন ${count} জন student ভর্তি আছে। তবুও Course-টা লিস্ট থেকে মুছে ফেলতে চান? (Student record মোছা হবে না)`
+    : `"${name}" Course-টা মুছে ফেলতে চান?`;
+
+  if(!confirm(msg)) return;
+
+  courses.splice(index, 1);
+  saveCourses(courses);
+  renderCourses();
+}
+
+/* =========================================================
+   THEME
+========================================================= */
+function applyTheme(){
+  const theme = localStorage.getItem(STORAGE.theme) || "dark";
+  if(theme === "light"){
+    document.body.classList.add("light");
+    document.getElementById("themeBtn").textContent = "☀️";
+  }else{
+    document.body.classList.remove("light");
+    document.getElementById("themeBtn").textContent = "🌙";
+  }
+}
+
+function toggleTheme(){
+  const isLight = document.body.classList.contains("light");
+  localStorage.setItem(STORAGE.theme, isLight ? "dark" : "light");
+  applyTheme();
+}
+
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+function logoutAdmin(){
+  const confirmLogout = confirm("আপনি কি Admin Panel থেকে Logout করতে চান?");
+  if(!confirmLogout) return;
+
+  sessionStorage.removeItem(ADMIN_LOGIN_KEY);
+  sessionStorage.removeItem("snkAdminEmail");
+
+  import("./firebase-config.js")
+    .then(({ auth }) => import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js")
+      .then(({ signOut }) => signOut(auth)))
+    .catch(() => {})
+    .finally(() => {
+      window.location.replace("admin-login.html");
+    });
+}
+
+/* =========================================================
+   EVENTS + INIT
+========================================================= */
+document.getElementById("addCourseBtn").addEventListener("click", addCourse);
+
+document.getElementById("newCourseInput").addEventListener("keydown", e => {
+  if(e.key === "Enter") addCourse();
+});
+
+document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+document.getElementById("menuBtn").addEventListener("click", toggleSidebar);
+document.getElementById("logoutBtn").addEventListener("click", logoutAdmin);
+
+(function init(){
+  applyTheme();
+  renderCourses();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Student Attendance</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --soft:#f1ffdd;
+    --success:#16a34a;
+    --success-soft:#dcfce7;
+    --warning:#d97706;
+    --warning-soft:#fef3c7;
+    --danger:#dc2626;
+    --danger-soft:#fee2e2;
+    --shadow:0 10px 30px rgba(15,23,42,.07);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+    --soft:#172554;
+    --success-soft:#052e16;
+    --warning-soft:#451a03;
+    --danger-soft:#450a0a;
+    --shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    min-height:70px;
+    padding:12px 25px;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    box-shadow:0 4px 20px rgba(15,23,42,.04);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:43px;
+    height:43px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#b7ff00;
+    color:#050505;
+    font-weight:900;
+    font-size:13px;
+}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+    line-height:1.2;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:3px;
+}
+
+.header-actions{
+    display:flex;
+    gap:7px;
+}
+
+.header-btn{
+    height:38px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:9px;
+    padding:0 12px;
+    font-size:9px;
+    font-weight:800;
+}
+
+.header-btn:hover{
+    background:var(--soft);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    max-width:1150px;
+    margin:auto;
+    padding:28px 20px 50px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:15px;
+}
+
+.profile-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.profile-avatar{
+    width:65px;
+    height:65px;
+    border-radius:17px;
+    background:var(--soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    flex-shrink:0;
+}
+
+.profile-info h1{
+    font-size:21px;
+    margin-bottom:3px;
+}
+
+.profile-info p{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:2px;
+}
+
+.student-badge{
+    display:inline-flex;
+    padding:4px 8px;
+    border-radius:20px;
+    background:var(--success-soft);
+    color:var(--success);
+    font-size:7px;
+    font-weight:900;
+    margin-top:6px;
+}
+
+.profile-right{
+    text-align:right;
+}
+
+.profile-right .course{
+    font-size:9px;
+    font-weight:900;
+}
+
+.profile-right .class-name{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:3px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:14px;
+}
+
+.page-title h2{
+    font-size:20px;
+    margin-bottom:3px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.action-buttons{
+    display:flex;
+    gap:7px;
+}
+
+.action-btn{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:9px;
+    padding:9px 13px;
+    font-size:8px;
+    font-weight:900;
+}
+
+.action-btn:hover{
+    background:var(--soft);
+}
+
+.action-btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.action-btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+/* =========================
+   MONTH FILTER
+========================= */
+
+.filter-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+    box-shadow:var(--shadow);
+    margin-bottom:14px;
+}
+
+.filter-row{
+    display:flex;
+    align-items:end;
+    gap:10px;
+}
+
+.field{
+    flex:1;
+    max-width:260px;
+}
+
+.field label{
+    display:block;
+    font-size:7px;
+    color:var(--muted);
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.field select{
+    width:100%;
+    height:38px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:var(--card);
+    color:var(--text);
+    padding:0 10px;
+    font-size:8px;
+    outline:none;
+}
+
+.field select:focus{
+    border-color:var(--primary);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--soft);
+    font-size:17px;
+    margin-bottom:8px;
+}
+
+.stat-number{
+    font-size:23px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:2px;
+}
+
+.stat.present .stat-number{
+    color:var(--success);
+}
+
+.stat.absent .stat-number{
+    color:var(--danger);
+}
+
+.stat.late .stat-number{
+    color:var(--warning);
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:17px;
+    box-shadow:var(--shadow);
+    margin-bottom:15px;
+}
+
+.progress-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:9px;
+}
+
+.progress-top h3{
+    font-size:11px;
+}
+
+.progress-percent{
+    font-size:18px;
+    font-weight:900;
+}
+
+.progress-bar{
+    height:11px;
+    background:var(--border);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--success);
+    border-radius:20px;
+    transition:.4s;
+}
+
+.progress-note{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:7px;
+}
+
+/* =========================
+   CALENDAR
+========================= */
+
+.calendar-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:15px;
+}
+
+.card-heading{
+    padding:15px 17px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.card-heading h3{
+    font-size:13px;
+}
+
+.card-heading span{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.calendar{
+    padding:15px;
+}
+
+.weekdays{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+    margin-bottom:5px;
+}
+
+.weekdays div{
+    text-align:center;
+    color:var(--muted);
+    font-size:7px;
+    font-weight:900;
+    padding:7px 2px;
+}
+
+.days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+}
+
+.day{
+    min-height:55px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:7px;
+    position:relative;
+    background:var(--card);
+}
+
+.day.empty{
+    background:transparent;
+    border:none;
+}
+
+.day-number{
+    font-size:8px;
+    font-weight:900;
+}
+
+.day-status{
+    position:absolute;
+    left:7px;
+    bottom:7px;
+    right:7px;
+    height:6px;
+    border-radius:10px;
+}
+
+.day.present{
+    background:var(--success-soft);
+    border-color:rgba(22,163,74,.25);
+}
+
+.day.present .day-status{
+    background:var(--success);
+}
+
+.day.absent{
+    background:var(--danger-soft);
+    border-color:rgba(220,38,38,.25);
+}
+
+.day.absent .day-status{
+    background:var(--danger);
+}
+
+.day.late{
+    background:var(--warning-soft);
+    border-color:rgba(217,119,6,.25);
+}
+
+.day.late .day-status{
+    background:var(--warning);
+}
+
+.day.today{
+    outline:2px solid var(--primary);
+    outline-offset:-2px;
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.history-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.history-scroll{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:600px;
+}
+
+th{
+    background:var(--bg);
+    color:var(--muted);
+    padding:11px 14px;
+    text-align:left;
+    font-size:7px;
+    font-weight:900;
+    border-bottom:1px solid var(--border);
+}
+
+td{
+    padding:11px 14px;
+    font-size:8px;
+    border-bottom:1px solid var(--border);
+}
+
+tr:last-child td{
+    border-bottom:none;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:7px;
+    font-weight:900;
+}
+
+.status.present{
+    background:var(--success-soft);
+    color:var(--success);
+}
+
+.status.absent{
+    background:var(--danger-soft);
+    color:var(--danger);
+}
+
+.status.late{
+    background:var(--warning-soft);
+    color:var(--warning);
+}
+
+.no-record{
+    text-align:center;
+    padding:45px 15px;
+    color:var(--muted);
+    font-size:8px;
+}
+
+.no-record-icon{
+    font-size:35px;
+    margin-bottom:7px;
+}
+
+/* =========================
+   LEGEND
+========================= */
+
+.legend{
+    padding:12px 15px;
+    border-top:1px solid var(--border);
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    color:var(--muted);
+    font-size:7px;
+    font-weight:800;
+}
+
+.dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+}
+
+.dot.present{
+    background:var(--success);
+}
+
+.dot.absent{
+    background:var(--danger);
+}
+
+.dot.late{
+    background:var(--warning);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:8px;
+    padding:20px 10px 5px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#111827;
+    color:#fff;
+    padding:11px 15px;
+    border-radius:9px;
+    font-size:9px;
+    opacity:0;
+    transform:translateY(20px);
+    pointer-events:none;
+    transition:.25s;
+    z-index:5000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:850px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .profile-card{
+        align-items:flex-start;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 13px 35px;
+    }
+
+    .profile-card{
+        flex-direction:column;
+    }
+
+    .profile-right{
+        text-align:left;
+        padding-left:79px;
+        margin-top:-7px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .filter-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .field{
+        max-width:none;
+    }
+
+    .stats{
+        gap:8px;
+    }
+
+    .stat{
+        padding:11px;
+    }
+
+    .stat-number{
+        font-size:19px;
+    }
+
+    .day{
+        min-height:45px;
+        padding:5px;
+    }
+
+    .day-status{
+        left:5px;
+        right:5px;
+        bottom:5px;
+    }
+
+}
+
+@media(max-width:420px){
+
+    .logo{
+        width:37px;
+        height:37px;
+    }
+
+    .logo-text{
+        font-size:11px;
+    }
+
+    .header-btn{
+        padding:0 8px;
+    }
+
+    .profile-avatar{
+        width:55px;
+        height:55px;
+        font-size:25px;
+    }
+
+    .profile-info h1{
+        font-size:17px;
+    }
+
+    .profile-right{
+        padding-left:69px;
+    }
+
+}
+
+@media print{
+
+    .header-actions,
+    .action-buttons,
+    .filter-card{
+        display:none!important;
+    }
+
+    body{
+        background:#fff;
+    }
+
+    .main{
+        max-width:none;
+        padding:0;
+    }
+
+    .profile-card,
+    .stat,
+    .progress-card,
+    .calendar-card,
+    .history-card{
+        box-shadow:none;
+    }
+
+}
+
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+            SNK AI Academy
+            <small>Student Portal</small>
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn"
+            onclick="toggleTheme()"
+            id="themeBtn"
+        >
+            🌙
+        </button>
+
+
+        <button
+            class="header-btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main class="main">
+
+
+<!-- =========================
+     STUDENT PROFILE
+========================= -->
+
+<section class="profile-card">
+
+    <div class="profile-left">
+
+        <div class="profile-avatar">
+            🎓
+        </div>
+
+
+        <div class="profile-info">
+
+            <h1 id="studentName">
+                Student
+            </h1>
+
+            <p>
+                Student ID:
+                <strong id="studentId">
+                    -
+                </strong>
+            </p>
+
+            <p id="studentEmail">
+                -
+            </p>
+
+            <span class="student-badge">
+                ✓ Active Student
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="profile-right">
+
+        <div
+            class="course"
+            id="studentCourse"
+        >
+            Course: -
+        </div>
+
+        <div
+            class="class-name"
+            id="studentClass"
+        >
+            Class: -
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     PAGE HEADER
+========================= -->
+
+<section class="page-header">
+
+    <div class="page-title">
+
+        <h2>
+            📅 My Attendance
+        </h2>
+
+        <p>
+            আপনার class attendance এবং monthly record দেখুন।
+        </p>
+
+    </div>
+
+
+    <div class="action-buttons">
+
+        <button
+            class="action-btn primary"
+            onclick="window.print()"
+        >
+            🖨️ Print
+        </button>
+
+        <button
+            class="action-btn"
+            onclick="refreshData()"
+        >
+            🔄 Refresh
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     MONTH FILTER
+========================= -->
+
+<section class="filter-card">
+
+    <div class="filter-row">
+
+        <div class="field">
+
+            <label>
+                📅 Select Month
+            </label>
+
+            <select
+                id="monthFilter"
+                onchange="renderPage()"
+            >
+            </select>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<section class="stats">
+
+
+    <div class="stat">
+
+        <div class="stat-icon">
+            📚
+        </div>
+
+        <div
+            class="stat-number"
+            id="totalDays"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Total Recorded Days
+        </div>
+
+    </div>
+
+
+    <div class="stat present">
+
+        <div class="stat-icon">
+            ✅
+        </div>
+
+        <div
+            class="stat-number"
+            id="presentDays"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Present
+        </div>
+
+    </div>
+
+
+    <div class="stat absent">
+
+        <div class="stat-icon">
+            ❌
+        </div>
+
+        <div
+            class="stat-number"
+            id="absentDays"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Absent
+        </div>
+
+    </div>
+
+
+    <div class="stat late">
+
+        <div class="stat-icon">
+            🕐
+        </div>
+
+        <div
+            class="stat-number"
+            id="lateDays"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Late
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ATTENDANCE PROGRESS
+========================= -->
+
+<section class="progress-card">
+
+    <div class="progress-top">
+
+        <h3>
+            📊 Attendance Percentage
+        </h3>
+
+        <div
+            class="progress-percent"
+            id="attendancePercent"
+        >
+            0%
+        </div>
+
+    </div>
+
+
+    <div class="progress-bar">
+
+        <div
+            class="progress-fill"
+            id="progressFill"
+        ></div>
+
+    </div>
+
+
+    <div
+        class="progress-note"
+        id="progressNote"
+    >
+        Attendance record পাওয়া যায়নি।
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     CALENDAR
+========================= -->
+
+<section class="calendar-card">
+
+    <div class="card-heading">
+
+        <h3>
+            📆 Monthly Calendar
+        </h3>
+
+        <span id="calendarMonth">
+            -
+        </span>
+
+    </div>
+
+
+    <div class="calendar">
+
+        <div class="weekdays">
+
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+
+        </div>
+
+
+        <div
+            class="days"
+            id="calendarDays"
+        ></div>
+
+    </div>
+
+
+    <div class="legend">
+
+        <div class="legend-item">
+
+            <span class="dot present"></span>
+
+            Present
+
+        </div>
+
+
+        <div class="legend-item">
+
+            <span class="dot absent"></span>
+
+            Absent
+
+        </div>
+
+
+        <div class="legend-item">
+
+            <span class="dot late"></span>
+
+            Late
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     HISTORY
+========================= -->
+
+<section class="history-card">
+
+    <div class="card-heading">
+
+        <h3>
+            📋 Attendance History
+        </h3>
+
+        <span id="historyCount">
+            0 records
+        </span>
+
+    </div>
+
+
+    <div class="history-scroll">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Day
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="historyBody"
+            ></tbody>
+
+        </table>
+
+    </div>
+
+
+    <div
+        class="no-record"
+        id="noRecord"
+        style="display:none;"
+    >
+
+        <div class="no-record-icon">
+            📅
+        </div>
+
+        <div>
+            এই মাসে কোনো attendance record পাওয়া যায়নি।
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<footer class="footer">
+
+    © 2026 SNK AI Academy • Student Attendance Portal
+
+</footer>
+
+
+</main>
+
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const ATTENDANCE_KEY =
+    "snkStudentAttendance";
+
+const STUDENTS_KEY =
+    "snkStudents";
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let attendance = {};
+
+let students = [];
+
+let currentStudent = null;
+
+
+/* =========================================================
+   LOAD ATTENDANCE
+========================================================= */
+
+function loadAttendance(){
+
+    attendance =
+        JSON.parse(
+            localStorage.getItem(
+                ATTENDANCE_KEY
+            )
+        ) || {};
+
+}
+
+
+/* =========================================================
+   LOAD STUDENTS
+========================================================= */
+
+function loadStudents(){
+
+    students =
+        JSON.parse(
+            localStorage.getItem(
+                STUDENTS_KEY
+            )
+        ) || [];
+
+
+    /*
+       Demo student fallback
+       যদি project-এ student data না থাকে।
+    */
+
+    if(
+        !Array.isArray(students) ||
+        students.length === 0
+    ){
+
+        students = [
+
+            {
+                id:"SNK001",
+                name:"Demo Student",
+                email:"student@example.com",
+                course:"Computer Basic",
+                className:"Class 01"
+            }
+
+        ];
+
+    }
+
+}
+
+
+/* =========================================================
+   FIND CURRENT STUDENT
+========================================================= */
+
+function findCurrentStudent(){
+
+    /*
+       URL থেকে ?student=SNK001 দিলে
+       সেই student দেখাবে।
+    */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const requestedId =
+        params.get(
+            "student"
+        );
+
+
+    if(requestedId){
+
+        currentStudent =
+            students.find(
+                student =>
+                    String(
+                        student.id ||
+                        student.studentId
+                    ) ===
+                    String(
+                        requestedId
+                    )
+            );
+
+    }
+
+
+    /*
+       না পাওয়া গেলে প্রথম student।
+    */
+
+    if(
+        !currentStudent &&
+        students.length > 0
+    ){
+
+        currentStudent =
+            students[0];
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function renderProfile(){
+
+    if(!currentStudent){
+        return;
+    }
+
+
+    const id =
+        currentStudent.id ||
+        currentStudent.studentId ||
+        "-";
+
+
+    const name =
+        currentStudent.name ||
+        currentStudent.studentName ||
+        "Student";
+
+
+    const email =
+        currentStudent.email ||
+        "-";
+
+
+    const course =
+        currentStudent.course ||
+        "-";
+
+
+    const className =
+        currentStudent.className ||
+        currentStudent.class ||
+        "-";
+
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "studentId"
+    ).textContent =
+        id;
+
+
+    document.getElementById(
+        "studentEmail"
+    ).textContent =
+        email;
+
+
+    document.getElementById(
+        "studentCourse"
+    ).textContent =
+        "Course: " + course;
+
+
+    document.getElementById(
+        "studentClass"
+    ).textContent =
+        "Class: " + className;
+
+}
+
+
+/* =========================================================
+   MONTH OPTIONS
+========================================================= */
+
+function buildMonthOptions(){
+
+    const select =
+        document.getElementById(
+            "monthFilter"
+        );
+
+
+    select.innerHTML =
+        "";
+
+
+    const months = [];
+
+    const now =
+        new Date();
+
+
+    /*
+       গত 12 মাস
+    */
+
+    for(
+        let i = 0;
+        i < 12;
+        i++
+    ){
+
+        const date =
+            new Date(
+                now.getFullYear(),
+                now.getMonth() - i,
+                1
+            );
+
+
+        const year =
+            date.getFullYear();
+
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const value =
+            `${year}-${month}`;
+
+
+        const label =
+            date.toLocaleDateString(
+                "en-US",
+                {
+                    month:"long",
+                    year:"numeric"
+                }
+            );
+
+
+        months.push({
+            value,
+            label
+        });
+
+    }
+
+
+    months.forEach(
+        item => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                item.value;
+
+
+            option.textContent =
+                item.label;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GET SELECTED MONTH
+========================================================= */
+
+function getSelectedMonth(){
+
+    return document.getElementById(
+        "monthFilter"
+    ).value;
+
+}
+
+
+/* =========================================================
+   GET STUDENT ATTENDANCE
+========================================================= */
+
+function getStudentAttendance(){
+
+    if(!currentStudent){
+        return {};
+    }
+
+
+    const id =
+        String(
+            currentStudent.id ||
+            currentStudent.studentId
+        );
+
+
+    return attendance[id] || {};
+
+}
+
+
+/* =========================================================
+   GET MONTH RECORDS
+========================================================= */
+
+function getMonthRecords(){
+
+    const month =
+        getSelectedMonth();
+
+
+    const record =
+        getStudentAttendance();
+
+
+    const result = [];
+
+
+    Object.keys(
+        record
+    ).forEach(
+        date => {
+
+            if(
+                date.startsWith(
+                    month
+                )
+            ){
+
+                result.push({
+                    date,
+                    status:
+                        record[date]
+                });
+
+            }
+
+        }
+    );
+
+
+    result.sort(
+        (a,b) =>
+            a.date.localeCompare(
+                b.date
+            )
+    );
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function calculateStats(){
+
+    const records =
+        getMonthRecords();
+
+
+    let present = 0;
+
+    let absent = 0;
+
+    let late = 0;
+
+
+    records.forEach(
+        record => {
+
+            if(
+                record.status ===
+                "present"
+            ){
+
+                present++;
+
+            }
+
+            else if(
+                record.status ===
+                "absent"
+            ){
+
+                absent++;
+
+            }
+
+            else if(
+                record.status ===
+                "late"
+            ){
+
+                late++;
+
+            }
+
+        }
+    );
+
+
+    const total =
+        records.length;
+
+
+    const percentage =
+        total > 0
+        ?
+        (
+            (
+                present +
+                late
+            ) /
+            total
+        ) * 100
+        :
+        0;
+
+
+    return {
+        total,
+        present,
+        absent,
+        late,
+        percentage
+    };
+
+}
+
+
+/* =========================================================
+   RENDER STATS
+========================================================= */
+
+function renderStats(){
+
+    const stats =
+        calculateStats();
+
+
+    document.getElementById(
+        "totalDays"
+    ).textContent =
+        stats.total;
+
+
+    document.getElementById(
+        "presentDays"
+    ).textContent =
+        stats.present;
+
+
+    document.getElementById(
+        "absentDays"
+    ).textContent =
+        stats.absent;
+
+
+    document.getElementById(
+        "lateDays"
+    ).textContent =
+        stats.late;
+
+
+    document.getElementById(
+        "attendancePercent"
+    ).textContent =
+        stats.percentage.toFixed(
+            1
+        ) + "%";
+
+
+    const fill =
+        document.getElementById(
+            "progressFill"
+        );
+
+
+    fill.style.width =
+        Math.min(
+            stats.percentage,
+            100
+        ) + "%";
+
+
+    const note =
+        document.getElementById(
+            "progressNote"
+        );
+
+
+    if(stats.total === 0){
+
+        note.textContent =
+            "এই মাসে কোনো attendance record পাওয়া যায়নি।";
+
+    }
+
+    else if(
+        stats.percentage >= 80
+    ){
+
+        note.textContent =
+            "Excellent! আপনার attendance খুব ভালো।";
+
+    }
+
+    else if(
+        stats.percentage >= 60
+    ){
+
+        note.textContent =
+            "ভালো আছে, তবে attendance আরও improve করা যায়।";
+
+    }
+
+    else{
+
+        note.textContent =
+            "Attendance কম। নিয়মিত class করার চেষ্টা করুন।";
+
+    }
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+function renderCalendar(){
+
+    const container =
+        document.getElementById(
+            "calendarDays"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    const month =
+        getSelectedMonth();
+
+
+    if(!month){
+        return;
+    }
+
+
+    const parts =
+        month.split("-");
+
+
+    const year =
+        Number(parts[0]);
+
+
+    const monthIndex =
+        Number(parts[1]) - 1;
+
+
+    const firstDay =
+        new Date(
+            year,
+            monthIndex,
+            1
+        );
+
+
+    const lastDay =
+        new Date(
+            year,
+            monthIndex + 1,
+            0
+        );
+
+
+    const daysInMonth =
+        lastDay.getDate();
+
+
+    const startingDay =
+        firstDay.getDay();
+
+
+    const record =
+        getStudentAttendance();
+
+
+    const monthName =
+        firstDay.toLocaleDateString(
+            "en-US",
+            {
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+
+    document.getElementById(
+        "calendarMonth"
+    ).textContent =
+        monthName;
+
+
+    /*
+       Empty cells
+    */
+
+    for(
+        let i = 0;
+        i < startingDay;
+        i++
+    ){
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+
+        empty.className =
+            "day empty";
+
+
+        container.appendChild(
+            empty
+        );
+
+    }
+
+
+    const today =
+        todayString();
+
+
+    for(
+        let day = 1;
+        day <= daysInMonth;
+        day++
+    ){
+
+        const dayElement =
+            document.createElement(
+                "div"
+            );
+
+
+        const date =
+            `${year}-${String(
+                monthIndex + 1
+            ).padStart(2,"0")}-${String(
+                day
+            ).padStart(2,"0")}`;
+
+
+        const status =
+            record[date] ||
+            "";
+
+
+        dayElement.className =
+            "day";
+
+
+        if(status){
+
+            dayElement.classList.add(
+                status
+            );
+
+        }
+
+
+        if(
+            date === today
+        ){
+
+            dayElement.classList.add(
+                "today"
+            );
+
+        }
+
+
+        let statusText =
+            "";
+
+
+        if(
+            status === "present"
+        ){
+
+            statusText =
+                "Present";
+
+        }
+
+        else if(
+            status === "absent"
+        ){
+
+            statusText =
+                "Absent";
+
+        }
+
+        else if(
+            status === "late"
+        ){
+
+            statusText =
+                "Late";
+
+        }
+
+
+        dayElement.title =
+            statusText
+            ?
+            `${date} — ${statusText}`
+            :
+            `${date} — No record`;
+
+
+        dayElement.innerHTML = `
+
+            <div class="day-number">
+                ${day}
+            </div>
+
+            ${
+                status
+                ?
+                `<div class="day-status"></div>`
+                :
+                ""
+            }
+
+        `;
+
+
+        container.appendChild(
+            dayElement
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function renderHistory(){
+
+    const body =
+        document.getElementById(
+            "historyBody"
+        );
+
+
+    const empty =
+        document.getElementById(
+            "noRecord"
+        );
+
+
+    const records =
+        getMonthRecords();
+
+
+    body.innerHTML =
+        "";
+
+
+    document.getElementById(
+        "historyCount"
+    ).textContent =
+        `${records.length} records`;
+
+
+    if(
+        records.length === 0
+    ){
+
+        empty.style.display =
+            "block";
+
+
+        return;
+
+    }
+
+
+    empty.style.display =
+        "none";
+
+
+    /*
+       Latest first
+    */
+
+    records
+    .slice()
+    .reverse()
+    .forEach(
+        record => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const date =
+                new Date(
+                    record.date +
+                    "T00:00:00"
+                );
+
+
+            const day =
+                date.toLocaleDateString(
+                    "en-US",
+                    {
+                        weekday:"long"
+                    }
+                );
+
+
+            let statusText =
+                "";
+
+
+            let icon =
+                "";
+
+
+            if(
+                record.status ===
+                "present"
+            ){
+
+                statusText =
+                    "Present";
+
+                icon =
+                    "✓";
+
+            }
+
+            else if(
+                record.status ===
+                "absent"
+            ){
+
+                statusText =
+                    "Absent";
+
+                icon =
+                    "✕";
+
+            }
+
+            else if(
+                record.status ===
+                "late"
+            ){
+
+                statusText =
+                    "Late";
+
+                icon =
+                    "🕐";
+
+            }
+
+            else{
+
+                statusText =
+                    record.status;
+
+            }
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${formatDate(record.date)}
+                </td>
+
+                <td>
+                    ${day}
+                </td>
+
+                <td>
+
+                    <span class="status ${escapeHtml(record.status)}">
+
+                        ${icon}
+                        ${escapeHtml(statusText)}
+
+                    </span>
+
+                </td>
+
+            `;
+
+
+            body.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
+
+function renderPage(){
+
+    renderStats();
+
+    renderCalendar();
+
+    renderHistory();
+
+}
+
+
+/* =========================================================
+   DATE FORMAT
+========================================================= */
+
+function formatDate(
+    value
+){
+
+    const date =
+        new Date(
+            value +
+            "T00:00:00"
+        );
+
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TODAY
+========================================================= */
+
+function todayString(){
+
+    const date =
+        new Date();
+
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshData(){
+
+    loadAttendance();
+
+    loadStudents();
+
+    findCurrentStudent();
+
+    renderProfile();
+
+    renderPage();
+
+    showToast(
+        "Attendance refreshed ✓"
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const isDark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        "snkStudentAttendanceTheme",
+        isDark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+        isDark
+        ?
+        "☀️"
+        :
+        "🌙";
+
+}
+
+
+function loadTheme(){
+
+    if(
+        localStorage.getItem(
+            "snkStudentAttendanceTheme"
+        ) ===
+        "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+
+        document.getElementById(
+            "themeBtn"
+        ).textContent =
+            "☀️";
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "index.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        window.toastTimer
+    );
+
+
+    window.toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+        ?
+        ""
+        :
+        String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   STORAGE EVENT
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key ===
+            ATTENDANCE_KEY ||
+            event.key ===
+            STUDENTS_KEY
+        ){
+
+            refreshData();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        loadAttendance();
+
+        loadStudents();
+
+        findCurrentStudent();
+
+        renderProfile();
+
+        buildMonthOptions();
+
+        renderPage();
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>
+```

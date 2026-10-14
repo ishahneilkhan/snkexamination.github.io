@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>SNK AI Academy | Exam Schedule</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#050505;
+  --bg2:#0a0a0a;
+  --card:#141414;
+  --card2:#181818;
+  --border:rgba(183,255,0,.14);
+  --text:#ffffff;
+  --muted:#999999;
+  --primary:#b7ff00;
+  --primary2:#ccff4d;
+  --success:#20c997;
+  --danger:#ff4545;
+  --warning:#ffbd59;
+  --info:#4dabf7;
+  --shadow:0 18px 50px rgba(0,0,0,.5);
+}
+
+body.light{
+  --bg:#f4f7fb;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card2:#f7f9fc;
+  --border:#dce3ee;
+  --text:#182235;
+  --muted:#68758a;
+  --primary:#5a8a00;
+  --primary2:#446b00;
+  --shadow:0 15px 40px rgba(27,39,67,.10);
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(183,255,0,.12),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(183,255,0,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input{ font:inherit; }
+button{ cursor:pointer; }
+a{ color:inherit; text-decoration:none; }
+
+.app{ display:flex; min-height:100vh; }
+
+.sidebar{
+  width:260px;
+  position:fixed;
+  left:0; top:0; bottom:0;
+  background:rgba(10,15,27,.96);
+  border-right:1px solid var(--border);
+  z-index:1000;
+  overflow-y:auto;
+  transition:.25s ease;
+}
+
+body.light .sidebar{ background:#fff; }
+
+.sidebar-head{ padding:22px 18px; border-bottom:1px solid var(--border); }
+
+.brand{ display:flex; align-items:center; gap:12px; }
+
+.logo{
+  width:46px; height:46px; border-radius:13px;
+  display:flex; align-items:center; justify-content:center;
+  background:#b7ff00; color:#050505; font-weight:900; font-size:15px;
+}
+
+.brand-title{ font-size:16px; font-weight:800; }
+.brand-sub{ color:var(--muted); font-size:12px; margin-top:3px; }
+
+.nav{ padding:14px 10px 30px; }
+
+.nav-label{
+  color:#6f7c91; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  padding:14px 12px 7px;
+}
+
+.nav a{
+  display:flex; align-items:center; gap:11px;
+  padding:11px 12px; border-radius:11px;
+  color:#aeb9ca; font-size:14px; margin:3px 0; transition:.2s;
+}
+
+body.light .nav a{ color:#5d687b; }
+
+.nav a:hover, .nav a.active{
+  background:rgba(183,255,0,.15); color:var(--primary);
+}
+
+body.light .nav a:hover, body.light .nav a.active{ color:var(--primary); }
+
+.nav-icon{ width:23px; text-align:center; font-size:16px; }
+
+.main{
+  width:calc(100% - 260px);
+  margin-left:260px;
+  min-width:0;
+}
+
+.topbar{
+  height:70px; position:sticky; top:0; z-index:900;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 25px;
+  background:rgba(7,11,20,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+body.light .topbar{ background:rgba(255,255,255,.88); }
+
+.top-left{ display:flex; align-items:center; gap:13px; }
+
+.menu-btn{
+  display:none; border:1px solid var(--border);
+  background:var(--card); color:var(--text);
+  width:40px; height:40px; border-radius:10px;
+}
+
+.page-title{ font-size:18px; font-weight:800; }
+.page-subtitle{ font-size:12px; color:var(--muted); margin-top:3px; }
+
+.top-actions{ display:flex; gap:8px; align-items:center; }
+
+.icon-btn{
+  width:40px; height:40px; border-radius:10px;
+  border:1px solid var(--border); background:var(--card); color:var(--text);
+}
+
+.container{ max-width:1100px; margin:auto; padding:25px; }
+
+.btn{
+  border:0; border-radius:10px; padding:11px 16px;
+  font-weight:700; font-size:13px; transition:.2s;
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn-primary{ background:var(--primary); color:#050505; font-weight:800; }
+.btn-danger{ background:var(--danger); color:#fff; }
+.btn-secondary{ background:var(--card2); border:1px solid var(--border); color:var(--text); }
+.btn-sm{ padding:8px 10px; font-size:12px; }
+
+.card{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; box-shadow:var(--shadow); overflow:hidden;
+}
+
+.card-head{
+  padding:20px 22px; border-bottom:1px solid var(--border);
+}
+
+.card-title{ font-size:17px; font-weight:800; }
+.card-sub{ color:var(--muted); font-size:12px; margin-top:5px; line-height:1.6; }
+
+.card-body{ padding:22px; }
+
+.add-form{
+  display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px;
+}
+
+.add-form input{
+  flex:1; min-width:220px; height:46px;
+  border:1px solid var(--border); border-radius:11px;
+  background:var(--bg2); color:var(--text);
+  padding:0 15px; font-size:14px; outline:none;
+}
+
+.add-form input:focus{ border-color:var(--primary); }
+
+.course-list{ display:flex; flex-direction:column; gap:12px; }
+
+.course-row{
+  display:flex; align-items:center; gap:14px;
+  padding:16px; border:1px solid var(--border); border-radius:14px;
+  background:var(--card2);
+}
+
+.course-name{
+  flex:1; font-size:14px; font-weight:700;
+}
+
+.course-name input{
+  width:100%; height:38px;
+  border:1px solid var(--border); border-radius:9px;
+  background:var(--bg2); color:var(--text);
+  padding:0 12px; font-size:13px; outline:none;
+  display:none;
+}
+
+.course-row.editing .course-name span{ display:none; }
+.course-row.editing .course-name input{ display:block; }
+
+.course-count{
+  font-size:11px; color:var(--muted);
+  background:var(--bg2); border:1px solid var(--border);
+  padding:5px 10px; border-radius:999px; white-space:nowrap;
+}
+
+.course-actions{ display:flex; gap:8px; }
+
+.empty-note{
+  text-align:center; color:var(--muted); padding:40px 10px; font-size:13px;
+}
+
+.info-box{
+  margin-top:20px; padding:15px 16px; border:1px dashed var(--border);
+  border-radius:14px; color:var(--muted); font-size:12px; line-height:1.7;
+}
+.info-box strong{ color:var(--text); }
+
+.footer{ text-align:center; color:var(--muted); padding:30px 0 10px; font-size:11px; }
+
+@media(max-width:900px){
+  .sidebar{ transform:translateX(-100%); }
+  .sidebar.open{ transform:translateX(0); }
+  .main{ width:100%; margin-left:0; }
+  .menu-btn{ display:block; }
+}
+
+@media(max-width:650px){
+  .topbar{ padding:0 14px; }
+  .container{ padding:14px; }
+  .add-form{ flex-direction:column; }
+  .course-row{ flex-wrap:wrap; }
+}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.field label{font-size:12px;font-weight:700;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:11px;background:var(--bg2);color:var(--text);padding:12px 14px;font-size:14px;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary)}
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-weight:700;font-size:13px}
+.tab.on{background:var(--primary);color:#050505;border-color:var(--primary)}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--card2);margin-bottom:10px}
+.row .ic{font-size:26px}
+.row .main2{flex:1;min-width:180px}
+.row .t{font-weight:800;font-size:14px}
+.row .s{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.6}
+.pill{font-size:11px;padding:4px 9px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+.pill.on{color:#050505;background:var(--primary);border-color:var(--primary);font-weight:800}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:12px}
+.chk input{width:18px;height:18px}
+.msg{padding:12px 14px;border-radius:12px;font-size:13px;margin-bottom:14px;display:none}
+.msg.ok{display:block;background:rgba(32,201,151,.15);border:1px solid var(--success);color:var(--success)}
+.msg.err{display:block;background:rgba(255,69,69,.12);border:1px solid var(--danger);color:var(--danger)}
+@media(max-width:650px){.grid2{grid-template-columns:1fr}}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-head">
+    <div class="brand">
+      <div class="logo">SNK</div>
+      <div>
+        <div class="brand-title">SNK AI Academy</div>
+        <div class="brand-sub">Admin Control Panel</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+
+    <div class="nav-label">Main</div>
+
+    <a href="admin-dashboard.html">
+      <span class="nav-icon">🏠</span>
+      <span>Admin Dashboard</span>
+    </a>
+
+    <a href="admin.html">
+      <span class="nav-icon">📊</span>
+      <span>Quiz Management</span>
+    </a>
+
+    <a href="students.html">
+      <span class="nav-icon">👨‍🎓</span>
+      <span>Students</span>
+    </a>
+
+    <a href="admin-courses.html">
+      <span class="nav-icon">📚</span>
+      <span>Course Management</span>
+    </a>
+
+    <a href="admin-schedule.html" class="active">
+      <span class="nav-icon">⏰</span>
+      <span>Exam / Quiz Schedule</span>
+    </a>
+
+    <a href="admin-profile.html">
+      <span class="nav-icon">🛠️</span>
+      <span>Site Settings</span>
+    </a>
+
+    <div class="nav-label">Academic</div>
+
+    <a href="assignments.html">
+      <span class="nav-icon">📝</span>
+      <span>Assignments</span>
+    </a>
+
+    <a href="admin-submissions.html">
+      <span class="nav-icon">📥</span>
+      <span>Submissions</span>
+    </a>
+
+    <a href="admin-quiz-results.html">
+      <span class="nav-icon">📈</span>
+      <span>Quiz Results</span>
+    </a>
+
+    <div class="nav-label">Exam & Attendance</div>
+
+    <a href="admin-attendance.html">
+      <span class="nav-icon">✅</span>
+      <span>Attendance</span>
+    </a>
+
+    <a href="attendance-dashboard.html">
+      <span class="nav-icon">📅</span>
+      <span>Attendance Dashboard</span>
+    </a>
+
+  </nav>
+</aside>
+<main class="main">
+  <header class="topbar">
+    <div class="top-left">
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu">☰</button>
+      <div>
+        <div class="page-title">Exam / Assignment / Quiz Schedule</div>
+        <div class="page-subtitle">সময় ও নোটিশ দিন — student দের মোবাইলে কাউন্টডাউন দেখাবে</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" type="button" title="Theme">🌙</button>
+      <button class="icon-btn" id="logoutBtn" type="button" title="Logout">⏻</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="msg" class="msg"></div>
+
+    <div class="tabs">
+      <button class="tab on" data-tab="items" type="button">⏰ সময়সূচি</button>
+      <button class="tab" data-tab="notices" type="button">📢 নোটিশ</button>
+    </div>
+
+    <!-- ===== ITEMS ===== -->
+    <section id="tab-items">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title" id="itemFormTitle">➕ নতুন পরীক্ষা / কুইজ / অ্যাসাইনমেন্ট</div>
+          <div class="card-sub">শুরুর ও শেষের সময় দিন। Student দের পেজে নিজে থেকেই কাউন্টডাউন চলবে। অ্যাসাইনমেন্টে শুধু "শেষ সময়" দিলেই হয়।</div>
+        </div>
+        <div class="card-body">
+          <input type="hidden" id="itemId">
+          <div class="grid2">
+            <div class="field"><label>ধরন</label>
+              <select id="itemType">
+                <option value="exam">📝 পরীক্ষা</option>
+                <option value="quiz">🧠 কুইজ</option>
+                <option value="assignment">📚 অ্যাসাইনমেন্ট</option>
+              </select></div>
+            <div class="field"><label>কোর্স / ক্লাস (ঐচ্ছিক)</label><input id="itemCourse" maxlength="80" placeholder="যেমন: Class 5"></div>
+          </div>
+          <div class="field"><label>শিরোনাম</label><input id="itemTitle" maxlength="120" placeholder="যেমন: মাসিক পরীক্ষা — বাংলা"></div>
+          <div class="grid2">
+            <div class="field"><label>শুরুর সময়</label><input type="datetime-local" id="itemStart"></div>
+            <div class="field"><label>শেষ সময় (deadline)</label><input type="datetime-local" id="itemEnd"></div>
+          </div>
+          <div class="field"><label>ছোট নোট (ঐচ্ছিক)</label><input id="itemNote" maxlength="200" placeholder="যেমন: কলম ও খাতা সাথে আনবে"></div>
+          <div class="field"><label>বাটনের লিংক (ঐচ্ছিক — খালি রাখলে নিজে ঠিক হবে)</label><input id="itemLink" placeholder="quiz.html"></div>
+          <label class="chk"><input type="checkbox" id="itemActive" checked> Student দের দেখাও</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" id="saveItemBtn" type="button">💾 সেভ করুন</button>
+            <button class="btn btn-secondary" id="cancelItemBtn" type="button" style="display:none">বাতিল</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="card-head"><div class="card-title">📋 সব সময়সূচি</div></div>
+        <div class="card-body" id="itemList"></div>
+      </div>
+    </section>
+
+    <!-- ===== NOTICES ===== -->
+    <section id="tab-notices" style="display:none">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">➕ নতুন নোটিশ</div>
+          <div class="card-sub">নোটিশ student দের সব পেজের উপরে দেখা যাবে। মেয়াদ শেষ হলে নিজে থেকেই সরে যাবে।</div>
+        </div>
+        <div class="card-body">
+          <div class="field"><label>নোটিশের লেখা</label><textarea id="nText" rows="3" maxlength="300" placeholder="যেমন: আগামীকাল ক্লাস বন্ধ থাকবে।"></textarea></div>
+          <div class="grid2">
+            <div class="field"><label>ধরন</label>
+              <select id="nLevel"><option value="info">📢 সাধারণ</option><option value="urgent">🚨 জরুরি</option></select></div>
+            <div class="field"><label>মেয়াদ শেষ (ঐচ্ছিক)</label><input type="datetime-local" id="nExpire"></div>
+          </div>
+          <div class="field"><label>লিংক (ঐচ্ছিক)</label><input id="nLink" placeholder="student-schedule.html"></div>
+          <button class="btn btn-primary" id="addNoticeBtn" type="button">📢 নোটিশ দিন</button>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <div class="card-head"><div class="card-title">📋 সব নোটিশ</div></div>
+        <div class="card-body" id="noticeList"></div>
+      </div>
+    </section>
+
+    <div class="info-box"><strong>কীভাবে কাজ করে:</strong> এখানে সেভ করলেই ডাটা Firebase-এ জমা হয় এবং student অ্যাপ/সাইটে কয়েক সেকেন্ডের মধ্যে দেখা যায়। ইন্টারনেট না থাকলেও আগের দেখা সময়সূচি ফোনে থেকে যায়।</div>
+    <div class="footer">SNK AI Academy Admin Panel • Schedule v1.0</div>
+  </div>
+</main>
+</div>
+
+<script type="module">
+import { db, auth } from "./firebase-config.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+if (sessionStorage.getItem("snkAdminLoggedIn") !== "true") location.replace("admin-login.html");
+
+const REF = doc(db, "siteSettings", "schedule");
+const TYPES = { exam:["📝","পরীক্ষা"], quiz:["🧠","কুইজ"], assignment:["📚","অ্যাসাইনমেন্ট"] };
+let data = { items: [], notices: [] };
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+function msg(text, ok = true){
+  const m = $("msg"); m.textContent = text; m.className = "msg " + (ok ? "ok" : "err");
+  clearTimeout(msg.t); msg.t = setTimeout(() => m.className = "msg", 4000);
+}
+function toLocalInput(iso){
+  if(!iso) return "";
+  const d = new Date(iso); if(isNaN(d)) return "";
+  const p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+const toISO = v => v ? new Date(v).toISOString() : "";
+const fmt = iso => iso ? new Date(iso).toLocaleString("bn-BD", { dateStyle: "medium", timeStyle: "short" }) : "—";
+
+async function load(){
+  try{
+    const s = await getDoc(REF);
+    if(s.exists()){ const d = s.data(); data = { items: d.items || [], notices: d.notices || [] }; }
+  }catch(e){ msg("লোড করা যায়নি: " + e.message, false); }
+  render();
+}
+async function save(okText){
+  try{
+    await setDoc(REF, { items: data.items, notices: data.notices, updatedAt: new Date().toISOString() });
+    localStorage.setItem("snkScheduleCache", JSON.stringify(data));
+    msg(okText || "✅ সেভ হয়েছে");
+  }catch(e){
+    msg("সেভ হয়নি — আপনি কি Admin হিসেবে লগইন করেছেন? (" + e.message + ")", false);
+  }
+  render();
+}
+
+function render(){
+  const items = [...data.items].sort((a, b) => (Date.parse(b.startAt || b.endAt) || 0) - (Date.parse(a.startAt || a.endAt) || 0));
+  $("itemList").innerHTML = items.length ? items.map(it => `
+    <div class="row">
+      <div class="ic">${TYPES[it.type]?.[0] || "📝"}</div>
+      <div class="main2">
+        <div class="t">${esc(it.title)} ${it.course ? `<span class="pill">${esc(it.course)}</span>` : ""}</div>
+        <div class="s">${TYPES[it.type]?.[1] || ""} • শুরু: ${fmt(it.startAt)} • শেষ: ${fmt(it.endAt)}${it.note ? "<br>📌 " + esc(it.note) : ""}</div>
+      </div>
+      <span class="pill ${it.active !== false ? "on" : ""}">${it.active !== false ? "দেখাচ্ছে" : "লুকানো"}</span>
+      <button class="btn btn-secondary btn-sm" data-edit="${it.id}" type="button">✏️</button>
+      <button class="btn btn-secondary btn-sm" data-toggle="${it.id}" type="button">👁️</button>
+      <button class="btn btn-danger btn-sm" data-del="${it.id}" type="button">🗑️</button>
+    </div>`).join("") : `<div class="empty-note">এখনো কিছু যোগ করা হয়নি।</div>`;
+
+  $("noticeList").innerHTML = data.notices.length ? data.notices.map(n => `
+    <div class="row">
+      <div class="ic">${n.level === "urgent" ? "🚨" : "📢"}</div>
+      <div class="main2"><div class="t">${esc(n.text)}</div><div class="s">মেয়াদ: ${n.expiresAt ? fmt(n.expiresAt) : "নেই"}${n.link ? " • লিংক: " + esc(n.link) : ""}</div></div>
+      <span class="pill ${n.active !== false ? "on" : ""}">${n.active !== false ? "দেখাচ্ছে" : "লুকানো"}</span>
+      <button class="btn btn-secondary btn-sm" data-ntoggle="${n.id}" type="button">👁️</button>
+      <button class="btn btn-danger btn-sm" data-ndel="${n.id}" type="button">🗑️</button>
+    </div>`).join("") : `<div class="empty-note">কোনো নোটিশ নেই।</div>`;
+}
+
+function resetForm(){
+  ["itemId","itemCourse","itemTitle","itemStart","itemEnd","itemNote","itemLink"].forEach(i => $(i).value = "");
+  $("itemType").value = "exam"; $("itemActive").checked = true;
+  $("itemFormTitle").textContent = "➕ নতুন পরীক্ষা / কুইজ / অ্যাসাইনমেন্ট";
+  $("cancelItemBtn").style.display = "none";
+}
+
+$("saveItemBtn").onclick = () => {
+  const title = $("itemTitle").value.trim();
+  const start = $("itemStart").value, end = $("itemEnd").value;
+  if(!title) return msg("শিরোনাম লিখুন।", false);
+  if(!start && !end) return msg("অন্তত একটি সময় দিন।", false);
+  if(start && end && new Date(end) <= new Date(start)) return msg("শেষ সময় শুরুর পরে হতে হবে।", false);
+  const id = $("itemId").value || uid();
+  const item = { id, type: $("itemType").value, title, course: $("itemCourse").value.trim(), startAt: toISO(start), endAt: toISO(end), note: $("itemNote").value.trim(), link: $("itemLink").value.trim(), active: $("itemActive").checked };
+  const i = data.items.findIndex(x => x.id === id);
+  if(i >= 0) data.items[i] = item; else data.items.push(item);
+  resetForm(); save("✅ সময়সূচি সেভ হয়েছে");
+};
+$("cancelItemBtn").onclick = resetForm;
+
+$("itemList").onclick = e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.del){ if(confirm("মুছে ফেলবেন?")){ data.items = data.items.filter(x => x.id !== b.dataset.del); save("🗑️ মোছা হয়েছে"); } }
+  if(b.dataset.toggle){ const it = data.items.find(x => x.id === b.dataset.toggle); it.active = it.active === false; save(); }
+  if(b.dataset.edit){
+    const it = data.items.find(x => x.id === b.dataset.edit);
+    $("itemId").value = it.id; $("itemType").value = it.type; $("itemCourse").value = it.course || "";
+    $("itemTitle").value = it.title; $("itemStart").value = toLocalInput(it.startAt); $("itemEnd").value = toLocalInput(it.endAt);
+    $("itemNote").value = it.note || ""; $("itemLink").value = it.link || ""; $("itemActive").checked = it.active !== false;
+    $("itemFormTitle").textContent = "✏️ এডিট করছেন"; $("cancelItemBtn").style.display = "inline-flex";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
+$("addNoticeBtn").onclick = () => {
+  const text = $("nText").value.trim();
+  if(!text) return msg("নোটিশের লেখা দিন।", false);
+  data.notices.unshift({ id: uid(), text, level: $("nLevel").value, expiresAt: toISO($("nExpire").value), link: $("nLink").value.trim(), active: true });
+  $("nText").value = ""; $("nExpire").value = ""; $("nLink").value = "";
+  save("📢 নোটিশ দেওয়া হয়েছে");
+};
+$("noticeList").onclick = e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.ndel){ if(confirm("নোটিশ মুছবেন?")){ data.notices = data.notices.filter(x => x.id !== b.dataset.ndel); save("🗑️ মোছা হয়েছে"); } }
+  if(b.dataset.ntoggle){ const n = data.notices.find(x => x.id === b.dataset.ntoggle); n.active = n.active === false; save(); }
+};
+
+document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+  document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
+  $("tab-items").style.display = t.dataset.tab === "items" ? "" : "none";
+  $("tab-notices").style.display = t.dataset.tab === "notices" ? "" : "none";
+});
+
+/* theme / sidebar / logout */
+function applyTheme(){ const l = localStorage.getItem("snkTheme") === "light"; document.body.classList.toggle("light", l); $("themeBtn").textContent = l ? "☀️" : "🌙"; }
+$("themeBtn").onclick = () => { localStorage.setItem("snkTheme", document.body.classList.contains("light") ? "dark" : "light"); applyTheme(); };
+$("menuBtn").onclick = () => $("sidebar").classList.toggle("open");
+$("logoutBtn").onclick = async () => {
+  if(!confirm("Logout করতে চান?")) return;
+  sessionStorage.removeItem("snkAdminLoggedIn"); sessionStorage.removeItem("snkAdminEmail");
+  try{ await signOut(auth); }catch(e){}
+  location.replace("admin-login.html");
+};
+applyTheme(); load();
+</script>
+</body>
+</html>

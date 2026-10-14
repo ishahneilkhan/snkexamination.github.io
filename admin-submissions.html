@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Admin Submissions</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --soft:#f1ffdd;
+
+    --success:#16a34a;
+    --success-soft:#dcfce7;
+
+    --warning:#d97706;
+    --warning-soft:#fef3c7;
+
+    --danger:#dc2626;
+    --danger-soft:#fee2e2;
+
+    --shadow:0 10px 30px rgba(15,23,42,.07);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --soft:#172554;
+
+    --shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    height:70px;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+
+    box-shadow:0 4px 20px rgba(15,23,42,.04);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:43px;
+    height:43px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#b7ff00;
+    color:#050505;
+    font-weight:900;
+    font-size:13px;
+}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+    line-height:1.2;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    gap:7px;
+}
+
+.header-btn{
+    height:38px;
+
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:9px;
+
+    padding:0 11px;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.header-btn:hover{
+    background:var(--soft);
+}
+
+.main{
+    max-width:1250px;
+    margin:auto;
+    padding:28px 20px 50px;
+}
+
+.page-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+
+    margin-bottom:18px;
+}
+
+.page-title h1{
+    font-size:25px;
+    margin-bottom:4px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.back-btn{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+
+    padding:9px 13px;
+
+    border-radius:9px;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:11px;
+
+    margin-bottom:20px;
+}
+
+.stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    padding:13px;
+
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:34px;
+    height:34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--soft);
+
+    border-radius:9px;
+
+    font-size:15px;
+
+    margin-bottom:7px;
+}
+
+.stat-number{
+    font-size:20px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.toolbar{
+    background:var(--card);
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    padding:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:13px;
+
+    box-shadow:var(--shadow);
+}
+
+.filters{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.input,
+.select{
+    height:36px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:8px;
+
+    padding:0 10px;
+
+    outline:none;
+
+    font-size:8px;
+}
+
+.input{
+    min-width:230px;
+}
+
+.input:focus,
+.select:focus{
+    border-color:var(--primary);
+}
+
+.refresh-btn{
+    height:36px;
+
+    border:1px solid var(--border);
+
+    background:var(--soft);
+    color:var(--primary);
+
+    border-radius:8px;
+
+    padding:0 12px;
+
+    font-size:8px;
+    font-weight:900;
+}
+
+.table-wrap{
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+}
+
+.table-scroll{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1050px;
+
+    border-collapse:collapse;
+}
+
+th{
+    background:var(--bg);
+
+    color:var(--muted);
+
+    text-align:left;
+
+    padding:12px;
+
+    font-size:7px;
+    font-weight:900;
+
+    border-bottom:1px solid var(--border);
+
+    white-space:nowrap;
+}
+
+td{
+    padding:11px 12px;
+
+    border-bottom:1px solid var(--border);
+
+    font-size:8px;
+
+    vertical-align:middle;
+}
+
+tr:last-child td{
+    border-bottom:none;
+}
+
+tbody tr:hover{
+    background:var(--bg);
+}
+
+.student{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.avatar{
+    width:34px;
+    height:34px;
+
+    border-radius:9px;
+
+    background:var(--soft);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:14px;
+
+    flex-shrink:0;
+}
+
+.student-name{
+    font-size:8px;
+    font-weight:900;
+}
+
+.student-id{
+    color:var(--muted);
+    font-size:6px;
+    margin-top:2px;
+}
+
+.assignment-title{
+    font-weight:900;
+    font-size:8px;
+}
+
+.course{
+    color:var(--muted);
+    font-size:6px;
+    margin-top:2px;
+}
+
+.date{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+
+    padding:5px 8px;
+
+    border-radius:20px;
+
+    font-size:6px;
+    font-weight:900;
+}
+
+.status.pending{
+    background:var(--warning-soft);
+    color:var(--warning);
+}
+
+.status.graded{
+    background:var(--success-soft);
+    color:var(--success);
+}
+
+.mark-display{
+    font-weight:900;
+}
+
+.mark-display.pending{
+    color:var(--warning);
+}
+
+.action-group{
+    display:flex;
+    gap:5px;
+}
+
+.action-btn{
+    border:1px solid var(--border);
+
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:7px;
+
+    padding:6px 8px;
+
+    font-size:7px;
+    font-weight:900;
+}
+
+.action-btn:hover{
+    background:var(--soft);
+    color:var(--primary);
+}
+
+.action-btn.delete:hover{
+    background:var(--danger-soft);
+    color:var(--danger);
+}
+
+.empty{
+    display:none;
+
+    text-align:center;
+
+    padding:55px 20px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.empty strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:4px;
+}
+
+.empty span{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    background:rgba(15,23,42,.65);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+
+    z-index:3000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:650px;
+
+    max-height:90vh;
+    overflow:auto;
+
+    background:var(--card);
+
+    border-radius:17px;
+
+    padding:20px;
+
+    box-shadow:0 25px 70px rgba(0,0,0,.3);
+}
+
+.modal-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+
+    margin-bottom:15px;
+}
+
+.modal-header h2{
+    font-size:15px;
+}
+
+.modal-header p{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:3px;
+}
+
+.close-btn{
+    width:32px;
+    height:32px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:8px;
+
+    font-size:17px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+
+    margin-bottom:13px;
+}
+
+.info{
+    background:var(--bg);
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    padding:10px;
+}
+
+.info span{
+    display:block;
+
+    color:var(--muted);
+
+    font-size:6px;
+
+    margin-bottom:3px;
+}
+
+.info strong{
+    font-size:8px;
+}
+
+.form-group{
+    margin-bottom:11px;
+}
+
+.form-group label{
+    display:block;
+
+    font-size:8px;
+    font-weight:900;
+
+    margin-bottom:5px;
+}
+
+.form-control{
+    width:100%;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:8px;
+
+    padding:9px;
+
+    outline:none;
+
+    font-size:8px;
+}
+
+.form-control:focus{
+    border-color:var(--primary);
+}
+
+textarea.form-control{
+    min-height:90px;
+    resize:vertical;
+}
+
+.save-btn{
+    width:100%;
+
+    height:40px;
+
+    border:none;
+
+    background:var(--primary);
+    color:#fff;
+
+    border-radius:9px;
+
+    font-size:9px;
+    font-weight:900;
+}
+
+.save-btn:hover{
+    background:var(--primary-dark);
+}
+
+.view-box{
+    background:var(--bg);
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    padding:12px;
+
+    margin-bottom:12px;
+}
+
+.view-title{
+    font-size:8px;
+    font-weight:900;
+    margin-bottom:6px;
+}
+
+.view-text{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.7;
+    white-space:pre-wrap;
+}
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    background:#111827;
+    color:#fff;
+
+    padding:11px 15px;
+
+    border-radius:9px;
+
+    font-size:9px;
+
+    opacity:0;
+    transform:translateY(20px);
+
+    pointer-events:none;
+
+    transition:.25s;
+
+    z-index:5000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.footer{
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    padding:25px 10px 5px;
+}
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:750px){
+
+    .header{
+        height:64px;
+        padding:0 13px;
+    }
+
+    .logo{
+        width:38px;
+        height:38px;
+    }
+
+    .header-btn{
+        padding:0 8px;
+    }
+
+    .main{
+        padding:18px 13px 35px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .toolbar{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .input{
+        min-width:0;
+        width:100%;
+    }
+
+    .filters{
+        width:100%;
+    }
+
+    .select{
+        flex:1;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Admin Submissions Management
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn"
+            onclick="toggleTheme()"
+            id="themeBtn"
+        >
+            🌙
+        </button>
+
+
+        <button
+            class="header-btn"
+            onclick="goDashboard()"
+        >
+            🏠 Dashboard
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <section class="page-header">
+
+        <div class="page-title">
+
+            <h1>
+                📤 Student Submissions
+            </h1>
+
+            <p>
+                Student assignment submission review, marking এবং feedback management।
+            </p>
+
+        </div>
+
+
+        <button
+            class="back-btn"
+            onclick="goAssignments()"
+        >
+            ← Assignments
+        </button>
+
+    </section>
+
+
+
+    <!-- =================================================
+         STATS
+    ================================================== -->
+
+    <section class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📤
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalSubmissions"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Total Submissions
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ⏳
+            </div>
+
+            <div
+                class="stat-number"
+                id="pendingSubmissions"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Pending Review
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div
+                class="stat-number"
+                id="gradedSubmissions"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Graded
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🎯
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalObtained"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Total Marks Given
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📊
+            </div>
+
+            <div
+                class="stat-number"
+                id="averagePercentage"
+            >
+                0%
+            </div>
+
+            <div class="stat-label">
+                Average Result
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         TOOLBAR
+    ================================================== -->
+
+    <section class="toolbar">
+
+        <div class="filters">
+
+            <input
+                type="search"
+                class="input"
+                id="searchInput"
+                placeholder="🔍 Student / ID / Assignment search..."
+                oninput="renderSubmissions()"
+            >
+
+
+            <select
+                class="select"
+                id="statusFilter"
+                onchange="renderSubmissions()"
+            >
+
+                <option value="all">
+                    সব Status
+                </option>
+
+                <option value="pending">
+                    Pending
+                </option>
+
+                <option value="graded">
+                    Graded
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="refresh-btn"
+            onclick="loadData()"
+        >
+            🔄 Refresh
+        </button>
+
+    </section>
+
+
+
+    <!-- =================================================
+         TABLE
+    ================================================== -->
+
+    <div
+        class="table-wrap"
+        id="tableWrap"
+    >
+
+        <div class="table-scroll">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Assignment
+                        </th>
+
+                        <th>
+                            Submitted
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Marks
+                        </th>
+
+                        <th>
+                            Feedback
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="submissionBody"
+                ></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- EMPTY -->
+
+    <div
+        class="empty"
+        id="emptyState"
+    >
+
+        <div class="empty-icon">
+            📭
+        </div>
+
+        <strong>
+            কোনো submission পাওয়া যায়নি
+        </strong>
+
+        <span>
+            Student assignment submit করলে এখানে দেখা যাবে।
+        </span>
+
+    </div>
+
+
+
+    <footer class="footer">
+
+        © 2026 SNK AI Academy
+        • Admin Submission Management
+
+    </footer>
+
+</main>
+
+
+
+<!-- =====================================================
+     MARK MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="markModal"
+>
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    🎯 Grade Submission
+                </h2>
+
+                <p>
+                    Student-এর assignment mark এবং feedback দিন।
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeMarkModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <div class="info">
+
+                <span>
+                    Student
+                </span>
+
+                <strong
+                    id="markStudent"
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <span>
+                    Assignment
+                </span>
+
+                <strong
+                    id="markAssignment"
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <span>
+                    Total Marks
+                </span>
+
+                <strong
+                    id="markTotal"
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <span>
+                    Submission Date
+                </span>
+
+                <strong
+                    id="markDate"
+                >
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Obtained Marks
+            </label>
+
+            <input
+                type="number"
+                class="form-control"
+                id="obtainedMark"
+                min="0"
+                step="0.01"
+                placeholder="যেমন: 85"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Teacher Feedback
+            </label>
+
+            <textarea
+                class="form-control"
+                id="teacherFeedback"
+                placeholder="Student-এর জন্য feedback লিখুন..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            class="save-btn"
+            onclick="saveGrade()"
+        >
+            💾 Save Grade & Feedback
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     VIEW MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="viewModal"
+>
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    👁 Submission Details
+                </h2>
+
+                <p>
+                    Student submission details।
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeViewModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="view-box"
+        >
+
+            <div class="view-title">
+                Student
+            </div>
+
+            <div
+                class="view-text"
+                id="viewStudent"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div
+            class="view-box"
+        >
+
+            <div class="view-title">
+                Assignment
+            </div>
+
+            <div
+                class="view-text"
+                id="viewAssignment"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div
+            class="view-box"
+        >
+
+            <div class="view-title">
+                Student Answer / Submission
+            </div>
+
+            <div
+                class="view-text"
+                id="viewContent"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div
+            class="view-box"
+        >
+
+            <div class="view-title">
+                Current Feedback
+            </div>
+
+            <div
+                class="view-text"
+                id="viewFeedback"
+            >
+                No feedback yet.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const ASSIGNMENT_KEY =
+    "snkAssignments";
+
+const SUBMISSION_KEY =
+    "snkAssignmentSubmissions";
+
+
+let assignments = [];
+
+let submissions = [];
+
+let editingSubmissionId = null;
+
+
+/* =====================================================
+   LOAD DATA
+===================================================== */
+
+function loadData(){
+
+    assignments =
+        JSON.parse(
+            localStorage.getItem(
+                ASSIGNMENT_KEY
+            )
+        ) || [];
+
+
+    submissions =
+        JSON.parse(
+            localStorage.getItem(
+                SUBMISSION_KEY
+            )
+        ) || [];
+
+
+    renderStats();
+
+    renderSubmissions();
+
+}
+
+
+/* =====================================================
+   SAVE SUBMISSIONS
+===================================================== */
+
+function saveSubmissions(){
+
+    localStorage.setItem(
+        SUBMISSION_KEY,
+        JSON.stringify(
+            submissions
+        )
+    );
+
+}
+
+
+/* =====================================================
+   GET ASSIGNMENT
+===================================================== */
+
+function getAssignment(
+    assignmentId
+){
+
+    return assignments.find(
+        item =>
+            String(
+                item.id
+            ) ===
+            String(
+                assignmentId
+            )
+    );
+
+}
+
+
+/* =====================================================
+   GET SUBMISSION STATUS
+===================================================== */
+
+function isGraded(
+    submission
+){
+
+    return !!(
+        submission &&
+        submission.mark !== null &&
+        submission.mark !== undefined &&
+        submission.mark !== ""
+    );
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(
+    date
+){
+
+    if(!date){
+
+        return "-";
+
+    }
+
+
+    const d =
+        new Date(
+            date
+        );
+
+
+    if(
+        Number.isNaN(
+            d.getTime()
+        )
+    ){
+
+        return "-";
+
+    }
+
+
+    return d.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value == null
+        ? ""
+        : String(value);
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function renderStats(){
+
+    const total =
+        submissions.length;
+
+
+    let pending =
+        0;
+
+    let graded =
+        0;
+
+    let obtained =
+        0;
+
+    let percentageSum =
+        0;
+
+    let percentageCount =
+        0;
+
+
+    submissions.forEach(
+        submission => {
+
+            if(
+                isGraded(
+                    submission
+                )
+            ){
+
+                graded++;
+
+
+                const assignment =
+                    getAssignment(
+                        submission.assignmentId
+                    );
+
+
+                const mark =
+                    Number(
+                        submission.mark
+                    );
+
+
+                if(
+                    !Number.isNaN(
+                        mark
+                    )
+                ){
+
+                    obtained +=
+                        mark;
+
+                }
+
+
+                if(
+                    assignment &&
+                    Number(
+                        assignment.marks
+                    ) > 0
+                ){
+
+                    const percent =
+                        (
+                            mark /
+                            Number(
+                                assignment.marks
+                            )
+                        ) *
+                        100;
+
+
+                    percentageSum +=
+                        percent;
+
+                    percentageCount++;
+
+                }
+
+            }
+            else{
+
+                pending++;
+
+            }
+
+        }
+    );
+
+
+    const average =
+        percentageCount
+        ?
+        percentageSum /
+        percentageCount
+        :
+        0;
+
+
+    document.getElementById(
+        "totalSubmissions"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "pendingSubmissions"
+    ).textContent =
+        pending;
+
+
+    document.getElementById(
+        "gradedSubmissions"
+    ).textContent =
+        graded;
+
+
+    document.getElementById(
+        "totalObtained"
+    ).textContent =
+        obtained;
+
+
+    document.getElementById(
+        "averagePercentage"
+    ).textContent =
+        average.toFixed(1) +
+        "%";
+
+}
+
+
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+
+function renderSubmissions(){
+
+    const tbody =
+        document.getElementById(
+            "submissionBody"
+        );
+
+
+    const tableWrap =
+        document.getElementById(
+            "tableWrap"
+        );
+
+
+    const empty =
+        document.getElementById(
+            "emptyState"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    let list =
+        submissions.filter(
+            submission => {
+
+                const assignment =
+                    getAssignment(
+                        submission.assignmentId
+                    );
+
+
+                const studentName =
+                    String(
+                        submission.studentName ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const studentId =
+                    String(
+                        submission.studentId ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const assignmentTitle =
+                    String(
+                        assignment?.title ||
+                        submission.assignmentTitle ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    studentName.includes(
+                        search
+                    ) ||
+                    studentId.includes(
+                        search
+                    ) ||
+                    assignmentTitle.includes(
+                        search
+                    );
+
+
+                const graded =
+                    isGraded(
+                        submission
+                    );
+
+
+                const matchesStatus =
+                    status === "all" ||
+                    (
+                        status === "graded" &&
+                        graded
+                    ) ||
+                    (
+                        status === "pending" &&
+                        !graded
+                    );
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    list.sort(
+        (a,b) =>
+            new Date(
+                b.submittedAt || 0
+            ) -
+            new Date(
+                a.submittedAt || 0
+            )
+    );
+
+
+    list.forEach(
+        submission => {
+
+            const assignment =
+                getAssignment(
+                    submission.assignmentId
+                );
+
+
+            const assignmentTitle =
+                assignment?.title ||
+                submission.assignmentTitle ||
+                "Assignment";
+
+
+            const course =
+                assignment?.course ||
+                submission.course ||
+                "Course";
+
+
+            const totalMarks =
+                assignment?.marks ??
+                submission.totalMarks ??
+                "-";
+
+
+            const graded =
+                isGraded(
+                    submission
+                );
+
+
+            const mark =
+                graded
+                ?
+                submission.mark
+                :
+                "-";
+
+
+            const feedback =
+                submission.teacherFeedback ||
+                "No feedback";
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="student">
+
+                        <div class="avatar">
+                            🎓
+                        </div>
+
+                        <div>
+
+                            <div class="student-name">
+                                ${escapeHtml(
+                                    submission.studentName ||
+                                    "Student"
+                                )}
+                            </div>
+
+                            <div class="student-id">
+                                ID:
+                                ${escapeHtml(
+                                    submission.studentId ||
+                                    "-"
+                                )}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="assignment-title">
+                        ${escapeHtml(
+                            assignmentTitle
+                        )}
+                    </div>
+
+                    <div class="course">
+                        ${escapeHtml(
+                            course
+                        )}
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="date">
+                        ${formatDate(
+                            submission.submittedAt
+                        )}
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    ${
+                        graded
+                        ?
+                        `
+                        <span class="status graded">
+                            ● Graded
+                        </span>
+                        `
+                        :
+                        `
+                        <span class="status pending">
+                            ● Pending
+                        </span>
+                        `
+                    }
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="
+                            mark-display
+                            ${graded ? "" : "pending"}
+                        "
+                    >
+
+                        ${
+                            graded
+                            ?
+                            escapeHtml(
+                                submission.mark
+                            ) +
+                            " / " +
+                            escapeHtml(
+                                totalMarks
+                            )
+                            :
+                            "Pending"
+                        }
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div
+                        style="
+                            max-width:150px;
+                            color:var(--muted);
+                            font-size:7px;
+                            line-height:1.5;
+                        "
+                    >
+
+                        ${escapeHtml(
+                            feedback
+                        )}
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="action-group">
+
+                        <button
+                            class="action-btn"
+                            onclick="viewSubmission('${escapeHtml(
+                                submission.id
+                            )}')"
+                        >
+                            👁 View
+                        </button>
+
+
+                        <button
+                            class="action-btn"
+                            onclick="openMarkModal('${escapeHtml(
+                                submission.id
+                            )}')"
+                        >
+                            🎯 ${graded ? "Edit" : "Mark"}
+                        </button>
+
+
+                        <button
+                            class="action-btn delete"
+                            onclick="deleteSubmission('${escapeHtml(
+                                submission.id
+                            )}')"
+                        >
+                            🗑
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    if(
+        list.length === 0
+    ){
+
+        tableWrap.style.display =
+            "none";
+
+        empty.style.display =
+            "block";
+
+    }
+    else{
+
+        tableWrap.style.display =
+            "block";
+
+        empty.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   OPEN MARK MODAL
+===================================================== */
+
+function openMarkModal(
+    submissionId
+){
+
+    const submission =
+        submissions.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    submissionId
+                )
+        );
+
+
+    if(!submission){
+
+        showToast(
+            "Submission পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    const assignment =
+        getAssignment(
+            submission.assignmentId
+        );
+
+
+    editingSubmissionId =
+        submissionId;
+
+
+    document.getElementById(
+        "markStudent"
+    ).textContent =
+        submission.studentName ||
+        "Student";
+
+
+    document.getElementById(
+        "markAssignment"
+    ).textContent =
+        assignment?.title ||
+        submission.assignmentTitle ||
+        "Assignment";
+
+
+    document.getElementById(
+        "markTotal"
+    ).textContent =
+        assignment?.marks ??
+        submission.totalMarks ??
+        "-";
+
+
+    document.getElementById(
+        "markDate"
+    ).textContent =
+        formatDate(
+            submission.submittedAt
+        );
+
+
+    document.getElementById(
+        "obtainedMark"
+    ).value =
+        submission.mark ??
+        "";
+
+
+    document.getElementById(
+        "teacherFeedback"
+    ).value =
+        submission.teacherFeedback ||
+        "";
+
+
+    document.getElementById(
+        "markModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   SAVE GRADE
+===================================================== */
+
+function saveGrade(){
+
+    if(
+        !editingSubmissionId
+    ){
+
+        return;
+
+    }
+
+
+    const submission =
+        submissions.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    editingSubmissionId
+                )
+        );
+
+
+    if(!submission){
+
+        return;
+
+    }
+
+
+    const assignment =
+        getAssignment(
+            submission.assignmentId
+        );
+
+
+    const input =
+        document.getElementById(
+            "obtainedMark"
+        );
+
+
+    const feedback =
+        document.getElementById(
+            "teacherFeedback"
+        ).value
+        .trim();
+
+
+    const mark =
+        Number(
+            input.value
+        );
+
+
+    const total =
+        Number(
+            assignment?.marks ??
+            submission.totalMarks ??
+            0
+        );
+
+
+    if(
+        input.value === "" ||
+        Number.isNaN(mark)
+    ){
+
+        showToast(
+            "Obtained marks দিন।"
+        );
+
+        input.focus();
+
+        return;
+
+    }
+
+
+    if(
+        mark < 0
+    ){
+
+        showToast(
+            "Mark 0-এর কম হতে পারবে না।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        total > 0 &&
+        mark > total
+    ){
+
+        showToast(
+            "Obtained mark total marks-এর বেশি হতে পারবে না।"
+        );
+
+        return;
+
+    }
+
+
+    submission.mark =
+        mark;
+
+
+    submission.teacherFeedback =
+        feedback;
+
+
+    submission.status =
+        "graded";
+
+
+    submission.gradedAt =
+        new Date().toISOString();
+
+
+    saveSubmissions();
+
+
+    closeMarkModal();
+
+
+    loadData();
+
+
+    showToast(
+        "Grade এবং feedback successfully saved।"
+    );
+
+}
+
+
+/* =====================================================
+   VIEW SUBMISSION
+===================================================== */
+
+function viewSubmission(
+    submissionId
+){
+
+    const submission =
+        submissions.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    submissionId
+                )
+        );
+
+
+    if(!submission){
+
+        showToast(
+            "Submission পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    const assignment =
+        getAssignment(
+            submission.assignmentId
+        );
+
+
+    document.getElementById(
+        "viewStudent"
+    ).textContent =
+        (
+            submission.studentName ||
+            "Student"
+        ) +
+        " • ID: " +
+        (
+            submission.studentId ||
+            "-"
+        );
+
+
+    document.getElementById(
+        "viewAssignment"
+    ).textContent =
+        (
+            assignment?.title ||
+            submission.assignmentTitle ||
+            "Assignment"
+        ) +
+        " • " +
+        (
+            assignment?.course ||
+            submission.course ||
+            "Course"
+        );
+
+
+    document.getElementById(
+        "viewContent"
+    ).textContent =
+        submission.content ||
+        submission.answer ||
+        submission.text ||
+        submission.fileName ||
+        "No submission content available.";
+
+
+    document.getElementById(
+        "viewFeedback"
+    ).textContent =
+        submission.teacherFeedback ||
+        "No feedback yet.";
+
+
+    document.getElementById(
+        "viewModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+function deleteSubmission(
+    submissionId
+){
+
+    const submission =
+        submissions.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    submissionId
+                )
+        );
+
+
+    if(!submission){
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "এই submission delete করতে চান?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    submissions =
+        submissions.filter(
+            item =>
+                String(
+                    item.id
+                ) !==
+                String(
+                    submissionId
+                )
+        );
+
+
+    saveSubmissions();
+
+    loadData();
+
+    showToast(
+        "Submission deleted।"
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE MARK
+===================================================== */
+
+function closeMarkModal(){
+
+    document.getElementById(
+        "markModal"
+    ).classList.remove(
+        "show"
+    );
+
+    editingSubmissionId =
+        null;
+
+}
+
+
+/* =====================================================
+   CLOSE VIEW
+===================================================== */
+
+function closeViewModal(){
+
+    document.getElementById(
+        "viewModal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        "snkAdminSubmissionsTheme",
+        dark
+        ? "dark"
+        : "light"
+    );
+
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+        dark
+        ? "☀️"
+        : "🌙";
+
+}
+
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem(
+            "snkAdminSubmissionsTheme"
+        );
+
+
+    if(
+        theme === "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+        document.getElementById(
+            "themeBtn"
+        ).textContent =
+            "☀️";
+
+    }
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function goDashboard(){
+
+    window.location.href =
+        "admin-dashboard.html";
+
+}
+
+
+function goAssignments(){
+
+    window.location.href =
+        "admin-assignments.html";
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
+
+document.getElementById(
+    "markModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeMarkModal();
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "viewModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeViewModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeMarkModal();
+
+            closeViewModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
+
+setInterval(
+    function(){
+
+        loadData();
+
+    },
+    5000
+);
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+loadTheme();
+
+loadData();
+
+</script>
+
+</body>
+</html>
+```

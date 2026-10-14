@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNK AI Academy | Students Management 1.12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --bg:#f4f6fa;--card:#fff;--text:#172033;--muted:#667085;--border:#e5e7eb;
+ --primary:#5a8a00;--primary-dark:#3d6600;--soft:#f1ffdd;
+ --success:#16a34a;--warning:#d97706;--danger:#dc2626;--sidebar:#111827;
+ --shadow:0 10px 30px rgba(15,23,42,.07)
+}
+body.dark{
+ --bg:#080d18;--card:#111827;--text:#f8fafc;--muted:#94a3b8;--border:#1f2937;
+ --soft:#172554;--sidebar:#020617;--shadow:0 10px 30px rgba(0,0,0,.25)
+}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans Bengali",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:.25s}
+button,input,select{font-family:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.app{min-height:100vh;display:flex}
+.sidebar{width:255px;min-width:255px;background:var(--sidebar);color:#fff;min-height:100vh;position:fixed;left:0;top:0;bottom:0;z-index:1000;display:flex;flex-direction:column;transition:.25s}
+.sidebar-logo{height:76px;padding:13px 17px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-logo-badge{width:45px;height:45px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:14px;flex-shrink:0}
+.sidebar-logo-text{font-size:15px;font-weight:800}.sidebar-logo-text small{display:block;color:#9ca3af;font-size:9px;font-weight:500;margin-top:2px}
+.sidebar-menu{padding:18px 12px;flex:1;overflow-y:auto}.menu-label{color:#6b7280;font-size:9px;font-weight:800;padding:8px 11px;letter-spacing:.5px;text-transform:uppercase}
+.menu-item{width:100%;border:none;background:transparent;color:#d1d5db;display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:9px;margin-bottom:4px;font-size:11px;font-weight:600;text-align:left}
+.menu-item:hover{background:rgba(255,255,255,.07);color:#fff}.menu-item.active{background:#5a8a00;color:#fff}.menu-icon{width:22px;text-align:center;font-size:15px}.menu-badge{margin-left:auto;background:#ef4444;color:#fff;font-size:8px;min-width:18px;height:18px;border-radius:20px;display:flex;align-items:center;justify-content:center}
+.sidebar-footer{padding:13px;border-top:1px solid rgba(255,255,255,.08)}.admin-mini{display:flex;align-items:center;gap:9px;padding:9px;background:rgba(255,255,255,.05);border-radius:10px}.admin-avatar{width:34px;height:34px;border-radius:9px;background:#5a8a00;display:flex;align-items:center;justify-content:center;font-size:17px}.admin-mini-info{flex:1;min-width:0}.admin-mini-info strong{display:block;font-size:10px}.admin-mini-info span{display:block;color:#9ca3af;font-size:8px}.logout-small{border:none;background:transparent;color:#9ca3af;font-size:14px;padding:5px}.logout-small:hover{color:#fff}
+.main{margin-left:255px;width:calc(100% - 255px);min-width:0}
+.topbar{height:76px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 25px;position:sticky;top:0;z-index:900}
+.topbar-left{display:flex;align-items:center;gap:12px}.mobile-menu-btn{display:none;border:1px solid var(--border);background:var(--card);color:var(--text);width:38px;height:38px;border-radius:9px;font-size:18px}
+.page-heading h1{font-size:20px;margin-bottom:2px}.page-heading p{color:var(--muted);font-size:10px}.topbar-actions{display:flex;align-items:center;gap:7px}
+.topbar-btn{width:37px;height:37px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.topbar-btn:hover{background:var(--soft)}.admin-top-profile{display:flex;align-items:center;gap:9px;padding-left:9px;border-left:1px solid var(--border)}
+.top-avatar{width:36px;height:36px;border-radius:9px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:17px}.top-profile-text strong{display:block;font-size:10px}.top-profile-text span{display:block;color:var(--muted);font-size:8px}
+.content{padding:25px}
+.page-intro{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}.page-intro h2{font-size:21px;margin-bottom:4px}.page-intro p{color:var(--muted);font-size:10px}
+.primary-btn{border:none;background:var(--primary);color:#fff;padding:11px 16px;border-radius:9px;font-size:10px;font-weight:800;box-shadow:0 6px 16px rgba(90,138,0,.2)}.primary-btn:hover{background:var(--primary-dark)}
+.secondary-btn{border:1px solid var(--border);background:var(--card);color:var(--text);padding:10px 13px;border-radius:8px;font-size:9px;font-weight:700}.secondary-btn:hover{background:var(--soft)}
+.danger-btn{border:1px solid #fecaca;background:#fff1f2;color:#b91c1c;padding:10px 13px;border-radius:8px;font-size:9px;font-weight:700}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:17px;box-shadow:var(--shadow)}
+.stat-icon{width:39px;height:39px;border-radius:10px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:11px}.stat-number{font-size:23px;font-weight:800}.stat-title{font-size:10px;margin-top:2px}.stat-description{color:var(--muted);font-size:8px;margin-top:3px}
+.toolbar{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:14px;box-shadow:var(--shadow);margin-bottom:15px}.toolbar-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.search-box{flex:1;min-width:220px;position:relative}.search-box span{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted)}.search-box input{width:100%;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:10px 12px 10px 33px;border-radius:8px;outline:none}
+.search-box input:focus,select:focus,input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(90,138,0,.08)}
+select{border:1px solid var(--border);background:var(--bg);color:var(--text);padding:10px 11px;border-radius:8px;outline:none;font-size:9px;min-width:145px}
+.table-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.panel-header{padding:17px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}.panel-header h3{font-size:14px}.panel-header span{color:var(--muted);font-size:9px}
+.table-wrapper{width:100%;overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:12px 15px;text-align:left;border-bottom:1px solid var(--border);font-size:9px}th{color:var(--muted);font-weight:700;background:var(--bg)}td{font-weight:600}
+.student-cell{display:flex;align-items:center;gap:8px}.table-avatar{width:34px;height:34px;border-radius:9px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:15px}.student-name strong{display:block;font-size:10px}.student-name span{display:block;color:var(--muted);font-size:8px;margin-top:2px}
+.status{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:15px;font-size:8px;font-weight:800}.status.active{background:#dcfce7;color:#166534}.status.inactive{background:#fee2e2;color:#991b1b}.status.pending{background:#fef3c7;color:#92400e}
+.row-actions{display:flex;gap:5px}.action-btn{border:1px solid var(--border);background:var(--card);color:var(--text);padding:6px 8px;border-radius:6px;font-size:8px;font-weight:800}.action-btn:hover{background:var(--soft)}.action-btn.delete{color:var(--danger)}
+.empty{text-align:center;padding:35px;color:var(--muted);font-size:10px}
+.footer{padding:20px 25px;border-top:1px solid var(--border);color:var(--muted);font-size:9px;text-align:center}
+.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:950;display:none}.sidebar-overlay.show{display:block}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:3000}.modal-overlay.show{display:flex}
+.modal{width:100%;max-width:560px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:23px;box-shadow:0 25px 70px rgba(0,0,0,.25);max-height:90vh;overflow:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:17px}.modal-header h3{font-size:16px}.modal-close{width:30px;height:30px;border:none;background:var(--bg);color:var(--text);border-radius:8px;font-size:15px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:9px;font-weight:800}.field input,.field select{width:100%;padding:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:8px;font-size:9px;outline:none}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.modal p{color:var(--muted);font-size:10px;line-height:1.7;margin-bottom:15px}
+.view-box{display:grid;grid-template-columns:1fr 1fr;gap:10px}.view-item{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:10px}.view-item span{display:block;color:var(--muted);font-size:8px;margin-bottom:3px}.view-item strong{font-size:10px;word-break:break-word}
+.toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:11px 15px;border-radius:9px;font-size:9px;box-shadow:0 12px 30px rgba(0,0,0,.2);opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:5000}.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.mobile-menu-btn{display:flex;align-items:center;justify-content:center}.top-profile-text{display:none}.admin-top-profile{border-left:none;padding-left:0}}
+@media(max-width:600px){.topbar{height:65px;padding:0 13px}.content{padding:15px}.page-heading h1{font-size:16px}.page-heading p{display:none}.topbar-btn{width:33px;height:33px}.page-intro{align-items:flex-start;flex-direction:column}.stats-grid{grid-template-columns:1fr;gap:10px}.form-grid,.view-box{grid-template-columns:1fr}.field.full{grid-column:auto}}
+@media print{.sidebar,.topbar,.toolbar,.page-intro .primary-btn,.row-actions,.footer{display:none!important}.main{margin:0;width:100%}.content{padding:0}}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-badge">SNK</div>
+    <div class="sidebar-logo-text">SNK AI Academy<small>Student Management</small></div>
+  </div>
+  <div class="sidebar-menu">
+    <div class="menu-label">Main</div>
+    <button class="menu-item" onclick="go('admin-dashboard.html')"><span class="menu-icon">📊</span>Dashboard</button>
+    <button class="menu-item active"><span class="menu-icon">👨‍🎓</span>Students</button>
+    <button class="menu-item" onclick="go('courses.html')"><span class="menu-icon">🎓</span>Courses</button>
+    <button class="menu-item" onclick="go('admin-courses.html')"><span class="menu-icon">📚</span>Course Management</button>
+    <button class="menu-item" onclick="go('admin-profile.html')"><span class="menu-icon">🛠️</span>Site Settings</button>
+    <div class="menu-label">Academic</div>
+    <button class="menu-item" onclick="go('assignments.html')"><span class="menu-icon">📝</span>Assignments</button>
+    <button class="menu-item" onclick="go('quiz.html')"><span class="menu-icon">🎯</span>Quiz</button>
+    <button class="menu-item" onclick="go('results.html')"><span class="menu-icon">🏆</span>Results</button>
+    <button class="menu-item" onclick="go('attendance-overview.html')"><span class="menu-icon">📅</span>Attendance</button>
+    <div class="menu-label">Content</div>
+    <button class="menu-item" onclick="go('resources.html')"><span class="menu-icon">📚</span>Resources</button>
+  </div>
+  <div class="sidebar-footer">
+    <div class="admin-mini"><div class="admin-avatar">👨‍💼</div><div class="admin-mini-info"><strong>Super Admin</strong><span>Administrator</span></div><button class="logout-small" onclick="go('admin-dashboard.html')" title="Back">↩️</button></div>
+  </div>
+</aside>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<main class="main">
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+    <div class="page-heading"><h1>Students Management</h1><p>SNK AI Academy • Version 1.12</p></div>
+  </div>
+  <div class="topbar-actions">
+    <button class="topbar-btn" onclick="toggleTheme()" id="themeBtn" title="Theme">🌙</button>
+    <button class="topbar-btn" onclick="refreshStudents()" title="Refresh">↻</button>
+    <div class="admin-top-profile"><div class="top-avatar">👨‍💼</div><div class="top-profile-text"><strong>Super Admin</strong><span>Online</span></div></div>
+  </div>
+</header>
+
+<div class="content">
+  <section class="page-intro">
+    <div><h2>👨‍🎓 Student Management</h2><p>Student account, course, batch এবং status এক জায়গা থেকে পরিচালনা করুন।</p></div>
+    <button class="primary-btn" onclick="openStudentModal()">＋ Add Student</button>
+  </section>
+
+  <section class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">👨‍🎓</div><div class="stat-number" id="totalCount">0</div><div class="stat-title">Total Students</div><div class="stat-description">সব student record</div></div>
+    <div class="stat-card"><div class="stat-icon">🟢</div><div class="stat-number" id="activeCount">0</div><div class="stat-title">Active Students</div><div class="stat-description">বর্তমানে active</div></div>
+    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-number" id="pendingCount">0</div><div class="stat-title">Pending Students</div><div class="stat-description">অপেক্ষমাণ status</div></div>
+    <div class="stat-card"><div class="stat-icon">🔴</div><div class="stat-number" id="inactiveCount">0</div><div class="stat-title">Inactive Students</div><div class="stat-description">inactive records</div></div>
+  </section>
+
+  <section class="toolbar">
+    <div class="toolbar-row">
+      <div class="search-box"><span>🔎</span><input id="searchInput" type="search" placeholder="নাম, Student ID, ফোন বা email দিয়ে খুঁজুন..."></div>
+      <select id="courseFilter"><option value="">সব Course</option></select>
+      <select id="statusFilter"><option value="">সব Status</option><option value="active">Active</option><option value="pending">Pending</option><option value="inactive">Inactive</option></select>
+      <button class="secondary-btn" onclick="resetFilters()">Reset</button>
+      <button class="secondary-btn" onclick="window.print()">🖨️ Print</button>
+    </div>
+  </section>
+
+  <section class="table-panel">
+    <div class="panel-header">
+      <div><h3>📋 Student List</h3><span id="resultMeta">0 student দেখানো হচ্ছে</span></div>
+      <button class="secondary-btn" onclick="seedDemoStudents()">Demo Data</button>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Student</th><th>Student ID</th><th>Phone</th><th>Course</th><th>Batch</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="studentTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">SNK AI Academy • Students Management • Version 1.12<br>© 2026 SNK AI Academy. All Rights Reserved.</footer>
+</main>
+</div>
+
+<div class="modal-overlay" id="studentModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header"><h3 id="studentModalTitle">Add Student</h3><button class="modal-close" onclick="closeStudentModal()">×</button></div>
+    <form id="studentForm" onsubmit="saveStudent(event)">
+      <input type="hidden" id="editIndex" value="">
+      <div class="form-grid">
+        <div class="field"><label>Student Name *</label><input id="studentName" required maxlength="80" placeholder="Student name"></div>
+        <div class="field"><label>Student ID *</label><input id="studentId" required maxlength="30" placeholder="SNK-1001"></div>
+        <div class="field"><label>Phone</label><input id="studentPhone" maxlength="25" placeholder="01XXXXXXXXX"></div>
+        <div class="field"><label>Email</label><input id="studentEmail" type="email" maxlength="100" placeholder="student@email.com"></div>
+        <div class="field"><label>Course *</label><select id="studentCourse" required></select></div>
+        <div class="field"><label>Batch</label><input id="studentBatch" maxlength="40" placeholder="Batch 01"></div>
+        <div class="field full"><label>Status</label><select id="studentStatus"><option value="active">Active</option><option value="pending">Pending</option><option value="inactive">Inactive</option></select></div>
+      </div>
+      <div class="modal-actions"><button type="button" class="secondary-btn" onclick="closeStudentModal()">Cancel</button><button type="submit" class="primary-btn">Save Student</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="viewModal" onclick="closeViewOutside(event)">
+  <div class="modal">
+    <div class="modal-header"><h3>👁️ Student Details</h3><button class="modal-close" onclick="closeViewModal()">×</button></div>
+    <div class="view-box" id="viewContent"></div>
+    <div class="modal-actions"><button class="primary-btn" onclick="closeViewModal()">ঠিক আছে</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STUDENT_KEY = "snkStudents";
+const THEME_KEY = "snkStudentsTheme";
+
+const COURSE_KEY = "snkCourses";
+
+const DEFAULT_COURSES = [
+  "Computer Office Application",
+  "Graphics Design",
+  "Digital Marketing",
+  "Web Design & Development"
+];
+
+function getCourses(){
+  try{
+    const saved = localStorage.getItem(COURSE_KEY);
+    if(saved){
+      const parsed = JSON.parse(saved);
+      if(Array.isArray(parsed)) return parsed;
+    }
+  }catch(error){
+    console.warn("Course list read error:", error);
+  }
+  return DEFAULT_COURSES;
+}
+
+let students = [];
+
+document.addEventListener("DOMContentLoaded", function(){
+  loadTheme();
+  loadStudents();
+  bindEvents();
+  refreshStudents();
+});
+
+function bindEvents(){
+  document.getElementById("searchInput").addEventListener("input", refreshStudents);
+  document.getElementById("courseFilter").addEventListener("change", refreshStudents);
+  document.getElementById("statusFilter").addEventListener("change", refreshStudents);
+}
+
+function loadStudents(){
+  const raw = localStorage.getItem(STUDENT_KEY);
+  if(!raw){ students = []; return; }
+  try{
+    const parsed = JSON.parse(raw);
+    students = Array.isArray(parsed) ? parsed.map(normalizeStudent) : [];
+  }catch(e){
+    students = [];
+    console.warn("Student data parse error:", e);
+  }
+}
+
+function normalizeStudent(s){
+  s = s || {};
+  return {
+    id: String(s.id ?? s.studentId ?? s.studentID ?? s.roll ?? "").trim(),
+    name: String(s.name ?? s.studentName ?? s.fullName ?? "").trim(),
+    phone: String(s.phone ?? s.mobile ?? s.contact ?? "").trim(),
+    email: String(s.email ?? "").trim(),
+    course: String(s.course ?? s.courseName ?? "").trim(),
+    batch: String(s.batch ?? s.batchName ?? "").trim(),
+    status: normalizeStatus(s.status)
+  };
+}
+
+function normalizeStatus(value){
+  const v = String(value || "active").toLowerCase().trim();
+  if(v === "inactive" || v === "disabled") return "inactive";
+  if(v === "pending" || v === "waiting") return "pending";
+  return "active";
+}
+
+function saveStorage(){
+  localStorage.setItem(STUDENT_KEY, JSON.stringify(students));
+}
+
+function refreshStudents(){
+  loadStudents();
+  updateCourseOptions();
+  updateStats();
+  renderStudents();
+}
+
+function updateStats(){
+  document.getElementById("totalCount").textContent = students.length;
+  document.getElementById("activeCount").textContent = students.filter(s => s.status === "active").length;
+  document.getElementById("pendingCount").textContent = students.filter(s => s.status === "pending").length;
+  document.getElementById("inactiveCount").textContent = students.filter(s => s.status === "inactive").length;
+}
+
+function updateCourseOptions(){
+  const select = document.getElementById("courseFilter");
+  const current = select.value;
+  const courses = [...new Set([...getCourses(), ...students.map(s => s.course).filter(Boolean)])].sort();
+  select.innerHTML = '<option value="">সব Course</option>' + courses.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+  if(courses.includes(current)) select.value = current;
+
+  const course = document.getElementById("studentCourse");
+  course.innerHTML = '<option value="">Course নির্বাচন করুন</option>' + courses.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+}
+
+function getFilteredStudents(){
+  const q = document.getElementById("searchInput").value.toLowerCase().trim();
+  const course = document.getElementById("courseFilter").value;
+  const status = document.getElementById("statusFilter").value;
+
+  return students.map((s,index)=>({student:s,index})).filter(item=>{
+    const s = item.student;
+    const text = [s.name,s.id,s.phone,s.email,s.course,s.batch].join(" ").toLowerCase();
+    return (!q || text.includes(q)) && (!course || s.course === course) && (!status || s.status === status);
+  });
+}
+
+function renderStudents(){
+  const body = document.getElementById("studentTableBody");
+  const filtered = getFilteredStudents();
+  document.getElementById("resultMeta").textContent = `${filtered.length} student দেখানো হচ্ছে`;
+
+  if(!filtered.length){
+    body.innerHTML = `<tr><td colspan="7" class="empty">👨‍🎓 কোনো student পাওয়া যায়নি। নতুন student যোগ করুন অথবা filter পরিবর্তন করুন।</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = filtered.map(({student,index})=>{
+    const avatar = student.name ? student.name.charAt(0).toUpperCase() : "👨‍🎓";
+    return `<tr>
+      <td><div class="student-cell"><div class="table-avatar">${escapeHTML(avatar)}</div><div class="student-name"><strong>${escapeHTML(student.name || "Unnamed Student")}</strong><span>${escapeHTML(student.email || "Email নেই")}</span></div></div></td>
+      <td>${escapeHTML(student.id || "—")}</td>
+      <td>${escapeHTML(student.phone || "—")}</td>
+      <td>${escapeHTML(student.course || "—")}</td>
+      <td>${escapeHTML(student.batch || "—")}</td>
+      <td><span class="status ${student.status}">${statusLabel(student.status)}</span></td>
+      <td><div class="row-actions">
+        <button class="action-btn" onclick="viewStudent(${index})">View</button>
+        <button class="action-btn" onclick="editStudent(${index})">Edit</button>
+        <button class="action-btn delete" onclick="deleteStudent(${index})">Delete</button>
+      </div></td>
+    </tr>`;
+  }).join("");
+}
+
+function statusLabel(status){
+  if(status === "active") return "● Active";
+  if(status === "pending") return "● Pending";
+  return "● Inactive";
+}
+
+function openStudentModal(index = null){
+  document.getElementById("studentForm").reset();
+  document.getElementById("editIndex").value = index === null ? "" : index;
+  document.getElementById("studentModalTitle").textContent = index === null ? "＋ Add Student" : "✏️ Edit Student";
+
+  updateCourseOptions();
+
+  if(index !== null && students[index]){
+    const s = students[index];
+    document.getElementById("studentName").value = s.name;
+    document.getElementById("studentId").value = s.id;
+    document.getElementById("studentPhone").value = s.phone;
+    document.getElementById("studentEmail").value = s.email;
+    document.getElementById("studentCourse").value = s.course;
+    document.getElementById("studentBatch").value = s.batch;
+    document.getElementById("studentStatus").value = s.status;
+  }else{
+    document.getElementById("studentStatus").value = "active";
+  }
+
+  document.getElementById("studentModal").classList.add("show");
+  setTimeout(()=>document.getElementById("studentName").focus(),50);
+}
+
+function editStudent(index){
+  if(students[index]) openStudentModal(index);
+}
+
+function saveStudent(event){
+  event.preventDefault();
+
+  const editIndex = document.getElementById("editIndex").value;
+  const id = document.getElementById("studentId").value.trim();
+
+  const duplicate = students.some((s,i)=>s.id.toLowerCase() === id.toLowerCase() && String(i) !== editIndex);
+  if(duplicate){
+    alert("এই Student ID ইতিমধ্যে আছে। অন্য ID ব্যবহার করুন।");
+    return;
+  }
+
+  const student = {
+    id,
+    name: document.getElementById("studentName").value.trim(),
+    phone: document.getElementById("studentPhone").value.trim(),
+    email: document.getElementById("studentEmail").value.trim(),
+    course: document.getElementById("studentCourse").value.trim(),
+    batch: document.getElementById("studentBatch").value.trim(),
+    status: document.getElementById("studentStatus").value
+  };
+
+  if(!student.name || !student.id || !student.course){
+    alert("Student Name, Student ID এবং Course পূরণ করুন।");
+    return;
+  }
+
+  if(editIndex === ""){
+    students.push(student);
+    showToast("✓ নতুন student যোগ হয়েছে");
+  }else{
+    students[Number(editIndex)] = student;
+    showToast("✓ Student information updated");
+  }
+
+  saveStorage();
+  closeStudentModal();
+  refreshStudents();
+}
+
+function deleteStudent(index){
+  const s = students[index];
+  if(!s) return;
+
+  const ok = confirm(`"${s.name}" student-কে delete করতে চান?\n\nএই action localStorage থেকে record মুছে দেবে।`);
+  if(!ok) return;
+
+  students.splice(index,1);
+  saveStorage();
+  refreshStudents();
+  showToast("✓ Student deleted");
+}
+
+function viewStudent(index){
+  const s = students[index];
+  if(!s) return;
+
+  document.getElementById("viewContent").innerHTML = `
+    <div class="view-item"><span>Name</span><strong>${escapeHTML(s.name || "—")}</strong></div>
+    <div class="view-item"><span>Student ID</span><strong>${escapeHTML(s.id || "—")}</strong></div>
+    <div class="view-item"><span>Phone</span><strong>${escapeHTML(s.phone || "—")}</strong></div>
+    <div class="view-item"><span>Email</span><strong>${escapeHTML(s.email || "—")}</strong></div>
+    <div class="view-item"><span>Course</span><strong>${escapeHTML(s.course || "—")}</strong></div>
+    <div class="view-item"><span>Batch</span><strong>${escapeHTML(s.batch || "—")}</strong></div>
+    <div class="view-item"><span>Status</span><strong>${escapeHTML(statusLabel(s.status))}</strong></div>
+  `;
+  document.getElementById("viewModal").classList.add("show");
+}
+
+function seedDemoStudents(){
+  if(students.length && !confirm("Existing student data আছে। Demo data যোগ করতে চান?")) return;
+
+  const demo = [
+    {id:"SNK-1001",name:"Demo Student",phone:"01700000001",email:"demo@student.com",course:"Computer Office Application",batch:"Batch 01",status:"active"},
+    {id:"SNK-1002",name:"Student Two",phone:"01700000002",email:"student2@example.com",course:"Graphics Design",batch:"Batch 01",status:"active"},
+    {id:"SNK-1003",name:"Student Three",phone:"01700000003",email:"student3@example.com",course:"Digital Marketing",batch:"Batch 02",status:"pending"}
+  ];
+
+  demo.forEach(d=>{
+    if(!students.some(s=>s.id === d.id)) students.push(d);
+  });
+  saveStorage();
+  refreshStudents();
+  showToast("✓ Demo student data added");
+}
+
+function resetFilters(){
+  document.getElementById("searchInput").value = "";
+  document.getElementById("courseFilter").value = "";
+  document.getElementById("statusFilter").value = "";
+  renderStudents();
+}
+
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+  const dark = document.body.classList.contains("dark");
+  localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
+  document.getElementById("themeBtn").textContent = dark ? "☀️" : "🌙";
+}
+
+function loadTheme(){
+  const theme = localStorage.getItem(THEME_KEY);
+  if(theme === "dark"){
+    document.body.classList.add("dark");
+    document.getElementById("themeBtn").textContent = "☀️";
+  }
+}
+
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sidebarOverlay").classList.toggle("show");
+}
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("sidebarOverlay").classList.remove("show");
+}
+
+function closeStudentModal(){document.getElementById("studentModal").classList.remove("show")}
+function closeViewModal(){document.getElementById("viewModal").classList.remove("show")}
+function closeModalOutside(e){if(e.target.id === "studentModal") closeStudentModal()}
+function closeViewOutside(e){if(e.target.id === "viewModal") closeViewModal()}
+
+function go(page){window.location.href = page}
+
+function showToast(message){
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=>toast.classList.remove("show"),2200);
+}
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[c]));
+}
+
+document.addEventListener("keydown",function(e){
+  if(e.key === "Escape"){
+    closeStudentModal();
+    closeViewModal();
+    closeSidebar();
+  }
+});
+</script>
+</body>
+</html>

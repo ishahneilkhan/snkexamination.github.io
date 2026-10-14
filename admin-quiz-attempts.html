@@ -1,0 +1,5416 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b14">
+<title>SNK AI Academy | Quiz Attempt Control</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#050505;
+  --bg2:#0a0a0a;
+  --card:#141414;
+  --card2:#181818;
+  --border:rgba(183,255,0,.14);
+  --text:#ffffff;
+  --muted:#999999;
+  --primary:#b7ff00;
+  --success:#20c997;
+  --danger:#ff4545;
+  --warning:#ffbd59;
+  --info:#4dabf7;
+  --purple:#a78bfa;
+  --shadow:0 18px 50px rgba(0,0,0,.5);
+}
+
+body.light{
+  --bg:#f4f7fb;
+  --bg2:#fff;
+  --card:#fff;
+  --card2:#f7f9fc;
+  --border:#dce3ee;
+  --text:#182235;
+  --muted:#68758a;
+  --primary:#5a8a00;
+  --shadow:0 15px 40px rgba(27,39,67,.10);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(183,255,0,.12),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(77,171,247,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+  min-height:100vh;
+  display:flex;
+}
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:260px;
+  background:rgba(10,15,27,.97);
+  border-right:1px solid var(--border);
+  z-index:1000;
+  overflow-y:auto;
+}
+
+body.light .sidebar{
+  background:#fff;
+}
+
+.sidebar-head{
+  padding:22px 18px;
+  border-bottom:1px solid var(--border);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#b7ff00;
+  color:#050505;
+  font-weight:900;
+  font-size:15px;
+}
+
+.brand-title{
+  font-size:16px;
+  font-weight:800;
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.nav{
+  padding:14px 10px 30px;
+}
+
+.nav-label{
+  color:#6f7c91;
+  font-size:11px;
+  font-weight:700;
+  padding:14px 12px 7px;
+  text-transform:uppercase;
+}
+
+.nav a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:11px 12px;
+  margin:3px 0;
+  border-radius:11px;
+  color:#aeb9ca;
+  font-size:14px;
+  transition:.2s;
+}
+
+body.light .nav a{
+  color:#5d687b;
+}
+
+.nav a:hover,
+.nav a.active{
+  background:rgba(183,255,0,.15);
+  color:var(--primary);
+}
+
+body.light .nav a:hover,
+body.light .nav a.active{
+  color:var(--primary);
+}
+
+.nav-icon{
+  width:23px;
+  text-align:center;
+}
+
+.main{
+  width:calc(100% - 260px);
+  margin-left:260px;
+  min-width:0;
+}
+
+.topbar{
+  height:70px;
+  position:sticky;
+  top:0;
+  z-index:900;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:rgba(7,11,20,.84);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+body.light .topbar{
+  background:rgba(255,255,255,.9);
+}
+
+.top-left{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.menu-btn,
+.icon-btn{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:10px;
+}
+
+.menu-btn{
+  display:none;
+  width:40px;
+  height:40px;
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+}
+
+.page-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+.page-subtitle{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.container{
+  max-width:1450px;
+  margin:auto;
+  padding:25px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:28px;
+  background:
+    radial-gradient(circle at 90% 20%,rgba(183,255,0,.18),transparent 32%),
+    linear-gradient(135deg,var(--card),var(--card2));
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:250px;
+  height:250px;
+  right:-90px;
+  bottom:-120px;
+  border:1px solid rgba(183,255,0,.25);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 25px rgba(183,255,0,.04),
+    0 0 0 50px rgba(183,255,0,.025);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.badge{
+  display:inline-flex;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(167,139,250,.12);
+  color:#c4b5fd;
+  border:1px solid rgba(167,139,250,.25);
+  font-size:12px;
+  font-weight:800;
+}
+
+.hero h1{
+  font-size:clamp(26px,3vw,40px);
+  margin:16px 0 8px;
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:850px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  font-size:13px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:#050505;
+  font-weight:800;
+}
+
+.btn-success{
+  background:var(--success);
+  color:#062017;
+}
+
+.btn-danger{
+  background:var(--danger);
+  color:#fff;
+}
+
+.btn-warning{
+  background:var(--warning);
+  color:#2c2000;
+}
+
+.btn-info{
+  background:var(--info);
+  color:#061a28;
+}
+
+.btn-purple{
+  background:var(--purple);
+  color:#160c2b;
+}
+
+.btn-secondary{
+  background:var(--card2);
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+.btn-sm{
+  padding:8px 10px;
+  font-size:12px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat-value{
+  font-size:27px;
+  font-weight:800;
+  margin-top:8px;
+}
+
+.stat-small{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  margin-top:18px;
+}
+
+.card-head{
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.card-title{
+  font-size:16px;
+  font-weight:800;
+}
+
+.card-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.card-body{
+  padding:20px;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.status.green{
+  color:#4be0b1;
+  background:rgba(32,201,151,.12);
+}
+
+.status.red{
+  color:#ff7386;
+  background:rgba(255,93,115,.12);
+}
+
+.status.yellow{
+  color:#ffc96e;
+  background:rgba(255,189,89,.12);
+}
+
+.status.blue{
+  color:#72c3ff;
+  background:rgba(77,171,247,.12);
+}
+
+.status.purple{
+  color:#c4b5fd;
+  background:rgba(167,139,250,.12);
+}
+
+.status.gray{
+  color:#b0bac8;
+  background:rgba(160,170,185,.10);
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.toolbar input,
+.toolbar select{
+  min-width:180px;
+}
+
+input,
+select{
+  background:var(--bg2);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 12px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(183,255,0,.10);
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  min-width:1250px;
+  border-collapse:collapse;
+}
+
+th,
+td{
+  padding:13px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  font-size:12px;
+  vertical-align:middle;
+}
+
+th{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.student-name{
+  font-weight:800;
+}
+
+.student-id{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.action-row{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+  padding:13px 15px;
+  border:1px solid var(--border);
+  background:var(--card2);
+  border-radius:12px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+}
+
+.notice strong{
+  color:var(--text);
+}
+
+/* =========================
+   MAKEUP CARD
+========================= */
+
+.makeup-box{
+  border:1px solid rgba(167,139,250,.28);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(167,139,250,.08),
+      rgba(183,255,0,.04)
+    );
+  border-radius:16px;
+  padding:18px;
+}
+
+.makeup-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:15px;
+}
+
+.field label{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+.field input,
+.field select{
+  width:100%;
+}
+
+.checkbox-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:12px;
+  color:var(--text);
+  font-size:13px;
+}
+
+.checkbox-row input{
+  width:17px;
+  height:17px;
+}
+
+.makeup-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:3000;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(800px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.modal-foot{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  padding:16px 20px;
+  border-top:1px solid var(--border);
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.detail-box{
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px;
+}
+
+.detail-label{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.detail-value{
+  margin-top:5px;
+  font-weight:700;
+  font-size:13px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+  text-align:center;
+  padding:45px 20px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.empty-title{
+  color:var(--text);
+  font-size:17px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:5000;
+  background:#151d2e;
+  color:#fff;
+  border:1px solid #29364e;
+  border-radius:12px;
+  padding:12px 15px;
+  font-size:13px;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+  transform:translateY(30px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  padding:30px 0 10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1300px){
+
+  .stats{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .makeup-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:900px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    width:100%;
+    margin-left:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .detail-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:650px){
+
+  .container{
+    padding:14px;
+  }
+
+  .topbar{
+    padding:0 14px;
+  }
+
+  .hero{
+    padding:20px;
+    border-radius:18px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .card-head{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .toolbar{
+    width:100%;
+  }
+
+  .toolbar input,
+  .toolbar select{
+    width:100%;
+    min-width:0;
+  }
+
+  .makeup-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:430px){
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+}
+
+/* =========================
+   PRINT
+========================= */
+
+@media print{
+
+  .sidebar,
+  .topbar,
+  .no-print,
+  .modal,
+  .toast,
+  .makeup-box{
+    display:none!important;
+  }
+
+  .main{
+    margin:0;
+    width:100%;
+  }
+
+  body{
+    background:#fff;
+    color:#000;
+  }
+
+  .card,
+  .stat,
+  .hero{
+    box-shadow:none;
+    border:1px solid #ccc;
+  }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-head">
+
+    <div class="brand">
+
+      <div class="logo">SNK</div>
+
+      <div>
+
+        <div class="brand-title">
+          SNK AI Academy
+        </div>
+
+        <div class="brand-sub">
+          Admin Control Panel
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <nav class="nav">
+
+    <div class="nav-label">
+      Main
+    </div>
+
+    <a href="admin-dashboard.html">
+      <span class="nav-icon">📊</span>
+      <span>Admin Dashboard</span>
+    </a>
+
+    <a href="students.html">
+      <span class="nav-icon">👨‍🎓</span>
+      <span>Students</span>
+    </a>
+
+    <a href="courses.html">
+      <span class="nav-icon">📚</span>
+      <span>Courses</span>
+    </a>
+
+    <a href="admin-courses.html">
+      <span class="nav-icon">🗂️</span>
+      <span>Course Management</span>
+    </a>
+
+    <a href="admin-schedule.html">
+      <span class="nav-icon">⏰</span>
+      <span>Exam / Quiz Schedule</span>
+    </a>
+
+    <a href="admin-profile.html">
+      <span class="nav-icon">🛠️</span>
+      <span>Site Settings</span>
+    </a>
+
+
+    <div class="nav-label">
+      Academic
+    </div>
+
+    <a href="assignments.html">
+      <span class="nav-icon">📝</span>
+      <span>Assignments</span>
+    </a>
+
+    <a href="admin-submissions.html">
+      <span class="nav-icon">📥</span>
+      <span>Submissions</span>
+    </a>
+
+    <a href="quiz.html">
+      <span class="nav-icon">❓</span>
+      <span>Student Quiz</span>
+    </a>
+
+    <a href="admin-quiz-results.html">
+      <span class="nav-icon">📈</span>
+      <span>Quiz Results</span>
+    </a>
+
+    <a href="admin-quiz-attempts.html" class="active">
+      <span class="nav-icon">⏱️</span>
+      <span>Quiz Attempts</span>
+    </a>
+
+    <a href="admin-quiz-result-details.html">
+      <span class="nav-icon">📄</span>
+      <span>Result Details</span>
+    </a>
+
+    <a href="admin-quiz-answer-review.html">
+      <span class="nav-icon">🔍</span>
+      <span>Answer Review</span>
+    </a>
+
+
+    <div class="nav-label">
+      Exam
+    </div>
+
+    <a href="student-result-details.html">
+      <span class="nav-icon">🎓</span>
+      <span>Exam Marksheet</span>
+    </a>
+
+    <a href="admin-attendance.html">
+      <span class="nav-icon">✅</span>
+      <span>Exam Attendance</span>
+    </a>
+
+
+    <div class="nav-label">
+      Student Portal
+    </div>
+
+    <a href="student-dashboard.html">
+      <span class="nav-icon">🏠</span>
+      <span>Student Dashboard</span>
+    </a>
+
+    <a href="student-resources.html">
+      <span class="nav-icon">📦</span>
+      <span>Resources</span>
+    </a>
+
+    <a href="student-notifications.html">
+      <span class="nav-icon">🔔</span>
+      <span>Notifications</span>
+    </a>
+
+    <a href="student-support.html">
+      <span class="nav-icon">💬</span>
+      <span>Support</span>
+    </a>
+
+  </nav>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <div class="top-left">
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      type="button"
+    >
+      ☰
+    </button>
+
+    <div>
+
+      <div class="page-title">
+        Quiz Attempt Control
+      </div>
+
+      <div class="page-subtitle">
+        Reschedule • Make-up • Attempt Permission
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="top-actions">
+
+    <button
+      class="icon-btn"
+      id="refreshBtn"
+      type="button"
+      title="Refresh"
+    >
+      ↻
+    </button>
+
+    <button
+      class="icon-btn"
+      id="themeBtn"
+      type="button"
+      title="Theme"
+    >
+      🌙
+    </button>
+
+  </div>
+
+</header>
+
+
+<div class="container">
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <span class="badge">
+      ● MAKE-UP / RESCHEDULE CONTROL
+    </span>
+
+    <h1 id="heroTitle">
+      Quiz Attempt Control
+    </h1>
+
+    <p>
+      কোনো Student নির্ধারিত সময়ে Quiz দিতে না পারলে
+      Admin এখান থেকে তার জন্য আলাদা Make-up date দিতে
+      পারবেন। Student-এর attempt reset করে আবার Quiz দেওয়ার
+      permission-ও দেওয়া যাবে।
+    </p>
+
+    <div
+      style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+        margin-top:18px;
+      "
+    >
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        onclick="refreshAll()"
+      >
+        ↻ Refresh
+      </button>
+
+      <button
+        class="btn btn-purple"
+        type="button"
+        onclick="openMakeupForFirstStudent()"
+      >
+        🗓️ Make-up Schedule
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="location.href='admin-quiz-results.html'"
+      >
+        📈 Quiz Results
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<section class="stats">
+
+  <div class="stat">
+
+    <div class="stat-label">
+      Total Students
+    </div>
+
+    <div
+      class="stat-value"
+      id="statStudents"
+    >
+      0
+    </div>
+
+    <div class="stat-small">
+      Current students
+    </div>
+
+  </div>
+
+
+  <div class="stat">
+
+    <div class="stat-label">
+      Submitted
+    </div>
+
+    <div
+      class="stat-value"
+      id="statSubmitted"
+    >
+      0
+    </div>
+
+    <div class="stat-small">
+      Final result saved
+    </div>
+
+  </div>
+
+
+  <div class="stat">
+
+    <div class="stat-label">
+      Not Submitted
+    </div>
+
+    <div
+      class="stat-value"
+      id="statNotSubmitted"
+    >
+      0
+    </div>
+
+    <div class="stat-small">
+      No final result
+    </div>
+
+  </div>
+
+
+  <div class="stat">
+
+    <div class="stat-label">
+      Active
+    </div>
+
+    <div
+      class="stat-value"
+      id="statActive"
+    >
+      0
+    </div>
+
+    <div class="stat-small">
+      Quiz started
+    </div>
+
+  </div>
+
+
+  <div class="stat">
+
+    <div class="stat-label">
+      Locked
+    </div>
+
+    <div
+      class="stat-value"
+      id="statLocked"
+    >
+      0
+    </div>
+
+    <div class="stat-small">
+      One-attempt lock
+    </div>
+
+  </div>
+
+
+  <div class="stat">
+
+    <div class="stat-label">
+      Make-up
+    </div>
+
+    <div
+      class="stat-value"
+      id="statMakeup"
+    >
+      0
+    </div>
+
+    <div class="stat-small">
+      Special permissions
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     QUIZ INFORMATION
+========================= -->
+
+<section class="card">
+
+  <div class="card-head">
+
+    <div>
+
+      <div class="card-title">
+        ❓ Current Quiz
+      </div>
+
+      <div
+        class="card-sub"
+        id="quizInfoSub"
+      >
+        Quiz information
+      </div>
+
+    </div>
+
+    <span
+      class="status yellow"
+      id="quizStatus"
+    >
+      DRAFT
+    </span>
+
+  </div>
+
+
+  <div class="card-body">
+
+    <div class="detail-grid">
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Quiz Title
+        </div>
+
+        <div
+          class="detail-value"
+          id="infoTitle"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Quiz ID
+        </div>
+
+        <div
+          class="detail-value"
+          id="infoId"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Normal Date Window
+        </div>
+
+        <div
+          class="detail-value"
+          id="infoDates"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Duration
+        </div>
+
+        <div
+          class="detail-value"
+          id="infoDuration"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Pass Percentage
+        </div>
+
+        <div
+          class="detail-value"
+          id="infoPass"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          One Attempt
+        </div>
+
+        <div
+          class="detail-value"
+          id="infoOneAttempt"
+        >
+          —
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     MAKE-UP PANEL
+========================= -->
+
+<section class="card">
+
+  <div class="card-head">
+
+    <div>
+
+      <div class="card-title">
+        🗓️ Student Make-up / Reschedule
+      </div>
+
+      <div class="card-sub">
+        একটি Student-এর জন্য আলাদা Quiz access window তৈরি করুন
+      </div>
+
+    </div>
+
+    <span class="status purple">
+      ADMIN CONTROL
+    </span>
+
+  </div>
+
+
+  <div class="card-body">
+
+    <div class="makeup-box">
+
+      <div class="notice">
+
+        <strong>কখন ব্যবহার করবেন?</strong><br>
+
+        Student যদি normal quiz date-এ Quiz দিতে না পারে,
+        তাহলে তার attempt reset করে এখানে একটি special
+        Make-up date দেওয়া যাবে। এই permission শুধু ওই
+        Student-এর জন্য কাজ করবে।
+
+      </div>
+
+
+      <div class="makeup-grid">
+
+        <div class="field">
+
+          <label>
+            Student
+          </label>
+
+          <select id="makeupStudent"></select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Make-up Start Date
+          </label>
+
+          <input
+            id="makeupStartDate"
+            type="date"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Make-up End Date
+          </label>
+
+          <input
+            id="makeupEndDate"
+            type="date"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Reason
+          </label>
+
+          <input
+            id="makeupReason"
+            type="text"
+            placeholder="যেমন: Missed Quiz"
+          >
+
+        </div>
+
+      </div>
+
+
+      <label class="checkbox-row">
+
+        <input
+          id="makeupResetAttempt"
+          type="checkbox"
+          checked
+        >
+
+        Student-এর existing attempt/lock reset করে নতুন attempt allow করুন
+
+      </label>
+
+
+      <label class="checkbox-row">
+
+        <input
+          id="makeupAllowAfterNormalWindow"
+          type="checkbox"
+          checked
+        >
+
+        Normal Quiz date শেষ হলেও Make-up window-তে Quiz allow করুন
+
+      </label>
+
+
+      <div class="makeup-actions">
+
+        <button
+          class="btn btn-purple"
+          type="button"
+          onclick="saveMakeupPermission()"
+        >
+          🗓️ Save Make-up Permission
+        </button>
+
+        <button
+          class="btn btn-secondary"
+          type="button"
+          onclick="clearMakeupForm()"
+        >
+          Clear
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     PERMISSIONS
+========================= -->
+
+<section class="card">
+
+  <div class="card-head">
+
+    <div>
+
+      <div class="card-title">
+        🛂 Make-up Permissions
+      </div>
+
+      <div class="card-sub">
+        Student-wise special quiz access
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card-body">
+
+    <div
+      id="makeupPermissions"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     STUDENT ATTEMPTS
+========================= -->
+
+<section class="card">
+
+  <div class="card-head">
+
+    <div>
+
+      <div class="card-title">
+        👨‍🎓 Student Attempt Status
+      </div>
+
+      <div class="card-sub">
+        Submitted, Active, Locked এবং Make-up status
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card-body">
+
+    <div class="toolbar">
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Student ID / Name search..."
+      >
+
+      <select id="statusFilter">
+
+        <option value="all">
+          All Students
+        </option>
+
+        <option value="submitted">
+          Submitted
+        </option>
+
+        <option value="active">
+          Active Attempt
+        </option>
+
+        <option value="locked">
+          Locked
+        </option>
+
+        <option value="makeup">
+          Make-up
+        </option>
+
+        <option value="not-submitted">
+          Not Submitted
+        </option>
+
+      </select>
+
+      <select id="sortFilter">
+
+        <option value="student">
+          Student A-Z
+        </option>
+
+        <option value="latest">
+          Latest Activity
+        </option>
+
+        <option value="oldest">
+          Oldest Activity
+        </option>
+
+      </select>
+
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="resetFilters()"
+      >
+        Reset Filter
+      </button>
+
+    </div>
+
+
+    <div
+      class="table-wrap"
+      style="margin-top:15px;"
+    >
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Student
+            </th>
+
+            <th>
+              Course
+            </th>
+
+            <th>
+              Submitted
+            </th>
+
+            <th>
+              Active
+            </th>
+
+            <th>
+              Lock
+            </th>
+
+            <th>
+              Make-up
+            </th>
+
+            <th>
+              Score
+            </th>
+
+            <th>
+              Activity
+            </th>
+
+            <th>
+              Action
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody
+          id="attemptTableBody"
+        ></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="footer">
+  SNK AI Academy • Admin Quiz Attempt Control v2.5.13
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- =========================
+     DETAIL MODAL
+========================= -->
+
+<div
+  class="modal"
+  id="detailModal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <div>
+
+        <div class="card-title">
+          Student Attempt Details
+        </div>
+
+        <div
+          class="card-sub"
+          id="modalStudent"
+        >
+          —
+        </div>
+
+      </div>
+
+      <button
+        class="icon-btn"
+        type="button"
+        onclick="closeModal()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div id="modalContent"></div>
+
+    </div>
+
+
+    <div class="modal-foot">
+
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="closeModal()"
+      >
+        Close
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<script>
+"use strict";
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE = {
+
+  theme:
+    "snkTheme",
+
+  course:
+    "snkCourseSettingsV25",
+
+  quiz:
+    "snkQuizSettingsV25",
+
+  questions:
+    "snkQuizQuestionsV25",
+
+  results:
+    "snkQuizResults",
+
+  students:
+    "snkStudents",
+
+  activeAttempt:
+    "snkQuizActiveAttemptV25",
+
+  attemptLock:
+    "snkQuizAttemptLockV25",
+
+  makeup:
+    "snkQuizMakeupPermissionsV25"
+
+};
+
+
+/* =========================================================
+   DEFAULT COURSE
+========================================================= */
+
+const DEFAULT_COURSE = {
+
+  name:
+    "আপনার কোর্স",
+
+  batch:
+    "Batch 01",
+
+  mode:
+    "Offline",
+
+  duration:
+    "6 Months",
+
+  days:
+    "Saturday–Monday",
+
+  time:
+    "4:00 PM – 6:00 PM",
+
+  instructor:
+    "SNK AI Instructor"
+
+};
+
+
+/* =========================================================
+   DEFAULT QUIZ
+========================================================= */
+
+const DEFAULT_QUIZ = {
+
+  id:
+    "SNK-QUIZ-2026-01",
+
+  title:
+    "Computer Basics Quiz",
+
+  startDate:
+    "2026-09-10",
+
+  endDate:
+    "2026-09-15",
+
+  durationMinutes:
+    20,
+
+  marksPerQuestion:
+    1,
+
+  passPercentage:
+    40,
+
+  oneAttemptOnly:
+    true,
+
+  autoSubmit:
+    true,
+
+  published:
+    false
+
+};
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function readJSON(
+  storage,
+  key,
+  fallback
+){
+
+  try{
+
+    const value =
+      storage.getItem(key);
+
+    if(!value){
+
+      return fallback;
+
+    }
+
+    return JSON.parse(value);
+
+  }catch(error){
+
+    console.warn(
+      "Read error:",
+      key,
+      error
+    );
+
+    return fallback;
+
+  }
+
+}
+
+
+function writeJSON(
+  storage,
+  key,
+  value
+){
+
+  try{
+
+    storage.setItem(
+      key,
+      JSON.stringify(value)
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Write error:",
+      key,
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+function getLocal(
+  key,
+  fallback
+){
+
+  return readJSON(
+    localStorage,
+    key,
+    fallback
+  );
+
+}
+
+
+function setLocal(
+  key,
+  value
+){
+
+  return writeJSON(
+    localStorage,
+    key,
+    value
+  );
+
+}
+
+
+function escapeHTML(
+  value
+){
+
+  return String(
+    value ?? ""
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+function showToast(
+  message
+){
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+  toast.textContent =
+    message;
+
+  toast.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    window.__toastTimer
+  );
+
+  window.__toastTimer =
+    setTimeout(
+      ()=>{
+        toast.classList.remove(
+          "show"
+        );
+      },
+      2800
+    );
+
+}
+
+
+function formatDateOnly(
+  value
+){
+
+  if(!value){
+
+    return "—";
+
+  }
+
+  const date =
+    new Date(
+      `${value}T00:00:00`
+    );
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
+    return value;
+
+  }
+
+  return date.toLocaleDateString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
+
+}
+
+
+function formatDateTime(
+  value
+){
+
+  if(!value){
+
+    return "—";
+
+  }
+
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
+    return String(value);
+
+  }
+
+  return date.toLocaleString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+function todayISO(){
+
+  const date =
+    new Date();
+
+  const y =
+    date.getFullYear();
+
+  const m =
+    String(
+      date.getMonth()+1
+    ).padStart(2,"0");
+
+  const d =
+    String(
+      date.getDate()
+    ).padStart(2,"0");
+
+  return `${y}-${m}-${d}`;
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+  const theme =
+    localStorage.getItem(
+      STORAGE.theme
+    ) || "dark";
+
+  const button =
+    document.getElementById(
+      "themeBtn"
+    );
+
+  if(theme === "light"){
+
+    document.body.classList.add(
+      "light"
+    );
+
+    button.textContent =
+      "☀️";
+
+  }else{
+
+    document.body.classList.remove(
+      "light"
+    );
+
+    button.textContent =
+      "🌙";
+
+  }
+
+}
+
+
+function toggleTheme(){
+
+  const light =
+    document.body.classList.contains(
+      "light"
+    );
+
+  localStorage.setItem(
+    STORAGE.theme,
+    light
+      ? "dark"
+      : "light"
+  );
+
+  applyTheme();
+
+}
+
+
+/* =========================================================
+   COURSE / QUIZ
+========================================================= */
+
+function getCourse(){
+
+  return {
+
+    ...DEFAULT_COURSE,
+
+    ...(
+      getLocal(
+        STORAGE.course,
+        {}
+      ) || {}
+    )
+
+  };
+
+}
+
+
+function getQuiz(){
+
+  return {
+
+    ...DEFAULT_QUIZ,
+
+    ...(
+      getLocal(
+        STORAGE.quiz,
+        {}
+      ) || {}
+    )
+
+  };
+
+}
+
+
+/* =========================================================
+   STUDENTS
+========================================================= */
+
+function getStudents(){
+
+  const students =
+    getLocal(
+      STORAGE.students,
+      []
+    );
+
+
+  if(
+    Array.isArray(students) &&
+    students.length
+  ){
+
+    return students;
+
+  }
+
+
+  return [
+
+    {
+
+      studentId:
+        "SNK-1001",
+
+      studentName:
+        "Student",
+
+      course:
+        DEFAULT_COURSE.name,
+
+      batch:
+        DEFAULT_COURSE.batch
+
+    }
+
+  ];
+
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+function getResults(){
+
+  const results =
+    getLocal(
+      STORAGE.results,
+      []
+    );
+
+  return Array.isArray(results)
+    ? results
+    : [];
+
+}
+
+
+/* =========================================================
+   ACTIVE ATTEMPTS
+========================================================= */
+
+function getActiveAttempts(){
+
+  const saved =
+    getLocal(
+      STORAGE.activeAttempt,
+      null
+    );
+
+
+  if(!saved){
+
+    return [];
+
+  }
+
+
+  if(Array.isArray(saved)){
+
+    return saved;
+
+  }
+
+
+  if(
+    typeof saved === "object"
+  ){
+
+    if(saved.studentId){
+
+      return [saved];
+
+    }
+
+    return Object
+      .values(saved)
+      .filter(
+        item =>
+          item &&
+          typeof item === "object"
+      );
+
+  }
+
+
+  return [];
+
+}
+
+
+/* =========================================================
+   LOCKS
+========================================================= */
+
+function getAttemptLocks(){
+
+  const saved =
+    getLocal(
+      STORAGE.attemptLock,
+      null
+    );
+
+
+  if(!saved){
+
+    return [];
+
+  }
+
+
+  if(Array.isArray(saved)){
+
+    return saved;
+
+  }
+
+
+  if(
+    typeof saved === "object"
+  ){
+
+    if(saved.studentId){
+
+      return [saved];
+
+    }
+
+
+    return Object
+      .entries(saved)
+      .map(
+        ([studentId,value])=>{
+
+          if(
+            value &&
+            typeof value === "object"
+          ){
+
+            return {
+
+              studentId:
+                value.studentId ||
+                studentId,
+
+              ...value
+
+            };
+
+          }
+
+
+          return {
+
+            studentId,
+
+            locked:
+              value === true
+
+          };
+
+        }
+      );
+
+  }
+
+
+  return [];
+
+}
+
+
+/* =========================================================
+   MAKE-UP PERMISSIONS
+========================================================= */
+
+function getMakeupPermissions(){
+
+  const saved =
+    getLocal(
+      STORAGE.makeup,
+      []
+    );
+
+
+  return Array.isArray(saved)
+    ? saved
+    : [];
+
+}
+
+
+/* =========================================================
+   CURRENT QUIZ FILTER
+========================================================= */
+
+function isSameQuiz(
+  item
+){
+
+  const quiz =
+    getQuiz();
+
+
+  if(!item){
+
+    return false;
+
+  }
+
+
+  return (
+    !item.quizId ||
+    item.quizId === quiz.id
+  );
+
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+function getStudentResult(
+  studentId
+){
+
+  const quiz =
+    getQuiz();
+
+
+  return getResults()
+    .filter(
+      result=>{
+
+        const sameStudent =
+          String(
+            result.studentId || ""
+          ) ===
+          String(
+            studentId
+          );
+
+
+        const sameQuiz =
+          !result.quizId ||
+          result.quizId === quiz.id ||
+          result.quizName === quiz.title;
+
+
+        return (
+          sameStudent &&
+          sameQuiz
+        );
+
+      }
+    )
+    .sort(
+      (a,b)=>
+        new Date(
+          b.submittedAt ||
+          b.updatedAt ||
+          0
+        ) -
+        new Date(
+          a.submittedAt ||
+          a.updatedAt ||
+          0
+        )
+    )[0] || null;
+
+}
+
+
+/* =========================================================
+   ACTIVE ATTEMPT
+========================================================= */
+
+function getStudentActiveAttempt(
+  studentId
+){
+
+  return getActiveAttempts()
+    .filter(
+      attempt=>
+
+        String(
+          attempt.studentId || ""
+        ) ===
+        String(
+          studentId
+        ) &&
+
+        isSameQuiz(
+          attempt
+        )
+
+    )
+    .sort(
+      (a,b)=>
+        new Date(
+          b.startedAt ||
+          b.createdAt ||
+          0
+        ) -
+        new Date(
+          a.startedAt ||
+          a.createdAt ||
+          0
+        )
+    )[0] || null;
+
+}
+
+
+/* =========================================================
+   LOCK
+========================================================= */
+
+function getStudentLock(
+  studentId
+){
+
+  return getAttemptLocks()
+    .filter(
+      lock=>
+
+        String(
+          lock.studentId || ""
+        ) ===
+        String(
+          studentId
+        ) &&
+
+        isSameQuiz(
+          lock
+        )
+
+    )[0] || null;
+
+}
+
+
+/* =========================================================
+   MAKE-UP PERMISSION
+========================================================= */
+
+function getStudentMakeup(
+  studentId
+){
+
+  const quiz =
+    getQuiz();
+
+
+  const today =
+    todayISO();
+
+
+  const permissions =
+    getMakeupPermissions()
+      .filter(
+        item=>{
+
+          return (
+
+            String(
+              item.studentId || ""
+            ) ===
+            String(
+              studentId
+            ) &&
+
+            (
+              !item.quizId ||
+              item.quizId === quiz.id
+            )
+
+          );
+
+        }
+      )
+      .sort(
+        (a,b)=>
+          new Date(
+            b.updatedAt ||
+            b.createdAt ||
+            0
+          ) -
+          new Date(
+            a.updatedAt ||
+            a.createdAt ||
+            0
+          )
+      );
+
+
+  if(!permissions.length){
+
+    return null;
+
+  }
+
+
+  const valid =
+    permissions.find(
+      permission=>{
+
+        if(
+          permission.enabled === false
+        ){
+
+          return false;
+
+        }
+
+        if(
+          permission.endDate &&
+          today >
+          permission.endDate
+        ){
+
+          return false;
+
+        }
+
+        return true;
+
+      }
+    );
+
+
+  return valid ||
+    permissions[0] ||
+    null;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function getStudentStatus(
+  student
+){
+
+  const studentId =
+    student.studentId ||
+    student.id ||
+    "";
+
+
+  const result =
+    getStudentResult(
+      studentId
+    );
+
+
+  const active =
+    getStudentActiveAttempt(
+      studentId
+    );
+
+
+  const lock =
+    getStudentLock(
+      studentId
+    );
+
+
+  const makeup =
+    getStudentMakeup(
+      studentId
+    );
+
+
+  return {
+
+    studentId,
+
+    result,
+
+    active,
+
+    lock,
+
+    makeup,
+
+    submitted:
+      !!result,
+
+    locked:
+      !!(
+        lock &&
+        lock.locked !== false
+      ),
+
+    isActive:
+      !!active,
+
+    isMakeup:
+      !!makeup
+
+  };
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+  const students =
+    getStudents();
+
+
+  let submitted = 0;
+
+  let active = 0;
+
+  let locked = 0;
+
+  let makeup = 0;
+
+
+  students.forEach(
+    student=>{
+
+      const status =
+        getStudentStatus(
+          student
+        );
+
+
+      if(status.submitted){
+
+        submitted++;
+
+      }
+
+
+      if(status.isActive){
+
+        active++;
+
+      }
+
+
+      if(status.locked){
+
+        locked++;
+
+      }
+
+
+      if(status.isMakeup){
+
+        makeup++;
+
+      }
+
+    }
+  );
+
+
+  document.getElementById(
+    "statStudents"
+  ).textContent =
+    students.length;
+
+
+  document.getElementById(
+    "statSubmitted"
+  ).textContent =
+    submitted;
+
+
+  document.getElementById(
+    "statNotSubmitted"
+  ).textContent =
+    Math.max(
+      0,
+      students.length -
+      submitted
+    );
+
+
+  document.getElementById(
+    "statActive"
+  ).textContent =
+    active;
+
+
+  document.getElementById(
+    "statLocked"
+  ).textContent =
+    locked;
+
+
+  document.getElementById(
+    "statMakeup"
+  ).textContent =
+    makeup;
+
+}
+
+
+/* =========================================================
+   QUIZ INFO
+========================================================= */
+
+function renderQuizInfo(){
+
+  const quiz =
+    getQuiz();
+
+  const course =
+    getCourse();
+
+
+  document.getElementById(
+    "heroTitle"
+  ).textContent =
+    quiz.title ||
+    "Quiz Attempt Control";
+
+
+  document.getElementById(
+    "infoTitle"
+  ).textContent =
+    quiz.title ||
+    "—";
+
+
+  document.getElementById(
+    "infoId"
+  ).textContent =
+    quiz.id ||
+    "—";
+
+
+  document.getElementById(
+    "infoDates"
+  ).textContent =
+    `${formatDateOnly(
+      quiz.startDate
+    )} → ${formatDateOnly(
+      quiz.endDate
+    )}`;
+
+
+  document.getElementById(
+    "infoDuration"
+  ).textContent =
+    `${Number(
+      quiz.durationMinutes || 0
+    )} minutes`;
+
+
+  document.getElementById(
+    "infoPass"
+  ).textContent =
+    `${Number(
+      quiz.passPercentage || 0
+    )}%`;
+
+
+  document.getElementById(
+    "infoOneAttempt"
+  ).textContent =
+    quiz.oneAttemptOnly !== false
+      ? "Enabled"
+      : "Disabled";
+
+
+  document.getElementById(
+    "quizInfoSub"
+  ).textContent =
+    `${course.name} • ${course.batch}`;
+
+
+  const status =
+    document.getElementById(
+      "quizStatus"
+    );
+
+
+  if(quiz.published){
+
+    status.textContent =
+      "PUBLISHED";
+
+    status.className =
+      "status green";
+
+  }else{
+
+    status.textContent =
+      "DRAFT";
+
+    status.className =
+      "status yellow";
+
+  }
+
+}
+
+
+/* =========================================================
+   MAKE-UP STUDENT SELECT
+========================================================= */
+
+function renderMakeupStudents(){
+
+  const select =
+    document.getElementById(
+      "makeupStudent"
+    );
+
+
+  const students =
+    getStudents();
+
+
+  const previous =
+    select.value;
+
+
+  select.innerHTML =
+    students.map(
+      student=>{
+
+        const id =
+          student.studentId ||
+          student.id ||
+          "";
+
+
+        const name =
+          student.studentName ||
+          student.name ||
+          "Student";
+
+
+        return `
+
+          <option
+            value="${escapeHTML(id)}"
+          >
+            ${escapeHTML(name)}
+            — ${escapeHTML(id)}
+          </option>
+
+        `;
+
+      }
+    ).join("");
+
+
+  if(
+    previous &&
+    students.some(
+      student=>
+        String(
+          student.studentId ||
+          student.id ||
+          ""
+        ) ===
+        String(
+          previous
+        )
+    )
+  ){
+
+    select.value =
+      previous;
+
+  }
+
+
+  loadMakeupFormForStudent();
+
+}
+
+
+/* =========================================================
+   LOAD MAKEUP FORM
+========================================================= */
+
+function loadMakeupFormForStudent(){
+
+  const studentId =
+    document.getElementById(
+      "makeupStudent"
+    ).value;
+
+
+  const permission =
+    getStudentMakeup(
+      studentId
+    );
+
+
+  if(permission){
+
+    document.getElementById(
+      "makeupStartDate"
+    ).value =
+      permission.startDate ||
+      "";
+
+    document.getElementById(
+      "makeupEndDate"
+    ).value =
+      permission.endDate ||
+      "";
+
+    document.getElementById(
+      "makeupReason"
+    ).value =
+      permission.reason ||
+      "";
+
+  }else{
+
+    const today =
+      todayISO();
+
+
+    document.getElementById(
+      "makeupStartDate"
+    ).value =
+      today;
+
+
+    document.getElementById(
+      "makeupEndDate"
+    ).value =
+      today;
+
+
+    document.getElementById(
+      "makeupReason"
+    ).value =
+      "Missed Quiz";
+
+  }
+
+}
+
+
+/* =========================================================
+   CLEAR FORM
+========================================================= */
+
+function clearMakeupForm(){
+
+  const today =
+    todayISO();
+
+
+  document.getElementById(
+    "makeupStartDate"
+  ).value =
+    today;
+
+
+  document.getElementById(
+    "makeupEndDate"
+  ).value =
+    today;
+
+
+  document.getElementById(
+    "makeupReason"
+  ).value =
+    "Missed Quiz";
+
+
+  document.getElementById(
+    "makeupResetAttempt"
+  ).checked =
+    true;
+
+
+  document.getElementById(
+    "makeupAllowAfterNormalWindow"
+  ).checked =
+    true;
+
+}
+
+
+/* =========================================================
+   SAVE MAKE-UP PERMISSION
+========================================================= */
+
+function saveMakeupPermission(){
+
+  const quiz =
+    getQuiz();
+
+
+  const studentId =
+    document.getElementById(
+      "makeupStudent"
+    ).value;
+
+
+  const startDate =
+    document.getElementById(
+      "makeupStartDate"
+    ).value;
+
+
+  const endDate =
+    document.getElementById(
+      "makeupEndDate"
+    ).value;
+
+
+  const reason =
+    document.getElementById(
+      "makeupReason"
+    ).value.trim();
+
+
+  const resetAttempt =
+    document.getElementById(
+      "makeupResetAttempt"
+    ).checked;
+
+
+  const allowAfterNormalWindow =
+    document.getElementById(
+      "makeupAllowAfterNormalWindow"
+    ).checked;
+
+
+  if(!studentId){
+
+    showToast(
+      "Student select করুন"
+    );
+
+    return;
+
+  }
+
+
+  if(!startDate || !endDate){
+
+    showToast(
+      "Start এবং End date দিন"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    endDate <
+    startDate
+  ){
+
+    showToast(
+      "End date Start date-এর আগে হতে পারবে না"
+    );
+
+    return;
+
+  }
+
+
+  if(!reason){
+
+    showToast(
+      "Make-up reason দিন"
+    );
+
+    return;
+
+  }
+
+
+  const students =
+    getStudents();
+
+
+  const student =
+    students.find(
+      item=>
+        String(
+          item.studentId ||
+          item.id ||
+          ""
+        ) ===
+        String(
+          studentId
+        )
+    );
+
+
+  const oldPermissions =
+    getMakeupPermissions();
+
+
+  const now =
+    new Date().toISOString();
+
+
+  const existingIndex =
+    oldPermissions.findIndex(
+      item=>
+
+        String(
+          item.studentId || ""
+        ) ===
+        String(
+          studentId
+        ) &&
+
+        (
+          !item.quizId ||
+          item.quizId === quiz.id
+        )
+
+    );
+
+
+  const permission = {
+
+    id:
+      existingIndex >= 0
+        ? oldPermissions[
+            existingIndex
+          ].id
+        : `MAKEUP-${Date.now()}`,
+
+    quizId:
+      quiz.id,
+
+    quizName:
+      quiz.title,
+
+    studentId,
+
+    studentName:
+      student?.studentName ||
+      student?.name ||
+      "Student",
+
+    course:
+      student?.course ||
+      getCourse().name,
+
+    batch:
+      student?.batch ||
+      getCourse().batch,
+
+    startDate,
+
+    endDate,
+
+    reason,
+
+    enabled:
+      true,
+
+    resetAttempt,
+
+    allowAfterNormalWindow,
+
+    createdAt:
+      existingIndex >= 0
+        ? (
+            oldPermissions[
+              existingIndex
+            ].createdAt ||
+            now
+          )
+        : now,
+
+    updatedAt:
+      now,
+
+    source:
+      "admin",
+
+    version:
+      "2.5.13"
+
+  };
+
+
+  if(existingIndex >= 0){
+
+    oldPermissions[
+      existingIndex
+    ] =
+      permission;
+
+  }else{
+
+    oldPermissions.push(
+      permission
+    );
+
+  }
+
+
+  setLocal(
+    STORAGE.makeup,
+    oldPermissions
+  );
+
+
+  if(resetAttempt){
+
+    clearLockOnly(
+      studentId
+    );
+
+    clearActiveAttemptWithoutConfirm(
+      studentId
+    );
+
+  }
+
+
+  showToast(
+    "Make-up permission saved"
+  );
+
+
+  renderMakeupPermissions();
+
+  updateStats();
+
+  renderAttempts();
+
+}
+
+
+/* =========================================================
+   DELETE MAKE-UP
+========================================================= */
+
+function deleteMakeup(
+  permissionId
+){
+
+  const permissions =
+    getMakeupPermissions();
+
+
+  const permission =
+    permissions.find(
+      item=>
+        item.id ===
+        permissionId
+    );
+
+
+  if(!permission){
+
+    return;
+
+  }
+
+
+  const ok =
+    confirm(
+      `${permission.studentName || permission.studentId}-এর Make-up permission remove করবেন?`
+    );
+
+
+  if(!ok){
+
+    return;
+
+  }
+
+
+  const filtered =
+    permissions.filter(
+      item=>
+        item.id !==
+        permissionId
+    );
+
+
+  setLocal(
+    STORAGE.makeup,
+    filtered
+  );
+
+
+  showToast(
+    "Make-up permission removed"
+  );
+
+
+  renderMakeupPermissions();
+
+  updateStats();
+
+  renderAttempts();
+
+}
+
+
+/* =========================================================
+   TOGGLE MAKE-UP
+========================================================= */
+
+function toggleMakeup(
+  permissionId
+){
+
+  const permissions =
+    getMakeupPermissions();
+
+
+  const permission =
+    permissions.find(
+      item=>
+        item.id ===
+        permissionId
+    );
+
+
+  if(!permission){
+
+    return;
+
+  }
+
+
+  permission.enabled =
+    permission.enabled === false;
+
+
+  permission.updatedAt =
+    new Date().toISOString();
+
+
+  setLocal(
+    STORAGE.makeup,
+    permissions
+  );
+
+
+  showToast(
+    permission.enabled
+      ? "Make-up enabled"
+      : "Make-up disabled"
+  );
+
+
+  renderMakeupPermissions();
+
+  updateStats();
+
+  renderAttempts();
+
+}
+
+
+/* =========================================================
+   MAKE-UP LIST
+========================================================= */
+
+function renderMakeupPermissions(){
+
+  const container =
+    document.getElementById(
+      "makeupPermissions"
+    );
+
+
+  const permissions =
+    getMakeupPermissions()
+      .filter(
+        permission=>
+          isSameQuiz(
+            permission
+          )
+      )
+      .sort(
+        (a,b)=>
+          new Date(
+            b.updatedAt ||
+            b.createdAt ||
+            0
+          ) -
+          new Date(
+            a.updatedAt ||
+            a.createdAt ||
+            0
+          )
+      );
+
+
+  if(!permissions.length){
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">
+          🗓️
+        </div>
+
+        <div class="empty-title">
+          No Make-up Permission
+        </div>
+
+        <div>
+          এখনো কোনো Student-এর জন্য special make-up permission তৈরি হয়নি।
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML = `
+
+    <div class="table-wrap">
+
+      <table style="min-width:1000px;">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Student
+            </th>
+
+            <th>
+              Make-up Window
+            </th>
+
+            <th>
+              Reason
+            </th>
+
+            <th>
+              Reset
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Updated
+            </th>
+
+            <th>
+              Action
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            permissions.map(
+              permission=>`
+
+                <tr>
+
+                  <td>
+
+                    <div class="student-name">
+                      ${escapeHTML(
+                        permission.studentName ||
+                        "Student"
+                      )}
+                    </div>
+
+                    <div class="student-id">
+                      ${escapeHTML(
+                        permission.studentId
+                      )}
+                    </div>
+
+                  </td>
+
+
+                  <td>
+
+                    ${escapeHTML(
+                      formatDateOnly(
+                        permission.startDate
+                      )
+                    )}
+
+                    →
+
+                    ${escapeHTML(
+                      formatDateOnly(
+                        permission.endDate
+                      )
+                    )}
+
+                  </td>
+
+
+                  <td>
+                    ${escapeHTML(
+                      permission.reason ||
+                      "—"
+                    )}
+                  </td>
+
+
+                  <td>
+
+                    ${
+                      permission.resetAttempt
+                        ? `<span class="status green">
+                            Yes
+                          </span>`
+                        : `<span class="status gray">
+                            No
+                          </span>`
+                    }
+
+                  </td>
+
+
+                  <td>
+
+                    ${
+                      permission.enabled !== false
+
+                        ? `<span class="status purple">
+                            Enabled
+                          </span>`
+
+                        : `<span class="status gray">
+                            Disabled
+                          </span>`
+                    }
+
+                  </td>
+
+
+                  <td>
+                    ${escapeHTML(
+                      formatDateTime(
+                        permission.updatedAt
+                      )
+                    )}
+                  </td>
+
+
+                  <td>
+
+                    <div class="action-row">
+
+                      <button
+                        class="btn btn-secondary btn-sm"
+                        type="button"
+                        onclick="editMakeup('${escapeHTML(
+                          permission.studentId
+                        )}')"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        class="btn btn-warning btn-sm"
+                        type="button"
+                        onclick="toggleMakeup('${escapeHTML(
+                          permission.id
+                        )}')"
+                      >
+                        ${
+                          permission.enabled !== false
+                            ? "Disable"
+                            : "Enable"
+                        }
+                      </button>
+
+                      <button
+                        class="btn btn-danger btn-sm"
+                        type="button"
+                        onclick="deleteMakeup('${escapeHTML(
+                          permission.id
+                        )}')"
+                      >
+                        Delete
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `
+            ).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   EDIT MAKE-UP
+========================================================= */
+
+function editMakeup(
+  studentId
+){
+
+  const select =
+    document.getElementById(
+      "makeupStudent"
+    );
+
+
+  select.value =
+    studentId;
+
+
+  loadMakeupFormForStudent();
+
+
+  document
+    .getElementById(
+      "makeupStartDate"
+    )
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+
+  showToast(
+    "Make-up permission loaded"
+  );
+
+}
+
+
+/* =========================================================
+   FIRST STUDENT
+========================================================= */
+
+function openMakeupForFirstStudent(){
+
+  const students =
+    getStudents();
+
+
+  if(!students.length){
+
+    showToast(
+      "Student পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "makeupStudent"
+  ).value =
+    students[0].studentId ||
+    students[0].id ||
+    "";
+
+
+  loadMakeupFormForStudent();
+
+
+  document
+    .querySelector(
+      ".makeup-box"
+    )
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+}
+
+
+/* =========================================================
+   CLEAR ACTIVE ATTEMPT
+========================================================= */
+
+function clearActiveAttemptWithoutConfirm(
+  studentId
+){
+
+  const quiz =
+    getQuiz();
+
+
+  const saved =
+    getLocal(
+      STORAGE.activeAttempt,
+      null
+    );
+
+
+  if(!saved){
+
+    return;
+
+  }
+
+
+  if(Array.isArray(saved)){
+
+    const filtered =
+      saved.filter(
+        attempt=>{
+
+          return !(
+            String(
+              attempt.studentId || ""
+            ) ===
+            String(
+              studentId
+            ) &&
+
+            (
+              !attempt.quizId ||
+              attempt.quizId === quiz.id
+            )
+
+          );
+
+        }
+      );
+
+
+    setLocal(
+      STORAGE.activeAttempt,
+      filtered
+    );
+
+    return;
+
+  }
+
+
+  if(saved.studentId){
+
+    if(
+      String(
+        saved.studentId
+      ) ===
+      String(
+        studentId
+      ) &&
+
+      (
+        !saved.quizId ||
+        saved.quizId === quiz.id
+      )
+
+    ){
+
+      localStorage.removeItem(
+        STORAGE.activeAttempt
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  if(
+    typeof saved === "object"
+  ){
+
+    const copy = {
+      ...saved
+    };
+
+    delete copy[
+      studentId
+    ];
+
+    setLocal(
+      STORAGE.activeAttempt,
+      copy
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CLEAR LOCK
+========================================================= */
+
+function clearLockOnly(
+  studentId
+){
+
+  const quiz =
+    getQuiz();
+
+
+  const saved =
+    getLocal(
+      STORAGE.attemptLock,
+      null
+    );
+
+
+  if(!saved){
+
+    return;
+
+  }
+
+
+  if(Array.isArray(saved)){
+
+    const filtered =
+      saved.filter(
+        lock=>{
+
+          return !(
+            String(
+              lock.studentId || ""
+            ) ===
+            String(
+              studentId
+            ) &&
+
+            (
+              !lock.quizId ||
+              lock.quizId === quiz.id
+            )
+
+          );
+
+        }
+      );
+
+
+    setLocal(
+      STORAGE.attemptLock,
+      filtered
+    );
+
+    return;
+
+  }
+
+
+  if(saved.studentId){
+
+    if(
+      String(
+        saved.studentId
+      ) ===
+      String(
+        studentId
+      ) &&
+
+      (
+        !saved.quizId ||
+        saved.quizId === quiz.id
+      )
+
+    ){
+
+      localStorage.removeItem(
+        STORAGE.attemptLock
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  if(
+    typeof saved === "object"
+  ){
+
+    const copy = {
+      ...saved
+    };
+
+    delete copy[
+      studentId
+    ];
+
+    setLocal(
+      STORAGE.attemptLock,
+      copy
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   RESET STUDENT
+========================================================= */
+
+function resetStudentAttempt(
+  studentId
+){
+
+  const ok =
+    confirm(
+      `${studentId}-এর attempt reset করবেন?\n\nStudent আবার Quiz শুরু করতে পারবে। পুরোনো submitted result delete হবে না।`
+    );
+
+
+  if(!ok){
+
+    return;
+
+  }
+
+
+  clearLockOnly(
+    studentId
+  );
+
+
+  clearActiveAttemptWithoutConfirm(
+    studentId
+  );
+
+
+  showToast(
+    "Student attempt reset হয়েছে"
+  );
+
+
+  refreshAll();
+
+}
+
+
+/* =========================================================
+   VIEW STUDENT
+========================================================= */
+
+function viewStudent(
+  studentId
+){
+
+  const student =
+    getStudents().find(
+      item=>
+        String(
+          item.studentId ||
+          item.id ||
+          ""
+        ) ===
+        String(
+          studentId
+        )
+    );
+
+
+  if(!student){
+
+    showToast(
+      "Student পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
+
+  const status =
+    getStudentStatus(
+      student
+    );
+
+
+  document.getElementById(
+    "modalStudent"
+  ).textContent =
+    `${student.studentName || student.name || "Student"} • ${studentId}`;
+
+
+  document.getElementById(
+    "modalContent"
+  ).innerHTML = `
+
+    <div class="detail-grid">
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Student ID
+        </div>
+
+        <div class="detail-value">
+          ${escapeHTML(studentId)}
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Student Name
+        </div>
+
+        <div class="detail-value">
+          ${escapeHTML(
+            student.studentName ||
+            student.name ||
+            "Student"
+          )}
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Submitted
+        </div>
+
+        <div class="detail-value">
+          ${
+            status.submitted
+              ? "Yes"
+              : "No"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Active Attempt
+        </div>
+
+        <div class="detail-value">
+          ${
+            status.isActive
+              ? "Yes"
+              : "No"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Attempt Lock
+        </div>
+
+        <div class="detail-value">
+          ${
+            status.locked
+              ? "Locked"
+              : "Unlocked"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Make-up Permission
+        </div>
+
+        <div class="detail-value">
+          ${
+            status.isMakeup
+              ? "Available"
+              : "None"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Score
+        </div>
+
+        <div class="detail-value">
+
+          ${
+            status.result
+
+              ? `${escapeHTML(
+                  status.result.obtainedMarks ??
+                  status.result.correct ??
+                  0
+                )} / ${escapeHTML(
+                  status.result.totalMarks ??
+                  10
+                )}`
+
+              : "—"
+          }
+
+        </div>
+
+      </div>
+
+
+      <div class="detail-box">
+
+        <div class="detail-label">
+          Percentage
+        </div>
+
+        <div class="detail-value">
+
+          ${
+            status.result
+
+              ? `${escapeHTML(
+                  Number(
+                    status.result.percentage ||
+                    0
+                  )
+                )}%`
+
+              : "—"
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    ${
+      status.isMakeup
+
+      ? `
+
+        <div
+          class="notice"
+          style="margin-top:15px;"
+        >
+
+          <strong>Make-up Window</strong><br>
+
+          ${escapeHTML(
+            formatDateOnly(
+              status.makeup.startDate
+            )
+          )}
+
+          →
+
+          ${escapeHTML(
+            formatDateOnly(
+              status.makeup.endDate
+            )
+          )}
+
+          <br>
+
+          Reason:
+          ${escapeHTML(
+            status.makeup.reason ||
+            "—"
+          )}
+
+        </div>
+
+      `
+
+      : ""
+    }
+
+
+    <div
+      style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+        margin-top:18px;
+      "
+    >
+
+      ${
+        status.locked
+
+        ? `<button
+            class="btn btn-success"
+            type="button"
+            onclick="resetStudentAttempt('${escapeHTML(
+              studentId
+            )}');closeModal();"
+          >
+            🔓 Reset Attempt
+          </button>`
+
+        : ""
+      }
+
+
+      <button
+        class="btn btn-purple"
+        type="button"
+        onclick="editMakeup('${escapeHTML(
+          studentId
+        )}');closeModal();"
+      >
+        🗓️ Make-up
+      </button>
+
+
+      ${
+        status.result
+
+        ? `<button
+            class="btn btn-info"
+            type="button"
+            onclick="openResult('${escapeHTML(
+              studentId
+            )}')"
+          >
+            📈 Open Result
+          </button>`
+
+        : ""
+      }
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "detailModal"
+  ).classList.add(
+    "show"
+  );
+
+}
+
+
+/* =========================================================
+   OPEN RESULT
+========================================================= */
+
+function openResult(
+  studentId
+){
+
+  const result =
+    getStudentResult(
+      studentId
+    );
+
+
+  if(!result){
+
+    showToast(
+      "Result পাওয়া যায়নি"
+    );
+
+    return;
+
+  }
+
+
+  const params =
+    new URLSearchParams();
+
+
+  params.set(
+    "studentId",
+    studentId
+  );
+
+
+  if(result.id){
+
+    params.set(
+      "resultId",
+      result.id
+    );
+
+  }
+
+
+  window.location.href =
+    `admin-quiz-result-details.html?${params.toString()}`;
+
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+function renderAttempts(){
+
+  const body =
+    document.getElementById(
+      "attemptTableBody"
+    );
+
+
+  const search =
+    document.getElementById(
+      "searchInput"
+    )
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const statusFilter =
+    document.getElementById(
+      "statusFilter"
+    ).value;
+
+
+  const sortFilter =
+    document.getElementById(
+      "sortFilter"
+    ).value;
+
+
+  let rows =
+    getStudents()
+      .map(
+        student=>({
+
+          student,
+
+          status:
+            getStudentStatus(
+              student
+            )
+
+        })
+      );
+
+
+  rows =
+    rows.filter(
+      row=>{
+
+        const id =
+          String(
+            row.status.studentId ||
+            ""
+          ).toLowerCase();
+
+
+        const name =
+          String(
+            row.student.studentName ||
+            row.student.name ||
+            ""
+          ).toLowerCase();
+
+
+        if(
+          search &&
+          !id.includes(search) &&
+          !name.includes(search)
+        ){
+
+          return false;
+
+        }
+
+
+        if(
+          statusFilter ===
+          "submitted"
+        ){
+
+          return row.status.submitted;
+
+        }
+
+
+        if(
+          statusFilter ===
+          "active"
+        ){
+
+          return row.status.isActive;
+
+        }
+
+
+        if(
+          statusFilter ===
+          "locked"
+        ){
+
+          return row.status.locked;
+
+        }
+
+
+        if(
+          statusFilter ===
+          "makeup"
+        ){
+
+          return row.status.isMakeup;
+
+        }
+
+
+        if(
+          statusFilter ===
+          "not-submitted"
+        ){
+
+          return !row.status.submitted;
+
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  rows.sort(
+    (a,b)=>{
+
+      if(
+        sortFilter ===
+        "latest"
+      ){
+
+        const ad =
+          new Date(
+            a.status.result?.submittedAt ||
+            a.status.active?.startedAt ||
+            a.status.makeup?.updatedAt ||
+            0
+          ).getTime();
+
+
+        const bd =
+          new Date(
+            b.status.result?.submittedAt ||
+            b.status.active?.startedAt ||
+            b.status.makeup?.updatedAt ||
+            0
+          ).getTime();
+
+
+        return bd - ad;
+
+      }
+
+
+      if(
+        sortFilter ===
+        "oldest"
+      ){
+
+        const ad =
+          new Date(
+            a.status.result?.submittedAt ||
+            a.status.active?.startedAt ||
+            a.status.makeup?.updatedAt ||
+            0
+          ).getTime();
+
+
+        const bd =
+          new Date(
+            b.status.result?.submittedAt ||
+            b.status.active?.startedAt ||
+            b.status.makeup?.updatedAt ||
+            0
+          ).getTime();
+
+
+        return ad - bd;
+
+      }
+
+
+      return String(
+        a.student.studentName ||
+        a.student.name ||
+        a.status.studentId
+      ).localeCompare(
+        String(
+          b.student.studentName ||
+          b.student.name ||
+          b.status.studentId
+        )
+      );
+
+    }
+  );
+
+
+  if(!rows.length){
+
+    body.innerHTML = `
+
+      <tr>
+
+        <td colspan="9">
+
+          <div class="empty">
+
+            <div class="empty-icon">
+              🔎
+            </div>
+
+            <div class="empty-title">
+              No Student Found
+            </div>
+
+            <div>
+              এই filter/search অনুযায়ী কোনো student পাওয়া যায়নি।
+            </div>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `;
+
+    return;
+
+  }
+
+
+  body.innerHTML =
+    rows.map(
+      row=>{
+
+        const student =
+          row.student;
+
+        const status =
+          row.status;
+
+
+        const name =
+          student.studentName ||
+          student.name ||
+          "Student";
+
+
+        const course =
+          student.course ||
+          getCourse().name;
+
+
+        const batch =
+          student.batch ||
+          getCourse().batch;
+
+
+        let score =
+          "—";
+
+
+        if(status.result){
+
+          const obtained =
+            status.result.obtainedMarks ??
+            status.result.correct ??
+            0;
+
+
+          const total =
+            status.result.totalMarks ??
+            (
+              Number(
+                status.result.totalQuestions ||
+                10
+              ) *
+              Number(
+                status.result.marksPerQuestion ||
+                1
+              )
+            );
+
+
+          score =
+            `${obtained}/${total}`;
+
+        }
+
+
+        const activity =
+          status.result?.submittedAt ||
+          status.active?.startedAt ||
+          status.makeup?.updatedAt ||
+          null;
+
+
+        return `
+
+          <tr>
+
+            <td>
+
+              <div class="student-name">
+                ${escapeHTML(name)}
+              </div>
+
+              <div class="student-id">
+                ${escapeHTML(
+                  status.studentId
+                )}
+              </div>
+
+            </td>
+
+
+            <td>
+
+              ${escapeHTML(course)}
+
+              <div class="student-id">
+                ${escapeHTML(batch)}
+              </div>
+
+            </td>
+
+
+            <td>
+
+              ${
+                status.submitted
+
+                  ? `<span class="status green">
+                      Submitted
+                    </span>`
+
+                  : `<span class="status gray">
+                      Not Submitted
+                    </span>`
+              }
+
+            </td>
+
+
+            <td>
+
+              ${
+                status.isActive
+
+                  ? `<span class="status blue">
+                      Active
+                    </span>`
+
+                  : `<span class="status gray">
+                      No
+                    </span>`
+              }
+
+            </td>
+
+
+            <td>
+
+              ${
+                status.locked
+
+                  ? `<span class="status yellow">
+                      Locked
+                    </span>`
+
+                  : `<span class="status gray">
+                      Unlocked
+                    </span>`
+              }
+
+            </td>
+
+
+            <td>
+
+              ${
+                status.isMakeup
+
+                  ? `<span class="status purple">
+                      ${
+                        status.makeup.enabled !== false
+                          ? "Make-up"
+                          : "Disabled"
+                      }
+                    </span>`
+
+                  : `<span class="status gray">
+                      None
+                    </span>`
+              }
+
+            </td>
+
+
+            <td>
+
+              <strong>
+                ${escapeHTML(score)}
+              </strong>
+
+              ${
+                status.result
+
+                  ? `<div class="student-id">
+                      ${escapeHTML(
+                        Number(
+                          status.result.percentage ||
+                          0
+                        )
+                      )}%
+                    </div>`
+
+                  : ""
+              }
+
+            </td>
+
+
+            <td>
+              ${escapeHTML(
+                formatDateTime(
+                  activity
+                )
+              )}
+            </td>
+
+
+            <td>
+
+              <div class="action-row">
+
+                <button
+                  class="btn btn-secondary btn-sm"
+                  type="button"
+                  onclick="viewStudent('${escapeHTML(
+                    status.studentId
+                  )}')"
+                >
+                  View
+                </button>
+
+
+                <button
+                  class="btn btn-purple btn-sm"
+                  type="button"
+                  onclick="editMakeup('${escapeHTML(
+                    status.studentId
+                  )}')"
+                >
+                  Make-up
+                </button>
+
+
+                ${
+                  status.locked
+
+                    ? `<button
+                        class="btn btn-success btn-sm"
+                        type="button"
+                        onclick="resetStudentAttempt('${escapeHTML(
+                          status.studentId
+                        )}')"
+                      >
+                        Reset
+                      </button>`
+
+                    : ""
+                }
+
+
+                ${
+                  status.result
+
+                    ? `<button
+                        class="btn btn-info btn-sm"
+                        type="button"
+                        onclick="openResult('${escapeHTML(
+                          status.studentId
+                        )}')"
+                      >
+                        Result
+                      </button>`
+
+                    : ""
+                }
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================================================
+   FILTER RESET
+========================================================= */
+
+function resetFilters(){
+
+  document.getElementById(
+    "searchInput"
+  ).value = "";
+
+
+  document.getElementById(
+    "statusFilter"
+  ).value =
+    "all";
+
+
+  document.getElementById(
+    "sortFilter"
+  ).value =
+    "student";
+
+
+  renderAttempts();
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(){
+
+  document.getElementById(
+    "detailModal"
+  ).classList.remove(
+    "show"
+  );
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshAll(){
+
+  renderQuizInfo();
+
+  renderMakeupStudents();
+
+  renderMakeupPermissions();
+
+  updateStats();
+
+  renderAttempts();
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+function toggleSidebar(){
+
+  document.getElementById(
+    "sidebar"
+  ).classList.toggle(
+    "open"
+  );
+
+}
+
+
+/* =========================================================
+   PUBLIC API
+========================================================= */
+
+window.SNKAdminQuizAttempts = {
+
+  getQuiz,
+
+  getStudents,
+
+  getResults,
+
+  getActiveAttempts,
+
+  getAttemptLocks,
+
+  getMakeupPermissions,
+
+  getStudentStatus,
+
+  saveMakeupPermission,
+
+  resetStudentAttempt,
+
+  clearActiveAttempt:
+    clearActiveAttemptWithoutConfirm,
+
+  deleteMakeup,
+
+  toggleMakeup,
+
+  refresh:
+    refreshAll
+
+};
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+document
+  .getElementById(
+    "themeBtn"
+  )
+  .addEventListener(
+    "click",
+    toggleTheme
+  );
+
+
+document
+  .getElementById(
+    "refreshBtn"
+  )
+  .addEventListener(
+    "click",
+    ()=>{
+      refreshAll();
+
+      showToast(
+        "Quiz attempts refreshed"
+      );
+    }
+  );
+
+
+document
+  .getElementById(
+    "menuBtn"
+  )
+  .addEventListener(
+    "click",
+    toggleSidebar
+  );
+
+
+document
+  .getElementById(
+    "makeupStudent"
+  )
+  .addEventListener(
+    "change",
+    loadMakeupFormForStudent
+  );
+
+
+document
+  .getElementById(
+    "searchInput"
+  )
+  .addEventListener(
+    "input",
+    renderAttempts
+  );
+
+
+document
+  .getElementById(
+    "statusFilter"
+  )
+  .addEventListener(
+    "change",
+    renderAttempts
+  );
+
+
+document
+  .getElementById(
+    "sortFilter"
+  )
+  .addEventListener(
+    "change",
+    renderAttempts
+  );
+
+
+document
+  .getElementById(
+    "detailModal"
+  )
+  .addEventListener(
+    "click",
+    event=>{
+
+      if(
+        event.target.id ===
+        "detailModal"
+      ){
+
+        closeModal();
+
+      }
+
+    }
+  );
+
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      event.key ===
+      "Escape"
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   STORAGE SYNC
+========================================================= */
+
+window.addEventListener(
+  "storage",
+  event=>{
+
+    const keys = [
+
+      STORAGE.theme,
+
+      STORAGE.course,
+
+      STORAGE.quiz,
+
+      STORAGE.questions,
+
+      STORAGE.results,
+
+      STORAGE.students,
+
+      STORAGE.activeAttempt,
+
+      STORAGE.attemptLock,
+
+      STORAGE.makeup
+
+    ];
+
+
+    if(
+      keys.includes(
+        event.key
+      )
+    ){
+
+      applyTheme();
+
+      refreshAll();
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "focus",
+  refreshAll
+);
+
+
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+
+    if(
+      document.visibilityState ===
+      "visible"
+    ){
+
+      refreshAll();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+(function init(){
+
+  applyTheme();
+
+  refreshAll();
+
+})();
+
+</script>
+
+</body>
+</html>
+```

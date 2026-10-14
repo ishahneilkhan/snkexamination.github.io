@@ -1,0 +1,2585 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Notifications | SNK IT Institute</title>
+
+  <meta
+    name="description"
+    content="SNK IT Institute Student Portal - Notifications and Announcements"
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #0f172a;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --purple: #7c3aed;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans Bengali", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    body.dark {
+      --bg: #020617;
+      --card: #0f172a;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #1e293b;
+      --secondary: #f8fafc;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================
+       TOP BAR
+    ========================== */
+
+    .topbar {
+      background: var(--secondary);
+      color: white;
+      padding: 8px 20px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-inner {
+      max-width: 1250px;
+      margin: auto;
+      min-height: 74px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .brand img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      padding: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .nav a,
+    .nav button {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      padding: 9px 11px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav a:hover,
+    .nav button:hover {
+      background: var(--bg);
+    }
+
+    .nav .active {
+      background: #dbeafe;
+      color: var(--primary-dark);
+    }
+
+    body.dark .nav .active {
+      background: #172554;
+      color: #93c5fd;
+    }
+
+    .theme-btn {
+      border: 1px solid var(--border) !important;
+    }
+
+    .logout-btn {
+      color: var(--danger) !important;
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    .container {
+      max-width: 1250px;
+      margin: auto;
+      padding: 28px 20px 50px;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37, 99, 235, 0.98),
+          rgba(29, 78, 216, 0.9)
+        );
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 18px 45px rgba(37, 99, 235, 0.2);
+      margin-bottom: 24px;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero::before {
+      width: 230px;
+      height: 230px;
+      right: -70px;
+      top: -100px;
+    }
+
+    .hero::after {
+      width: 160px;
+      height: 160px;
+      right: 100px;
+      bottom: -110px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.22);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      font-size: clamp(25px, 4vw, 38px);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      font-size: 15px;
+      opacity: 0.93;
+    }
+
+    .student-mini {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .student-mini span {
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    /* =========================
+       SUMMARY
+    ========================== */
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .summary-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .summary-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .summary-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      background: #eff6ff;
+    }
+
+    body.dark .summary-icon {
+      background: #172554;
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 27px;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .summary-card span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* =========================
+       TOOLBAR
+    ========================== */
+
+    .toolbar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 17px;
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    .toolbar-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) 220px 150px;
+      gap: 12px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      height: 47px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      outline: none;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .reset-btn {
+      height: 47px;
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--card);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .reset-btn:hover {
+      background: var(--bg);
+    }
+
+    .toolbar-info {
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* =========================
+       SECTION HEADER
+    ========================== */
+
+    .section-title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 30px 0 16px;
+    }
+
+    .section-title h3 {
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =========================
+       NOTIFICATION LIST
+    ========================== */
+
+    .notification-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .notification-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 19px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 15px;
+      align-items: start;
+      transition: 0.25s ease;
+    }
+
+    .notification-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(37,99,235,0.35);
+    }
+
+    .notification-card.unread {
+      border-left: 4px solid var(--primary);
+    }
+
+    .notification-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      background: #eff6ff;
+    }
+
+    body.dark .notification-icon {
+      background: #172554;
+    }
+
+    .notification-content h4 {
+      font-size: 17px;
+      line-height: 1.4;
+      margin-bottom: 5px;
+    }
+
+    .notification-content p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .notification-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .meta {
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .type-badge {
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .type-class {
+      color: #1d4ed8;
+      background: #dbeafe;
+    }
+
+    .type-assignment {
+      color: #9a3412;
+      background: #ffedd5;
+    }
+
+    .type-quiz {
+      color: #6d28d9;
+      background: #ede9fe;
+    }
+
+    .type-result {
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    .type-general {
+      color: #475569;
+      background: #e2e8f0;
+    }
+
+    body.dark .type-class {
+      color: #93c5fd;
+      background: #172554;
+    }
+
+    body.dark .type-assignment {
+      color: #fdba74;
+      background: #431407;
+    }
+
+    body.dark .type-quiz {
+      color: #c4b5fd;
+      background: #2e1065;
+    }
+
+    body.dark .type-result {
+      color: #86efac;
+      background: #052e16;
+    }
+
+    body.dark .type-general {
+      color: #cbd5e1;
+      background: #1e293b;
+    }
+
+    .notification-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .read-btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 9px;
+      padding: 7px 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .read-btn:hover {
+      background: var(--bg);
+    }
+
+    .unread-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    /* =========================
+       EMPTY
+    ========================== */
+
+    .empty-state {
+      display: none;
+      text-align: center;
+      background: var(--card);
+      border: 1px dashed var(--border);
+      border-radius: 18px;
+      padding: 45px 20px;
+    }
+
+    .empty-icon {
+      font-size: 45px;
+      margin-bottom: 8px;
+    }
+
+    .empty-state h4 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =========================
+       COURSE INFO
+    ========================== */
+
+    .course-info {
+      margin-top: 30px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .course-info h3 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .info-item {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 13px;
+    }
+
+    .info-item small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .info-item strong {
+      font-size: 14px;
+    }
+
+    /* =========================
+       NOTICE
+    ========================== */
+
+    .notice {
+      margin-top: 22px;
+      padding: 15px 17px;
+      border-radius: 14px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1e40af;
+      font-size: 13px;
+    }
+
+    body.dark .notice {
+      background: #172554;
+      border-color: #1e3a8a;
+      color: #bfdbfe;
+    }
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(650px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+    }
+
+    .modal-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-header h3 {
+      font-size: 19px;
+    }
+
+    .close-btn {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 10px;
+      font-size: 20px;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-body p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .modal-footer {
+      padding: 0 20px 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+    }
+
+    .modal-btn {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .modal-btn.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer {
+      margin-top: 35px;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 1250px;
+      margin: auto;
+      padding: 25px 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 1050px) {
+
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .toolbar-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .reset-btn {
+        grid-column: span 2;
+      }
+
+    }
+
+    @media (max-width: 800px) {
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .nav a,
+      .nav button {
+        white-space: nowrap;
+      }
+
+      .hero {
+        padding: 25px 20px;
+      }
+
+      .notification-card {
+        grid-template-columns: 52px 1fr;
+      }
+
+      .notification-actions {
+        grid-column: 2;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        padding: 20px 14px 40px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .toolbar-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reset-btn {
+        grid-column: auto;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .notification-card {
+        grid-template-columns: 1fr;
+      }
+
+      .notification-actions {
+        grid-column: auto;
+      }
+
+      .notification-icon {
+        width: 48px;
+        height: 48px;
+      }
+
+      .hero h2 {
+        font-size: 27px;
+      }
+
+      .student-mini {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .student-mini span {
+        width: 100%;
+      }
+
+      .section-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+    }
+
+    @media (max-width: 420px) {
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card strong {
+        font-size: 25px;
+      }
+
+    }
+
+    /* =========================
+       PRINT
+    ========================== */
+
+    @media print {
+
+      body {
+        background: white !important;
+        color: black !important;
+      }
+
+      .topbar,
+      .header,
+      .toolbar,
+      .notification-actions,
+      .notice,
+      footer,
+      .modal {
+        display: none !important;
+      }
+
+      .container {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .hero {
+        color: black;
+        background: white;
+        box-shadow: none;
+        border-bottom: 2px solid #ddd;
+        border-radius: 0;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .notification-card,
+      .course-info {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+      }
+
+    }
+
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+
+  <div class="topbar">
+    🎓 SNK IT Institute Student Portal • Class Starts 08 September 2026
+  </div>
+
+
+  <!-- HEADER -->
+
+  <header class="header">
+
+    <div class="header-inner">
+
+      <a href="student-dashboard.html" class="brand">
+
+        <img
+          src="https://raw.githubusercontent.com/yourdocuments/products/main/snkitlogo%20(2).svg"
+          alt="SNK IT Institute Logo"
+        >
+
+        <div class="brand-text">
+          <h1>SNK IT Institute</h1>
+          <p>Student Portal</p>
+        </div>
+
+      </a>
+
+
+      <nav class="nav">
+
+        <a href="student-dashboard.html">
+          🏠 Dashboard
+        </a>
+
+        <a href="courses.html">
+          📚 My Course
+        </a>
+
+        <a href="assignments.html">
+          📝 Assignment
+        </a>
+
+        <a href="quiz.html">
+          🧠 Quiz
+        </a>
+
+        <a href="results.html">
+          📊 Result
+        </a>
+
+        <a href="student-resources.html">
+          📁 Resources
+        </a>
+
+        <a href="student-notifications.html" class="active">
+          🔔 Notifications
+        </a>
+
+        <button
+          class="theme-btn"
+          id="themeBtn"
+          type="button"
+          onclick="toggleTheme()"
+        >
+          🌙
+        </button>
+
+        <button
+          class="logout-btn"
+          type="button"
+          onclick="logoutStudent()"
+        >
+          Logout
+        </button>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+  <!-- MAIN -->
+
+  <main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="hero-badge">
+          🔔 Student Notifications
+        </div>
+
+        <h2>
+          আপনার গুরুত্বপূর্ণ Notice ও Announcement
+        </h2>
+
+        <p>
+          Class schedule, Assignment deadline, Quiz,
+          Result এবং অন্যান্য গুরুত্বপূর্ণ Student Notice
+          এখানে দেখতে পারবেন।
+        </p>
+
+        <div class="student-mini">
+
+          <span>
+            👤 Student:
+            <strong id="studentName">Student</strong>
+          </span>
+
+          <span>
+            🆔 ID:
+            <strong id="studentId">SNK-1001</strong>
+          </span>
+
+          <span>
+            🎓 Batch:
+            <strong>Batch 01</strong>
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+
+    <section class="summary-grid">
+
+      <div class="summary-card">
+
+        <div class="summary-top">
+          <div class="summary-icon">🔔</div>
+        </div>
+
+        <strong id="totalCount">0</strong>
+
+        <span>
+          মোট Notification
+        </span>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-top">
+          <div class="summary-icon">📩</div>
+        </div>
+
+        <strong id="unreadCount">0</strong>
+
+        <span>
+          Unread
+        </span>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-top">
+          <div class="summary-icon">📝</div>
+        </div>
+
+        <strong id="assignmentCount">0</strong>
+
+        <span>
+          Assignment Notice
+        </span>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <div class="summary-top">
+          <div class="summary-icon">🎓</div>
+        </div>
+
+        <strong id="classCount">0</strong>
+
+        <span>
+          Class Notice
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <section class="toolbar">
+
+      <div class="toolbar-grid">
+
+        <div class="field">
+
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="🔎 Notification খুঁজুন..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <select id="typeFilter">
+
+            <option value="all">
+              সব ধরনের Notice
+            </option>
+
+            <option value="class">
+              🎓 Class
+            </option>
+
+            <option value="assignment">
+              📝 Assignment
+            </option>
+
+            <option value="quiz">
+              🧠 Quiz
+            </option>
+
+            <option value="result">
+              📊 Result
+            </option>
+
+            <option value="general">
+              📢 General
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <button
+          class="reset-btn"
+          type="button"
+          onclick="resetFilters()"
+        >
+          Reset
+        </button>
+
+      </div>
+
+
+      <div
+        class="toolbar-info"
+        id="filterInfo"
+      >
+        সব Notification দেখানো হচ্ছে।
+      </div>
+
+    </section>
+
+
+    <!-- SECTION -->
+
+    <div class="section-title">
+
+      <div>
+        <h3>🔔 Notifications</h3>
+        <p>
+          সর্বশেষ Student Portal updates
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- NOTIFICATION LIST -->
+
+    <section
+      class="notification-list"
+      id="notificationList"
+    >
+
+
+      <!-- 1 -->
+
+      <article
+        class="notification-card unread"
+        data-type="class"
+        data-id="notice-1"
+        data-search="class starts tomorrow september 8 2026 computer office application batch 01 class"
+      >
+
+        <div class="notification-icon">
+          🎓
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            Class Starts Tomorrow — 08 September 2026
+          </h4>
+
+          <p>
+            আপনার Computer Office Application — Batch 01
+            এর Offline Class আগামীকাল 08 September 2026
+            থেকে শুরু হবে। Class time: 4:00 PM – 6:00 PM।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              🎓 Class Notice
+            </span>
+
+            <span class="meta">
+              Batch 01
+            </span>
+
+            <span class="meta">
+              4:00 PM – 6:00 PM
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            07 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            <span class="unread-dot"></span>
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- 2 -->
+
+      <article
+        class="notification-card unread"
+        data-type="assignment"
+        data-id="notice-2"
+        data-search="ms word assignment deadline 10 september 2026 20 marks submission"
+      >
+
+        <div class="notification-icon">
+          📝
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            MS Word Assignment — Deadline Reminder
+          </h4>
+
+          <p>
+            MS Word Assignment জমা দেওয়ার শেষ সময়
+            10 September 2026। Assignment-এর মোট নম্বর
+            20। সময়মতো submission সম্পন্ন করুন।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              📝 Assignment
+            </span>
+
+            <span class="meta">
+              20 Marks
+            </span>
+
+            <span class="meta">
+              Deadline: 10 Sep
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            07 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            <span class="unread-dot"></span>
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- 3 -->
+
+      <article
+        class="notification-card unread"
+        data-type="general"
+        data-id="notice-3"
+        data-search="student portal welcome important notice batch 01"
+      >
+
+        <div class="notification-icon">
+          📢
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            Welcome to SNK AI Student Portal
+          </h4>
+
+          <p>
+            Student Portal-এর Dashboard থেকে Course,
+            Assignment, Quiz, Result, Attendance,
+            Resources এবং অন্যান্য সুবিধা ব্যবহার করতে পারবেন।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              📢 General
+            </span>
+
+            <span class="meta">
+              Student Portal
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            06 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            <span class="unread-dot"></span>
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- 4 -->
+
+      <article
+        class="notification-card"
+        data-type="quiz"
+        data-id="notice-4"
+        data-search="computer basics quiz 5 minutes 3 questions quiz"
+      >
+
+        <div class="notification-icon">
+          🧠
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            Computer Basics Quiz Available
+          </h4>
+
+          <p>
+            Computer Basics-এর Demo Quiz Student Portal-এর
+            Quiz page থেকে শুরু করতে পারবেন। Quiz-এ
+            3টি প্রশ্ন এবং 5 মিনিটের timer রয়েছে।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              🧠 Quiz
+            </span>
+
+            <span class="meta">
+              3 Questions
+            </span>
+
+            <span class="meta">
+              5 Minutes
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            05 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- 5 -->
+
+      <article
+        class="notification-card"
+        data-type="assignment"
+        data-id="notice-5"
+        data-search="ms excel assignment upcoming 12 september 25 september 25 marks"
+      >
+
+        <div class="notification-icon">
+          📊
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            MS Excel Assignment — Upcoming
+          </h4>
+
+          <p>
+            MS Excel Assignment 12 September 2026 থেকে
+            available হবে এবং deadline 25 September 2026।
+            মোট নম্বর 25।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              📊 MS Excel
+            </span>
+
+            <span class="meta">
+              25 Marks
+            </span>
+
+            <span class="meta">
+              Upcoming
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            05 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- 6 -->
+
+      <article
+        class="notification-card"
+        data-type="class"
+        data-id="notice-6"
+        data-search="class schedule saturday sunday monday 4 pm 6 pm offline"
+      >
+
+        <div class="notification-icon">
+          🕓
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            Class Schedule — Batch 01
+          </h4>
+
+          <p>
+            Batch 01-এর Offline Class হবে
+            Saturday – Monday, প্রতিদিন 4:00 PM – 6:00 PM।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              🎓 Batch 01
+            </span>
+
+            <span class="meta">
+              Saturday – Monday
+            </span>
+
+            <span class="meta">
+              4:00 PM – 6:00 PM
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            04 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- 7 -->
+
+      <article
+        class="notification-card"
+        data-type="result"
+        data-id="notice-7"
+        data-search="result quiz result pending student result"
+      >
+
+        <div class="notification-icon">
+          📊
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            Result Section Ready
+          </h4>
+
+          <p>
+            Quiz complete করার পর আপনার result
+            Student Portal-এর Result page-এ দেখতে পারবেন।
+            নতুন result থাকলে এখানে notification দেখানো যাবে।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              📊 Result
+            </span>
+
+            <span class="meta">
+              Student Result
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            03 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+      <!-- 8 -->
+
+      <article
+        class="notification-card"
+        data-type="general"
+        data-id="notice-8"
+        data-search="resources notes documents videos student learning materials"
+      >
+
+        <div class="notification-icon">
+          📚
+        </div>
+
+
+        <div class="notification-content">
+
+          <h4>
+            Learning Resources Available
+          </h4>
+
+          <p>
+            Student Resources page-এ Class Notes,
+            Documents, Video/Class Materials এবং
+            Important Links পাওয়া যাবে।
+          </p>
+
+          <div class="notification-meta">
+
+            <span class="meta">
+              📚 Resources
+            </span>
+
+            <span class="meta">
+              Notes
+            </span>
+
+            <span class="meta">
+              Videos
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="notification-actions">
+
+          <span class="date">
+            02 Sep 2026
+          </span>
+
+          <button
+            class="read-btn"
+            type="button"
+            onclick="markRead(this)"
+          >
+            Mark Read
+          </button>
+
+        </div>
+
+      </article>
+
+
+    </section>
+
+
+    <!-- EMPTY -->
+
+    <div
+      class="empty-state"
+      id="emptyState"
+    >
+
+      <div class="empty-icon">
+        🔎
+      </div>
+
+      <h4>
+        কোনো Notification পাওয়া যায়নি
+      </h4>
+
+      <p>
+        Search অথবা Type Filter পরিবর্তন করে আবার চেষ্টা করুন।
+      </p>
+
+    </div>
+
+
+    <!-- COURSE INFO -->
+
+    <section class="course-info">
+
+      <h3>
+        🎓 Course Information
+      </h3>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <small>Course</small>
+          <strong>Computer Office Application</strong>
+        </div>
+
+        <div class="info-item">
+          <small>Batch</small>
+          <strong>Batch 01</strong>
+        </div>
+
+        <div class="info-item">
+          <small>Mode</small>
+          <strong>Offline</strong>
+        </div>
+
+        <div class="info-item">
+          <small>Duration</small>
+          <strong>6 Months</strong>
+        </div>
+
+        <div class="info-item">
+          <small>Class Days</small>
+          <strong>Saturday – Monday</strong>
+        </div>
+
+        <div class="info-item">
+          <small>Class Time</small>
+          <strong>4:00 PM – 6:00 PM</strong>
+        </div>
+
+        <div class="info-item">
+          <small>Instructor</small>
+          <strong>SNK AI Instructor</strong>
+        </div>
+
+        <div class="info-item">
+          <small>Class Start</small>
+          <strong>08 September 2026</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NOTICE -->
+
+    <div class="notice">
+
+      💡 <strong>নোট:</strong>
+      বর্তমানে Notificationগুলো demo/local data হিসেবে রাখা হয়েছে।
+      পরবর্তী ধাপে Admin Dashboard থেকে real notification তৈরি,
+      publish এবং student-wise notification system যুক্ত করা যাবে।
+
+    </div>
+
+  </main>
+
+
+  <!-- MODAL -->
+
+  <div
+    class="modal"
+    id="notificationModal"
+    onclick="closeModalOutside(event)"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h3 id="modalTitle">
+          Notification
+        </h3>
+
+        <button
+          class="close-btn"
+          type="button"
+          onclick="closeModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <p id="modalText">
+          Notification details
+        </p>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button
+          class="modal-btn"
+          type="button"
+          onclick="closeModal()"
+        >
+          Close
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-inner">
+
+      <p>
+        © 2026 SNK IT Institute. All Rights Reserved.
+      </p>
+
+      <div class="footer-links">
+
+        <a href="student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="student-profiles.html">
+          Profile
+        </a>
+
+        <a href="student-attendance.html">
+          Attendance
+        </a>
+
+        <a href="student-certificates.html">
+          Certificate
+        </a>
+
+        <a href="student-id-cards.html">
+          ID Card
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    /* ==========================================
+       LOGIN PROTECTION
+    ========================================== */
+
+    const isLoggedIn =
+      sessionStorage.getItem("snkStudentLoggedIn") === "true";
+
+    if (!isLoggedIn) {
+      window.location.replace("login.html");
+    }
+
+
+    /* ==========================================
+       STUDENT INFORMATION
+    ========================================== */
+
+    const studentId =
+      sessionStorage.getItem("snkStudentId") || "SNK-1001";
+
+    const studentName =
+      sessionStorage.getItem("snkStudentName") || "Demo Student";
+
+    document.getElementById("studentId").textContent =
+      studentId;
+
+    document.getElementById("studentName").textContent =
+      studentName;
+
+
+    /* ==========================================
+       THEME
+    ========================================== */
+
+    function applyTheme() {
+
+      const theme =
+        localStorage.getItem("snkTheme") || "light";
+
+      if (theme === "dark") {
+
+        document.body.classList.add("dark");
+
+        document.getElementById("themeBtn").textContent =
+          "☀️";
+
+      } else {
+
+        document.body.classList.remove("dark");
+
+        document.getElementById("themeBtn").textContent =
+          "🌙";
+
+      }
+
+    }
+
+
+    function toggleTheme() {
+
+      const dark =
+        document.body.classList.contains("dark");
+
+      localStorage.setItem(
+        "snkTheme",
+        dark ? "light" : "dark"
+      );
+
+      applyTheme();
+
+    }
+
+
+    applyTheme();
+
+
+    /* ==========================================
+       NOTIFICATION ELEMENTS
+    ========================================== */
+
+    const notificationList =
+      document.getElementById("notificationList");
+
+    const cards =
+      Array.from(
+        document.querySelectorAll(".notification-card")
+      );
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const typeFilter =
+      document.getElementById("typeFilter");
+
+    const emptyState =
+      document.getElementById("emptyState");
+
+
+    /* ==========================================
+       READ STORAGE
+    ========================================== */
+
+    const READ_KEY =
+      "snkStudentReadNotifications";
+
+
+    function getReadNotifications() {
+
+      try {
+
+        const data =
+          localStorage.getItem(READ_KEY);
+
+        if (!data) {
+          return [];
+        }
+
+        const parsed =
+          JSON.parse(data);
+
+        return Array.isArray(parsed)
+          ? parsed
+          : [];
+
+      } catch (error) {
+
+        return [];
+
+      }
+
+    }
+
+
+    function saveReadNotifications(list) {
+
+      localStorage.setItem(
+        READ_KEY,
+        JSON.stringify(list)
+      );
+
+    }
+
+
+    /* ==========================================
+       APPLY SAVED READ STATE
+    ========================================== */
+
+    function applyReadState() {
+
+      const readList =
+        getReadNotifications();
+
+      cards.forEach(card => {
+
+        const id =
+          card.dataset.id;
+
+        const button =
+          card.querySelector(".read-btn");
+
+        if (readList.includes(id)) {
+
+          card.classList.remove("unread");
+
+          if (button) {
+
+            button.innerHTML =
+              "✓ Read";
+
+          }
+
+        }
+
+      });
+
+    }
+
+
+    applyReadState();
+
+
+    /* ==========================================
+       MARK READ
+    ========================================== */
+
+    function markRead(button) {
+
+      const card =
+        button.closest(".notification-card");
+
+      if (!card) {
+        return;
+      }
+
+      const id =
+        card.dataset.id;
+
+      const readList =
+        getReadNotifications();
+
+      if (!readList.includes(id)) {
+
+        readList.push(id);
+
+        saveReadNotifications(
+          readList
+        );
+
+      }
+
+      card.classList.remove("unread");
+
+      button.innerHTML =
+        "✓ Read";
+
+      updateSummary();
+
+    }
+
+
+    /* ==========================================
+       SEARCH + FILTER
+    ========================================== */
+
+    function filterNotifications() {
+
+      const search =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+      const type =
+        typeFilter.value;
+
+      let visible =
+        0;
+
+      cards.forEach(card => {
+
+        const cardType =
+          card.dataset.type || "";
+
+        const searchData =
+          (
+            card.dataset.search ||
+            ""
+          ).toLowerCase();
+
+        const title =
+          card.querySelector("h4")
+            ?.textContent
+            .toLowerCase() || "";
+
+        const description =
+          card.querySelector("p")
+            ?.textContent
+            .toLowerCase() || "";
+
+        const matchesSearch =
+          !search ||
+          searchData.includes(search) ||
+          title.includes(search) ||
+          description.includes(search);
+
+        const matchesType =
+          type === "all" ||
+          cardType === type;
+
+        if (
+          matchesSearch &&
+          matchesType
+        ) {
+
+          card.style.display =
+            "grid";
+
+          visible++;
+
+        } else {
+
+          card.style.display =
+            "none";
+
+        }
+
+      });
+
+
+      if (visible === 0) {
+
+        emptyState.style.display =
+          "block";
+
+      } else {
+
+        emptyState.style.display =
+          "none";
+
+      }
+
+
+      document.getElementById(
+        "filterInfo"
+      ).textContent =
+        `${visible}টি Notification দেখানো হচ্ছে।`;
+
+    }
+
+
+    searchInput.addEventListener(
+      "input",
+      filterNotifications
+    );
+
+    typeFilter.addEventListener(
+      "change",
+      filterNotifications
+    );
+
+
+    function resetFilters() {
+
+      searchInput.value =
+        "";
+
+      typeFilter.value =
+        "all";
+
+      filterNotifications();
+
+    }
+
+
+    filterNotifications();
+
+
+    /* ==========================================
+       SUMMARY
+    ========================================== */
+
+    function updateSummary() {
+
+      const readList =
+        getReadNotifications();
+
+      const unread =
+        cards.filter(card =>
+          card.classList.contains("unread")
+        ).length;
+
+      const assignments =
+        cards.filter(card =>
+          card.dataset.type === "assignment"
+        ).length;
+
+      const classes =
+        cards.filter(card =>
+          card.dataset.type === "class"
+        ).length;
+
+
+      document.getElementById(
+        "totalCount"
+      ).textContent =
+        cards.length;
+
+
+      document.getElementById(
+        "unreadCount"
+      ).textContent =
+        unread;
+
+
+      document.getElementById(
+        "assignmentCount"
+      ).textContent =
+        assignments;
+
+
+      document.getElementById(
+        "classCount"
+      ).textContent =
+        classes;
+
+    }
+
+
+    updateSummary();
+
+
+    /* ==========================================
+       MODAL
+    ========================================== */
+
+    function openNotification(card) {
+
+      const title =
+        card.querySelector("h4")
+          ?.textContent ||
+        "Notification";
+
+      const text =
+        card.querySelector(".notification-content p")
+          ?.textContent ||
+        "";
+
+      document.getElementById(
+        "modalTitle"
+      ).textContent =
+        title;
+
+      document.getElementById(
+        "modalText"
+      ).textContent =
+        text;
+
+      document.getElementById(
+        "notificationModal"
+      ).classList.add("show");
+
+    }
+
+
+    function closeModal() {
+
+      document.getElementById(
+        "notificationModal"
+      ).classList.remove("show");
+
+    }
+
+
+    function closeModalOutside(event) {
+
+      if (
+        event.target ===
+        document.getElementById(
+          "notificationModal"
+        )
+      ) {
+
+        closeModal();
+
+      }
+
+    }
+
+
+    /* ==========================================
+       CARD CLICK
+    ========================================== */
+
+    cards.forEach(card => {
+
+      const content =
+        card.querySelector(".notification-content");
+
+      if (content) {
+
+        content.style.cursor =
+          "pointer";
+
+        content.addEventListener(
+          "click",
+          function() {
+
+            openNotification(card);
+
+            const button =
+              card.querySelector(".read-btn");
+
+            if (button) {
+              markRead(button);
+            }
+
+          }
+        );
+
+      }
+
+    });
+
+
+    /* ==========================================
+       ESCAPE MODAL
+    ========================================== */
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Escape") {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+    /* ==========================================
+       LOGOUT
+    ========================================== */
+
+    function logoutStudent() {
+
+      const confirmLogout =
+        confirm(
+          "আপনি কি Student Portal থেকে Logout করতে চান?"
+        );
+
+      if (!confirmLogout) {
+        return;
+      }
+
+      sessionStorage.removeItem(
+        "snkStudentLoggedIn"
+      );
+
+      sessionStorage.removeItem(
+        "snkStudentId"
+      );
+
+      sessionStorage.removeItem(
+        "snkStudentName"
+      );
+
+      sessionStorage.removeItem(
+        "snkStudentCourse"
+      );
+
+      window.location.replace(
+        "login.html"
+      );
+
+    }
+
+
+    /* ==========================================
+       VISIBILITY REFRESH
+    ========================================== */
+
+    document.addEventListener(
+      "visibilitychange",
+      function() {
+
+        if (
+          document.visibilityState ===
+          "visible"
+        ) {
+
+          applyTheme();
+
+          applyReadState();
+
+          updateSummary();
+
+          const updatedName =
+            sessionStorage.getItem(
+              "snkStudentName"
+            );
+
+          const updatedId =
+            sessionStorage.getItem(
+              "snkStudentId"
+            );
+
+          if (updatedName) {
+
+            document.getElementById(
+              "studentName"
+            ).textContent =
+              updatedName;
+
+          }
+
+          if (updatedId) {
+
+            document.getElementById(
+              "studentId"
+            ).textContent =
+              updatedId;
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /* ==========================================
+       STORAGE EVENT
+    ========================================== */
+
+    window.addEventListener(
+      "storage",
+      function() {
+
+        applyTheme();
+
+        applyReadState();
+
+        updateSummary();
+
+      }
+    );
+
+
+  </script>
+
+</body>
+</html>
+```

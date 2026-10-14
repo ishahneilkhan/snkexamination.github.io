@@ -1,0 +1,4216 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>SNK AI Academy | Admin Quiz Management</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#050505;
+  --bg2:#0a0a0a;
+  --card:#141414;
+  --card2:#181818;
+  --border:rgba(183,255,0,.14);
+  --text:#ffffff;
+  --muted:#999999;
+  --primary:#b7ff00;
+  --primary2:#ccff4d;
+  --success:#20c997;
+  --danger:#ff4545;
+  --warning:#ffbd59;
+  --info:#4dabf7;
+  --shadow:0 18px 50px rgba(0,0,0,.5);
+}
+
+body.light{
+  --bg:#f4f7fb;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card2:#f7f9fc;
+  --border:#dce3ee;
+  --text:#182235;
+  --muted:#68758a;
+  --primary:#5a8a00;
+  --primary2:#446b00;
+  --shadow:0 15px 40px rgba(27,39,67,.10);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(183,255,0,.12),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(77,171,247,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:260px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  background:rgba(10,15,27,.96);
+  border-right:1px solid var(--border);
+  z-index:1000;
+  overflow-y:auto;
+  transition:.25s ease;
+}
+
+body.light .sidebar{
+  background:#fff;
+}
+
+.sidebar-head{
+  padding:22px 18px;
+  border-bottom:1px solid var(--border);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:46px;
+  height:46px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#b7ff00;
+  color:#050505;
+  font-weight:900;
+  font-size:15px;
+}
+
+.brand-title{
+  font-size:16px;
+  font-weight:800;
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.nav{
+  padding:14px 10px 30px;
+}
+
+.nav-label{
+  color:#6f7c91;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:14px 12px 7px;
+}
+
+.nav a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:11px 12px;
+  border-radius:11px;
+  color:#aeb9ca;
+  font-size:14px;
+  margin:3px 0;
+  transition:.2s;
+}
+
+body.light .nav a{
+  color:#5d687b;
+}
+
+.nav a:hover,
+.nav a.active{
+  background:rgba(183,255,0,.15);
+  color:var(--primary);
+}
+
+body.light .nav a:hover,
+body.light .nav a.active{
+  color:var(--primary);
+}
+
+.nav-icon{
+  width:23px;
+  text-align:center;
+  font-size:16px;
+}
+
+.main{
+  width:calc(100% - 260px);
+  margin-left:260px;
+  min-width:0;
+}
+
+.topbar{
+  height:70px;
+  position:sticky;
+  top:0;
+  z-index:900;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  background:rgba(7,11,20,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+body.light .topbar{
+  background:rgba(255,255,255,.88);
+}
+
+.top-left{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.menu-btn{
+  display:none;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  width:40px;
+  height:40px;
+  border-radius:10px;
+}
+
+.page-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+.page-subtitle{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+}
+
+.container{
+  max-width:1500px;
+  margin:auto;
+  padding:25px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:28px;
+  background:
+    radial-gradient(circle at 90% 20%,rgba(183,255,0,.18),transparent 30%),
+    linear-gradient(135deg,var(--card),var(--card2));
+  box-shadow:var(--shadow);
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:240px;
+  height:240px;
+  right:-80px;
+  bottom:-100px;
+  border:1px solid rgba(183,255,0,.25);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 25px rgba(183,255,0,.04),
+    0 0 0 50px rgba(183,255,0,.025);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(32,201,151,.12);
+  color:#58e2b5;
+  border:1px solid rgba(32,201,151,.22);
+  font-size:12px;
+  font-weight:700;
+}
+
+.hero h1{
+  font-size:clamp(25px,3vw,40px);
+  margin:16px 0 8px;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:780px;
+  line-height:1.7;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:700;
+  font-size:13px;
+  transition:.2s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:#050505;
+  font-weight:800;
+}
+
+.btn-success{
+  background:var(--success);
+  color:#061a14;
+}
+
+.btn-danger{
+  background:var(--danger);
+  color:#fff;
+}
+
+.btn-warning{
+  background:var(--warning);
+  color:#281b00;
+}
+
+.btn-info{
+  background:var(--info);
+  color:#071522;
+}
+
+.btn-secondary{
+  background:var(--card2);
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+.btn-sm{
+  padding:8px 10px;
+  font-size:12px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat-value{
+  font-size:27px;
+  font-weight:800;
+  margin-top:8px;
+}
+
+.stat-small{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:18px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.card-head{
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+}
+
+.card-title{
+  font-size:16px;
+  font-weight:800;
+}
+
+.card-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.card-body{
+  padding:20px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.form-group.full{
+  grid-column:1/-1;
+}
+
+label{
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  background:var(--bg2);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:11px 12px;
+  outline:none;
+}
+
+textarea{
+  resize:vertical;
+  min-height:90px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(183,255,0,.10);
+}
+
+.checkbox-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text);
+  font-size:13px;
+}
+
+.checkbox-row input{
+  width:auto;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+  display:inline-flex;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.status.green{
+  background:rgba(32,201,151,.12);
+  color:#48dcae;
+}
+
+.status.red{
+  background:rgba(255,93,115,.12);
+  color:#ff7285;
+}
+
+.status.yellow{
+  background:rgba(255,189,89,.12);
+  color:#ffc86e;
+}
+
+.status.blue{
+  background:rgba(77,171,247,.12);
+  color:#70c1ff;
+}
+
+/* =========================
+   QUESTION BUILDER
+========================= */
+
+.question-list{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.question-card{
+  border:1px solid var(--border);
+  background:var(--card2);
+  border-radius:16px;
+  padding:17px;
+}
+
+.question-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.question-number{
+  font-weight:800;
+  font-size:14px;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+
+.correct-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:12px;
+}
+
+.correct-row select{
+  max-width:180px;
+}
+
+/* =========================
+   RESULTS
+========================= */
+
+.result-toolbar{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+th,
+td{
+  padding:12px 13px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  font-size:12px;
+}
+
+th{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.student-name{
+  font-weight:700;
+}
+
+.student-id{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.action-row{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.70);
+  backdrop-filter:blur(8px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:3000;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(760px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+
+.modal-head{
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.modal-foot{
+  padding:16px 20px;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+}
+
+/* =========================
+   NOTICE
+========================= */
+
+.notice{
+  padding:13px 15px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--card2);
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
+.notice strong{
+  color:var(--text);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#151d2e;
+  color:#fff;
+  border:1px solid #29364e;
+  border-radius:12px;
+  padding:12px 15px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+  transform:translateY(30px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:5000;
+  font-size:13px;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  padding:30px 0 10px;
+  font-size:11px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+  .stats{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    width:100%;
+    margin-left:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .grid-2{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:650px){
+  .topbar{
+    padding:0 14px;
+  }
+
+  .container{
+    padding:14px;
+  }
+
+  .hero{
+    padding:20px;
+    border-radius:18px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .option-grid{
+    grid-template-columns:1fr;
+  }
+
+  .top-actions .hide-mobile{
+    display:none;
+  }
+
+  .card-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+
+@media(max-width:430px){
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+}
+
+/* =========================
+   PRINT
+========================= */
+
+@media print{
+  .sidebar,
+  .topbar,
+  .no-print,
+  .modal,
+  .toast{
+    display:none!important;
+  }
+
+  .main{
+    margin:0;
+    width:100%;
+  }
+
+  body{
+    background:#fff;
+    color:#000;
+  }
+
+  .card,
+  .stat,
+  .hero{
+    box-shadow:none;
+    color:#000;
+    border:1px solid #ccc;
+  }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-head">
+    <div class="brand">
+      <div class="logo">SNK</div>
+
+      <div>
+        <div class="brand-title">SNK AI Academy</div>
+        <div class="brand-sub">Admin Control Panel</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+
+    <div class="nav-label">Main</div>
+
+    <a href="admin-dashboard.html">
+      <span class="nav-icon">🏠</span>
+      <span>Admin Dashboard</span>
+    </a>
+
+    <a href="admin.html" class="active">
+      <span class="nav-icon">📊</span>
+      <span>Quiz Management</span>
+    </a>
+
+    <a href="students.html">
+      <span class="nav-icon">👨‍🎓</span>
+      <span>Students</span>
+    </a>
+
+    <a href="courses.html">
+      <span class="nav-icon">📚</span>
+      <span>Courses</span>
+    </a>
+
+    <a href="admin-courses.html">
+      <span class="nav-icon">🗂️</span>
+      <span>Course Management</span>
+    </a>
+
+    <a href="admin-schedule.html">
+      <span class="nav-icon">⏰</span>
+      <span>Exam / Quiz Schedule</span>
+    </a>
+
+    <a href="admin-profile.html">
+      <span class="nav-icon">🛠️</span>
+      <span>Site Settings</span>
+    </a>
+
+    <div class="nav-label">Academic</div>
+
+    <a href="assignments.html">
+      <span class="nav-icon">📝</span>
+      <span>Assignments</span>
+    </a>
+
+    <a href="admin-submissions.html">
+      <span class="nav-icon">📥</span>
+      <span>Submissions</span>
+    </a>
+
+    <a href="quiz.html">
+      <span class="nav-icon">❓</span>
+      <span>Student Quiz</span>
+    </a>
+
+    <a href="admin-quiz-results.html">
+      <span class="nav-icon">📈</span>
+      <span>Quiz Results</span>
+    </a>
+
+    <a href="admin-quiz-result-details.html">
+      <span class="nav-icon">📄</span>
+      <span>Result Details</span>
+    </a>
+
+    <a href="admin-quiz-answer-review.html">
+      <span class="nav-icon">🔍</span>
+      <span>Answer Review</span>
+    </a>
+
+    <div class="nav-label">Exam</div>
+
+    <a href="student-result-details.html">
+      <span class="nav-icon">🎓</span>
+      <span>Exam Marksheet</span>
+    </a>
+
+    <a href="admin-attendance.html">
+      <span class="nav-icon">✅</span>
+      <span>Exam Attendance</span>
+    </a>
+
+    <div class="nav-label">Student Portal</div>
+
+    <a href="student-dashboard.html">
+      <span class="nav-icon">🏠</span>
+      <span>Student Dashboard</span>
+    </a>
+
+    <a href="student-resources.html">
+      <span class="nav-icon">📦</span>
+      <span>Resources</span>
+    </a>
+
+    <a href="student-notifications.html">
+      <span class="nav-icon">🔔</span>
+      <span>Notifications</span>
+    </a>
+
+    <a href="student-support.html">
+      <span class="nav-icon">💬</span>
+      <span>Support</span>
+    </a>
+
+  </nav>
+</aside>
+
+<!-- =========================
+     MAIN
+========================= -->
+<main class="main">
+
+  <header class="topbar">
+
+    <div class="top-left">
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        type="button"
+        aria-label="Menu"
+      >
+        ☰
+      </button>
+
+      <div>
+        <div class="page-title">Quiz Management</div>
+        <div class="page-subtitle">
+          Course, Quiz, Questions & Student Results
+        </div>
+      </div>
+
+    </div>
+
+    <div class="top-actions">
+
+      <button
+        class="icon-btn"
+        id="refreshBtn"
+        type="button"
+        title="Refresh"
+      >
+        ↻
+      </button>
+
+      <button
+        class="icon-btn"
+        id="themeBtn"
+        type="button"
+        title="Theme"
+      >
+        🌙
+      </button>
+
+    </div>
+
+  </header>
+
+  <div class="container">
+
+    <!-- =========================
+         HERO
+    ========================= -->
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <span class="badge">
+          ● ADMIN QUIZ CONTROL
+        </span>
+
+        <h1 id="heroQuizTitle">
+          Computer Basics Quiz
+        </h1>
+
+        <p>
+          এখান থেকে Admin এক জায়গা থেকেই Quiz-এর course,
+          date, timer, pass mark, questions এবং student result
+          manage করতে পারবেন।
+        </p>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;">
+
+          <button
+            class="btn btn-primary"
+            type="button"
+            onclick="scrollToSection('quizSettingsCard')"
+          >
+            ⚙ Quiz Settings
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            type="button"
+            onclick="scrollToSection('questionCard')"
+          >
+            ❓ Questions
+          </button>
+
+          <button
+            class="btn btn-success"
+            type="button"
+            onclick="publishQuiz()"
+          >
+            🚀 Publish Quiz
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         STATS
+    ========================= -->
+    <section class="stats">
+
+      <div class="stat">
+        <div class="stat-label">Quiz Status</div>
+        <div class="stat-value" id="statPublished">Draft</div>
+        <div class="stat-small">Published / Unpublished</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Questions</div>
+        <div class="stat-value" id="statQuestions">0</div>
+        <div class="stat-small">Required: 10</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Submitted</div>
+        <div class="stat-value" id="statSubmitted">0</div>
+        <div class="stat-small">Student attempts</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Passed</div>
+        <div class="stat-value" id="statPassed">0</div>
+        <div class="stat-small">Based on pass mark</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Average</div>
+        <div class="stat-value" id="statAverage">0%</div>
+        <div class="stat-small">Submitted results</div>
+      </div>
+
+    </section>
+
+    <!-- =========================
+         COURSE + QUIZ
+    ========================= -->
+    <section class="grid-2">
+
+      <!-- COURSE -->
+      <div class="card">
+
+        <div class="card-head">
+
+          <div>
+            <div class="card-title">📚 Course Settings</div>
+            <div class="card-sub">
+              Student portal-এর course information
+            </div>
+          </div>
+
+          <span class="status blue">SYNC</span>
+
+        </div>
+
+        <div class="card-body">
+
+          <form id="courseForm">
+
+            <div class="form-grid">
+
+              <div class="form-group full">
+                <label>Course Name</label>
+                <input
+                  id="courseName"
+                  type="text"
+                  placeholder="Course Name"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Batch</label>
+                <input
+                  id="courseBatch"
+                  type="text"
+                  placeholder="Batch 01"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Mode</label>
+                <select id="courseMode">
+                  <option value="Offline">Offline</option>
+                  <option value="Online">Online</option>
+                  <option value="Hybrid">Hybrid</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Duration</label>
+                <input
+                  id="courseDuration"
+                  type="text"
+                  placeholder="6 Months"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Class Days</label>
+                <input
+                  id="courseDays"
+                  type="text"
+                  placeholder="Saturday–Monday"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Class Time</label>
+                <input
+                  id="courseTime"
+                  type="text"
+                  placeholder="4:00 PM – 6:00 PM"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Instructor</label>
+                <input
+                  id="courseInstructor"
+                  type="text"
+                  placeholder="SNK AI Instructor"
+                >
+              </div>
+
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;margin-top:15px;">
+
+              <button
+                class="btn btn-primary"
+                type="submit"
+              >
+                💾 Save Course
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+      <!-- QUIZ SETTINGS -->
+      <div class="card" id="quizSettingsCard">
+
+        <div class="card-head">
+
+          <div>
+            <div class="card-title">⚙ Quiz Settings</div>
+            <div class="card-sub">
+              Date window, timer & result rules
+            </div>
+          </div>
+
+          <span
+            id="quizStatusBadge"
+            class="status yellow"
+          >
+            DRAFT
+          </span>
+
+        </div>
+
+        <div class="card-body">
+
+          <form id="quizForm">
+
+            <div class="form-grid">
+
+              <div class="form-group full">
+                <label>Quiz Title</label>
+                <input
+                  id="quizTitle"
+                  type="text"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Start Date</label>
+                <input
+                  id="quizStartDate"
+                  type="date"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label>End Date</label>
+                <input
+                  id="quizEndDate"
+                  type="date"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Duration (Minutes)</label>
+                <input
+                  id="quizDuration"
+                  type="number"
+                  min="1"
+                  max="300"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Marks Per Question</label>
+                <input
+                  id="quizMarks"
+                  type="number"
+                  min="1"
+                  max="100"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Pass Percentage</label>
+                <input
+                  id="quizPass"
+                  type="number"
+                  min="1"
+                  max="100"
+                  required
+                >
+              </div>
+
+              <div class="form-group">
+                <label>Quiz ID</label>
+                <input
+                  id="quizId"
+                  type="text"
+                  readonly
+                >
+              </div>
+
+            </div>
+
+            <div style="margin-top:15px;display:flex;flex-direction:column;gap:10px;">
+
+              <label class="checkbox-row">
+                <input
+                  id="oneAttemptOnly"
+                  type="checkbox"
+                >
+                <span>একজন Student শুধুমাত্র ১ বার submit করতে পারবে</span>
+              </label>
+
+              <label class="checkbox-row">
+                <input
+                  id="autoSubmit"
+                  type="checkbox"
+                >
+                <span>Timer শেষ হলে automatically submit হবে</span>
+              </label>
+
+              <label class="checkbox-row">
+                <input
+                  id="published"
+                  type="checkbox"
+                >
+                <span>Quiz Student-এর জন্য Published থাকবে</span>
+              </label>
+
+            </div>
+
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:17px;flex-wrap:wrap;">
+
+              <button
+                class="btn btn-secondary"
+                type="button"
+                onclick="resetQuizSettings()"
+              >
+                ↺ Reset
+              </button>
+
+              <button
+                class="btn btn-primary"
+                type="submit"
+              >
+                💾 Save Quiz Settings
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         NOTICE
+    ========================= -->
+    <div class="notice" style="margin-top:18px;">
+
+      <strong>Important:</strong>
+      Student-এর timer Quiz Start button চাপার পরে শুরু হবে।
+      Date window শুধু কোন তারিখে Quiz শুরু করা যাবে তা control করবে।
+      Student refresh করলে active attempt continue করবে।
+
+    </div>
+
+    <!-- =========================
+         QUESTIONS
+    ========================= -->
+    <section class="card" id="questionCard" style="margin-top:18px;">
+
+      <div class="card-head">
+
+        <div>
+          <div class="card-title">❓ Quiz Questions</div>
+          <div class="card-sub">
+            Exactly 10টি MCQ রাখতে হবে
+          </div>
+        </div>
+
+        <div class="result-toolbar">
+
+          <button
+            class="btn btn-secondary btn-sm"
+            type="button"
+            onclick="loadQuestionsIntoBuilder()"
+          >
+            ↻ Reload
+          </button>
+
+          <button
+            class="btn btn-primary btn-sm"
+            type="button"
+            onclick="addQuestion()"
+            id="addQuestionBtn"
+          >
+            ＋ Add Question
+          </button>
+
+          <button
+            class="btn btn-success btn-sm"
+            type="button"
+            onclick="saveQuestions()"
+          >
+            💾 Save Questions
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="card-body">
+
+        <div
+          class="notice"
+          style="margin-bottom:15px;"
+        >
+          প্রতিটি Question-এ Question Text, A/B/C/D options এবং Correct Answer
+          অবশ্যই দিতে হবে।
+        </div>
+
+        <div
+          class="question-list"
+          id="questionList"
+        ></div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================
+         RESULTS
+    ========================= -->
+    <section class="card" style="margin-top:18px;">
+
+      <div class="card-head">
+
+        <div>
+          <div class="card-title">📈 Student Quiz Results</div>
+          <div class="card-sub">
+            সর্বশেষ student submissions
+          </div>
+        </div>
+
+        <div class="result-toolbar">
+
+          <button
+            class="btn btn-secondary btn-sm"
+            type="button"
+            onclick="location.href='admin-quiz-results.html'"
+          >
+            Open Full Results
+          </button>
+
+          <button
+            class="btn btn-secondary btn-sm"
+            type="button"
+            onclick="printPage()"
+          >
+            🖨 Print
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="card-body">
+
+        <div class="result-toolbar" style="margin-bottom:14px;">
+
+          <input
+            id="resultSearch"
+            type="search"
+            placeholder="Student ID / Name search..."
+            style="max-width:300px;"
+          >
+
+          <select
+            id="resultFilter"
+            style="max-width:180px;"
+          >
+            <option value="all">All Results</option>
+            <option value="pass">Passed</option>
+            <option value="fail">Failed</option>
+            <option value="published">Published</option>
+            <option value="unpublished">Unpublished</option>
+          </select>
+
+        </div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Student</th>
+                <th>Score</th>
+                <th>Correct</th>
+                <th>Wrong</th>
+                <th>Unanswered</th>
+                <th>Result</th>
+                <th>Published</th>
+                <th>Submitted</th>
+                <th>Action</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="resultTableBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <div class="footer">
+      SNK AI Academy Admin Panel • Quiz Management v2.5.11
+    </div>
+
+  </div>
+
+</main>
+
+</div>
+
+<!-- =========================
+     RESULT MODAL
+========================= -->
+<div
+  class="modal"
+  id="resultModal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <div>
+        <div class="card-title">Student Result</div>
+        <div
+          class="card-sub"
+          id="modalStudentName"
+        >
+          Result Details
+        </div>
+      </div>
+
+      <button
+        class="icon-btn"
+        type="button"
+        onclick="closeModal()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div
+        id="modalResultContent"
+      ></div>
+
+      <div class="form-group" style="margin-top:18px;">
+
+        <label>Admin Note</label>
+
+        <textarea
+          id="adminNote"
+          placeholder="Optional admin note..."
+        ></textarea>
+
+      </div>
+
+    </div>
+
+    <div class="modal-foot">
+
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="closeModal()"
+      >
+        Close
+      </button>
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        onclick="saveAdminNote()"
+      >
+        💾 Save Note
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     TOAST
+========================= -->
+<div
+  class="toast"
+  id="toast"
+></div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE = {
+  theme: "snkTheme",
+
+  course: "snkCourseSettingsV25",
+
+  quiz: "snkQuizSettingsV25",
+
+  questions: "snkQuizQuestionsV25",
+
+  results: "snkQuizResults",
+
+  students: "snkStudents",
+
+  activeAttempt: "snkQuizActiveAttemptV25",
+
+  attemptLock: "snkQuizAttemptLockV25"
+};
+
+
+/* =========================================================
+   DEFAULT COURSE
+========================================================= */
+
+const DEFAULT_COURSE = {
+  name: "আপনার কোর্স",
+  batch: "Batch 01",
+  mode: "Offline",
+  duration: "6 Months",
+  days: "Saturday–Monday",
+  time: "4:00 PM – 6:00 PM",
+  instructor: "SNK AI Instructor"
+};
+
+
+/* =========================================================
+   DEFAULT QUIZ
+========================================================= */
+
+const DEFAULT_QUIZ = {
+  id: "SNK-QUIZ-2026-01",
+
+  title: "Computer Basics Quiz",
+
+  startDate: "2026-09-10",
+
+  endDate: "2026-09-15",
+
+  durationMinutes: 20,
+
+  marksPerQuestion: 1,
+
+  passPercentage: 40,
+
+  oneAttemptOnly: true,
+
+  autoSubmit: true,
+
+  published: false
+};
+
+
+/* =========================================================
+   DEFAULT QUESTIONS
+========================================================= */
+
+const DEFAULT_QUESTIONS = [
+
+  {
+    id: "Q1",
+    question: "কম্পিউটারের প্রধান মস্তিষ্ক কোনটি?",
+    options: {
+      A: "CPU",
+      B: "Monitor",
+      C: "Keyboard",
+      D: "Mouse"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q2",
+    question: "কোনটি একটি Input Device?",
+    options: {
+      A: "Monitor",
+      B: "Printer",
+      C: "Keyboard",
+      D: "Speaker"
+    },
+    correctAnswer: "C"
+  },
+
+  {
+    id: "Q3",
+    question: "MS Word মূলত কী কাজে ব্যবহার করা হয়?",
+    options: {
+      A: "Document তৈরি ও সম্পাদনা",
+      B: "ভিডিও দেখা",
+      C: "গান শোনা",
+      D: "ছবি তোলা"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q4",
+    question: "কোনটি একটি Operating System?",
+    options: {
+      A: "Windows",
+      B: "Google",
+      C: "YouTube",
+      D: "Facebook"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q5",
+    question: "Keyboard-এর Enter key সাধারণত কী কাজে ব্যবহৃত হয়?",
+    options: {
+      A: "নতুন line বা command confirm",
+      B: "কম্পিউটার বন্ধ",
+      C: "শব্দ বাড়ানো",
+      D: "ছবি আঁকা"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q6",
+    question: "MS Excel-এ তথ্য সাধারণত কোথায় লেখা হয়?",
+    options: {
+      A: "Cell",
+      B: "Slide",
+      C: "Page",
+      D: "Frame"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q7",
+    question: "Internet ব্যবহার করতে কোনটি প্রয়োজন হতে পারে?",
+    options: {
+      A: "Network Connection",
+      B: "Printer Ink",
+      C: "Paper",
+      D: "Scanner Glass"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q8",
+    question: "PowerPoint মূলত কী তৈরির জন্য ব্যবহার করা হয়?",
+    options: {
+      A: "Presentation",
+      B: "Database Server",
+      C: "Operating System",
+      D: "Keyboard Driver"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q9",
+    question: "কম্পিউটারে লেখা মুছে ফেলতে কোন key ব্যবহার করা যায়?",
+    options: {
+      A: "Backspace",
+      B: "Caps Lock",
+      C: "Shift",
+      D: "Tab"
+    },
+    correctAnswer: "A"
+  },
+
+  {
+    id: "Q10",
+    question: "কম্পিউটারে File সংরক্ষণ করার shortcut কোনটি?",
+    options: {
+      A: "Ctrl + S",
+      B: "Ctrl + P",
+      C: "Ctrl + X",
+      D: "Ctrl + Z"
+    },
+    correctAnswer: "A"
+  }
+
+];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function readJSON(storage, key, fallback){
+
+  try{
+
+    const value = storage.getItem(key);
+
+    if(!value){
+      return fallback;
+    }
+
+    return JSON.parse(value);
+
+  }catch(error){
+
+    console.warn("Storage read error:", key, error);
+
+    return fallback;
+  }
+}
+
+
+function writeJSON(storage, key, value){
+
+  try{
+
+    storage.setItem(
+      key,
+      JSON.stringify(value)
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error("Storage write error:", key, error);
+
+    showToast("Data save করা যায়নি");
+
+    return false;
+  }
+}
+
+
+function getLocal(key, fallback){
+
+  return readJSON(
+    localStorage,
+    key,
+    fallback
+  );
+}
+
+
+function setLocal(key, value){
+
+  return writeJSON(
+    localStorage,
+    key,
+    value
+  );
+}
+
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  if(!toast){
+    return;
+  }
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(
+    window.__snkToastTimer
+  );
+
+  window.__snkToastTimer =
+    setTimeout(
+      ()=>{
+        toast.classList.remove("show");
+      },
+      2500
+    );
+}
+
+
+function scrollToSection(id){
+
+  const element =
+    document.getElementById(id);
+
+  if(element){
+
+    element.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  }
+}
+
+
+function formatDateTime(value){
+
+  if(!value){
+    return "—";
+  }
+
+  const date =
+    new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return value;
+  }
+
+  return date.toLocaleString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+  const theme =
+    localStorage.getItem(
+      STORAGE.theme
+    ) || "dark";
+
+  if(theme === "light"){
+
+    document.body.classList.add("light");
+
+    document.getElementById("themeBtn").textContent = "☀️";
+
+  }else{
+
+    document.body.classList.remove("light");
+
+    document.getElementById("themeBtn").textContent = "🌙";
+
+  }
+}
+
+
+function toggleTheme(){
+
+  const isLight =
+    document.body.classList.contains("light");
+
+  localStorage.setItem(
+    STORAGE.theme,
+    isLight ? "dark" : "light"
+  );
+
+  applyTheme();
+}
+
+
+/* =========================================================
+   LOAD COURSE
+========================================================= */
+
+function getCourse(){
+
+  const saved =
+    getLocal(
+      STORAGE.course,
+      null
+    );
+
+  return {
+    ...DEFAULT_COURSE,
+    ...(saved || {})
+  };
+}
+
+
+function loadCourse(){
+
+  const course =
+    getCourse();
+
+  document.getElementById("courseName").value =
+    course.name || "";
+
+  document.getElementById("courseBatch").value =
+    course.batch || "";
+
+  document.getElementById("courseMode").value =
+    course.mode || "Offline";
+
+  document.getElementById("courseDuration").value =
+    course.duration || "";
+
+  document.getElementById("courseDays").value =
+    course.days || "";
+
+  document.getElementById("courseTime").value =
+    course.time || "";
+
+  document.getElementById("courseInstructor").value =
+    course.instructor || "";
+}
+
+
+function saveCourse(event){
+
+  event.preventDefault();
+
+  const course = {
+
+    name:
+      document.getElementById("courseName").value.trim(),
+
+    batch:
+      document.getElementById("courseBatch").value.trim(),
+
+    mode:
+      document.getElementById("courseMode").value,
+
+    duration:
+      document.getElementById("courseDuration").value.trim(),
+
+    days:
+      document.getElementById("courseDays").value.trim(),
+
+    time:
+      document.getElementById("courseTime").value.trim(),
+
+    instructor:
+      document.getElementById("courseInstructor").value.trim(),
+
+    updatedAt:
+      new Date().toISOString()
+
+  };
+
+  if(!course.name){
+
+    showToast("Course Name দিন");
+
+    return;
+  }
+
+  setLocal(
+    STORAGE.course,
+    course
+  );
+
+  showToast("Course settings saved");
+
+  refreshAll();
+}
+
+
+/* =========================================================
+   LOAD QUIZ
+========================================================= */
+
+function getQuiz(){
+
+  const saved =
+    getLocal(
+      STORAGE.quiz,
+      null
+    );
+
+  return {
+    ...DEFAULT_QUIZ,
+    ...(saved || {})
+  };
+}
+
+
+function loadQuiz(){
+
+  const quiz =
+    getQuiz();
+
+  document.getElementById("quizTitle").value =
+    quiz.title || "";
+
+  document.getElementById("quizStartDate").value =
+    quiz.startDate || "";
+
+  document.getElementById("quizEndDate").value =
+    quiz.endDate || "";
+
+  document.getElementById("quizDuration").value =
+    Number(quiz.durationMinutes) || 20;
+
+  document.getElementById("quizMarks").value =
+    Number(quiz.marksPerQuestion) || 1;
+
+  document.getElementById("quizPass").value =
+    Number(quiz.passPercentage) || 40;
+
+  document.getElementById("quizId").value =
+    quiz.id || DEFAULT_QUIZ.id;
+
+  document.getElementById("oneAttemptOnly").checked =
+    quiz.oneAttemptOnly !== false;
+
+  document.getElementById("autoSubmit").checked =
+    quiz.autoSubmit !== false;
+
+  document.getElementById("published").checked =
+    quiz.published === true;
+
+  updateQuizStatusUI();
+}
+
+
+function saveQuiz(event){
+
+  event.preventDefault();
+
+  const quiz = {
+
+    id:
+      document.getElementById("quizId").value.trim()
+      || DEFAULT_QUIZ.id,
+
+    title:
+      document.getElementById("quizTitle").value.trim(),
+
+    startDate:
+      document.getElementById("quizStartDate").value,
+
+    endDate:
+      document.getElementById("quizEndDate").value,
+
+    durationMinutes:
+      Math.max(
+        1,
+        Number(
+          document.getElementById("quizDuration").value
+        ) || 20
+      ),
+
+    marksPerQuestion:
+      Math.max(
+        1,
+        Number(
+          document.getElementById("quizMarks").value
+        ) || 1
+      ),
+
+    passPercentage:
+      Math.min(
+        100,
+        Math.max(
+          1,
+          Number(
+            document.getElementById("quizPass").value
+          ) || 40
+        )
+      ),
+
+    oneAttemptOnly:
+      document.getElementById("oneAttemptOnly").checked,
+
+    autoSubmit:
+      document.getElementById("autoSubmit").checked,
+
+    published:
+      document.getElementById("published").checked,
+
+    updatedAt:
+      new Date().toISOString()
+
+  };
+
+
+  if(!quiz.title){
+
+    showToast("Quiz Title দিন");
+
+    return;
+  }
+
+
+  if(!quiz.startDate || !quiz.endDate){
+
+    showToast("Start এবং End Date দিন");
+
+    return;
+  }
+
+
+  if(
+    new Date(quiz.endDate) <
+    new Date(quiz.startDate)
+  ){
+
+    showToast("End Date, Start Date-এর পরে হতে হবে");
+
+    return;
+  }
+
+
+  if(quiz.published){
+
+    const questions =
+      getQuestions();
+
+    if(questions.length !== 10){
+
+      showToast(
+        "Publish করার আগে exactly 10টি question দিন"
+      );
+
+      document.getElementById("published").checked =
+        false;
+
+      quiz.published = false;
+    }
+
+  }
+
+
+  setLocal(
+    STORAGE.quiz,
+    quiz
+  );
+
+  showToast(
+    quiz.published
+      ? "Quiz settings saved & published"
+      : "Quiz settings saved"
+  );
+
+  refreshAll();
+}
+
+
+/* =========================================================
+   QUIZ STATUS UI
+========================================================= */
+
+function updateQuizStatusUI(){
+
+  const quiz =
+    getQuiz();
+
+  const badge =
+    document.getElementById("quizStatusBadge");
+
+  const stat =
+    document.getElementById("statPublished");
+
+  const hero =
+    document.getElementById("heroQuizTitle");
+
+  hero.textContent =
+    quiz.title || "Quiz Management";
+
+
+  if(quiz.published){
+
+    badge.textContent = "PUBLISHED";
+
+    badge.className =
+      "status green";
+
+    stat.textContent =
+      "Published";
+
+  }else{
+
+    badge.textContent = "DRAFT";
+
+    badge.className =
+      "status yellow";
+
+    stat.textContent =
+      "Draft";
+  }
+}
+
+
+/* =========================================================
+   RESET QUIZ
+========================================================= */
+
+function resetQuizSettings(){
+
+  const current =
+    getQuiz();
+
+  const resetData = {
+
+    ...DEFAULT_QUIZ,
+
+    id:
+      current.id || DEFAULT_QUIZ.id,
+
+    title:
+      current.title || DEFAULT_QUIZ.title
+
+  };
+
+  setLocal(
+    STORAGE.quiz,
+    resetData
+  );
+
+  loadQuiz();
+
+  showToast(
+    "Quiz settings default অবস্থায় reset হয়েছে"
+  );
+}
+
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+function getQuestions(){
+
+  const saved =
+    getLocal(
+      STORAGE.questions,
+      null
+    );
+
+  if(
+    Array.isArray(saved) &&
+    saved.length
+  ){
+
+    return saved;
+  }
+
+  return DEFAULT_QUESTIONS;
+}
+
+
+function normalizeQuestion(question,index){
+
+  const options =
+    question &&
+    question.options &&
+    typeof question.options === "object"
+      ? question.options
+      : {};
+
+  return {
+
+    id:
+      question.id ||
+      `Q${index + 1}`,
+
+    question:
+      String(
+        question.question || ""
+      ),
+
+    options: {
+
+      A:
+        String(options.A || ""),
+
+      B:
+        String(options.B || ""),
+
+      C:
+        String(options.C || ""),
+
+      D:
+        String(options.D || "")
+
+    },
+
+    correctAnswer:
+      ["A","B","C","D"].includes(
+        question.correctAnswer
+      )
+        ? question.correctAnswer
+        : "A"
+
+  };
+}
+
+
+function loadQuestionsIntoBuilder(){
+
+  const questions =
+    getQuestions()
+      .map(normalizeQuestion);
+
+  const list =
+    document.getElementById("questionList");
+
+  list.innerHTML = "";
+
+  questions.forEach(
+    (question,index)=>{
+      renderQuestionCard(
+        question,
+        index
+      );
+    }
+  );
+
+  updateQuestionStats();
+
+  showToast(
+    `${questions.length}টি question loaded`
+  );
+}
+
+
+function renderQuestionCard(question,index){
+
+  const list =
+    document.getElementById("questionList");
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "question-card";
+
+  card.dataset.index =
+    index;
+
+  card.innerHTML = `
+
+    <div class="question-top">
+
+      <div class="question-number">
+        Question ${index + 1}
+      </div>
+
+      <button
+        class="btn btn-danger btn-sm"
+        type="button"
+        onclick="removeQuestion(${index})"
+      >
+        🗑 Delete
+      </button>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Question</label>
+
+      <textarea
+        class="question-text"
+        data-field="question"
+        placeholder="Question লিখুন..."
+      >${escapeHTML(question.question)}</textarea>
+
+    </div>
+
+    <div class="option-grid">
+
+      <div class="form-group">
+
+        <label>Option A</label>
+
+        <input
+          type="text"
+          class="option-input"
+          data-option="A"
+          value="${escapeHTML(question.options.A)}"
+          placeholder="Option A"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Option B</label>
+
+        <input
+          type="text"
+          class="option-input"
+          data-option="B"
+          value="${escapeHTML(question.options.B)}"
+          placeholder="Option B"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Option C</label>
+
+        <input
+          type="text"
+          class="option-input"
+          data-option="C"
+          value="${escapeHTML(question.options.C)}"
+          placeholder="Option C"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Option D</label>
+
+        <input
+          type="text"
+          class="option-input"
+          data-option="D"
+          value="${escapeHTML(question.options.D)}"
+          placeholder="Option D"
+        >
+
+      </div>
+
+    </div>
+
+    <div class="correct-row">
+
+      <label>Correct Answer</label>
+
+      <select
+        class="correct-select"
+      >
+
+        <option
+          value="A"
+          ${question.correctAnswer === "A" ? "selected" : ""}
+        >
+          A
+        </option>
+
+        <option
+          value="B"
+          ${question.correctAnswer === "B" ? "selected" : ""}
+        >
+          B
+        </option>
+
+        <option
+          value="C"
+          ${question.correctAnswer === "C" ? "selected" : ""}
+        >
+          C
+        </option>
+
+        <option
+          value="D"
+          ${question.correctAnswer === "D" ? "selected" : ""}
+        >
+          D
+        </option>
+
+      </select>
+
+    </div>
+
+  `;
+
+  list.appendChild(card);
+}
+
+
+function addQuestion(){
+
+  const list =
+    document.getElementById("questionList");
+
+  const count =
+    list.children.length;
+
+  if(count >= 10){
+
+    showToast(
+      "Maximum 10টি question রাখা যাবে"
+    );
+
+    return;
+  }
+
+  const question = {
+
+    id:
+      `Q${count + 1}`,
+
+    question:"",
+
+    options:{
+      A:"",
+      B:"",
+      C:"",
+      D:""
+    },
+
+    correctAnswer:"A"
+
+  };
+
+  renderQuestionCard(
+    question,
+    count
+  );
+
+  updateQuestionStats();
+
+  const cards =
+    list.querySelectorAll(
+      ".question-card"
+    );
+
+  const last =
+    cards[cards.length - 1];
+
+  if(last){
+
+    last.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+  }
+
+  showToast(
+    "New question added"
+  );
+}
+
+
+function removeQuestion(index){
+
+  const list =
+    document.getElementById("questionList");
+
+  const cards =
+    [...list.querySelectorAll(
+      ".question-card"
+    )];
+
+  if(cards.length <= 1){
+
+    showToast(
+      "কমপক্ষে ১টি question রাখতে হবে"
+    );
+
+    return;
+  }
+
+  const card =
+    cards[index];
+
+  if(card){
+    card.remove();
+  }
+
+  renumberQuestionCards();
+
+  updateQuestionStats();
+}
+
+
+function renumberQuestionCards(){
+
+  const cards =
+    document.querySelectorAll(
+      "#questionList .question-card"
+    );
+
+  cards.forEach(
+    (card,index)=>{
+
+      card.dataset.index =
+        index;
+
+      const title =
+        card.querySelector(
+          ".question-number"
+        );
+
+      if(title){
+
+        title.textContent =
+          `Question ${index + 1}`;
+
+      }
+
+      const deleteButton =
+        card.querySelector(
+          ".btn-danger"
+        );
+
+      if(deleteButton){
+
+        deleteButton.setAttribute(
+          "onclick",
+          `removeQuestion(${index})`
+        );
+
+      }
+
+    }
+  );
+}
+
+
+function collectQuestions(){
+
+  const cards =
+    [
+      ...document.querySelectorAll(
+        "#questionList .question-card"
+      )
+    ];
+
+  return cards.map(
+    (card,index)=>{
+
+      const question =
+        card.querySelector(
+          ".question-text"
+        )?.value.trim() || "";
+
+      const options = {};
+
+      card
+        .querySelectorAll(
+          ".option-input"
+        )
+        .forEach(
+          input=>{
+            options[
+              input.dataset.option
+            ] =
+              input.value.trim();
+          }
+        );
+
+      const correctAnswer =
+        card.querySelector(
+          ".correct-select"
+        )?.value || "A";
+
+      return {
+
+        id:
+          `Q${index + 1}`,
+
+        question,
+
+        options:{
+
+          A:options.A || "",
+
+          B:options.B || "",
+
+          C:options.C || "",
+
+          D:options.D || ""
+
+        },
+
+        correctAnswer
+
+      };
+
+    }
+  );
+}
+
+
+function validateQuestions(questions){
+
+  if(questions.length !== 10){
+
+    return {
+      ok:false,
+      message:
+        "Exactly 10টি question প্রয়োজন"
+    };
+  }
+
+
+  for(let i=0;i<questions.length;i++){
+
+    const q =
+      questions[i];
+
+    if(!q.question){
+
+      return {
+        ok:false,
+        message:
+          `Question ${i+1} empty`
+      };
+    }
+
+
+    for(
+      const option of
+      ["A","B","C","D"]
+    ){
+
+      if(!q.options[option]){
+
+        return {
+          ok:false,
+          message:
+            `Question ${i+1}-এর Option ${option} empty`
+        };
+
+      }
+
+    }
+
+
+    if(
+      !["A","B","C","D"].includes(
+        q.correctAnswer
+      )
+    ){
+
+      return {
+        ok:false,
+        message:
+          `Question ${i+1}-এর correct answer ঠিক করুন`
+      };
+
+    }
+
+  }
+
+
+  return {
+    ok:true,
+    message:"OK"
+  };
+}
+
+
+function saveQuestions(){
+
+  const questions =
+    collectQuestions();
+
+  const validation =
+    validateQuestions(
+      questions
+    );
+
+  if(!validation.ok){
+
+    showToast(
+      validation.message
+    );
+
+    return;
+  }
+
+  setLocal(
+    STORAGE.questions,
+    questions
+  );
+
+  showToast(
+    "Exactly 10টি question saved"
+  );
+
+  updateQuestionStats();
+
+  updateQuizStatusUI();
+}
+
+
+/* =========================================================
+   QUESTION STATS
+========================================================= */
+
+function updateQuestionStats(){
+
+  const count =
+    document.querySelectorAll(
+      "#questionList .question-card"
+    ).length;
+
+  document.getElementById(
+    "statQuestions"
+  ).textContent =
+    count;
+}
+
+
+/* =========================================================
+   PUBLISH QUIZ
+========================================================= */
+
+function publishQuiz(){
+
+  const questions =
+    collectQuestions();
+
+  const validation =
+    validateQuestions(
+      questions
+    );
+
+  if(!validation.ok){
+
+    showToast(
+      validation.message
+    );
+
+    scrollToSection(
+      "questionCard"
+    );
+
+    return;
+  }
+
+  setLocal(
+    STORAGE.questions,
+    questions
+  );
+
+
+  const quiz =
+    getQuiz();
+
+  quiz.published =
+    true;
+
+  quiz.updatedAt =
+    new Date().toISOString();
+
+  setLocal(
+    STORAGE.quiz,
+    quiz
+  );
+
+  document.getElementById(
+    "published"
+  ).checked = true;
+
+  updateQuizStatusUI();
+
+  showToast(
+    "Quiz successfully published"
+  );
+}
+
+
+function unpublishQuiz(){
+
+  const quiz =
+    getQuiz();
+
+  quiz.published =
+    false;
+
+  quiz.updatedAt =
+    new Date().toISOString();
+
+  setLocal(
+    STORAGE.quiz,
+    quiz
+  );
+
+  document.getElementById(
+    "published"
+  ).checked = false;
+
+  updateQuizStatusUI();
+
+  showToast(
+    "Quiz unpublished"
+  );
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+function getResults(){
+
+  const saved =
+    getLocal(
+      STORAGE.results,
+      []
+    );
+
+  return Array.isArray(saved)
+    ? saved
+    : [];
+}
+
+
+function getStudents(){
+
+  const saved =
+    getLocal(
+      STORAGE.students,
+      []
+    );
+
+  if(
+    Array.isArray(saved) &&
+    saved.length
+  ){
+
+    return saved;
+  }
+
+  return [
+    {
+      studentId:"SNK-1001",
+      studentName:"Student",
+      course:"আপনার কোর্স",
+      batch:"Batch 01"
+    }
+  ];
+}
+
+
+function getCurrentQuizResults(){
+
+  const quiz =
+    getQuiz();
+
+  return getResults()
+    .filter(
+      result=>{
+
+        if(
+          result.quizId &&
+          result.quizId === quiz.id
+        ){
+
+          return true;
+        }
+
+        if(
+          result.quizName &&
+          result.quizName === quiz.title
+        ){
+
+          return true;
+        }
+
+        return false;
+
+      }
+    )
+    .sort(
+      (a,b)=>
+        new Date(
+          b.submittedAt || b.updatedAt || 0
+        ) -
+        new Date(
+          a.submittedAt || a.updatedAt || 0
+        )
+    );
+}
+
+
+function renderResults(){
+
+  const body =
+    document.getElementById(
+      "resultTableBody"
+    );
+
+  const search =
+    document.getElementById(
+      "resultSearch"
+    ).value
+      .trim()
+      .toLowerCase();
+
+  const filter =
+    document.getElementById(
+      "resultFilter"
+    ).value;
+
+
+  let results =
+    getCurrentQuizResults();
+
+
+  results =
+    results.filter(
+      result=>{
+
+        const studentId =
+          String(
+            result.studentId || ""
+          ).toLowerCase();
+
+        const studentName =
+          String(
+            result.studentName || ""
+          ).toLowerCase();
+
+        const matchesSearch =
+          !search ||
+          studentId.includes(search) ||
+          studentName.includes(search);
+
+        if(!matchesSearch){
+          return false;
+        }
+
+
+        if(filter === "pass"){
+
+          return String(
+            result.result || ""
+          ).toLowerCase() === "pass";
+
+        }
+
+
+        if(filter === "fail"){
+
+          return String(
+            result.result || ""
+          ).toLowerCase() === "fail";
+
+        }
+
+
+        if(filter === "published"){
+
+          return result.published === true;
+
+        }
+
+
+        if(filter === "unpublished"){
+
+          return result.published !== true;
+
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  if(!results.length){
+
+    body.innerHTML = `
+
+      <tr>
+
+        <td
+          colspan="9"
+          style="text-align:center;padding:30px;color:var(--muted);"
+        >
+          এই Quiz-এর কোনো result পাওয়া যায়নি।
+        </td>
+
+      </tr>
+
+    `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    results.map(
+      result=>{
+
+        const percentage =
+          Number(
+            result.percentage || 0
+          );
+
+        const resultText =
+          String(
+            result.result || ""
+          ).toLowerCase();
+
+        const isPass =
+          resultText === "pass";
+
+
+        return `
+
+          <tr>
+
+            <td>
+
+              <div class="student-name">
+                ${escapeHTML(
+                  result.studentName ||
+                  "Student"
+                )}
+              </div>
+
+              <div class="student-id">
+                ${escapeHTML(
+                  result.studentId ||
+                  "—"
+                )}
+              </div>
+
+            </td>
+
+            <td>
+              <strong>
+                ${escapeHTML(
+                  result.obtainedMarks ??
+                  result.correct ??
+                  0
+                )}
+                /
+                ${escapeHTML(
+                  result.totalMarks ??
+                  (
+                    Number(
+                      result.totalQuestions || 10
+                    ) *
+                    Number(
+                      result.marksPerQuestion || 1
+                    )
+                  )
+                )}
+              </strong>
+
+              <div
+                style="color:var(--muted);margin-top:3px;"
+              >
+                ${percentage}%
+              </div>
+
+            </td>
+
+            <td>
+              ${escapeHTML(
+                result.correct ?? 0
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                result.wrong ?? 0
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                result.unanswered ?? 0
+              )}
+            </td>
+
+            <td>
+
+              <span
+                class="status ${isPass ? "green" : "red"}"
+              >
+                ${isPass ? "PASS" : "FAIL"}
+              </span>
+
+            </td>
+
+            <td>
+
+              <span
+                class="status ${
+                  result.published === true
+                    ? "green"
+                    : "yellow"
+                }"
+              >
+                ${
+                  result.published === true
+                    ? "Published"
+                    : "Unpublished"
+                }
+              </span>
+
+            </td>
+
+            <td>
+              ${escapeHTML(
+                formatDateTime(
+                  result.submittedAt
+                )
+              )}
+            </td>
+
+            <td>
+
+              <div class="action-row">
+
+                <button
+                  class="btn btn-secondary btn-sm"
+                  type="button"
+                  onclick="viewResult('${escapeHTML(
+                    result.id || ""
+                  )}')"
+                >
+                  View
+                </button>
+
+                <button
+                  class="btn ${
+                    result.published === true
+                      ? "btn-warning"
+                      : "btn-success"
+                  } btn-sm"
+                  type="button"
+                  onclick="toggleResultPublish('${escapeHTML(
+                    result.id || ""
+                  )}')"
+                >
+                  ${
+                    result.published === true
+                      ? "Unpublish"
+                      : "Publish"
+                  }
+                </button>
+
+                <button
+                  class="btn btn-danger btn-sm"
+                  type="button"
+                  onclick="deleteResult('${escapeHTML(
+                    result.id || ""
+                  )}')"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    ).join("");
+}
+
+
+/* =========================================================
+   VIEW RESULT
+========================================================= */
+
+let currentResultId = null;
+
+
+function viewResult(id){
+
+  const result =
+    getResults()
+      .find(
+        item =>
+          String(item.id) ===
+          String(id)
+      );
+
+
+  if(!result){
+
+    showToast(
+      "Result পাওয়া যায়নি"
+    );
+
+    return;
+  }
+
+
+  currentResultId =
+    result.id;
+
+
+  document.getElementById(
+    "modalStudentName"
+  ).textContent =
+    `${result.studentName || "Student"} • ${result.studentId || ""}`;
+
+
+  const percentage =
+    Number(
+      result.percentage || 0
+    );
+
+
+  const resultText =
+    String(
+      result.result || ""
+    ).toUpperCase();
+
+
+  document.getElementById(
+    "modalResultContent"
+  ).innerHTML = `
+
+    <div class="grid-2" style="margin-top:0;">
+
+      <div class="stat">
+
+        <div class="stat-label">
+          Score
+        </div>
+
+        <div class="stat-value">
+          ${escapeHTML(
+            result.obtainedMarks ??
+            result.correct ??
+            0
+          )}
+          /
+          ${escapeHTML(
+            result.totalMarks ??
+            10
+          )}
+        </div>
+
+      </div>
+
+      <div class="stat">
+
+        <div class="stat-label">
+          Percentage
+        </div>
+
+        <div class="stat-value">
+          ${percentage}%
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      style="
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:10px;
+        margin-top:14px;
+      "
+    >
+
+      <div class="notice">
+        <strong>Correct</strong><br>
+        ${escapeHTML(
+          result.correct ?? 0
+        )}
+      </div>
+
+      <div class="notice">
+        <strong>Wrong</strong><br>
+        ${escapeHTML(
+          result.wrong ?? 0
+        )}
+      </div>
+
+      <div class="notice">
+        <strong>Unanswered</strong><br>
+        ${escapeHTML(
+          result.unanswered ?? 0
+        )}
+      </div>
+
+      <div class="notice">
+        <strong>Status</strong><br>
+        ${escapeHTML(
+          resultText || "—"
+        )}
+      </div>
+
+    </div>
+
+    <div
+      class="notice"
+      style="margin-top:14px;"
+    >
+
+      <strong>Course:</strong>
+      ${escapeHTML(
+        result.course || getCourse().name
+      )}
+
+      <br>
+
+      <strong>Batch:</strong>
+      ${escapeHTML(
+        result.batch || getCourse().batch
+      )}
+
+      <br>
+
+      <strong>Started:</strong>
+      ${escapeHTML(
+        formatDateTime(
+          result.startedAt
+        )
+      )}
+
+      <br>
+
+      <strong>Submitted:</strong>
+      ${escapeHTML(
+        formatDateTime(
+          result.submittedAt
+        )
+      )}
+
+      <br>
+
+      <strong>Time Taken:</strong>
+      ${escapeHTML(
+        formatSeconds(
+          result.timeTakenSeconds
+        )
+      )}
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "adminNote"
+  ).value =
+    result.adminNote || "";
+
+
+  document.getElementById(
+    "resultModal"
+  ).classList.add("show");
+}
+
+
+function closeModal(){
+
+  document.getElementById(
+    "resultModal"
+  ).classList.remove("show");
+
+  currentResultId =
+    null;
+}
+
+
+/* =========================================================
+   SAVE ADMIN NOTE
+========================================================= */
+
+function saveAdminNote(){
+
+  if(!currentResultId){
+
+    return;
+  }
+
+  const note =
+    document.getElementById(
+      "adminNote"
+    ).value.trim();
+
+  const results =
+    getResults();
+
+  const index =
+    results.findIndex(
+      result =>
+        String(result.id) ===
+        String(currentResultId)
+    );
+
+  if(index === -1){
+
+    showToast(
+      "Result পাওয়া যায়নি"
+    );
+
+    return;
+  }
+
+  results[index].adminNote =
+    note;
+
+  results[index].updatedAt =
+    new Date().toISOString();
+
+  setLocal(
+    STORAGE.results,
+    results
+  );
+
+  showToast(
+    "Admin note saved"
+  );
+
+  closeModal();
+
+  renderResults();
+}
+
+
+/* =========================================================
+   PUBLISH RESULT
+========================================================= */
+
+function toggleResultPublish(id){
+
+  const results =
+    getResults();
+
+  const index =
+    results.findIndex(
+      result =>
+        String(result.id) ===
+        String(id)
+    );
+
+  if(index === -1){
+
+    showToast(
+      "Result পাওয়া যায়নি"
+    );
+
+    return;
+  }
+
+
+  results[index].published =
+    results[index].published !== true;
+
+
+  results[index].updatedAt =
+    new Date().toISOString();
+
+
+  setLocal(
+    STORAGE.results,
+    results
+  );
+
+
+  showToast(
+    results[index].published
+      ? "Result published"
+      : "Result unpublished"
+  );
+
+
+  renderResults();
+
+  updateResultStats();
+}
+
+
+function publishEligibleResults(){
+
+  const results =
+    getResults();
+
+  const quiz =
+    getQuiz();
+
+  let changed = 0;
+
+
+  results.forEach(
+    result=>{
+
+      const sameQuiz =
+        (
+          result.quizId === quiz.id
+        ) ||
+        (
+          result.quizName === quiz.title
+        );
+
+      if(
+        sameQuiz &&
+        result.published !== true
+      ){
+
+        result.published = true;
+
+        result.updatedAt =
+          new Date().toISOString();
+
+        changed++;
+
+      }
+
+    }
+  );
+
+
+  if(changed){
+
+    setLocal(
+      STORAGE.results,
+      results
+    );
+  }
+
+
+  showToast(
+    changed
+      ? `${changed}টি result published`
+      : "Publish করার মতো result নেই"
+  );
+
+
+  renderResults();
+
+  updateResultStats();
+}
+
+
+/* =========================================================
+   DELETE RESULT
+========================================================= */
+
+function deleteResult(id){
+
+  const results =
+    getResults();
+
+  const index =
+    results.findIndex(
+      result =>
+        String(result.id) ===
+        String(id)
+    );
+
+  if(index === -1){
+
+    showToast(
+      "Result পাওয়া যায়নি"
+    );
+
+    return;
+  }
+
+
+  const result =
+    results[index];
+
+
+  const ok =
+    confirm(
+      `${result.studentName || "Student"}-এর quiz result delete করবেন?`
+    );
+
+
+  if(!ok){
+    return;
+  }
+
+
+  results.splice(
+    index,
+    1
+  );
+
+
+  setLocal(
+    STORAGE.results,
+    results
+  );
+
+
+  showToast(
+    "Result deleted"
+  );
+
+
+  renderResults();
+
+  updateResultStats();
+}
+
+
+/* =========================================================
+   RESULT STATS
+========================================================= */
+
+function updateResultStats(){
+
+  const results =
+    getCurrentQuizResults();
+
+
+  const submitted =
+    results.length;
+
+
+  const passed =
+    results.filter(
+      result =>
+        String(
+          result.result || ""
+        ).toLowerCase() ===
+        "pass"
+    ).length;
+
+
+  const percentages =
+    results
+      .map(
+        result =>
+          Number(
+            result.percentage
+          )
+      )
+      .filter(
+        value =>
+          Number.isFinite(value)
+      );
+
+
+  const average =
+    percentages.length
+      ? (
+          percentages.reduce(
+            (sum,value)=>
+              sum + value,
+            0
+          ) /
+          percentages.length
+        )
+        .toFixed(1)
+      : "0";
+
+
+  document.getElementById(
+    "statSubmitted"
+  ).textContent =
+    submitted;
+
+
+  document.getElementById(
+    "statPassed"
+  ).textContent =
+    passed;
+
+
+  document.getElementById(
+    "statAverage"
+  ).textContent =
+    `${average}%`;
+}
+
+
+/* =========================================================
+   FORMAT SECONDS
+========================================================= */
+
+function formatSeconds(seconds){
+
+  const value =
+    Number(seconds);
+
+  if(
+    !Number.isFinite(value) ||
+    value < 0
+  ){
+
+    return "—";
+  }
+
+
+  const minutes =
+    Math.floor(
+      value / 60
+    );
+
+  const sec =
+    value % 60;
+
+
+  return `${minutes}m ${String(sec).padStart(2,"0")}s`;
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+function printPage(){
+
+  window.print();
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshAll(){
+
+  loadCourse();
+
+  loadQuiz();
+
+  loadQuestionsIntoBuilder();
+
+  renderResults();
+
+  updateResultStats();
+
+  updateQuestionStats();
+
+  updateQuizStatusUI();
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function toggleSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
+}
+
+
+/* =========================================================
+   PUBLIC API
+========================================================= */
+
+window.SNKAdminQuiz = {
+
+  getCourse,
+
+  getQuiz,
+
+  getQuestions,
+
+  getResults,
+
+  saveCourse,
+
+  saveQuiz,
+
+  saveQuestions,
+
+  publishQuiz,
+
+  unpublishQuiz,
+
+  publishEligibleResults,
+
+  refresh:refreshAll
+
+};
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+document
+  .getElementById("themeBtn")
+  .addEventListener(
+    "click",
+    toggleTheme
+  );
+
+
+document
+  .getElementById("refreshBtn")
+  .addEventListener(
+    "click",
+    ()=>{
+      refreshAll();
+      showToast("Data refreshed");
+    }
+  );
+
+
+document
+  .getElementById("menuBtn")
+  .addEventListener(
+    "click",
+    toggleSidebar
+  );
+
+
+document
+  .getElementById("courseForm")
+  .addEventListener(
+    "submit",
+    saveCourse
+  );
+
+
+document
+  .getElementById("quizForm")
+  .addEventListener(
+    "submit",
+    saveQuiz
+  );
+
+
+document
+  .getElementById("resultSearch")
+  .addEventListener(
+    "input",
+    renderResults
+  );
+
+
+document
+  .getElementById("resultFilter")
+  .addEventListener(
+    "change",
+    renderResults
+  );
+
+
+document
+  .getElementById("resultModal")
+  .addEventListener(
+    "click",
+    event=>{
+
+      if(
+        event.target.id ===
+        "resultModal"
+      ){
+
+        closeModal();
+
+      }
+
+    }
+  );
+
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      event.key === "Escape"
+    ){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   STORAGE SYNC
+========================================================= */
+
+window.addEventListener(
+  "storage",
+  event=>{
+
+    if(
+      [
+        STORAGE.theme,
+        STORAGE.course,
+        STORAGE.quiz,
+        STORAGE.questions,
+        STORAGE.results,
+        STORAGE.students
+      ].includes(
+        event.key
+      )
+    ){
+
+      applyTheme();
+
+      refreshAll();
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "focus",
+  ()=>{
+    refreshAll();
+  }
+);
+
+
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+    if(
+      document.visibilityState ===
+      "visible"
+    ){
+
+      refreshAll();
+
+    }
+  }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+(function init(){
+
+  applyTheme();
+
+  refreshAll();
+
+})();
+</script>
+
+</body>
+</html>
+```

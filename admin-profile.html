@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>SNK AI Academy | Site Settings</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#050505;
+  --bg2:#0a0a0a;
+  --card:#141414;
+  --card2:#181818;
+  --border:rgba(183,255,0,.14);
+  --text:#ffffff;
+  --muted:#999999;
+  --primary:#b7ff00;
+  --primary2:#ccff4d;
+  --success:#20c997;
+  --danger:#ff4545;
+  --warning:#ffbd59;
+  --shadow:0 18px 50px rgba(0,0,0,.5);
+}
+
+body.light{
+  --bg:#f4f7fb;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card2:#f7f9fc;
+  --border:#dce3ee;
+  --text:#182235;
+  --muted:#68758a;
+  --primary:#5a8a00;
+  --primary2:#446b00;
+  --shadow:0 15px 40px rgba(27,39,67,.10);
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(183,255,0,.12),transparent 30%),
+    radial-gradient(circle at 90% 20%,rgba(183,255,0,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,textarea{ font:inherit; }
+button{ cursor:pointer; }
+a{ color:inherit; text-decoration:none; }
+
+.app{ display:flex; min-height:100vh; }
+
+.sidebar{
+  width:260px;
+  position:fixed;
+  left:0; top:0; bottom:0;
+  background:rgba(10,15,27,.96);
+  border-right:1px solid var(--border);
+  z-index:1000;
+  overflow-y:auto;
+}
+
+body.light .sidebar{ background:#fff; }
+
+.sidebar-head{ padding:22px 18px; border-bottom:1px solid var(--border); }
+
+.brand{ display:flex; align-items:center; gap:12px; }
+
+.logo{
+  width:46px; height:46px; border-radius:13px;
+  display:flex; align-items:center; justify-content:center;
+  background:#b7ff00; color:#050505; font-weight:900; font-size:15px;
+}
+
+.brand-title{ font-size:16px; font-weight:800; }
+.brand-sub{ color:var(--muted); font-size:12px; margin-top:3px; }
+
+.nav{ padding:14px 10px 30px; }
+
+.nav-label{
+  color:#6f7c91; font-size:11px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  padding:14px 12px 7px;
+}
+
+.nav a{
+  display:flex; align-items:center; gap:11px;
+  padding:11px 12px; border-radius:11px;
+  color:#aeb9ca; font-size:14px; margin:3px 0; transition:.2s;
+}
+
+body.light .nav a{ color:#5d687b; }
+
+.nav a:hover, .nav a.active{
+  background:rgba(183,255,0,.15); color:var(--primary);
+}
+
+.nav-icon{ width:23px; text-align:center; font-size:16px; }
+
+.main{
+  width:calc(100% - 260px);
+  margin-left:260px;
+  min-width:0;
+}
+
+.topbar{
+  height:70px; position:sticky; top:0; z-index:900;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 25px;
+  background:rgba(7,11,20,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+body.light .topbar{ background:rgba(255,255,255,.88); }
+
+.top-left{ display:flex; align-items:center; gap:13px; }
+
+.menu-btn{
+  display:none; border:1px solid var(--border);
+  background:var(--card); color:var(--text);
+  width:40px; height:40px; border-radius:10px;
+}
+
+.page-title{ font-size:18px; font-weight:800; }
+.page-subtitle{ font-size:12px; color:var(--muted); margin-top:3px; }
+
+.top-actions{ display:flex; gap:8px; align-items:center; }
+
+.icon-btn{
+  width:40px; height:40px; border-radius:10px;
+  border:1px solid var(--border); background:var(--card); color:var(--text);
+}
+
+.container{ max-width:1500px; margin:auto; padding:25px; }
+
+.save-bar{
+  position:sticky; top:70px; z-index:800;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; flex-wrap:wrap;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:14px 18px; margin-bottom:20px;
+  box-shadow:var(--shadow);
+}
+
+.save-status{ font-size:12px; color:var(--muted); }
+.save-status.ok{ color:var(--success); }
+.save-status.err{ color:var(--danger); }
+
+.btn{
+  border:0; border-radius:10px; padding:11px 18px;
+  font-weight:800; font-size:13px; transition:.2s;
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn-primary{ background:var(--primary); color:#050505; }
+.btn-secondary{ background:var(--card2); border:1px solid var(--border); color:var(--text); }
+.btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
+
+.layout{
+  display:grid;
+  grid-template-columns:1fr 400px;
+  gap:20px;
+  align-items:start;
+}
+
+.card{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; box-shadow:var(--shadow); overflow:hidden;
+  margin-bottom:18px;
+}
+
+.card-head{
+  padding:18px 20px; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:10px;
+}
+
+.card-head .emoji{ font-size:18px; }
+.card-title{ font-size:15px; font-weight:800; }
+.card-sub{ color:var(--muted); font-size:11px; margin-top:3px; }
+
+.card-body{ padding:20px; display:flex; flex-direction:column; gap:14px; }
+
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field label{ font-size:12px; font-weight:700; color:var(--muted); }
+
+.field input[type="text"],
+.field input[type="url"],
+.field input[type="tel"],
+.field input[type="email"],
+.field textarea{
+  width:100%; border:1px solid var(--border); border-radius:11px;
+  background:var(--bg2); color:var(--text);
+  padding:11px 13px; font-size:13px; outline:none;
+}
+
+.field input:focus, .field textarea:focus{ border-color:var(--primary); }
+
+.field textarea{ resize:vertical; min-height:70px; }
+
+.row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media(max-width:560px){ .row2{ grid-template-columns:1fr; } }
+
+.toggle-row{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; padding:11px 13px;
+  background:var(--bg2); border:1px solid var(--border); border-radius:11px;
+}
+
+.switch{
+  position:relative; width:44px; height:24px; flex-shrink:0;
+}
+.switch input{ opacity:0; width:0; height:0; }
+.slider{
+  position:absolute; inset:0; background:var(--border);
+  border-radius:999px; cursor:pointer; transition:.2s;
+}
+.slider::before{
+  content:""; position:absolute; width:18px; height:18px;
+  left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s;
+}
+.switch input:checked + .slider{ background:var(--primary); }
+.switch input:checked + .slider::before{ transform:translateX(20px); background:#050505; }
+
+.logo-preview-row{ display:flex; align-items:center; gap:14px; }
+.logo-preview-box{
+  width:60px; height:60px; border-radius:15px;
+  display:flex; align-items:center; justify-content:center;
+  background:#b7ff00; color:#050505; font-weight:900; font-size:18px;
+  overflow:hidden; flex-shrink:0; border:1px solid var(--border);
+}
+.logo-preview-box img{ width:100%; height:100%; object-fit:contain; }
+
+/* ===== PREVIEW PANEL ===== */
+.preview-panel{
+  position:sticky; top:150px;
+}
+
+.preview-frame{
+  border-radius:18px; overflow:hidden; border:1px solid var(--border);
+  background:#050505; color:#fff;
+}
+
+.preview-notice{
+  background:#b7ff00; color:#050505; font-weight:800;
+  font-size:11px; padding:9px 14px; text-align:center;
+  display:none;
+}
+.preview-notice.show{ display:block; }
+
+.preview-hero{
+  padding:26px 20px;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(183,255,0,.12),transparent 30%),
+    #050505;
+}
+
+.preview-badge{
+  display:inline-block; font-size:10px; font-weight:800;
+  background:rgba(183,255,0,.14); color:#b7ff00;
+  border:1px solid rgba(183,255,0,.3);
+  padding:5px 10px; border-radius:999px; margin-bottom:12px;
+}
+
+.preview-hero h2{ font-size:22px; line-height:1.3; margin-bottom:10px; }
+.preview-hero h2 span{ color:#b7ff00; }
+.preview-hero p{ font-size:12px; color:#aaa; line-height:1.6; }
+
+.preview-footer{
+  background:#0a0a0a; padding:20px; border-top:1px solid rgba(183,255,0,.1);
+}
+
+.preview-footer-brand{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.preview-footer-logo{
+  width:34px; height:34px; border-radius:9px;
+  background:#b7ff00; color:#050505; font-weight:900; font-size:11px;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.preview-footer-logo img{ width:100%; height:100%; object-fit:contain; }
+.preview-footer-name{ font-size:13px; font-weight:800; }
+.preview-footer p{ font-size:11px; color:#999; line-height:1.6; margin-bottom:12px; }
+
+.preview-social{ display:flex; gap:8px; }
+.preview-social span{
+  width:30px; height:30px; border-radius:9px;
+  background:rgba(183,255,0,.1); border:1px solid rgba(183,255,0,.2);
+  display:flex; align-items:center; justify-content:center; font-size:13px;
+}
+
+.info-box{
+  margin-top:6px; padding:13px 14px; border:1px dashed var(--border);
+  border-radius:12px; color:var(--muted); font-size:11px; line-height:1.7;
+}
+.info-box strong{ color:var(--text); }
+
+.footer{ text-align:center; color:var(--muted); padding:30px 0 10px; font-size:11px; }
+
+@media(max-width:1100px){
+  .layout{ grid-template-columns:1fr; }
+  .preview-panel{ position:static; }
+}
+
+@media(max-width:900px){
+  .sidebar{ transform:translateX(-100%); transition:.25s ease; }
+  .sidebar.open{ transform:translateX(0); }
+  .main{ width:100%; margin-left:0; }
+  .menu-btn{ display:block; }
+}
+
+@media(max-width:650px){
+  .topbar{ padding:0 14px; }
+  .container{ padding:14px; }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-head">
+    <div class="brand">
+      <div class="logo">SNK</div>
+      <div>
+        <div class="brand-title">SNK AI Academy</div>
+        <div class="brand-sub">Admin Control Panel</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-label">Main</div>
+
+    <a href="admin-dashboard.html">
+      <span class="nav-icon">🏠</span>
+      <span>Admin Dashboard</span>
+    </a>
+
+    <a href="admin.html">
+      <span class="nav-icon">📊</span>
+      <span>Quiz Management</span>
+    </a>
+
+    <a href="students.html">
+      <span class="nav-icon">👨‍🎓</span>
+      <span>Students</span>
+    </a>
+
+    <a href="admin-courses.html">
+      <span class="nav-icon">📚</span>
+      <span>Course Management</span>
+    </a>
+
+    <a href="admin-schedule.html">
+      <span class="nav-icon">⏰</span>
+      <span>Exam / Quiz Schedule</span>
+    </a>
+
+    <a href="admin-profile.html" class="active">
+      <span class="nav-icon">🛠️</span>
+      <span>Site Settings</span>
+    </a>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div class="top-left">
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu">☰</button>
+      <div>
+        <div class="page-title">Site Settings</div>
+        <div class="page-subtitle">Logo, Notice, Institute Info, Hero, Footer — সব একজায়গায়</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" type="button" title="Theme">🌙</button>
+      <button class="icon-btn" id="logoutBtn" type="button" title="Logout">⏻</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="save-bar">
+      <div class="save-status" id="saveStatus">Loading saved settings...</div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-secondary" type="button" id="reloadBtn">↻ Reload</button>
+        <button class="btn btn-primary" type="button" id="saveBtn">💾 Save সব Settings</button>
+      </div>
+    </div>
+
+    <div class="layout">
+
+      <!-- ===== LEFT: FORM ===== -->
+      <div>
+
+        <!-- Institute Info -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">🏫</span>
+            <div>
+              <div class="card-title">Institute Information</div>
+              <div class="card-sub">নাম, ঠিকানা, যোগাযোগ</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label>Institute-এর নাম</label>
+              <input type="text" id="instituteName" placeholder="SNK AI Academy">
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label>ফোন নম্বর</label>
+                <input type="tel" id="institutePhone" placeholder="+8801XXXXXXXXX">
+              </div>
+              <div class="field">
+                <label>ইমেইল</label>
+                <input type="email" id="instituteEmail" placeholder="info@snkitinstitute.com">
+              </div>
+            </div>
+            <div class="field">
+              <label>ঠিকানা</label>
+              <textarea id="instituteAddress" placeholder="যেমন: হাউজ ১২, রোড ৫, ঢাকা"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">🖼️</span>
+            <div>
+              <div class="card-title">Logo</div>
+              <div class="card-sub">ছবি আপলোড করুন বা লিংক দিন; খালি রাখলে "SNK" badge থাকবে</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="logo-preview-row">
+              <div class="logo-preview-box" id="logoPreviewBox">SNK</div>
+              <div class="field" style="flex:1;">
+                <label>Logo Image URL</label>
+                <input type="text" id="logoUrl" placeholder="https://example.com/logo.png">
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center;">
+              <label class="btn-upload" style="cursor:pointer;background:#b7ff00;color:#050505;font-weight:800;padding:12px 16px;border-radius:12px;font-size:13px;">
+                📤 ফোন/কম্পিউটার থেকে Logo আপলোড
+                <input type="file" id="logoFile" accept="image/*" style="display:none">
+              </label>
+              <button type="button" id="logoClear" style="border:1px solid rgba(255,255,255,.2);background:transparent;color:inherit;padding:12px 14px;border-radius:12px;font-size:13px;cursor:pointer;">🗑️ Logo মুছুন</button>
+            </div>
+            <div class="card-sub" style="margin-top:10px;">ছবি নিজে থেকে ছোট (512×512) হয়ে সেভ হবে। এই লোগোই সব পেজে, favicon-এ ও মোবাইল অ্যাপ আইকনে বসবে।</div>
+          </div>
+        </div>
+
+        <!-- Mobile App -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">📲</span>
+            <div>
+              <div class="card-title">Mobile App</div>
+              <div class="card-sub">Install App বাটন, অ্যাপের নাম ও রং</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="toggle-row">
+              <span>উপরের navbar-এ "📲 অ্যাপ ইনস্টল" বাটন দেখান</span>
+              <label class="switch">
+                <input type="checkbox" id="installButtonActive" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="field">
+              <label>অ্যাপের পুরো নাম</label>
+              <input type="text" id="appName" placeholder="SNK AI Academy">
+            </div>
+            <div class="field">
+              <label>হোম স্ক্রিনের ছোট নাম (১২ অক্ষরের মধ্যে)</label>
+              <input type="text" id="appShortName" maxlength="14" placeholder="SNK Academy">
+            </div>
+            <div class="field">
+              <label>অ্যাপের থিম রং</label>
+              <input type="color" id="themeColor" value="#050505" style="height:48px;padding:4px;">
+            </div>
+            <div class="field">
+              <label>APK ডাউনলোড লিংক (ঐচ্ছিক — APK বানানোর পর বসান)</label>
+              <input type="text" id="apkUrl" placeholder="https://github.com/.../releases/download/.../snk-academy.apk">
+            </div>
+          </div>
+        </div>
+
+        <!-- Notice -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">📢</span>
+            <div>
+              <div class="card-title">Notice</div>
+              <div class="card-sub">Homepage-এর উপরে একটা ব্যানার হিসেবে দেখাবে</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="toggle-row">
+              <span>Notice চালু রাখুন</span>
+              <label class="switch">
+                <input type="checkbox" id="noticeActive">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="field">
+              <label>Notice-এর লেখা</label>
+              <input type="text" id="noticeText" placeholder="যেমন: নতুন ব্যাচ শুরু হচ্ছে ১৫ সেপ্টেম্বর থেকে!">
+            </div>
+            <div class="field">
+              <label>Notice Link (ঐচ্ছিক)</label>
+              <input type="url" id="noticeLink" placeholder="login.html অথবা পুরো URL">
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">🎯</span>
+            <div>
+              <div class="card-title">Homepage Hero</div>
+              <div class="card-sub">হোমপেজের সবচেয়ে উপরের বড় লেখা</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label>ছোট Badge লেখা</label>
+              <input type="text" id="heroBadge" placeholder="Student Portal • Batch 01">
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label>Heading (সাদা অংশ)</label>
+                <input type="text" id="heroHeading" placeholder="Learn. Grow.">
+              </div>
+              <div class="field">
+                <label>Heading Highlight (রঙিন অংশ)</label>
+                <input type="text" id="heroHighlight" placeholder="Practice.">
+              </div>
+            </div>
+            <div class="field">
+              <label>Description</label>
+              <textarea id="heroDescription" placeholder="Welcome to the SNK AI Academy Student Portal..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Course -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">🎓</span>
+            <div>
+              <div class="card-title">Current Course</div>
+              <div class="card-sub">Homepage-এর "My Course" অংশে যেটা দেখাবে — এটা আপনার আসল চলমান কোর্সের তথ্য</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label>Course-এর নাম</label>
+              <input type="text" id="courseName" placeholder="যেমন: Graphics Design">
+            </div>
+            <div class="field">
+              <label>ছোট বিবরণ</label>
+              <textarea id="courseDescription" placeholder="এই কোর্সে কী শেখানো হয়, এক-দুই লাইনে লিখুন"></textarea>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label>মেয়াদ (Duration)</label>
+                <input type="text" id="courseDuration" placeholder="যেমন: 6 Months">
+              </div>
+              <div class="field">
+                <label>ক্লাসের দিন</label>
+                <input type="text" id="courseDays" placeholder="যেমন: Saturday – Monday">
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label>ক্লাসের সময়</label>
+                <input type="text" id="courseTime" placeholder="যেমন: 4:00 PM – 6:00 PM">
+              </div>
+              <div class="field">
+                <label>Mode</label>
+                <input type="text" id="courseMode" placeholder="Offline / Online">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">📄</span>
+            <div>
+              <div class="card-title">Footer</div>
+              <div class="card-sub">নিচের অংশের লেখা</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label>Footer About লেখা</label>
+              <textarea id="footerAbout" placeholder="Learn practical IT skills and build your future with SNK AI Academy."></textarea>
+            </div>
+            <div class="field">
+              <label>Copyright লেখা</label>
+              <input type="text" id="footerCopyright" placeholder="© 2026 SNK AI Academy. All Rights Reserved.">
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">🔗</span>
+            <div>
+              <div class="card-title">Social Links</div>
+              <div class="card-sub">যেগুলো খালি রাখবেন, সেগুলো দেখানো হবে না</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row2">
+              <div class="field">
+                <label>📘 Facebook</label>
+                <input type="url" id="socialFacebook" placeholder="https://facebook.com/...">
+              </div>
+              <div class="field">
+                <label>▶️ YouTube</label>
+                <input type="url" id="socialYoutube" placeholder="https://youtube.com/...">
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label>💬 WhatsApp</label>
+                <input type="url" id="socialWhatsapp" placeholder="https://wa.me/8801XXXXXXXXX">
+              </div>
+              <div class="field">
+                <label>📸 Instagram</label>
+                <input type="url" id="socialInstagram" placeholder="https://instagram.com/...">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <strong>নোট:</strong> Save করার পর এই তথ্য Firebase Firestore-এ জমা থাকবে, page refresh করলেও থাকবে, এবং <code>exam.snkitinstitute.com</code>-এর homepage (index.html) স্বয়ংক্রিয়ভাবে এখান থেকেই তথ্য দেখাবে।
+        </div>
+
+      </div>
+
+      <!-- ===== RIGHT: LIVE PREVIEW ===== -->
+      <div class="preview-panel">
+        <div class="card">
+          <div class="card-head">
+            <span class="emoji">👁️</span>
+            <div>
+              <div class="card-title">Live Preview</div>
+              <div class="card-sub">Homepage-এ যেমন দেখাবে, সেটার একটা ছোট নমুনা</div>
+            </div>
+          </div>
+          <div class="card-body" style="padding:14px;">
+            <div class="preview-frame">
+
+              <div class="preview-notice" id="pvNotice"></div>
+
+              <div class="preview-hero">
+                <div class="preview-badge" id="pvBadge">Student Portal • Batch 01</div>
+                <h2 id="pvHeading">Learn. <span id="pvHighlight">Practice.</span></h2>
+                <p id="pvDescription">Welcome to the SNK AI Academy Student Portal.</p>
+              </div>
+
+              <div class="preview-footer">
+                <div class="preview-footer-brand">
+                  <div class="preview-footer-logo" id="pvFooterLogo">SNK</div>
+                  <div class="preview-footer-name" id="pvFooterName">SNK AI Academy</div>
+                </div>
+                <p id="pvFooterAbout">Learn practical IT skills and build your future.</p>
+                <div class="preview-social" id="pvSocial"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      SNK AI Academy Admin Panel • Site Settings v1.0
+    </div>
+
+  </div>
+
+</main>
+
+</div>
+
+<script type="module">
+"use strict";
+
+import { db, auth } from "./firebase-config.js";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import {
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+const ADMIN_LOGIN_KEY = "snkAdminLoggedIn";
+const THEME_KEY = "snkTheme";
+const SETTINGS_DOC = doc(db, "siteSettings", "main");
+
+/* =========================================================
+   ADMIN SESSION GUARD
+========================================================= */
+(function guardAdminSession(){
+  const loggedIn = sessionStorage.getItem(ADMIN_LOGIN_KEY);
+  if(loggedIn !== "true"){
+    window.location.replace("admin-login.html");
+  }
+})();
+
+/* =========================================================
+   FIELD MAP
+========================================================= */
+const FIELDS = [
+  "instituteName", "institutePhone", "instituteEmail", "instituteAddress",
+  "logoUrl", "appName", "appShortName", "themeColor", "apkUrl",
+  "noticeText", "noticeLink",
+  "heroBadge", "heroHeading", "heroHighlight", "heroDescription",
+  "courseName", "courseDescription", "courseDuration", "courseDays", "courseTime", "courseMode",
+  "footerAbout", "footerCopyright",
+  "socialFacebook", "socialYoutube", "socialWhatsapp", "socialInstagram"
+];
+
+function getFormData(){
+  const data = {};
+  FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    data[id] = el ? el.value.trim() : "";
+  });
+  data.noticeActive = document.getElementById("noticeActive").checked;
+  data.installButtonActive = document.getElementById("installButtonActive").checked;
+  return data;
+}
+
+function fillForm(data){
+  if(!data) return;
+  FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if(el && data[id] !== undefined) el.value = data[id];
+  });
+  document.getElementById("noticeActive").checked = !!data.noticeActive;
+  document.getElementById("installButtonActive").checked = data.installButtonActive !== false;
+}
+
+/* =========================================================
+   LIVE PREVIEW
+========================================================= */
+function updatePreview(){
+  const d = getFormData();
+
+  const noticeEl = document.getElementById("pvNotice");
+  if(d.noticeActive && d.noticeText){
+    noticeEl.textContent = d.noticeText;
+    noticeEl.classList.add("show");
+  }else{
+    noticeEl.classList.remove("show");
+  }
+
+  document.getElementById("pvBadge").textContent = d.heroBadge || "Student Portal • Batch 01";
+  document.getElementById("pvHeading").firstChild.textContent = (d.heroHeading || "Learn.") + " ";
+  document.getElementById("pvHighlight").textContent = d.heroHighlight || "Practice.";
+  document.getElementById("pvDescription").textContent =
+    d.heroDescription || "Welcome to the SNK AI Academy Student Portal.";
+
+  document.getElementById("pvFooterName").textContent = d.instituteName || "SNK AI Academy";
+  document.getElementById("pvFooterAbout").textContent =
+    d.footerAbout || "Learn practical IT skills and build your future.";
+
+  const logoBox = document.getElementById("logoPreviewBox");
+  const footerLogo = document.getElementById("pvFooterLogo");
+  if(d.logoUrl){
+    logoBox.innerHTML = `<img src="${d.logoUrl}" alt="Logo">`;
+    footerLogo.innerHTML = `<img src="${d.logoUrl}" alt="Logo">`;
+  }else{
+    logoBox.textContent = "SNK";
+    footerLogo.textContent = "SNK";
+  }
+
+  const socialIcons = [
+    d.socialFacebook ? "📘" : "",
+    d.socialYoutube ? "▶️" : "",
+    d.socialWhatsapp ? "💬" : "",
+    d.socialInstagram ? "📸" : ""
+  ].filter(Boolean);
+  document.getElementById("pvSocial").innerHTML =
+    socialIcons.map(icon => `<span>${icon}</span>`).join("");
+}
+
+document.querySelectorAll("input, textarea").forEach(el => {
+  el.addEventListener("input", updatePreview);
+});
+
+/* =========================================================
+   LOGO UPLOAD (resize to 512x512 PNG -> data URL)
+========================================================= */
+document.getElementById("logoFile").addEventListener("change", function(e){
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+  if(!/^image\//.test(file.type)){ alert("শুধু ছবি (PNG/JPG) দিন।"); return; }
+  const reader = new FileReader();
+  reader.onload = function(){
+    const img = new Image();
+    img.onload = function(){
+      const size = 512, c = document.createElement("canvas");
+      c.width = size; c.height = size;
+      const ctx = c.getContext("2d");
+      const k = Math.min(size / img.width, size / img.height);
+      const w = img.width * k, h = img.height * k;
+      ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+      document.getElementById("logoUrl").value = c.toDataURL("image/png");
+      updatePreview();
+      setStatus("✓ Logo প্রস্তুত — নিচের Save বাটনে চাপুন।", "ok");
+    };
+    img.onerror = function(){ alert("ছবিটা পড়া যায়নি, অন্য ছবি দিন।"); };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+document.getElementById("logoClear").addEventListener("click", function(){
+  document.getElementById("logoUrl").value = "";
+  updatePreview();
+});
+
+/* =========================================================
+   FIRESTORE LOAD / SAVE
+========================================================= */
+function setStatus(text, kind){
+  const el = document.getElementById("saveStatus");
+  el.textContent = text;
+  el.className = "save-status" + (kind ? " " + kind : "");
+}
+
+async function loadSettings(){
+  setStatus("Firestore থেকে settings লোড হচ্ছে...");
+  try{
+    const snap = await getDoc(SETTINGS_DOC);
+    if(snap.exists()){
+      fillForm(snap.data());
+      setStatus("✓ Saved settings লোড হয়েছে।", "ok");
+    }else{
+      setStatus("এখনো কোনো settings save করা হয়নি — ডিফল্ট দেখাচ্ছে।");
+    }
+  }catch(error){
+    console.error("Load error:", error);
+    setStatus("⚠ Settings লোড করা যায়নি: " + (error.message || error.code || "unknown error"), "err");
+  }
+  updatePreview();
+}
+
+async function saveSettings(){
+  const saveBtn = document.getElementById("saveBtn");
+  saveBtn.disabled = true;
+  saveBtn.textContent = "সেভ হচ্ছে...";
+
+  try{
+    const data = getFormData();
+    data.updatedAt = serverTimestamp();
+    data.updatedBy = (auth.currentUser && auth.currentUser.email) || "unknown";
+
+    await setDoc(SETTINGS_DOC, data, { merge: true });
+
+    setStatus("✓ সফলভাবে Save হয়েছে — এখন homepage-এ দেখা যাবে।", "ok");
+  }catch(error){
+    console.error("Save error:", error);
+    setStatus("⚠ Save করা যায়নি: " + (error.message || error.code || "unknown error"), "err");
+    alert(
+      "Save করা যায়নি। সম্ভবত Firestore Security Rules-এ Admin-কে write করার অনুমতি দেওয়া নেই। " +
+      "Error: " + (error.message || error.code || "unknown")
+    );
+  }finally{
+    saveBtn.disabled = false;
+    saveBtn.textContent = "💾 Save সব Settings";
+  }
+}
+
+/* =========================================================
+   THEME / SIDEBAR / LOGOUT
+========================================================= */
+function applyTheme(){
+  const theme = localStorage.getItem(THEME_KEY) || "dark";
+  if(theme === "light"){
+    document.body.classList.add("light");
+    document.getElementById("themeBtn").textContent = "☀️";
+  }else{
+    document.body.classList.remove("light");
+    document.getElementById("themeBtn").textContent = "🌙";
+  }
+}
+
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const isLight = document.body.classList.contains("light");
+  localStorage.setItem(THEME_KEY, isLight ? "dark" : "light");
+  applyTheme();
+});
+
+document.getElementById("menuBtn").addEventListener("click", () => {
+  document.getElementById("sidebar").classList.toggle("open");
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  if(!confirm("আপনি কি Admin Panel থেকে Logout করতে চান?")) return;
+  sessionStorage.removeItem(ADMIN_LOGIN_KEY);
+  sessionStorage.removeItem("snkAdminEmail");
+  signOut(auth).catch(() => {}).finally(() => {
+    window.location.replace("admin-login.html");
+  });
+});
+
+document.getElementById("saveBtn").addEventListener("click", saveSettings);
+document.getElementById("reloadBtn").addEventListener("click", loadSettings);
+
+/* =========================================================
+   INIT
+========================================================= */
+applyTheme();
+loadSettings();
+</script>
+
+</body>
+</html>

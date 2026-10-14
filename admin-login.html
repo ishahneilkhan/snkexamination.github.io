@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>SNK AI Academy | Admin Login</title>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root{
+  --bg:#050505;
+  --card:#141414;
+  --card2:#181818;
+  --text:#ffffff;
+  --muted:#999999;
+  --border:rgba(183,255,0,0.14);
+  --primary:#b7ff00;
+  --primary2:#ccff4d;
+  --danger:#ff4545;
+  --success:#20c997;
+  --input:#0a0a0a;
+}
+
+body.light{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --card2:#f0f2f7;
+  --text:#111827;
+  --muted:#667085;
+  --border:rgba(0,0,0,0.08);
+  --primary:#5a8a00;
+  --primary2:#446b00;
+  --input:#f8fafc;
+}
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(183,255,0,0.10), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(32,201,151,0.08), transparent 35%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:0.25s ease;
+}
+
+.page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.login-wrapper{
+  width:100%;
+  max-width:460px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:46px;
+  box-shadow:0 25px 80px rgba(0,0,0,0.35);
+}
+
+.logo-box{
+  width:64px; height:64px;
+  border-radius:18px;
+  display:flex; align-items:center; justify-content:center;
+  background:#b7ff00;
+  margin-bottom:20px;
+  overflow:hidden;
+  color:#050505; font-weight:900; font-size:20px;
+}
+
+.logo-box img{ width:100%; height:100%; object-fit:contain; padding:8px; }
+
+.badge{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:6px 10px; border-radius:999px;
+  background:rgba(183,255,0,.14); color:#b7ff00;
+  border:1px solid rgba(183,255,0,.28);
+  font-size:11px; font-weight:700; margin-bottom:14px;
+}
+
+.top-actions{
+  display:flex; justify-content:flex-end; gap:8px; margin-bottom:10px;
+}
+
+.icon-btn{
+  border:1px solid var(--border); background:transparent; color:var(--text);
+  width:38px; height:38px; border-radius:10px; cursor:pointer; font-size:14px;
+}
+
+.icon-btn:hover{ background:var(--card2); }
+
+.form-title{ font-size:26px; margin-bottom:6px; }
+
+.form-subtitle{ color:var(--muted); margin-bottom:24px; line-height:1.6; font-size:13px; }
+
+.message{
+  display:none; margin-bottom:16px; padding:12px 13px;
+  border-radius:12px; font-size:13px; line-height:1.5;
+}
+
+.message.show{ display:block; }
+
+.message.error{
+  background:rgba(255,93,115,0.10);
+  border:1px solid rgba(255,93,115,0.25);
+  color:#ff8798;
+}
+
+.message.success{
+  background:rgba(32,201,151,0.10);
+  border:1px solid rgba(32,201,151,0.25);
+  color:#48dcae;
+}
+
+.field{ margin-bottom:16px; }
+
+.field label{ display:block; font-size:13px; font-weight:700; margin-bottom:7px; color:var(--muted); }
+
+.input-wrap{ position:relative; }
+
+.input-wrap input{
+  width:100%; height:48px;
+  border:1px solid var(--border); border-radius:12px;
+  outline:none; background:var(--input); color:var(--text);
+  padding:0 45px 0 14px; font-size:14px; transition:0.2s;
+}
+
+.input-wrap input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(183,255,0,0.12);
+}
+
+.password-toggle{
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  border:0; background:transparent; color:var(--muted); cursor:pointer; font-size:14px;
+}
+
+.login-btn{
+  width:100%; height:50px; border:0; border-radius:13px;
+  background:linear-gradient(135deg, var(--primary), var(--primary2));
+  color:#050505; font-size:15px; font-weight:800; cursor:pointer;
+  transition:0.2s; box-shadow:0 10px 30px rgba(183,255,0,0.20);
+  margin-top:6px;
+}
+
+.login-btn:hover{ transform:translateY(-1px); }
+.login-btn:disabled{ opacity:0.65; cursor:not-allowed; transform:none; }
+
+.info-box{
+  margin-top:18px; padding:13px; border:1px dashed var(--border);
+  border-radius:12px; color:var(--muted); font-size:12px; line-height:1.6;
+}
+
+.info-box strong{ color:var(--text); }
+
+.footer{ text-align:center; margin-top:20px; color:var(--muted); font-size:12px; }
+
+.back-link{
+  display:inline-block; margin-top:14px; color:var(--muted);
+  font-size:12px; text-decoration:none;
+}
+
+.back-link:hover{ color:var(--primary2); }
+
+.loading{ display:inline-flex; align-items:center; gap:8px; justify-content:center; }
+
+.spinner{
+  width:15px; height:15px; border:2px solid rgba(255,255,255,0.35);
+  border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite;
+}
+
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+@media(max-width:480px){
+  .login-wrapper{ padding:28px 22px; border-radius:20px; }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<main class="page">
+
+  <section class="login-wrapper">
+
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" type="button" title="Theme">☀</button>
+    </div>
+
+    <div class="logo-box">
+      SNK
+    </div>
+
+    <span class="badge">● ADMIN ACCESS</span>
+
+    <h2 class="form-title">Admin Login</h2>
+
+    <p class="form-subtitle">
+      শুধুমাত্র অনুমোদিত Admin account দিয়ে এখানে Login করা যাবে।
+    </p>
+
+    <div id="message" class="message" role="alert"></div>
+
+    <form id="loginForm" autocomplete="on">
+
+      <div class="field">
+        <label for="email">Admin Email</label>
+        <div class="input-wrap">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="admin@example.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="আপনার Firebase password"
+            autocomplete="current-password"
+            required
+          >
+          <button type="button" class="password-toggle" id="passwordToggle" title="Show password">👁</button>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">Admin Login</button>
+
+    </form>
+
+    <div class="info-box">
+      <strong>Note:</strong>
+      এই page শুধু নির্দিষ্ট Admin email-এর জন্য। অন্য কোনো (যেমন Student) account দিয়ে
+      Login করার চেষ্টা করলে Access দেওয়া হবে না।
+    </div>
+
+    <div class="footer">
+      © 2026 SNK AI Academy · Admin Panel
+    </div>
+
+    <a class="back-link" href="login.html">← Student Login-এ ফিরে যান</a>
+
+  </section>
+
+</main>
+
+<script type="module">
+
+import { auth } from "./firebase-config.js";
+
+import {
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+/* =========================================================
+   ADMIN EMAIL ALLOW-LIST
+   এখানে আপনার Firebase-এ তৈরি করা Admin email(s) বসান।
+   একাধিক Admin থাকলে কমা দিয়ে আরও email যোগ করতে পারবেন।
+========================================================= */
+const ADMIN_EMAILS = [
+  "thesnkgraphic@email.com",
+  "sakhijahanusha@gmail.com"
+];
+
+const THEME_KEY = "snkTheme";
+const ADMIN_LOGIN_KEY = "snkAdminLoggedIn";
+const ADMIN_EMAIL_KEY = "snkAdminEmail";
+
+const body = document.body;
+const loginForm = document.getElementById("loginForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const message = document.getElementById("message");
+const themeBtn = document.getElementById("themeBtn");
+const passwordToggle = document.getElementById("passwordToggle");
+
+function applyTheme(){
+  const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
+  if(savedTheme === "light"){
+    body.classList.add("light");
+    themeBtn.textContent = "☾";
+  }else{
+    body.classList.remove("light");
+    themeBtn.textContent = "☀";
+  }
+}
+
+themeBtn.addEventListener("click", () => {
+  const isLight = body.classList.contains("light");
+  localStorage.setItem(THEME_KEY, isLight ? "dark" : "light");
+  applyTheme();
+});
+
+passwordToggle.addEventListener("click", () => {
+  if(passwordInput.type === "password"){
+    passwordInput.type = "text";
+    passwordToggle.textContent = "🙈";
+  }else{
+    passwordInput.type = "password";
+    passwordToggle.textContent = "👁";
+  }
+});
+
+function showMessage(text, type = "error"){
+  message.textContent = text;
+  message.className = "message show " + type;
+}
+
+function hideMessage(){
+  message.textContent = "";
+  message.className = "message";
+}
+
+function getFirebaseErrorMessage(code){
+  const messages = {
+    "auth/invalid-email": "Email address সঠিক নয়।",
+    "auth/user-not-found": "এই Email দিয়ে Firebase-এ কোনো account পাওয়া যায়নি।",
+    "auth/wrong-password": "Password সঠিক নয়।",
+    "auth/invalid-credential": "Email অথবা Password সঠিক নয়।",
+    "auth/user-disabled": "এই account disabled করা হয়েছে।",
+    "auth/too-many-requests": "অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।",
+    "auth/network-request-failed": "Internet connection সমস্যা হয়েছে।"
+  };
+  return messages[code] || "Login করা যায়নি। আবার চেষ্টা করুন।";
+}
+
+loginForm.addEventListener("submit", async (event) => {
+
+  event.preventDefault();
+  hideMessage();
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if(!email){
+    showMessage("Email দিন।");
+    emailInput.focus();
+    return;
+  }
+
+  if(!password){
+    showMessage("Password দিন।");
+    passwordInput.focus();
+    return;
+  }
+
+  loginBtn.disabled = true;
+  loginBtn.innerHTML = `<span class="loading"><span class="spinner"></span> Login হচ্ছে...</span>`;
+
+  try{
+
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
+
+    const isAdmin = ADMIN_EMAILS
+      .map(item => item.toLowerCase())
+      .includes((user.email || "").toLowerCase());
+
+    if(!isAdmin){
+
+      /* এই account admin না, তাই সাথে সাথে sign out করে দেওয়া হচ্ছে */
+      await signOut(auth);
+
+      showMessage("এই account-এর Admin Access নেই। সঠিক Admin email দিয়ে চেষ্টা করুন।");
+
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Admin Login";
+
+      return;
+    }
+
+    sessionStorage.setItem(ADMIN_LOGIN_KEY, "true");
+    sessionStorage.setItem(ADMIN_EMAIL_KEY, user.email || "");
+
+    showMessage("Login সফল হয়েছে। Dashboard খুলছে...", "success");
+
+    setTimeout(() => {
+      window.location.href = "admin-dashboard.html";
+    }, 600);
+
+  }catch(error){
+
+    console.error("Admin Login Error:", error);
+    showMessage(getFirebaseErrorMessage(error.code));
+
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Admin Login";
+  }
+
+});
+
+applyTheme();
+
+</script>
+
+</body>
+</html>

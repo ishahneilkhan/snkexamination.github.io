@@ -1,0 +1,3327 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Student Results</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --soft:#f1ffdd;
+
+    --success:#16a34a;
+    --success-soft:#dcfce7;
+
+    --warning:#d97706;
+    --warning-soft:#fef3c7;
+
+    --danger:#dc2626;
+    --danger-soft:#fee2e2;
+
+    --purple:#7c3aed;
+    --purple-soft:#f5f3ff;
+
+    --shadow:0 10px 30px rgba(15,23,42,.07);
+}
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --soft:#172554;
+    --purple-soft:#2e1065;
+
+    --shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:.25s;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    height:70px;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+
+    box-shadow:0 4px 20px rgba(15,23,42,.04);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-badge{
+    width:43px;
+    height:43px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#b7ff00;
+    color:#050505;
+    font-weight:900;
+    font-size:13px;
+    flex-shrink:0;
+}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+    line-height:1.2;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    font-weight:500;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.header-btn{
+    height:38px;
+
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:9px;
+
+    padding:0 11px;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.header-btn:hover{
+    background:var(--soft);
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+    max-width:1250px;
+    margin:0 auto;
+
+    padding:28px 20px 50px;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:18px;
+}
+
+.page-title h1{
+    font-size:25px;
+    margin-bottom:4px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.back-btn{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+
+    padding:9px 13px;
+
+    border-radius:9px;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.back-btn:hover{
+    background:var(--soft);
+}
+
+/* =========================================================
+   STUDENT PROFILE
+========================================================= */
+
+.profile-card{
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            #3d6600
+        );
+
+    color:#fff;
+
+    border-radius:17px;
+
+    padding:20px;
+
+    margin-bottom:18px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(90,138,0,.18);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.profile-left{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.profile-avatar{
+    width:60px;
+    height:60px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.16);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:26px;
+}
+
+.profile-info h2{
+    font-size:17px;
+    margin-bottom:3px;
+}
+
+.profile-info p{
+    font-size:8px;
+    opacity:.85;
+    margin-top:2px;
+}
+
+.verified{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+
+    font-size:7px;
+    font-weight:800;
+
+    margin-left:5px;
+
+    background:rgba(255,255,255,.16);
+
+    padding:4px 7px;
+
+    border-radius:20px;
+}
+
+.profile-score{
+    text-align:right;
+}
+
+.profile-score span{
+    display:block;
+    font-size:8px;
+    opacity:.8;
+}
+
+.profile-score strong{
+    display:block;
+    font-size:30px;
+    line-height:1.1;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(6,1fr);
+
+    gap:11px;
+
+    margin-bottom:20px;
+}
+
+.stat{
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    padding:13px;
+
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:34px;
+    height:34px;
+
+    border-radius:9px;
+
+    background:var(--soft);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:15px;
+
+    margin-bottom:7px;
+}
+
+.stat-number{
+    font-size:19px;
+    font-weight:900;
+
+    line-height:1.1;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:7px;
+
+    margin-top:3px;
+}
+
+/* =========================================================
+   GRADE SUMMARY
+========================================================= */
+
+.summary{
+    display:grid;
+
+    grid-template-columns:
+        1.3fr
+        1fr;
+
+    gap:14px;
+
+    margin-bottom:20px;
+}
+
+.summary-card{
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    padding:17px;
+
+    box-shadow:var(--shadow);
+}
+
+.summary-card h2{
+    font-size:13px;
+    margin-bottom:13px;
+}
+
+/* Progress */
+
+.progress-area{
+    margin-bottom:11px;
+}
+
+.progress-header{
+    display:flex;
+    justify-content:space-between;
+
+    font-size:8px;
+    font-weight:800;
+
+    margin-bottom:5px;
+}
+
+.progress-bar{
+    width:100%;
+    height:9px;
+
+    background:var(--bg);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    border:1px solid var(--border);
+}
+
+.progress-fill{
+    height:100%;
+
+    width:0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            #7c3aed
+        );
+
+    border-radius:20px;
+
+    transition:.5s;
+}
+
+/* Grade Box */
+
+.grade-box{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.grade-circle{
+    width:76px;
+    height:76px;
+
+    border-radius:50%;
+
+    background:var(--soft);
+
+    border:6px solid var(--primary);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:25px;
+    font-weight:900;
+
+    flex-shrink:0;
+}
+
+.grade-info h3{
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.grade-info p{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.5;
+}
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.section-header{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    margin-bottom:12px;
+}
+
+.section-header h2{
+    font-size:15px;
+}
+
+.section-header p{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.filters{
+    display:flex;
+    gap:7px;
+}
+
+.filter{
+    height:34px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:8px;
+
+    padding:0 10px;
+
+    outline:none;
+
+    font-size:8px;
+}
+
+.filter:focus{
+    border-color:var(--primary);
+}
+
+.search{
+    min-width:190px;
+}
+
+/* =========================================================
+   RESULT TABLE
+========================================================= */
+
+.table-wrap{
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+}
+
+.result-table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:800px;
+}
+
+.result-table th{
+    background:var(--bg);
+
+    color:var(--muted);
+
+    text-align:left;
+
+    padding:12px 13px;
+
+    font-size:7px;
+
+    font-weight:900;
+
+    border-bottom:1px solid var(--border);
+
+    white-space:nowrap;
+}
+
+.result-table td{
+    padding:12px 13px;
+
+    font-size:8px;
+
+    border-bottom:1px solid var(--border);
+
+    vertical-align:middle;
+}
+
+.result-table tr:last-child td{
+    border-bottom:none;
+}
+
+.result-table tbody tr:hover{
+    background:var(--bg);
+}
+
+.assignment-cell{
+    min-width:210px;
+}
+
+.assignment-title{
+    font-weight:900;
+    font-size:9px;
+
+    margin-bottom:3px;
+}
+
+.assignment-course{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.mark{
+    font-weight:900;
+}
+
+.mark.good{
+    color:var(--success);
+}
+
+.mark.average{
+    color:var(--warning);
+}
+
+.mark.low{
+    color:var(--danger);
+}
+
+.grade-badge{
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    min-width:32px;
+
+    padding:5px 7px;
+
+    border-radius:20px;
+
+    font-size:7px;
+
+    font-weight:900;
+
+    background:var(--soft);
+}
+
+.grade-badge.pending{
+    background:var(--warning-soft);
+    color:var(--warning);
+}
+
+.grade-badge.success{
+    background:var(--success-soft);
+    color:var(--success);
+}
+
+.grade-badge.danger{
+    background:var(--danger-soft);
+    color:var(--danger);
+}
+
+.feedback{
+    max-width:190px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    line-height:1.5;
+}
+
+.pending-text{
+    color:var(--warning);
+    font-weight:800;
+}
+
+.view-btn{
+    border:1px solid var(--border);
+
+    background:var(--card);
+    color:var(--primary);
+
+    border-radius:7px;
+
+    padding:7px 9px;
+
+    font-size:7px;
+
+    font-weight:900;
+}
+
+.view-btn:hover{
+    background:var(--soft);
+}
+
+/* =========================================================
+   TABLE SCROLL
+========================================================= */
+
+.table-scroll{
+    width:100%;
+    overflow-x:auto;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    display:none;
+
+    text-align:center;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:15px;
+
+    padding:55px 20px;
+
+    box-shadow:var(--shadow);
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.empty strong{
+    display:block;
+
+    font-size:12px;
+
+    margin-bottom:4px;
+}
+
+.empty span{
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+/* =========================================================
+   DETAIL MODAL
+========================================================= */
+
+.modal{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.62);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+
+    z-index:3000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:650px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:var(--card);
+
+    border-radius:17px;
+
+    padding:20px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.3);
+}
+
+.modal-header{
+    display:flex;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:15px;
+}
+
+.modal-header h2{
+    font-size:15px;
+
+    margin-bottom:3px;
+}
+
+.modal-header p{
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+.close-btn{
+    width:32px;
+    height:32px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+    color:var(--text);
+
+    border-radius:8px;
+
+    font-size:16px;
+}
+
+/* =========================================================
+   MODAL DETAILS
+========================================================= */
+
+.modal-assignment{
+    background:var(--bg);
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    padding:12px;
+
+    margin-bottom:12px;
+}
+
+.modal-assignment h3{
+    font-size:11px;
+
+    margin-bottom:3px;
+}
+
+.modal-assignment p{
+    color:var(--muted);
+
+    font-size:7px;
+}
+
+.modal-score{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:8px;
+
+    margin-bottom:13px;
+}
+
+.score-item{
+    background:var(--bg);
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    padding:10px;
+}
+
+.score-item span{
+    display:block;
+
+    color:var(--muted);
+
+    font-size:6px;
+
+    margin-bottom:3px;
+}
+
+.score-item strong{
+    font-size:11px;
+}
+
+.modal-feedback{
+    background:var(--soft);
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    padding:12px;
+}
+
+.modal-feedback-title{
+    font-size:8px;
+
+    font-weight:900;
+
+    margin-bottom:6px;
+}
+
+.modal-feedback-text{
+    color:var(--muted);
+
+    font-size:8px;
+
+    line-height:1.7;
+
+    white-space:pre-wrap;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    background:#111827;
+    color:#fff;
+
+    padding:11px 15px;
+
+    border-radius:9px;
+
+    font-size:9px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.25);
+
+    transform:translateY(20px);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.25s;
+
+    z-index:5000;
+}
+
+.toast.show{
+    transform:translateY(0);
+
+    opacity:1;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    padding:25px 10px 5px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:850px){
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .profile-card{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .profile-score{
+        text-align:left;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .header{
+        height:64px;
+        padding:0 13px;
+    }
+
+    .logo{
+        width:38px;
+        height:38px;
+    }
+
+    .logo-text{
+        font-size:12px;
+    }
+
+    .header-btn{
+        padding:0 8px;
+    }
+
+    .main{
+        padding:18px 13px 35px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .filters{
+        width:100%;
+    }
+
+    .filter{
+        flex:1;
+    }
+
+    .search{
+        min-width:0;
+        width:100%;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .profile-left{
+        align-items:flex-start;
+    }
+
+    .profile-avatar{
+        width:50px;
+        height:50px;
+    }
+
+    .profile-info h2{
+        font-size:14px;
+    }
+
+    .grade-box{
+        align-items:flex-start;
+    }
+
+    .modal-score{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo-badge">SNK</div>
+
+        <div class="logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Student Result & Gradebook
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn"
+            id="languageButton"
+            onclick="toggleLanguage()"
+        >
+            English
+        </button>
+
+
+        <button
+            class="header-btn"
+            id="themeButton"
+            onclick="toggleTheme()"
+        >
+            🌙
+        </button>
+
+
+        <button
+            class="header-btn"
+            onclick="goAssignments()"
+        >
+            📚 Assignments
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div class="page-title">
+
+            <h1>
+                🏆 My Results
+            </h1>
+
+            <p>
+                আপনার assignment result, marks, grade এবং teacher feedback এখানে দেখুন।
+            </p>
+
+        </div>
+
+
+        <button
+            class="back-btn"
+            onclick="goAssignments()"
+        >
+            ← Back to Assignments
+        </button>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STUDENT PROFILE
+    ====================================================== -->
+
+    <section class="profile-card">
+
+        <div class="profile-left">
+
+            <div class="profile-avatar">
+                🎓
+            </div>
+
+
+            <div class="profile-info">
+
+                <h2 id="studentName">
+                    Student
+                </h2>
+
+                <p>
+                    Student ID:
+                    <strong id="studentId">
+                        STUDENT-001
+                    </strong>
+                </p>
+
+                <p>
+                    Course:
+                    <strong id="studentCourse">
+                        SNK AI Academy
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-score">
+
+            <span>
+                Overall Percentage
+            </span>
+
+            <strong id="overallPercentage">
+                0%
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STATS
+    ====================================================== -->
+
+    <section class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📚
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalAssignments"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Total Assignments
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                📤
+            </div>
+
+            <div
+                class="stat-number"
+                id="submittedAssignments"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Submitted
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ⏳
+            </div>
+
+            <div
+                class="stat-number"
+                id="pendingAssignments"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Pending
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div
+                class="stat-number"
+                id="gradedAssignments"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Graded
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🎯
+            </div>
+
+            <div
+                class="stat-number"
+                id="obtainedMarks"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Obtained Marks
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🏅
+            </div>
+
+            <div
+                class="stat-number"
+                id="overallGrade"
+            >
+                -
+            </div>
+
+            <div class="stat-label">
+                Overall Grade
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SUMMARY
+    ====================================================== -->
+
+    <section class="summary">
+
+
+        <!-- PERFORMANCE -->
+
+        <div class="summary-card">
+
+            <h2>
+                📈 Overall Performance
+            </h2>
+
+
+            <div class="progress-area">
+
+                <div class="progress-header">
+
+                    <span>
+                        Overall Progress
+                    </span>
+
+                    <span
+                        id="progressPercent"
+                    >
+                        0%
+                    </span>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        id="progressFill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    color:var(--muted);
+                    font-size:8px;
+                    line-height:1.6;
+                "
+                id="performanceMessage"
+            >
+                আপনার result এখানে automatically calculate হবে।
+            </div>
+
+        </div>
+
+
+
+        <!-- GRADE -->
+
+        <div class="summary-card">
+
+            <h2>
+                🏆 Grade Summary
+            </h2>
+
+
+            <div class="grade-box">
+
+                <div
+                    class="grade-circle"
+                    id="gradeCircle"
+                >
+                    -
+                </div>
+
+
+                <div class="grade-info">
+
+                    <h3 id="gradeTitle">
+                        No Grade Yet
+                    </h3>
+
+                    <p id="gradeDescription">
+                        Assignment grade করা হলে আপনার grade এখানে দেখা যাবে।
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RESULT SECTION
+    ====================================================== -->
+
+    <section>
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    📋 Assignment Gradebook
+                </h2>
+
+                <p>
+                    প্রতিটি assignment-এর marks এবং feedback দেখুন।
+                </p>
+
+            </div>
+
+
+            <div class="filters">
+
+                <input
+                    class="filter search"
+                    id="searchInput"
+                    type="search"
+                    placeholder="🔍 Assignment search..."
+                    oninput="renderResults()"
+                >
+
+
+                <select
+                    class="filter"
+                    id="statusFilter"
+                    onchange="renderResults()"
+                >
+
+                    <option value="all">
+                        সব Status
+                    </option>
+
+                    <option value="graded">
+                        Graded
+                    </option>
+
+                    <option value="pending">
+                        Pending
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TABLE -->
+
+        <div
+            class="table-wrap"
+            id="tableWrap"
+        >
+
+            <div class="table-scroll">
+
+                <table class="result-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Assignment
+                            </th>
+
+                            <th>
+                                Total Marks
+                            </th>
+
+                            <th>
+                                Obtained
+                            </th>
+
+                            <th>
+                                Percentage
+                            </th>
+
+                            <th>
+                                Grade
+                            </th>
+
+                            <th>
+                                Submission
+                            </th>
+
+                            <th>
+                                Feedback
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="resultTableBody"
+                    ></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- EMPTY -->
+
+        <div
+            class="empty"
+            id="emptyState"
+        >
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+            <strong>
+                কোনো result পাওয়া যায়নি
+            </strong>
+
+            <span>
+                Assignment submit এবং grade করা হলে result এখানে দেখা যাবে।
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        © 2026 SNK AI Academy
+        • Student Result & Gradebook
+
+    </footer>
+
+</main>
+
+
+
+<!-- =========================================================
+     RESULT DETAIL MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="detailModal"
+>
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    📊 Result Details
+                </h2>
+
+                <p>
+                    Assignment-এর সম্পূর্ণ result দেখুন।
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeDetailModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <div
+            class="modal-assignment"
+        >
+
+            <h3
+                id="modalAssignmentTitle"
+            >
+                Assignment
+            </h3>
+
+            <p
+                id="modalAssignmentCourse"
+            >
+                Course
+            </p>
+
+        </div>
+
+
+
+        <div class="modal-score">
+
+
+            <div class="score-item">
+
+                <span>
+                    Total Marks
+                </span>
+
+                <strong
+                    id="modalTotal"
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="score-item">
+
+                <span>
+                    Obtained
+                </span>
+
+                <strong
+                    id="modalObtained"
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="score-item">
+
+                <span>
+                    Percentage
+                </span>
+
+                <strong
+                    id="modalPercentage"
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="score-item">
+
+                <span>
+                    Grade
+                </span>
+
+                <strong
+                    id="modalGrade"
+                >
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="modal-feedback"
+        >
+
+            <div class="modal-feedback-title">
+                💬 Teacher Feedback
+            </div>
+
+            <div
+                class="modal-feedback-text"
+                id="modalFeedback"
+            >
+                No feedback yet.
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const ASSIGNMENT_KEY =
+    "snkAssignments";
+
+const SUBMISSION_KEY =
+    "snkAssignmentSubmissions";
+
+const STUDENT_KEY =
+    "snkCurrentStudent";
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let assignments =
+    JSON.parse(
+        localStorage.getItem(
+            ASSIGNMENT_KEY
+        )
+    ) || [];
+
+
+let submissions =
+    JSON.parse(
+        localStorage.getItem(
+            SUBMISSION_KEY
+        )
+    ) || [];
+
+
+/* =========================================================
+   CURRENT STUDENT
+========================================================= */
+
+let currentStudent =
+    JSON.parse(
+        localStorage.getItem(
+            STUDENT_KEY
+        )
+    ) || null;
+
+
+/* =========================================================
+   DEMO STUDENT
+========================================================= */
+
+if(!currentStudent){
+
+    currentStudent = {
+
+        id:
+            localStorage.getItem(
+                "snkStudentId"
+            ) ||
+            "STUDENT-001",
+
+        name:
+            localStorage.getItem(
+                "snkStudentName"
+            ) ||
+            "Demo Student",
+
+        course:
+            localStorage.getItem(
+                "snkStudentCourse"
+            ) ||
+            "SNK AI Academy"
+
+    };
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        "snkStudentResultTheme",
+        dark
+        ? "dark"
+        : "light"
+    );
+
+
+    document.getElementById(
+        "themeButton"
+    ).textContent =
+        dark
+        ? "☀️"
+        : "🌙";
+
+}
+
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem(
+            "snkStudentResultTheme"
+        );
+
+
+    if(
+        theme === "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+        document.getElementById(
+            "themeButton"
+        ).textContent =
+            "☀️";
+
+    }
+
+}
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+let currentLanguage =
+    localStorage.getItem(
+        "snkStudentResultLanguage"
+    ) || "bn";
+
+
+function toggleLanguage(){
+
+    currentLanguage =
+        currentLanguage === "bn"
+        ? "en"
+        : "bn";
+
+
+    localStorage.setItem(
+        "snkStudentResultLanguage",
+        currentLanguage
+    );
+
+
+    document.getElementById(
+        "languageButton"
+    ).textContent =
+        currentLanguage === "bn"
+        ? "English"
+        : "বাংলা";
+
+
+    showToast(
+        currentLanguage === "bn"
+        ? "বাংলা mode selected"
+        : "English mode selected"
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value == null
+        ? ""
+        : String(value);
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   GET ASSIGNMENT
+========================================================= */
+
+function getAssignment(
+    assignmentId
+){
+
+    return assignments.find(
+        assignment =>
+            String(
+                assignment.id
+            ) ===
+            String(
+                assignmentId
+            )
+    );
+
+}
+
+
+/* =========================================================
+   GET STUDENT SUBMISSIONS
+========================================================= */
+
+function getStudentSubmissions(){
+
+    return submissions.filter(
+        submission => {
+
+            const idMatch =
+                String(
+                    submission.studentId ||
+                    ""
+                ).toLowerCase() ===
+                String(
+                    currentStudent.id ||
+                    ""
+                ).toLowerCase();
+
+
+            return idMatch;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GET SUBMISSION FOR ASSIGNMENT
+========================================================= */
+
+function getSubmission(
+    assignmentId
+){
+
+    const studentSubmissions =
+        getStudentSubmissions();
+
+
+    return studentSubmissions.find(
+        submission =>
+            String(
+                submission.assignmentId
+            ) ===
+            String(
+                assignmentId
+            )
+    );
+
+}
+
+
+/* =========================================================
+   IS GRADED
+========================================================= */
+
+function isGraded(
+    submission
+){
+
+    return !!(
+        submission &&
+        submission.mark !== null &&
+        submission.mark !== undefined &&
+        submission.mark !== ""
+    );
+
+}
+
+
+/* =========================================================
+   PERCENTAGE
+========================================================= */
+
+function calculatePercentage(
+    obtained,
+    total
+){
+
+    const o =
+        Number(
+            obtained
+        );
+
+    const t =
+        Number(
+            total
+        );
+
+
+    if(
+        !t ||
+        Number.isNaN(o) ||
+        Number.isNaN(t)
+    ){
+
+        return 0;
+
+    }
+
+
+    return Math.max(
+        0,
+        Math.min(
+            100,
+            (o / t) * 100
+        )
+    );
+
+}
+
+
+/* =========================================================
+   GRADE
+========================================================= */
+
+function calculateGrade(
+    percentage
+){
+
+    const p =
+        Number(
+            percentage
+        );
+
+
+    if(p >= 80){
+
+        return {
+            grade:"A+",
+            title:"Excellent",
+            description:
+                "অসাধারণ ফলাফল! আপনার performance খুব ভালো।",
+            type:"success"
+        };
+
+    }
+
+
+    if(p >= 70){
+
+        return {
+            grade:"A",
+            title:"Very Good",
+            description:
+                "খুব ভালো ফলাফল। এভাবে চালিয়ে যান।",
+            type:"success"
+        };
+
+    }
+
+
+    if(p >= 60){
+
+        return {
+            grade:"A-",
+            title:"Good",
+            description:
+                "ভালো ফলাফল। আরও practice করলে আরও ভালো হবে।",
+            type:"success"
+        };
+
+    }
+
+
+    if(p >= 50){
+
+        return {
+            grade:"B",
+            title:"Satisfactory",
+            description:
+                "সন্তোষজনক ফলাফল। আরও মনোযোগ দিন।",
+            type:"success"
+        };
+
+    }
+
+
+    if(p >= 40){
+
+        return {
+            grade:"C",
+            title:"Needs Improvement",
+            description:
+                "আরও practice ও revision প্রয়োজন।",
+            type:"danger"
+        };
+
+    }
+
+
+    if(p > 0){
+
+        return {
+            grade:"F",
+            title:"Needs More Practice",
+            description:
+                "আরও নিয়মিত practice করুন।",
+            type:"danger"
+        };
+
+    }
+
+
+    return {
+        grade:"-",
+        title:"No Grade Yet",
+        description:
+            "Assignment grade করা হলে grade এখানে দেখা যাবে।",
+        type:"pending"
+    };
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(
+    dateString
+){
+
+    if(!dateString){
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   STUDENT PROFILE
+========================================================= */
+
+function renderStudentProfile(){
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        currentStudent.name ||
+        "Student";
+
+
+    document.getElementById(
+        "studentId"
+    ).textContent =
+        currentStudent.id ||
+        "STUDENT-001";
+
+
+    document.getElementById(
+        "studentCourse"
+    ).textContent =
+        currentStudent.course ||
+        "SNK AI Academy";
+
+}
+
+
+/* =========================================================
+   GET GRADED DATA
+========================================================= */
+
+function getGradedData(){
+
+    let total =
+        0;
+
+    let obtained =
+        0;
+
+    let graded =
+        0;
+
+
+    assignments.forEach(
+        assignment => {
+
+            const submission =
+                getSubmission(
+                    assignment.id
+                );
+
+
+            if(
+                isGraded(
+                    submission
+                )
+            ){
+
+                const totalMarks =
+                    Number(
+                        assignment.marks
+                    );
+
+
+                const mark =
+                    Number(
+                        submission.mark
+                    );
+
+
+                if(
+                    !Number.isNaN(
+                        totalMarks
+                    ) &&
+                    totalMarks > 0 &&
+                    !Number.isNaN(
+                        mark
+                    )
+                ){
+
+                    total +=
+                        totalMarks;
+
+                    obtained +=
+                        mark;
+
+                    graded++;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    return {
+        total,
+        obtained,
+        graded
+    };
+
+}
+
+
+/* =========================================================
+   RENDER STATS
+========================================================= */
+
+function renderStats(){
+
+    const totalAssignments =
+        assignments.length;
+
+
+    let submitted =
+        0;
+
+    let graded =
+        0;
+
+    let pending =
+        0;
+
+
+    assignments.forEach(
+        assignment => {
+
+            const submission =
+                getSubmission(
+                    assignment.id
+                );
+
+
+            if(
+                submission
+            ){
+
+                submitted++;
+
+            }
+
+
+            if(
+                isGraded(
+                    submission
+                )
+            ){
+
+                graded++;
+
+            }
+
+        }
+    );
+
+
+    pending =
+        totalAssignments -
+        submitted;
+
+
+    const data =
+        getGradedData();
+
+
+    const percentage =
+        calculatePercentage(
+            data.obtained,
+            data.total
+        );
+
+
+    const grade =
+        calculateGrade(
+            percentage
+        );
+
+
+    document.getElementById(
+        "totalAssignments"
+    ).textContent =
+        totalAssignments;
+
+
+    document.getElementById(
+        "submittedAssignments"
+    ).textContent =
+        submitted;
+
+
+    document.getElementById(
+        "pendingAssignments"
+    ).textContent =
+        pending;
+
+
+    document.getElementById(
+        "gradedAssignments"
+    ).textContent =
+        graded;
+
+
+    document.getElementById(
+        "obtainedMarks"
+    ).textContent =
+        data.obtained;
+
+
+    document.getElementById(
+        "overallGrade"
+    ).textContent =
+        grade.grade;
+
+
+    document.getElementById(
+        "overallPercentage"
+    ).textContent =
+        percentage.toFixed(1) +
+        "%";
+
+
+    document.getElementById(
+        "progressPercent"
+    ).textContent =
+        percentage.toFixed(1) +
+        "%";
+
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        percentage + "%";
+
+
+    document.getElementById(
+        "gradeCircle"
+    ).textContent =
+        grade.grade;
+
+
+    document.getElementById(
+        "gradeTitle"
+    ).textContent =
+        grade.title;
+
+
+    document.getElementById(
+        "gradeDescription"
+    ).textContent =
+        grade.description;
+
+
+    let performanceMessage =
+        "আপনার result এখানে automatically calculate হবে।";
+
+
+    if(
+        data.graded > 0
+    ){
+
+        performanceMessage =
+            "আপনি " +
+            data.graded +
+            "টি assignment grade পেয়েছেন। " +
+            "Obtained marks " +
+            data.obtained +
+            " / " +
+            data.total +
+            "।";
+
+    }
+
+
+    document.getElementById(
+        "performanceMessage"
+    ).textContent =
+        performanceMessage;
+
+}
+
+
+/* =========================================================
+   MARK CLASS
+========================================================= */
+
+function getMarkClass(
+    percentage
+){
+
+    if(
+        percentage >= 60
+    ){
+
+        return "good";
+
+    }
+
+
+    if(
+        percentage >= 40
+    ){
+
+        return "average";
+
+    }
+
+
+    return "low";
+
+}
+
+
+/* =========================================================
+   GRADE BADGE CLASS
+========================================================= */
+
+function getGradeClass(
+    grade
+){
+
+    if(
+        grade === "-" ||
+        grade === "Pending"
+    ){
+
+        return "pending";
+
+    }
+
+
+    if(
+        grade === "F" ||
+        grade === "C"
+    ){
+
+        return "danger";
+
+    }
+
+
+    return "success";
+
+}
+
+
+/* =========================================================
+   RENDER RESULTS
+========================================================= */
+
+function renderResults(){
+
+    const tbody =
+        document.getElementById(
+            "resultTableBody"
+        );
+
+
+    const tableWrap =
+        document.getElementById(
+            "tableWrap"
+        );
+
+
+    const empty =
+        document.getElementById(
+            "emptyState"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    let rows =
+        assignments.map(
+            assignment => {
+
+                const submission =
+                    getSubmission(
+                        assignment.id
+                    );
+
+
+                const graded =
+                    isGraded(
+                        submission
+                    );
+
+
+                const percentage =
+                    graded
+                    ?
+                    calculatePercentage(
+                        submission.mark,
+                        assignment.marks
+                    )
+                    :
+                    0;
+
+
+                const grade =
+                    graded
+                    ?
+                    calculateGrade(
+                        percentage
+                    )
+                    :
+                    {
+                        grade:"Pending",
+                        title:"Pending",
+                        type:"pending"
+                    };
+
+
+                return {
+                    assignment,
+                    submission,
+                    graded,
+                    percentage,
+                    grade
+                };
+
+            }
+        );
+
+
+    rows =
+        rows.filter(
+            item => {
+
+                const title =
+                    String(
+                        item.assignment.title ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const course =
+                    String(
+                        item.assignment.course ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const searchMatch =
+                    !search ||
+                    title.includes(
+                        search
+                    ) ||
+                    course.includes(
+                        search
+                    );
+
+
+                let statusMatch =
+                    true;
+
+
+                if(
+                    status === "graded"
+                ){
+
+                    statusMatch =
+                        item.graded;
+
+                }
+
+
+                if(
+                    status === "pending"
+                ){
+
+                    statusMatch =
+                        !item.graded;
+
+                }
+
+
+                return (
+                    searchMatch &&
+                    statusMatch
+                );
+
+            }
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    rows.forEach(
+        item => {
+
+            const assignment =
+                item.assignment;
+
+            const submission =
+                item.submission;
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const markClass =
+                item.graded
+                ?
+                getMarkClass(
+                    item.percentage
+                )
+                :
+                "";
+
+
+            const gradeClass =
+                getGradeClass(
+                    item.grade.grade
+                );
+
+
+            const submissionDate =
+                submission
+                ?
+                formatDate(
+                    submission.submittedAt
+                )
+                :
+                "-";
+
+
+            const feedback =
+                submission &&
+                submission.teacherFeedback
+                ?
+                submission.teacherFeedback
+                :
+                null;
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="assignment-cell">
+
+                        <div class="assignment-title">
+                            ${escapeHtml(
+                                assignment.title ||
+                                "Assignment"
+                            )}
+                        </div>
+
+                        <div class="assignment-course">
+                            ${escapeHtml(
+                                assignment.course ||
+                                "Course"
+                            )}
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+                    ${escapeHtml(
+                        assignment.marks ??
+                        "-"
+                    )}
+                </td>
+
+
+                <td>
+
+                    ${
+                        item.graded
+                        ?
+                        `
+                        <span class="mark ${markClass}">
+                            ${escapeHtml(
+                                submission.mark
+                            )}
+                        </span>
+                        `
+                        :
+                        `
+                        <span class="pending-text">
+                            Pending
+                        </span>
+                        `
+                    }
+
+                </td>
+
+
+                <td>
+
+                    ${
+                        item.graded
+                        ?
+                        percentage.toFixed(1) +
+                        "%"
+                        :
+                        "-"
+                    }
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="grade-badge ${gradeClass}"
+                    >
+                        ${escapeHtml(
+                            item.grade.grade
+                        )}
+                    </span>
+
+                </td>
+
+
+                <td>
+                    ${submissionDate}
+                </td>
+
+
+                <td>
+
+                    <div class="feedback">
+
+                        ${
+                            feedback
+                            ?
+                            escapeHtml(
+                                feedback
+                            )
+                            :
+                            item.graded
+                            ?
+                            "No feedback"
+                            :
+                            "Not available"
+                        }
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="view-btn"
+                        onclick="openDetailModal('${escapeHtml(
+                            assignment.id
+                        )}')"
+                    >
+                        👁 View
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    if(
+        rows.length === 0
+    ){
+
+        tableWrap.style.display =
+            "none";
+
+        empty.style.display =
+            "block";
+
+    }
+    else{
+
+        tableWrap.style.display =
+            "block";
+
+        empty.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN DETAIL MODAL
+========================================================= */
+
+function openDetailModal(
+    assignmentId
+){
+
+    const assignment =
+        getAssignment(
+            assignmentId
+        );
+
+
+    if(!assignment){
+
+        showToast(
+            "Assignment পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    const submission =
+        getSubmission(
+            assignment.id
+        );
+
+
+    const graded =
+        isGraded(
+            submission
+        );
+
+
+    const percentage =
+        graded
+        ?
+        calculatePercentage(
+            submission.mark,
+            assignment.marks
+        )
+        :
+        0;
+
+
+    const grade =
+        graded
+        ?
+        calculateGrade(
+            percentage
+        )
+        :
+        {
+            grade:"Pending"
+        };
+
+
+    document.getElementById(
+        "modalAssignmentTitle"
+    ).textContent =
+        assignment.title ||
+        "Assignment";
+
+
+    document.getElementById(
+        "modalAssignmentCourse"
+    ).textContent =
+        (
+            assignment.course ||
+            "Course"
+        ) +
+        " • Submitted: " +
+        (
+            submission
+            ?
+            formatDate(
+                submission.submittedAt
+            )
+            :
+            "Not submitted"
+        );
+
+
+    document.getElementById(
+        "modalTotal"
+    ).textContent =
+        assignment.marks ??
+        "-";
+
+
+    document.getElementById(
+        "modalObtained"
+    ).textContent =
+        graded
+        ?
+        submission.mark
+        :
+        "Pending";
+
+
+    document.getElementById(
+        "modalPercentage"
+    ).textContent =
+        graded
+        ?
+        percentage.toFixed(1) +
+        "%"
+        :
+        "-";
+
+
+    document.getElementById(
+        "modalGrade"
+    ).textContent =
+        grade.grade;
+
+
+    document.getElementById(
+        "modalFeedback"
+    ).textContent =
+        submission &&
+        submission.teacherFeedback
+        ?
+        submission.teacherFeedback
+        :
+        graded
+        ?
+        "Teacher has not added feedback yet."
+        :
+        "এই assignment এখনো grade করা হয়নি।";
+
+
+    document.getElementById(
+        "detailModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeDetailModal(){
+
+    document.getElementById(
+        "detailModal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   ASSIGNMENTS PAGE
+========================================================= */
+
+function goAssignments(){
+
+    window.location.href =
+        "student-assignments.html";
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================================
+   OUTSIDE CLICK
+========================================================= */
+
+document.getElementById(
+    "detailModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeDetailModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeDetailModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH DATA
+========================================================= */
+
+setInterval(
+    function(){
+
+        assignments =
+            JSON.parse(
+                localStorage.getItem(
+                    ASSIGNMENT_KEY
+                )
+            ) || [];
+
+
+        submissions =
+            JSON.parse(
+                localStorage.getItem(
+                    SUBMISSION_KEY
+                )
+            ) || [];
+
+
+        renderStats();
+
+        renderResults();
+
+    },
+    5000
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+loadTheme();
+
+
+document.getElementById(
+    "languageButton"
+).textContent =
+    currentLanguage === "bn"
+    ? "English"
+    : "বাংলা";
+
+
+renderStudentProfile();
+
+renderStats();
+
+renderResults();
+
+</script>
+
+</body>
+</html>
+```

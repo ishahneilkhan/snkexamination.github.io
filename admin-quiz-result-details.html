@@ -1,0 +1,3602 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05070c">
+
+<title>SNK AI Academy | Quiz Result Details</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap"
+rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   SNK AI ACADEMY
+   ADMIN QUIZ RESULT DETAILS
+   STEP 2.5.6
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --card2:#f8fafc;
+
+    --text:#172033;
+    --muted:#667085;
+
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+
+    --success:#16a34a;
+    --success-soft:#ecfdf3;
+
+    --danger:#dc2626;
+    --danger-soft:#fef2f2;
+
+    --warning:#d97706;
+    --warning-soft:#fff7ed;
+
+    --purple:#7c3aed;
+
+    --shadow:
+        0 15px 45px rgba(15,23,42,.08);
+}
+
+body.dark{
+
+    --bg:#070b14;
+    --card:#111827;
+    --card2:#0d1422;
+
+    --text:#f8fafc;
+    --muted:#94a3b8;
+
+    --border:#1f2937;
+
+    --success-soft:#052e16;
+    --danger-soft:#450a0a;
+    --warning-soft:#451a03;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        "Hind Siliguri",
+        "Inter",
+        Arial,
+        sans-serif;
+
+    transition:.25s;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar{
+
+    position:sticky;
+    top:0;
+
+    z-index:1000;
+
+    min-height:68px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    padding:10px 24px;
+
+    background:
+        rgba(255,255,255,.88);
+
+    backdrop-filter:blur(15px);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+body.dark .topbar{
+
+    background:
+        rgba(7,11,20,.88);
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.brand img{
+
+    width:40px;
+    height:40px;
+
+    object-fit:contain;
+
+    border-radius:9px;
+}
+
+.brand .logo-badge{
+    width:40px;
+    height:40px;
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#b7ff00;
+    color:#050505;
+    font-weight:900;
+    font-size:13px;
+    flex-shrink:0;
+}
+
+.brand-text strong{
+
+    display:block;
+
+    font-family:
+        "Inter",
+        "Hind Siliguri",
+        sans-serif;
+
+    font-size:13px;
+}
+
+.brand-text span{
+
+    display:block;
+
+    margin-top:2px;
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+.top-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+}
+
+.top-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:
+        1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    padding:
+        8px 11px;
+
+    border-radius:8px;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.top-btn:hover{
+
+    border-color:var(--primary);
+
+    color:var(--primary);
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+
+    width:
+        min(1120px,calc(100% - 32px));
+
+    margin:0 auto;
+
+    padding:
+        25px 0 50px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    margin-bottom:18px;
+
+    padding:30px;
+
+    border-radius:22px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #07111f,
+            #172554 55%,
+            #111827
+        );
+
+    box-shadow:
+        0 20px 60px rgba(15,23,42,.20);
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+    height:320px;
+
+    right:-110px;
+    top:-170px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(59,130,246,.40),
+            transparent 68%
+        );
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:200px;
+    height:200px;
+
+    left:-100px;
+    bottom:-110px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(124,58,237,.30),
+            transparent 70%
+        );
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+}
+
+.hero-badge{
+
+    display:inline-flex;
+
+    padding:
+        6px 10px;
+
+    margin-bottom:9px;
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    background:
+        rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    font-size:8px;
+
+    font-weight:900;
+}
+
+.hero h1{
+
+    margin-bottom:7px;
+
+    font-family:
+        "Inter",
+        "Hind Siliguri",
+        sans-serif;
+
+    font-size:
+        clamp(24px,4vw,36px);
+
+    line-height:1.15;
+}
+
+.hero p{
+
+    max-width:720px;
+
+    color:
+        rgba(255,255,255,.70);
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   RESULT HEADER
+========================================================= */
+
+.result-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-bottom:15px;
+
+    padding:18px;
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:17px;
+
+    box-shadow:var(--shadow);
+}
+
+.student-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.avatar{
+
+    width:55px;
+    height:55px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--purple)
+        );
+
+    color:#fff;
+
+    font-family:"Inter",sans-serif;
+
+    font-size:21px;
+
+    font-weight:900;
+}
+
+.student-info h2{
+
+    margin-bottom:3px;
+
+    font-size:17px;
+}
+
+.student-info p{
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+.status-area{
+
+    text-align:right;
+}
+
+.status-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    padding:
+        7px 11px;
+
+    border-radius:20px;
+
+    font-size:9px;
+
+    font-weight:900;
+}
+
+.status-badge.pass{
+
+    color:var(--success);
+
+    background:var(--success-soft);
+}
+
+.status-badge.fail{
+
+    color:var(--danger);
+
+    background:var(--danger-soft);
+}
+
+.publish-status{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   SCORE CARD
+========================================================= */
+
+.score-card{
+
+    margin-bottom:15px;
+
+    padding:22px;
+
+    text-align:center;
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+}
+
+.score-label{
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    font-weight:700;
+}
+
+.score-value{
+
+    margin:9px 0;
+
+    color:var(--primary);
+
+    font-family:"Inter",sans-serif;
+
+    font-size:
+        clamp(48px,9vw,76px);
+
+    font-weight:900;
+
+    line-height:1;
+}
+
+.score-marks{
+
+    font-family:"Inter",sans-serif;
+
+    font-size:14px;
+
+    font-weight:800;
+}
+
+.score-progress{
+
+    width:
+        min(550px,100%);
+
+    height:10px;
+
+    margin:
+        15px auto 8px;
+
+    overflow:hidden;
+
+    background:var(--border);
+
+    border-radius:20px;
+}
+
+.score-progress-fill{
+
+    height:100%;
+
+    width:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--purple)
+        );
+
+    border-radius:20px;
+
+    transition:
+        width .8s ease;
+}
+
+.score-caption{
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+
+    margin-bottom:15px;
+}
+
+.card{
+
+    overflow:hidden;
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:16px;
+
+    box-shadow:var(--shadow);
+}
+
+.card-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        14px 16px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.card-header-icon{
+
+    width:31px;
+    height:31px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--card2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:8px;
+
+    font-size:14px;
+}
+
+.card-header h3{
+
+    font-size:12px;
+}
+
+.card-body{
+
+    padding:15px;
+}
+
+
+/* =========================================================
+   INFO GRID
+========================================================= */
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:8px;
+}
+
+.info-item{
+
+    padding:10px;
+
+    background:var(--card2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:9px;
+}
+
+.info-item span{
+
+    display:block;
+
+    margin-bottom:4px;
+
+    color:var(--muted);
+
+    font-size:7px;
+}
+
+.info-item strong{
+
+    display:block;
+
+    font-size:9px;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   ANSWER SUMMARY
+========================================================= */
+
+.answer-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:8px;
+}
+
+.answer-box{
+
+    padding:
+        14px 8px;
+
+    text-align:center;
+
+    background:var(--card2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:10px;
+}
+
+.answer-box .number{
+
+    display:block;
+
+    margin-bottom:3px;
+
+    font-family:"Inter",sans-serif;
+
+    font-size:21px;
+
+    font-weight:900;
+}
+
+.answer-box span{
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    font-weight:700;
+}
+
+.answer-box.correct .number{
+
+    color:var(--success);
+}
+
+.answer-box.wrong .number{
+
+    color:var(--danger);
+}
+
+.answer-box.unanswered .number{
+
+    color:var(--warning);
+}
+
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+.performance-list{
+
+    display:grid;
+
+    gap:9px;
+}
+
+.performance-row{
+
+    display:grid;
+
+    grid-template-columns:
+        90px 1fr 45px;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:8px;
+}
+
+.performance-row span{
+
+    color:var(--muted);
+}
+
+.performance-bar{
+
+    height:7px;
+
+    overflow:hidden;
+
+    background:var(--border);
+
+    border-radius:20px;
+}
+
+.performance-fill{
+
+    height:100%;
+
+    background:var(--primary);
+
+    border-radius:20px;
+}
+
+.performance-value{
+
+    text-align:right;
+
+    font-family:"Inter",sans-serif;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   ADMIN NOTE
+========================================================= */
+
+.note{
+
+    margin-bottom:15px;
+
+    padding:12px;
+
+    background:var(--warning-soft);
+
+    color:var(--warning);
+
+    border-radius:10px;
+
+    font-size:9px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   ACTION BAR
+========================================================= */
+
+.action-bar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin-bottom:15px;
+
+    padding:15px;
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:16px;
+
+    box-shadow:var(--shadow);
+}
+
+.action-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:
+        1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    padding:
+        9px 13px;
+
+    border-radius:8px;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.action-btn:hover{
+
+    border-color:var(--primary);
+
+    color:var(--primary);
+}
+
+.action-btn.primary{
+
+    background:var(--primary);
+
+    border-color:var(--primary);
+
+    color:#fff;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+
+    padding:
+        60px 20px;
+
+    text-align:center;
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+}
+
+.empty-icon{
+
+    margin-bottom:10px;
+
+    font-size:45px;
+}
+
+.empty h2{
+
+    margin-bottom:5px;
+
+    font-size:18px;
+}
+
+.empty p{
+
+    max-width:500px;
+
+    margin:auto;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    padding:
+        10px 0;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+
+    position:fixed;
+
+    left:50%;
+    bottom:22px;
+
+    z-index:4000;
+
+    padding:
+        10px 15px;
+
+    background:#111827;
+
+    color:#fff;
+
+    border-radius:8px;
+
+    font-size:9px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transform:
+        translate(-50%,20px);
+
+    transition:.25s;
+}
+
+.toast.show{
+
+    opacity:1;
+
+    transform:
+        translate(-50%,0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:750px){
+
+    .topbar{
+
+        padding:
+            10px 12px;
+    }
+
+    .brand-text{
+
+        display:none;
+    }
+
+    .container{
+
+        width:
+            calc(100% - 20px);
+
+        padding-top:14px;
+    }
+
+    .hero{
+
+        padding:21px;
+
+        border-radius:16px;
+    }
+
+    .grid{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:520px){
+
+    .hide-mobile{
+
+        display:none !important;
+    }
+
+    .result-header{
+
+        align-items:flex-start;
+    }
+
+    .status-area{
+
+        width:100%;
+
+        text-align:left;
+    }
+
+    .info-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .answer-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .performance-row{
+
+        grid-template-columns:
+            75px 1fr 38px;
+    }
+
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print{
+
+    @page{
+
+        size:A4;
+
+        margin:12mm;
+    }
+
+    body{
+
+        background:#fff !important;
+
+        color:#000 !important;
+    }
+
+    .topbar,
+    .hero,
+    .action-bar,
+    .footer,
+    .toast{
+
+        display:none !important;
+    }
+
+    .container{
+
+        width:100%;
+
+        padding:0;
+    }
+
+    .result-header,
+    .score-card,
+    .card{
+
+        background:#fff !important;
+
+        color:#000 !important;
+
+        box-shadow:none !important;
+
+        border:
+            1px solid #ccc !important;
+    }
+
+    .info-item,
+    .answer-box{
+
+        background:#fff !important;
+
+        color:#000 !important;
+
+        border:
+            1px solid #ccc !important;
+    }
+
+    .info-item span,
+    .student-info p,
+    .score-label,
+    .score-caption,
+    .performance-row span{
+
+        color:#555 !important;
+    }
+
+    .score-value{
+
+        color:#111 !important;
+    }
+
+    .score-progress{
+
+        background:#ddd !important;
+    }
+
+    .score-progress-fill{
+
+        background:#333 !important;
+    }
+
+    .card{
+
+        break-inside:avoid;
+
+        margin-bottom:12px;
+    }
+
+}
+
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="logo-badge">SNK</div>
+
+        <div class="brand-text">
+
+            <strong>
+                SNK AI Academy
+            </strong>
+
+            <span>
+                Admin Quiz Result Details
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="top-actions">
+
+        <a
+        href="admin-quiz-results.html"
+        class="top-btn hide-mobile">
+
+            ← All Results
+
+        </a>
+
+
+        <button
+        type="button"
+        class="top-btn"
+        id="themeBtn">
+
+            🌙
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                ADMIN • QUIZ RESULT
+            </div>
+
+            <h1>
+                Quiz Result Details
+            </h1>
+
+            <p>
+                একজন Student-এর সম্পূর্ণ Quiz Result,
+                score, answer summary, timing এবং
+                publication status এক জায়গায় দেখুন।
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULT APP -->
+
+    <div id="resultApp"></div>
+
+
+</main>
+
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+    SNK AI Academy • Admin Quiz Result Details • Step 2.5.6
+
+    <br>
+
+    © 2026 SNK AI Academy. All Rights Reserved.
+
+</div>
+
+
+
+<!-- TOAST -->
+
+<div
+class="toast"
+id="toast">
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   STEP 2.5.6
+   ADMIN QUIZ RESULT DETAILS
+========================================================= */
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE = {
+
+    theme:
+        "snkTheme",
+
+    course:
+        "snkCourseSettingsV25",
+
+    quiz:
+        "snkQuizSettingsV25",
+
+    results:
+        "snkQuizResults"
+
+};
+
+
+/* =========================================================
+   DEFAULT COURSE
+========================================================= */
+
+const DEFAULT_COURSE = {
+
+    name:
+        "আপনার কোর্স",
+
+    batch:
+        "Batch 01",
+
+    mode:
+        "Offline",
+
+    duration:
+        "6 Months",
+
+    days:
+        "Saturday–Monday",
+
+    time:
+        "4:00 PM – 6:00 PM",
+
+    instructor:
+        "SNK AI Instructor"
+
+};
+
+
+/* =========================================================
+   DEFAULT QUIZ
+========================================================= */
+
+const DEFAULT_QUIZ = {
+
+    id:
+        "SNK-QUIZ-2026-01",
+
+    title:
+        "Computer Basics Quiz",
+
+    startDate:
+        "2026-09-10",
+
+    endDate:
+        "2026-09-15",
+
+    durationMinutes:
+        20,
+
+    marksPerQuestion:
+        1,
+
+    passPercentage:
+        40,
+
+    oneAttemptOnly:
+        true,
+
+    autoSubmit:
+        true,
+
+    published:
+        false
+
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let course = {};
+let quiz = {};
+let result = null;
+
+
+/* =========================================================
+   READ JSON
+========================================================= */
+
+function readJSON(
+    key,
+    fallback
+){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                key
+            );
+
+
+        if(!raw){
+
+            return fallback;
+
+        }
+
+
+        return JSON.parse(
+            raw
+        );
+
+    }
+    catch(error){
+
+        console.warn(
+            "Storage read error:",
+            error
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT DATE TIME
+========================================================= */
+
+function formatDateTime(
+    value
+){
+
+    if(!value){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"long",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT SECONDS
+========================================================= */
+
+function formatSeconds(
+    seconds
+){
+
+    const total =
+        Math.max(
+            0,
+            Number(
+                seconds
+            ) || 0
+        );
+
+
+    const minutes =
+        Math.floor(
+            total / 60
+        );
+
+
+    const secs =
+        total % 60;
+
+
+    return (
+
+        String(
+            minutes
+        )
+        .padStart(
+            2,
+            "0"
+        )
+
+        +
+
+        ":"
+
+        +
+
+        String(
+            secs
+        )
+        .padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   GET URL PARAMETER
+========================================================= */
+
+function getURLParameter(
+    name
+){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    return (
+        params.get(
+            name
+        )
+        ||
+        ""
+    ).trim();
+
+}
+
+
+/* =========================================================
+   LOAD SETTINGS
+========================================================= */
+
+function loadSettings(){
+
+    const savedCourse =
+        readJSON(
+            STORAGE.course,
+            null
+        );
+
+
+    course = {
+
+        ...DEFAULT_COURSE,
+
+        ...(savedCourse || {})
+
+    };
+
+
+    const savedQuiz =
+        readJSON(
+            STORAGE.quiz,
+            null
+        );
+
+
+    quiz = {
+
+        ...DEFAULT_QUIZ,
+
+        ...(savedQuiz || {})
+
+    };
+
+}
+
+
+/* =========================================================
+   GET CURRENT STUDENT ID
+========================================================= */
+
+function getCurrentStudentId(){
+
+    /*
+       Priority:
+       1. resultId/studentId URL
+       2. sessionStorage
+       3. localStorage
+       4. profile
+       5. demo student
+    */
+
+
+    const urlStudentId =
+        getURLParameter(
+            "studentId"
+        );
+
+
+    if(urlStudentId){
+
+        return urlStudentId;
+
+    }
+
+
+    const sessionId =
+        sessionStorage.getItem(
+            "snkStudentId"
+        );
+
+
+    if(sessionId){
+
+        return sessionId;
+
+    }
+
+
+    const localId =
+        localStorage.getItem(
+            "snkStudentId"
+        );
+
+
+    if(localId){
+
+        return localId;
+
+    }
+
+
+    const profile =
+        readJSON(
+            "snkStudentProfile",
+            null
+        );
+
+
+    if(profile){
+
+        return (
+
+            profile.studentId
+            ||
+            profile.id
+            ||
+            ""
+
+        );
+
+    }
+
+
+    return "SNK-1001";
+
+}
+
+
+/* =========================================================
+   FIND RESULT
+========================================================= */
+
+function findResult(){
+
+    const results =
+        readJSON(
+            STORAGE.results,
+            []
+        );
+
+
+    if(
+        !Array.isArray(
+            results
+        )
+    ){
+
+        return null;
+
+    }
+
+
+    const resultId =
+        getURLParameter(
+            "resultId"
+        );
+
+
+    const studentId =
+        getCurrentStudentId();
+
+
+    const normalizedStudentId =
+        String(
+            studentId
+        )
+        .trim()
+        .toLowerCase();
+
+
+    /*
+       STEP 1
+       Exact resultId match
+    */
+
+    if(resultId){
+
+        const byResultId =
+            results.find(
+                function(item){
+
+                    return (
+                        String(
+                            item.id ||
+                            ""
+                        )
+                        ===
+                        String(
+                            resultId
+                        )
+                    );
+
+                }
+            );
+
+
+        if(byResultId){
+
+            return byResultId;
+
+        }
+
+    }
+
+
+    /*
+       STEP 2
+       Quiz + Student
+    */
+
+    let match =
+        results.find(
+            function(item){
+
+                return (
+
+                    String(
+                        item.studentId ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase()
+                    ===
+                    normalizedStudentId
+
+                    &&
+
+                    (
+                        !item.quizId
+                        ||
+                        String(
+                            item.quizId
+                        )
+                        ===
+                        String(
+                            quiz.id
+                        )
+                    )
+
+                );
+
+            }
+        );
+
+
+    /*
+       STEP 3
+       Student only fallback
+    */
+
+    if(!match){
+
+        match =
+            results.find(
+                function(item){
+
+                    return (
+
+                        String(
+                            item.studentId ||
+                            ""
+                        )
+                        .trim()
+                        .toLowerCase()
+                        ===
+                        normalizedStudentId
+
+                    );
+
+                }
+            );
+
+    }
+
+
+    return match || null;
+
+}
+
+
+/* =========================================================
+   GET PERCENTAGE
+========================================================= */
+
+function getPercentage(){
+
+    if(!result){
+
+        return 0;
+
+    }
+
+
+    const stored =
+        Number(
+            result.percentage
+        );
+
+
+    if(
+        Number.isFinite(
+            stored
+        )
+    ){
+
+        return Math.max(
+            0,
+            Math.min(
+                100,
+                stored
+            )
+        );
+
+    }
+
+
+    const total =
+        Number(
+            result.totalMarks
+            ??
+            result.total
+            ??
+            0
+        );
+
+
+    const obtained =
+        Number(
+            result.obtainedMarks
+            ??
+            result.correct
+            ??
+            0
+        );
+
+
+    if(total > 0){
+
+        return Math.max(
+            0,
+            Math.min(
+                100,
+                (
+                    obtained /
+                    total
+                ) * 100
+            )
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =========================================================
+   GET RESULT STATUS
+========================================================= */
+
+function getResultStatus(){
+
+    if(!result){
+
+        return "Pending";
+
+    }
+
+
+    const saved =
+        String(
+            result.result ||
+            ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    if(
+        saved === "pass"
+        ||
+        saved === "passed"
+    ){
+
+        return "Pass";
+
+    }
+
+
+    if(
+        saved === "fail"
+        ||
+        saved === "failed"
+    ){
+
+        return "Fail";
+
+    }
+
+
+    const passPercentage =
+        Number(
+            result.passPercentage
+            ??
+            quiz.passPercentage
+            ??
+            40
+        );
+
+
+    return (
+
+        getPercentage()
+        >=
+        passPercentage
+
+        ?
+
+        "Pass"
+
+        :
+
+        "Fail"
+
+    );
+
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+function renderEmpty(){
+
+    document.getElementById(
+        "resultApp"
+    ).innerHTML = `
+
+        <section class="empty">
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+            <h2>
+                Quiz Result পাওয়া যায়নি
+            </h2>
+
+            <p>
+                এই Student-এর জন্য
+                Quiz Result-এর কোনো record পাওয়া যায়নি।
+                Student ID অথবা Result ID যাচাই করুন।
+            </p>
+
+            <div
+            style="
+                margin-top:15px;
+            ">
+
+                <a
+                href="admin-quiz-results.html"
+                class="action-btn primary">
+
+                    ← All Quiz Results
+
+                </a>
+
+            </div>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER RESULT
+========================================================= */
+
+function renderResult(){
+
+    if(!result){
+
+        renderEmpty();
+
+        return;
+
+    }
+
+
+    const percentage =
+        getPercentage();
+
+
+    const status =
+        getResultStatus();
+
+
+    const isPass =
+        status === "Pass";
+
+
+    const studentName =
+        result.studentName
+        ||
+        "Student";
+
+
+    const studentId =
+        result.studentId
+        ||
+        getCurrentStudentId();
+
+
+    const rowCourse =
+        result.course
+        ||
+        course.name;
+
+
+    const rowBatch =
+        result.batch
+        ||
+        course.batch;
+
+
+    const obtained =
+        Number(
+            result.obtainedMarks
+            ??
+            result.correct
+            ??
+            0
+        );
+
+
+    const totalMarks =
+        Number(
+            result.totalMarks
+            ??
+            result.total
+            ??
+            0
+        );
+
+
+    const correct =
+        Number(
+            result.correct
+        )
+        ||
+        0;
+
+
+    const wrong =
+        Number(
+            result.wrong
+        )
+        ||
+        0;
+
+
+    const unanswered =
+        Number(
+            result.unanswered
+        )
+        ||
+        0;
+
+
+    const totalQuestions =
+        Number(
+            result.totalQuestions
+        )
+        ||
+        (
+            correct +
+            wrong +
+            unanswered
+        )
+        ||
+        0;
+
+
+    const passPercentage =
+        Number(
+            result.passPercentage
+            ??
+            quiz.passPercentage
+            ??
+            40
+        );
+
+
+    const marksPerQuestion =
+        Number(
+            result.marksPerQuestion
+            ??
+            quiz.marksPerQuestion
+            ??
+            1
+        );
+
+
+    const timeTaken =
+        formatSeconds(
+            result.timeTakenSeconds
+        );
+
+
+    const published =
+        result.published === true;
+
+
+    const submitMethod =
+        result.submitMethod
+        ||
+        "Manual";
+
+
+    const quizName =
+        result.quizName
+        ||
+        quiz.title;
+
+
+    const studentInitial =
+        String(
+            studentName
+        )
+        .charAt(0)
+        .toUpperCase();
+
+
+    const accuracy =
+        totalQuestions > 0
+
+        ?
+
+        Math.round(
+            (
+                correct /
+                totalQuestions
+            )
+            *
+            100
+        )
+
+        :
+
+        0;
+
+
+    const completion =
+        totalQuestions > 0
+
+        ?
+
+        Math.round(
+            (
+                (
+                    correct +
+                    wrong
+                )
+                /
+                totalQuestions
+            )
+            *
+            100
+        )
+
+        :
+
+        0;
+
+
+    document.getElementById(
+        "resultApp"
+    ).innerHTML = `
+
+
+        <!-- ============================================
+             STUDENT HEADER
+        ============================================= -->
+
+        <section class="result-header">
+
+
+            <div class="student-info">
+
+
+                <div class="avatar">
+
+                    ${escapeHTML(
+                        studentInitial
+                    )}
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+
+                        ${escapeHTML(
+                            studentName
+                        )}
+
+                    </h2>
+
+
+                    <p>
+
+                        Student ID:
+
+                        <strong>
+
+                            ${escapeHTML(
+                                studentId
+                            )}
+
+                        </strong>
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="status-area">
+
+
+                <div
+                class="
+                    status-badge
+                    ${
+                        isPass
+                        ?
+                        "pass"
+                        :
+                        "fail"
+                    }
+                ">
+
+                    ${
+                        isPass
+                        ?
+                        "✓ PASS"
+                        :
+                        "✕ FAIL"
+                    }
+
+                </div>
+
+
+                <div class="publish-status">
+
+                    ${
+                        published
+                        ?
+                        "✓ Published to Student Portal"
+                        :
+                        "⚠ Unpublished — Admin Only"
+                    }
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ============================================
+             SCORE
+        ============================================= -->
+
+        <section class="score-card">
+
+
+            <div class="score-label">
+
+                QUIZ SCORE
+
+            </div>
+
+
+            <div class="score-value">
+
+                ${Math.round(
+                    percentage
+                )}%
+
+            </div>
+
+
+            <div class="score-marks">
+
+                ${obtained}
+
+                /
+
+                ${totalMarks}
+
+                Marks
+
+            </div>
+
+
+            <div class="score-progress">
+
+
+                <div
+                class="score-progress-fill"
+                style="
+                    width:${percentage}%;
+                ">
+
+                </div>
+
+
+            </div>
+
+
+            <div class="score-caption">
+
+                Pass Mark:
+                ${passPercentage}%
+
+                •
+
+                ${
+                    isPass
+                    ?
+                    "Student Passed"
+                    :
+                    "Student Did Not Pass"
+                }
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ============================================
+             STUDENT + QUIZ INFORMATION
+        ============================================= -->
+
+        <section class="grid">
+
+
+            <!-- STUDENT INFORMATION -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+
+                    <div class="card-header-icon">
+                        👤
+                    </div>
+
+
+                    <h3>
+                        Student Information
+                    </h3>
+
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div class="info-grid">
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Student Name
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    studentName
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Student ID
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    studentId
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Course
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    rowCourse
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Batch
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    rowBatch
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Mode
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    course.mode
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Duration
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    course.duration
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- QUIZ INFORMATION -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+
+                    <div class="card-header-icon">
+                        🎯
+                    </div>
+
+
+                    <h3>
+                        Quiz Information
+                    </h3>
+
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div class="info-grid">
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Quiz Name
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    quizName
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Quiz ID
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    result.quizId
+                                    ||
+                                    quiz.id
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Available From
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    quiz.startDate
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Available Until
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    quiz.endDate
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Duration
+                            </span>
+
+                            <strong>
+                                ${Number(
+                                    quiz.durationMinutes
+                                ) || 0}
+
+                                Minutes
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Marks / Question
+                            </span>
+
+                            <strong>
+                                ${marksPerQuestion}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ============================================
+             ANSWER SUMMARY
+        ============================================= -->
+
+        <section
+        class="card"
+        style="
+            margin-bottom:15px;
+        ">
+
+
+            <div class="card-header">
+
+
+                <div class="card-header-icon">
+                    📊
+                </div>
+
+
+                <h3>
+                    Answer Summary
+                </h3>
+
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div class="answer-grid">
+
+
+                    <div class="answer-box correct">
+
+                        <span class="number">
+                            ${correct}
+                        </span>
+
+                        <span>
+                            Correct
+                        </span>
+
+                    </div>
+
+
+                    <div class="answer-box wrong">
+
+                        <span class="number">
+                            ${wrong}
+                        </span>
+
+                        <span>
+                            Wrong
+                        </span>
+
+                    </div>
+
+
+                    <div class="answer-box unanswered">
+
+                        <span class="number">
+                            ${unanswered}
+                        </span>
+
+                        <span>
+                            Unanswered
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================================
+             PERFORMANCE + SUBMISSION
+        ============================================= -->
+
+        <section class="grid">
+
+
+            <!-- PERFORMANCE -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+
+                    <div class="card-header-icon">
+                        📈
+                    </div>
+
+
+                    <h3>
+                        Performance
+                    </h3>
+
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div class="performance-list">
+
+
+                        <div class="performance-row">
+
+                            <span>
+                                Score
+                            </span>
+
+
+                            <div class="performance-bar">
+
+                                <div
+                                class="performance-fill"
+                                style="
+                                    width:${percentage}%;
+                                ">
+
+                                </div>
+
+                            </div>
+
+
+                            <strong
+                            class="performance-value">
+
+                                ${Math.round(
+                                    percentage
+                                )}%
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="performance-row">
+
+                            <span>
+                                Accuracy
+                            </span>
+
+
+                            <div class="performance-bar">
+
+                                <div
+                                class="performance-fill"
+                                style="
+                                    width:${accuracy}%;
+                                ">
+
+                                </div>
+
+                            </div>
+
+
+                            <strong
+                            class="performance-value">
+
+                                ${accuracy}%
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="performance-row">
+
+                            <span>
+                                Completed
+                            </span>
+
+
+                            <div class="performance-bar">
+
+                                <div
+                                class="performance-fill"
+                                style="
+                                    width:${completion}%;
+                                ">
+
+                                </div>
+
+                            </div>
+
+
+                            <strong
+                            class="performance-value">
+
+                                ${completion}%
+
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SUBMISSION DETAILS -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+
+                    <div class="card-header-icon">
+                        ⏱️
+                    </div>
+
+
+                    <h3>
+                        Submission Details
+                    </h3>
+
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <div class="info-grid">
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Started At
+                            </span>
+
+                            <strong>
+                                ${formatDateTime(
+                                    result.startedAt
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Submitted At
+                            </span>
+
+                            <strong>
+                                ${formatDateTime(
+                                    result.submittedAt
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Time Taken
+                            </span>
+
+                            <strong>
+                                ${timeTaken}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Submit Method
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    submitMethod
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Published
+                            </span>
+
+                            <strong>
+                                ${
+                                    published
+                                    ?
+                                    "Yes"
+                                    :
+                                    "No"
+                                }
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Record ID
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    result.id
+                                    ||
+                                    "—"
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ============================================
+             ADMIN NOTE
+        ============================================= -->
+
+        ${
+            result.note
+
+            ?
+
+            `
+
+                <section class="note">
+
+                    <strong>
+                        📝 Admin Note
+                    </strong>
+
+                    <br>
+
+                    ${escapeHTML(
+                        result.note
+                    )}
+
+                </section>
+
+            `
+
+            :
+
+            ""
+        }
+
+
+
+        <!-- ============================================
+             ACTION BAR
+        ============================================= -->
+
+        <section class="action-bar">
+
+
+            <a
+            href="admin-quiz-results.html"
+            class="action-btn">
+
+                ← All Results
+
+            </a>
+
+
+            <button
+            type="button"
+            class="action-btn primary"
+            id="printBtn">
+
+                🖨 Print Result
+
+            </button>
+
+
+            <button
+            type="button"
+            class="action-btn"
+            id="refreshBtn">
+
+                ↻ Refresh
+
+            </button>
+
+
+        </section>
+
+
+    `;
+
+
+    const printBtn =
+        document.getElementById(
+            "printBtn"
+        );
+
+
+    if(printBtn){
+
+        printBtn.addEventListener(
+            "click",
+            printResult
+        );
+
+    }
+
+
+    const refreshBtn =
+        document.getElementById(
+            "refreshBtn"
+        );
+
+
+    if(refreshBtn){
+
+        refreshBtn.addEventListener(
+            "click",
+            function(){
+
+                loadPage();
+
+                showToast(
+                    "Result refreshed ✓"
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+function printResult(){
+
+    if(!result){
+
+        return;
+
+    }
+
+
+    window.print();
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+    const theme =
+        localStorage.getItem(
+            STORAGE.theme
+        )
+        ||
+        "light";
+
+
+    document.body.classList.toggle(
+        "dark",
+        theme === "dark"
+    );
+
+
+    const btn =
+        document.getElementById(
+            "themeBtn"
+        );
+
+
+    if(btn){
+
+        btn.textContent =
+            theme === "dark"
+            ?
+            "☀️"
+            :
+            "🌙";
+
+    }
+
+}
+
+
+/* =========================================================
+   THEME BUTTON
+========================================================= */
+
+document.getElementById(
+    "themeBtn"
+)
+.addEventListener(
+    "click",
+    function(){
+
+        const current =
+            localStorage.getItem(
+                STORAGE.theme
+            )
+            ||
+            "light";
+
+
+        const next =
+            current === "dark"
+            ?
+            "light"
+            :
+            "dark";
+
+
+        localStorage.setItem(
+            STORAGE.theme,
+            next
+        );
+
+
+        applyTheme();
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    if(!toast){
+
+        return;
+
+    }
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================================
+   STORAGE SYNC
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+
+            event.key ===
+            STORAGE.results
+
+            ||
+
+            event.key ===
+            STORAGE.quiz
+
+            ||
+
+            event.key ===
+            STORAGE.course
+
+            ||
+
+            event.key ===
+            STORAGE.theme
+
+        ){
+
+            loadPage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   VISIBILITY SYNC
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            !document.hidden
+        ){
+
+            loadPage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD PRINT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+
+            (
+                event.ctrlKey
+                ||
+                event.metaKey
+            )
+
+            &&
+
+            event.key.toLowerCase()
+            ===
+            "p"
+
+        ){
+
+            event.preventDefault();
+
+            printResult();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PUBLIC API
+========================================================= */
+
+window.SNKAdminQuizResultDetails = {
+
+    getResult:
+        function(){
+
+            return result
+                ?
+                {
+                    ...result
+                }
+                :
+                null;
+
+        },
+
+    getQuiz:
+        function(){
+
+            return {
+                ...quiz
+            };
+
+        },
+
+    getCourse:
+        function(){
+
+            return {
+                ...course
+            };
+
+        },
+
+    refresh:
+        function(){
+
+            loadPage();
+
+        },
+
+    print:
+        function(){
+
+            printResult();
+
+        }
+
+};
+
+
+/* =========================================================
+   LOAD PAGE
+========================================================= */
+
+function loadPage(){
+
+    loadSettings();
+
+    result =
+        findResult();
+
+    renderResult();
+
+    applyTheme();
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+loadPage();
+
+</script>
+
+</body>
+
+</html>
+```
