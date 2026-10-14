@@ -1,0 +1,3105 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SNK AI Academy | Student Quiz</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#050505;
+      --bg2:#0a0a0a;
+      --card:#141414;
+      --card2:#181818;
+      --border:rgba(183,255,0,.14);
+      --text:#ffffff;
+      --muted:#999999;
+      --primary:#b7ff00;
+      --primary2:#ccff4d;
+      --success:#22c55e;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+      --info:#38bdf8;
+      --shadow:0 20px 60px rgba(0,0,0,.5);
+      --radius:20px;
+    }
+
+    body.light{
+      --bg:#f4f7fb;
+      --bg2:#ffffff;
+      --card:#ffffff;
+      --card2:#f8fafc;
+      --border:#dce3ec;
+      --text:#101828;
+      --muted:#667085;
+      --shadow:0 15px 40px rgba(16,24,40,.10);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Noto Sans Bengali","Inter",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(183,255,0,.13),transparent 30%),
+        radial-gradient(circle at 90% 10%,rgba(56,189,248,.08),transparent 28%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      line-height:1.6;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .container{
+      width:min(1180px,calc(100% - 32px));
+      margin:auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter:blur(18px);
+      background:rgba(6,8,13,.78);
+      border-bottom:1px solid var(--border);
+    }
+
+    body.light .topbar{
+      background:rgba(255,255,255,.86);
+    }
+
+    .nav{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+    }
+
+    .brand-logo{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#b7ff00;
+      color:#050505;
+      font-weight:900;
+      font-size:13px;
+    }
+
+    .brand-title{
+      font-size:16px;
+    }
+
+    .brand-sub{
+      color:var(--muted);
+      font-size:11px;
+      display:block;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .nav-btn{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:10px;
+      font-size:13px;
+    }
+
+    .nav-btn:hover{
+      border-color:var(--primary);
+    }
+
+    .hero{
+      padding:42px 0 25px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.5fr .8fr;
+      gap:20px;
+    }
+
+    .hero-card,
+    .info-card,
+    .quiz-card{
+      background:linear-gradient(145deg,var(--card),var(--bg2));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-card{
+      padding:30px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-card:after{
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      right:-100px;
+      top:-120px;
+      border-radius:50%;
+      background:rgba(183,255,0,.14);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(183,255,0,.12);
+      border:1px solid rgba(183,255,0,.28);
+      color:#b9aaff;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    body.light .eyebrow{
+      color:#5b43d6;
+    }
+
+    h1{
+      font-size:clamp(28px,5vw,46px);
+      line-height:1.15;
+      margin-bottom:12px;
+    }
+
+    .hero-text{
+      color:var(--muted);
+      max-width:700px;
+      font-size:15px;
+    }
+
+    .student-chip{
+      margin-top:22px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+    }
+
+    .chip{
+      padding:8px 12px;
+      border:1px solid var(--border);
+      background:var(--card2);
+      border-radius:10px;
+      font-size:12px;
+    }
+
+    .info-card{
+      padding:24px;
+    }
+
+    .info-title{
+      font-size:14px;
+      font-weight:800;
+      margin-bottom:15px;
+    }
+
+    .info-row{
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      padding:11px 0;
+      border-bottom:1px solid var(--border);
+      font-size:13px;
+    }
+
+    .info-row:last-child{
+      border-bottom:0;
+    }
+
+    .info-label{
+      color:var(--muted);
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .status.good{
+      background:rgba(34,197,94,.12);
+      color:#4ade80;
+    }
+
+    .status.warning{
+      background:rgba(245,158,11,.12);
+      color:#fbbf24;
+    }
+
+    .status.danger{
+      background:rgba(239,68,68,.12);
+      color:#f87171;
+    }
+
+    .status.info{
+      background:rgba(56,189,248,.12);
+      color:#38bdf8;
+    }
+
+    main{
+      padding-bottom:60px;
+    }
+
+    .quiz-card{
+      padding:26px;
+      margin-bottom:20px;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:15px;
+      margin-bottom:20px;
+    }
+
+    .section-title{
+      font-size:21px;
+      font-weight:800;
+    }
+
+    .section-sub{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:4px;
+    }
+
+    .window-box{
+      padding:18px;
+      border:1px solid var(--border);
+      background:var(--card2);
+      border-radius:16px;
+      margin-bottom:18px;
+    }
+
+    .window-title{
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .window-text{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .makeup-box{
+      border:1px solid rgba(56,189,248,.35);
+      background:rgba(56,189,248,.07);
+      padding:18px;
+      border-radius:16px;
+      margin-bottom:18px;
+    }
+
+    .makeup-title{
+      color:#38bdf8;
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .makeup-text{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .makeup-details{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .makeup-item{
+      padding:10px;
+      background:rgba(0,0,0,.12);
+      border:1px solid var(--border);
+      border-radius:10px;
+    }
+
+    .makeup-item span{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      margin-bottom:2px;
+    }
+
+    .makeup-item strong{
+      font-size:13px;
+    }
+
+    .start-area{
+      text-align:center;
+      padding:30px 10px 20px;
+    }
+
+    .big-icon{
+      width:72px;
+      height:72px;
+      margin:0 auto 15px;
+      border-radius:22px;
+      display:grid;
+      place-items:center;
+      font-size:30px;
+      background:rgba(183,255,0,.13);
+      border:1px solid rgba(183,255,0,.25);
+    }
+
+    .start-title{
+      font-size:22px;
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .start-text{
+      color:var(--muted);
+      max-width:650px;
+      margin:0 auto 20px;
+      font-size:13px;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn{
+      border:0;
+      border-radius:12px;
+      padding:12px 18px;
+      font-weight:800;
+      transition:.2s;
+    }
+
+    .primary-btn{
+      color:#050505;
+      font-weight:800;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      box-shadow:0 10px 25px rgba(183,255,0,.25);
+    }
+
+    .primary-btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .secondary-btn{
+      color:var(--text);
+      background:var(--card2);
+      border:1px solid var(--border);
+    }
+
+    .danger-btn{
+      color:#fff;
+      background:#dc2626;
+    }
+
+    button:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none!important;
+    }
+
+    .quiz-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-bottom:20px;
+      padding-bottom:18px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .progress-wrap{
+      flex:1;
+    }
+
+    .progress-text{
+      display:flex;
+      justify-content:space-between;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:7px;
+    }
+
+    .progress{
+      height:8px;
+      background:var(--border);
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg,var(--primary),#38bdf8);
+      transition:.25s;
+    }
+
+    .timer{
+      min-width:125px;
+      text-align:center;
+      padding:11px 14px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--card2);
+      font-weight:800;
+    }
+
+    .timer.warning{
+      color:#fbbf24;
+      border-color:rgba(245,158,11,.4);
+    }
+
+    .timer.danger{
+      color:#f87171;
+      border-color:rgba(239,68,68,.45);
+      animation:pulse 1s infinite;
+    }
+
+    @keyframes pulse{
+      50%{opacity:.55}
+    }
+
+    .question-number{
+      color:#a99bff;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .question{
+      font-size:21px;
+      font-weight:800;
+      margin-bottom:20px;
+    }
+
+    .options{
+      display:grid;
+      gap:12px;
+    }
+
+    .option{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:15px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:var(--card2);
+      transition:.2s;
+    }
+
+    .option:hover{
+      border-color:rgba(183,255,0,.6);
+    }
+
+    .option.selected{
+      border-color:var(--primary);
+      background:rgba(183,255,0,.10);
+    }
+
+    .option input{
+      margin-top:5px;
+      accent-color:var(--primary);
+    }
+
+    .option-letter{
+      width:28px;
+      height:28px;
+      flex:0 0 28px;
+      display:grid;
+      place-items:center;
+      border-radius:8px;
+      background:var(--border);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .option.selected .option-letter{
+      background:var(--primary);
+      color:#050505;
+    }
+
+    .option-text{
+      flex:1;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .quiz-actions{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:24px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+    }
+
+    .result-box{
+      display:none;
+      text-align:center;
+      padding:30px 15px;
+    }
+
+    .result-circle{
+      width:130px;
+      height:130px;
+      border-radius:50%;
+      margin:0 auto 18px;
+      display:grid;
+      place-items:center;
+      background:var(--card2);
+      border:8px solid var(--primary);
+    }
+
+    .result-percent{
+      font-size:28px;
+      font-weight:900;
+    }
+
+    .result-title{
+      font-size:24px;
+      font-weight:900;
+      margin-bottom:5px;
+    }
+
+    .result-sub{
+      color:var(--muted);
+      margin-bottom:20px;
+    }
+
+    .result-grid{
+      max-width:650px;
+      margin:0 auto 20px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .result-stat{
+      padding:14px 8px;
+      border:1px solid var(--border);
+      background:var(--card2);
+      border-radius:12px;
+    }
+
+    .result-stat strong{
+      display:block;
+      font-size:21px;
+    }
+
+    .result-stat span{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .message{
+      display:none;
+      padding:18px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:var(--card2);
+      color:var(--muted);
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .message.show{
+      display:block;
+    }
+
+    .message.error{
+      border-color:rgba(239,68,68,.4);
+      color:#fca5a5;
+      background:rgba(239,68,68,.08);
+    }
+
+    .message.success{
+      border-color:rgba(34,197,94,.35);
+      color:#86efac;
+      background:rgba(34,197,94,.08);
+    }
+
+    .locked-box{
+      text-align:center;
+      padding:35px 15px;
+    }
+
+    .locked-icon{
+      font-size:42px;
+      margin-bottom:10px;
+    }
+
+    .locked-title{
+      font-size:22px;
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .locked-text{
+      color:var(--muted);
+      max-width:650px;
+      margin:auto;
+      font-size:13px;
+    }
+
+    .footer{
+      border-top:1px solid var(--border);
+      padding:25px 0;
+      color:var(--muted);
+      text-align:center;
+      font-size:12px;
+    }
+
+    @media(max-width:800px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .makeup-details{
+        grid-template-columns:1fr;
+      }
+
+      .result-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:600px){
+      .container{
+        width:min(100% - 20px,1180px);
+      }
+
+      .nav{
+        min-height:64px;
+      }
+
+      .brand-sub{
+        display:none;
+      }
+
+      .nav-btn{
+        padding:7px 9px;
+        font-size:11px;
+      }
+
+      .hero{
+        padding-top:25px;
+      }
+
+      .hero-card,
+      .info-card,
+      .quiz-card{
+        padding:19px;
+      }
+
+      h1{
+        font-size:30px;
+      }
+
+      .quiz-header{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .timer{
+        width:100%;
+      }
+
+      .question{
+        font-size:18px;
+      }
+
+      .quiz-actions{
+        flex-direction:column;
+      }
+
+      .quiz-actions button{
+        width:100%;
+      }
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="container nav">
+
+      <a href="index.html" class="brand">
+        <div class="brand-logo">SNK</div>
+        <div>
+          <div class="brand-title">SNK AI Academy</div>
+          <span class="brand-sub">Offline Course Student Portal</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="student-dashboard.html" class="nav-btn">Dashboard</a>
+        <a href="results.html" class="nav-btn">Result</a>
+        <button class="nav-btn" id="themeBtn">🌙</button>
+        <button class="nav-btn" id="logoutBtn">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+
+      <div class="hero-card">
+
+        <span class="eyebrow">Student Quiz</span>
+
+        <h1 id="heroTitle">Computer Basics Quiz</h1>
+
+        <p class="hero-text">
+          নির্ধারিত সময়ের মধ্যে Quiz শুরু করুন এবং সব প্রশ্নের উত্তর দিন।
+          Timer শুরু হবে শুধুমাত্র <strong>Start Quiz</strong> চাপার পর।
+        </p>
+
+        <div class="student-chip">
+          <span class="chip">
+            Student ID:
+            <strong id="studentId">SNK-1001</strong>
+          </span>
+
+          <span class="chip">
+            Student:
+            <strong id="studentName">Demo Student</strong>
+          </span>
+
+          <span class="chip">
+            Course:
+            <strong id="studentCourse">আপনার কোর্স</strong>
+          </span>
+
+          <span class="chip">
+            Batch:
+            <strong id="studentBatch">Batch 01</strong>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="info-card">
+
+        <div class="info-title">Quiz Information</div>
+
+        <div class="info-row">
+          <span class="info-label">Questions</span>
+          <strong id="questionCount">10</strong>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Duration</span>
+          <strong id="durationText">20 Minutes</strong>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Marks / Question</span>
+          <strong id="marksText">1</strong>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Pass Mark</span>
+          <strong id="passText">40%</strong>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Attempt</span>
+          <span class="status info" id="attemptStatus">1 Attempt</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+
+      <div id="globalMessage" class="message"></div>
+
+      <section class="quiz-card">
+
+        <div class="section-head">
+          <div>
+            <div class="section-title">Quiz Access</div>
+            <div class="section-sub">
+              আপনার জন্য বর্তমানে কোন সময়ের Window সক্রিয় আছে তা এখানে দেখুন।
+            </div>
+          </div>
+        </div>
+
+        <div class="window-box">
+
+          <div class="window-title" id="windowTitle">
+            Normal Quiz Window
+          </div>
+
+          <div class="window-text" id="windowText">
+            Loading...
+          </div>
+
+        </div>
+
+        <div id="makeupBox" class="makeup-box" style="display:none;">
+
+          <div class="makeup-title">
+            🔄 Make-up / Reschedule Window Active
+          </div>
+
+          <div class="makeup-text">
+            Admin আপনার জন্য একটি বিশেষ Quiz Window অনুমোদন করেছেন।
+            এই Window-এর মধ্যে আপনি Quiz শুরু করতে পারবেন।
+          </div>
+
+          <div class="makeup-details">
+
+            <div class="makeup-item">
+              <span>Start Date</span>
+              <strong id="makeupStart">—</strong>
+            </div>
+
+            <div class="makeup-item">
+              <span>End Date</span>
+              <strong id="makeupEnd">—</strong>
+            </div>
+
+            <div class="makeup-item">
+              <span>Reason</span>
+              <strong id="makeupReason">—</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div id="startArea" class="start-area">
+
+          <div class="big-icon">📝</div>
+
+          <div class="start-title" id="startTitle">
+            Quiz শুরু করার জন্য প্রস্তুত?
+          </div>
+
+          <p class="start-text" id="startText">
+            Start Quiz চাপার পরেই আপনার 20 মিনিটের Timer শুরু হবে।
+            তার আগে Timer চলবে না।
+          </p>
+
+          <button class="primary-btn" id="startBtn">
+            ▶ Start Quiz
+          </button>
+
+        </div>
+
+        <div id="lockedArea" class="locked-box" style="display:none;">
+
+          <div class="locked-icon">🔒</div>
+
+          <div class="locked-title" id="lockedTitle">
+            Quiz Attempt Locked
+          </div>
+
+          <p class="locked-text" id="lockedText">
+            আপনার Quiz attempt বর্তমানে locked আছে।
+          </p>
+
+        </div>
+
+        <div id="quizArea" style="display:none;">
+
+          <div class="quiz-header">
+
+            <div class="progress-wrap">
+
+              <div class="progress-text">
+                <span id="progressQuestion">Question 1 of 10</span>
+                <span id="answeredCount">0 Answered</span>
+              </div>
+
+              <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+
+            </div>
+
+            <div class="timer" id="timer">
+              20:00
+            </div>
+
+          </div>
+
+          <div class="question-number" id="questionNumber">
+            Question 1
+          </div>
+
+          <div class="question" id="questionText">
+            Loading question...
+          </div>
+
+          <div class="options" id="optionsContainer"></div>
+
+          <div class="quiz-actions">
+
+            <button class="secondary-btn" id="prevBtn">
+              ← Previous
+            </button>
+
+            <button class="secondary-btn" id="nextBtn">
+              Next →
+            </button>
+
+            <button class="danger-btn" id="submitBtn">
+              Submit Quiz
+            </button>
+
+          </div>
+
+        </div>
+
+        <div id="resultBox" class="result-box">
+
+          <div class="result-circle">
+            <div class="result-percent" id="resultPercent">
+              0%
+            </div>
+          </div>
+
+          <div class="result-title" id="resultTitle">
+            Result
+          </div>
+
+          <div class="result-sub" id="resultSub">
+            আপনার Quiz result তৈরি হয়েছে।
+          </div>
+
+          <div class="result-grid">
+
+            <div class="result-stat">
+              <strong id="resultCorrect">0</strong>
+              <span>Correct</span>
+            </div>
+
+            <div class="result-stat">
+              <strong id="resultWrong">0</strong>
+              <span>Wrong</span>
+            </div>
+
+            <div class="result-stat">
+              <strong id="resultUnanswered">0</strong>
+              <span>Unanswered</span>
+            </div>
+
+            <div class="result-stat">
+              <strong id="resultMarks">0/0</strong>
+              <span>Marks</span>
+            </div>
+
+          </div>
+
+          <button class="secondary-btn" onclick="window.location.href='results.html'">
+            View Result Page
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    © 2026 SNK AI Academy — Student Quiz Portal
+  </footer>
+
+  <script>
+    /* =========================================================
+       SNK AI ACADEMY
+       STUDENT QUIZ
+       STEP 2.5.14
+       MAKE-UP / RESCHEDULE INTEGRATION
+    ========================================================= */
+
+    const STORAGE = {
+      theme: "snkTheme",
+      language: "snkLanguage",
+
+      studentLoggedIn: "snkStudentLoggedIn",
+      studentId: "snkStudentId",
+      studentName: "snkStudentName",
+      studentCourse: "snkStudentCourse",
+      studentBatch: "snkStudentBatch",
+      studentProfile: "snkStudentProfile",
+
+      courseSettings: "snkCourseSettingsV25",
+      quizSettings: "snkQuizSettingsV25",
+      questions: "snkQuizQuestionsV25",
+      results: "snkQuizResults",
+
+      activeAttempt: "snkQuizActiveAttemptV25",
+      attemptLock: "snkQuizAttemptLockV25",
+
+      /* NEW */
+      makeupPermissions: "snkQuizMakeupPermissionsV25"
+    };
+
+    const DEFAULT_COURSE = {
+      name: "আপনার কোর্স",
+      batch: "Batch 01",
+      mode: "Offline",
+      duration: "6 Months",
+      days: "Saturday – Monday",
+      time: "4:00 PM – 6:00 PM",
+      instructor: "SNK AI Instructor"
+    };
+
+    const DEFAULT_QUIZ = {
+      id: "SNK-QUIZ-2026-01",
+      title: "Computer Basics Quiz",
+
+      /*
+        Normal window:
+        10 September 2026 → 15 September 2026
+      */
+      startDate: "2026-09-10",
+      endDate: "2026-09-15",
+
+      durationMinutes: 20,
+      marksPerQuestion: 1,
+      passPercentage: 40,
+
+      oneAttemptOnly: true,
+      autoSubmit: true,
+
+      published: false
+    };
+
+    const DEFAULT_QUESTIONS = [
+      {
+        id: "Q1",
+        question: "কম্পিউটারের প্রধান processing unit কোনটি?",
+        options: {
+          A: "CPU",
+          B: "Monitor",
+          C: "Keyboard",
+          D: "Printer"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q2",
+        question: "Windows-এ একটি নতুন folder তৈরি করার জন্য কোনটি ব্যবহার করা যায়?",
+        options: {
+          A: "New Folder",
+          B: "Print",
+          C: "Refresh Only",
+          D: "Shutdown"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q3",
+        question: "MS Word মূলত কোন কাজের জন্য ব্যবহৃত হয়?",
+        options: {
+          A: "Document তৈরি ও সম্পাদনা",
+          B: "শুধু গান শোনা",
+          C: "শুধু ছবি তোলা",
+          D: "শুধু ইন্টারনেট বন্ধ করা"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q4",
+        question: "MS Excel-এ data সাধারণত কোনভাবে সাজানো হয়?",
+        options: {
+          A: "Rows এবং Columns",
+          B: "শুধু Paragraph",
+          C: "শুধু Slides",
+          D: "শুধু Images"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q5",
+        question: "Keyboard-এর Enter key সাধারণত কী কাজে ব্যবহৃত হয়?",
+        options: {
+          A: "Command/line confirm বা নতুন line শুরু করতে",
+          B: "কম্পিউটার বন্ধ করতে",
+          C: "Monitor বন্ধ করতে",
+          D: "Printer চালু করতে"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q6",
+        question: "Internet ব্যবহার করার জন্য কোনটি একটি web browser?",
+        options: {
+          A: "Google Chrome",
+          B: "MS Paint",
+          C: "Calculator",
+          D: "Notepad"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q7",
+        question: "PowerPoint মূলত কী তৈরির জন্য ব্যবহৃত হয়?",
+        options: {
+          A: "Presentation",
+          B: "Spreadsheet",
+          C: "Database server",
+          D: "Operating system"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q8",
+        question: "Ctrl + C shortcut সাধারণত কী করে?",
+        options: {
+          A: "Copy",
+          B: "Paste",
+          C: "Save",
+          D: "Print"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q9",
+        question: "Ctrl + V shortcut সাধারণত কী করে?",
+        options: {
+          A: "Paste",
+          B: "Copy",
+          C: "Undo",
+          D: "Select All"
+        },
+        correct: "A"
+      },
+
+      {
+        id: "Q10",
+        question: "কম্পিউটারে file স্থায়ীভাবে সংরক্ষণ করার জন্য কোনটি ব্যবহার করা হয়?",
+        options: {
+          A: "Storage",
+          B: "Keyboard",
+          C: "Mouse Pad",
+          D: "Speaker"
+        },
+        correct: "A"
+      }
+    ];
+
+    let course = {};
+    let quiz = {};
+    let questions = [];
+
+    let student = {
+      id: "SNK-1001",
+      name: "Demo Student",
+      course: "আপনার কোর্স",
+      batch: "Batch 01"
+    };
+
+    let currentQuestion = 0;
+    let answers = {};
+    let timerInterval = null;
+    let attempt = null;
+    let activeMakeup = null;
+
+    /* =========================================================
+       HELPERS
+    ========================================================= */
+
+    function getJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+
+        if (!raw) {
+          return fallback;
+        }
+
+        return JSON.parse(raw);
+
+      } catch (error) {
+        console.warn("Storage read error:", key, error);
+        return fallback;
+      }
+    }
+
+    function setJSON(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function getStudent() {
+
+      const profile = getJSON(STORAGE.studentProfile, {});
+
+      const sessionStudent = {
+        id: sessionStorage.getItem(STORAGE.studentId),
+        name: sessionStorage.getItem(STORAGE.studentName),
+        course: sessionStorage.getItem(STORAGE.studentCourse),
+        batch: sessionStorage.getItem(STORAGE.studentBatch)
+      };
+
+      const localStudent = {
+        id: localStorage.getItem(STORAGE.studentId),
+        name: localStorage.getItem(STORAGE.studentName),
+        course: localStorage.getItem(STORAGE.studentCourse),
+        batch: localStorage.getItem(STORAGE.studentBatch)
+      };
+
+      return {
+        id:
+          sessionStudent.id ||
+          localStudent.id ||
+          profile.studentId ||
+          profile.id ||
+          "SNK-1001",
+
+        name:
+          sessionStudent.name ||
+          localStudent.name ||
+          profile.name ||
+          "Demo Student",
+
+        course:
+          sessionStudent.course ||
+          localStudent.course ||
+          profile.course ||
+          "আপনার কোর্স",
+
+        batch:
+          sessionStudent.batch ||
+          localStudent.batch ||
+          profile.batch ||
+          "Batch 01"
+      };
+    }
+
+    function formatDate(dateString) {
+
+      if (!dateString) {
+        return "—";
+      }
+
+      const date = new Date(dateString + "T00:00:00");
+
+      if (Number.isNaN(date.getTime())) {
+        return dateString;
+      }
+
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function formatDateTime(dateString) {
+
+      if (!dateString) {
+        return "—";
+      }
+
+      const date = new Date(dateString);
+
+      if (Number.isNaN(date.getTime())) {
+        return dateString;
+      }
+
+      return date.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function getTodayISO() {
+
+      const now = new Date();
+
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    function isWithinWindow(startDate, endDate) {
+
+      const today = getTodayISO();
+
+      return today >= startDate && today <= endDate;
+    }
+
+    function getDateWindowText(startDate, endDate) {
+
+      return `${formatDate(startDate)} → ${formatDate(endDate)}`;
+    }
+
+    function getCurrentMakeupPermission() {
+
+      const permissions = getJSON(
+        STORAGE.makeupPermissions,
+        []
+      );
+
+      if (!Array.isArray(permissions)) {
+        return null;
+      }
+
+      const today = getTodayISO();
+
+      const valid = permissions
+        .filter(permission => {
+
+          if (!permission) {
+            return false;
+          }
+
+          if (permission.studentId !== student.id) {
+            return false;
+          }
+
+          if (permission.enabled === false) {
+            return false;
+          }
+
+          if (!permission.startDate || !permission.endDate) {
+            return false;
+          }
+
+          return (
+            today >= permission.startDate &&
+            today <= permission.endDate
+          );
+        })
+        .sort((a, b) => {
+
+          const aDate = String(a.updatedAt || a.createdAt || "");
+          const bDate = String(b.updatedAt || b.createdAt || "");
+
+          return bDate.localeCompare(aDate);
+        });
+
+      return valid.length ? valid[0] : null;
+    }
+
+    function getNormalWindow() {
+
+      return {
+        startDate: quiz.startDate,
+        endDate: quiz.endDate,
+        source: "normal"
+      };
+    }
+
+    function getEffectiveWindow() {
+
+      activeMakeup = getCurrentMakeupPermission();
+
+      if (activeMakeup) {
+
+        return {
+          startDate: activeMakeup.startDate,
+          endDate: activeMakeup.endDate,
+          source: "makeup"
+        };
+      }
+
+      return getNormalWindow();
+    }
+
+    function hasSubmittedResult() {
+
+      const results = getJSON(
+        STORAGE.results,
+        []
+      );
+
+      if (!Array.isArray(results)) {
+        return null;
+      }
+
+      const found = results
+        .filter(result => {
+
+          return (
+            result &&
+            result.quizId === quiz.id &&
+            result.studentId === student.id
+          );
+
+        })
+        .sort((a, b) => {
+
+          const aDate = String(a.submittedAt || a.createdAt || "");
+          const bDate = String(b.submittedAt || b.createdAt || "");
+
+          return bDate.localeCompare(aDate);
+        });
+
+      return found.length ? found[0] : null;
+    }
+
+    function getAttemptLock() {
+
+      const lockData = getJSON(
+        STORAGE.attemptLock,
+        {}
+      );
+
+      if (!lockData || typeof lockData !== "object") {
+        return null;
+      }
+
+      if (lockData.quizId !== quiz.id) {
+        return null;
+      }
+
+      if (lockData.studentId !== student.id) {
+        return null;
+      }
+
+      return lockData;
+    }
+
+    function getActiveAttempt() {
+
+      const data = getJSON(
+        STORAGE.activeAttempt,
+        null
+      );
+
+      if (!data || typeof data !== "object") {
+        return null;
+      }
+
+      if (data.quizId !== quiz.id) {
+        return null;
+      }
+
+      if (data.studentId !== student.id) {
+        return null;
+      }
+
+      return data;
+    }
+
+    function showMessage(text, type = "") {
+
+      const box = document.getElementById("globalMessage");
+
+      box.textContent = text;
+
+      box.className = "message show";
+
+      if (type) {
+        box.classList.add(type);
+      }
+
+      window.scrollTo({
+        top: box.offsetTop - 100,
+        behavior: "smooth"
+      });
+    }
+
+    function hideMessage() {
+
+      const box = document.getElementById("globalMessage");
+
+      box.className = "message";
+
+      box.textContent = "";
+    }
+
+    /* =========================================================
+       LOAD SETTINGS
+    ========================================================= */
+
+    function loadSettings() {
+
+      course = {
+        ...DEFAULT_COURSE,
+        ...getJSON(
+          STORAGE.courseSettings,
+          {}
+        )
+      };
+
+      quiz = {
+        ...DEFAULT_QUIZ,
+        ...getJSON(
+          STORAGE.quizSettings,
+          {}
+        )
+      };
+
+      const savedQuestions = getJSON(
+        STORAGE.questions,
+        DEFAULT_QUESTIONS
+      );
+
+      questions = Array.isArray(savedQuestions)
+        ? savedQuestions.slice(0, 10)
+        : DEFAULT_QUESTIONS.slice(0, 10);
+    }
+
+    /* =========================================================
+       STUDENT UI
+    ========================================================= */
+
+    function renderStudent() {
+
+      document.getElementById("studentId").textContent =
+        student.id;
+
+      document.getElementById("studentName").textContent =
+        student.name;
+
+      document.getElementById("studentCourse").textContent =
+        student.course;
+
+      document.getElementById("studentBatch").textContent =
+        student.batch;
+
+      document.getElementById("heroTitle").textContent =
+        quiz.title;
+
+      document.getElementById("questionCount").textContent =
+        questions.length;
+
+      document.getElementById("durationText").textContent =
+        `${quiz.durationMinutes} Minutes`;
+
+      document.getElementById("marksText").textContent =
+        quiz.marksPerQuestion;
+
+      document.getElementById("passText").textContent =
+        `${quiz.passPercentage}%`;
+
+      document.getElementById("attemptStatus").textContent =
+        quiz.oneAttemptOnly
+          ? "1 Attempt"
+          : "Multiple Attempts";
+    }
+
+    /* =========================================================
+       WINDOW UI
+    ========================================================= */
+
+    function renderWindow() {
+
+      const normal = getNormalWindow();
+      const effective = getEffectiveWindow();
+
+      const windowTitle =
+        document.getElementById("windowTitle");
+
+      const windowText =
+        document.getElementById("windowText");
+
+      const makeupBox =
+        document.getElementById("makeupBox");
+
+      if (effective.source === "makeup") {
+
+        windowTitle.textContent =
+          "Current Active Window: Make-up / Reschedule";
+
+        windowText.textContent =
+          `আপনার বিশেষ Quiz Window: ${getDateWindowText(
+            effective.startDate,
+            effective.endDate
+          )}`;
+
+        makeupBox.style.display = "block";
+
+        document.getElementById("makeupStart").textContent =
+          formatDate(activeMakeup.startDate);
+
+        document.getElementById("makeupEnd").textContent =
+          formatDate(activeMakeup.endDate);
+
+        document.getElementById("makeupReason").textContent =
+          activeMakeup.reason || "Admin approved";
+
+      } else {
+
+        windowTitle.textContent =
+          "Normal Quiz Window";
+
+        windowText.textContent =
+          `Quiz available: ${getDateWindowText(
+            normal.startDate,
+            normal.endDate
+          )}`;
+
+        makeupBox.style.display = "none";
+      }
+    }
+
+    /* =========================================================
+       ACCESS CHECK
+    ========================================================= */
+
+    function validateQuizAccess() {
+
+      hideMessage();
+
+      if (!quiz.published) {
+
+        showStartLocked(
+          "Quiz এখনো প্রকাশ করা হয়নি।",
+          "Admin Quiz publish করলে আপনি এখানে Quiz শুরু করতে পারবেন।"
+        );
+
+        return false;
+      }
+
+      if (questions.length !== 10) {
+
+        showStartLocked(
+          "Quiz প্রস্তুত নয়।",
+          "Admin-কে অবশ্যই 10টি প্রশ্ন সম্পূর্ণ করে Quiz publish করতে হবে।"
+        );
+
+        return false;
+      }
+
+      const submittedResult = hasSubmittedResult();
+
+      if (
+        quiz.oneAttemptOnly &&
+        submittedResult
+      ) {
+
+        showResult(submittedResult);
+
+        return false;
+      }
+
+      const lock = getAttemptLock();
+
+      if (
+        quiz.oneAttemptOnly &&
+        lock
+      ) {
+
+        /*
+          Make-up permission with resetAttempt
+          can clear this lock from Admin page.
+        */
+
+        showStartLocked(
+          "Quiz Attempt Locked",
+          "আপনার একটি Quiz attempt ইতিমধ্যে locked আছে। Admin reset না করা পর্যন্ত নতুন attempt শুরু করা যাবে না।"
+        );
+
+        return false;
+      }
+
+      const active = getActiveAttempt();
+
+      if (active) {
+
+        attempt = active;
+
+        answers = active.answers || {};
+
+        /*
+          Active attempt always resumes,
+          regardless of today's normal window,
+          because timer was already started.
+        */
+
+        startQuizInterface();
+
+        return true;
+      }
+
+      const effective = getEffectiveWindow();
+
+      if (
+        !isWithinWindow(
+          effective.startDate,
+          effective.endDate
+        )
+      ) {
+
+        if (effective.source === "makeup") {
+
+          showStartLocked(
+            "Make-up Window বর্তমানে active নয়।",
+            `আপনার Make-up Window ছিল ${getDateWindowText(
+              effective.startDate,
+              effective.endDate
+            )}।`
+          );
+
+        } else {
+
+          showStartLocked(
+            "Quiz এখন Start করা যাবে না।",
+            `Normal Quiz Window: ${getDateWindowText(
+              effective.startDate,
+              effective.endDate
+            )}`
+          );
+        }
+
+        return false;
+      }
+
+      showStartReady();
+
+      return true;
+    }
+
+    /* =========================================================
+       START SCREEN
+    ========================================================= */
+
+    function showStartReady() {
+
+      document.getElementById("startArea").style.display =
+        "block";
+
+      document.getElementById("lockedArea").style.display =
+        "none";
+
+      document.getElementById("quizArea").style.display =
+        "none";
+
+      document.getElementById("resultBox").style.display =
+        "none";
+
+      const effective = getEffectiveWindow();
+
+      const startTitle =
+        document.getElementById("startTitle");
+
+      const startText =
+        document.getElementById("startText");
+
+      if (effective.source === "makeup") {
+
+        startTitle.textContent =
+          "Make-up Quiz শুরু করার জন্য প্রস্তুত?";
+
+        startText.textContent =
+          `Admin-approved Make-up Window active: ${getDateWindowText(
+            effective.startDate,
+            effective.endDate
+          )}. Start Quiz চাপার পর Timer শুরু হবে।`;
+
+      } else {
+
+        startTitle.textContent =
+          "Quiz শুরু করার জন্য প্রস্তুত?";
+
+        startText.textContent =
+          `Start Quiz চাপার পরেই আপনার ${quiz.durationMinutes} মিনিটের Timer শুরু হবে। তার আগে Timer চলবে না।`;
+      }
+
+      document.getElementById("startBtn").disabled =
+        false;
+    }
+
+    function showStartLocked(title, text) {
+
+      document.getElementById("startArea").style.display =
+        "none";
+
+      document.getElementById("quizArea").style.display =
+        "none";
+
+      document.getElementById("resultBox").style.display =
+        "none";
+
+      document.getElementById("lockedArea").style.display =
+        "block";
+
+      document.getElementById("lockedTitle").textContent =
+        title;
+
+      document.getElementById("lockedText").textContent =
+        text;
+    }
+
+    /* =========================================================
+       START QUIZ
+    ========================================================= */
+
+    function startQuiz() {
+
+      hideMessage();
+
+      const submittedResult = hasSubmittedResult();
+
+      if (
+        quiz.oneAttemptOnly &&
+        submittedResult
+      ) {
+
+        showResult(submittedResult);
+
+        return;
+      }
+
+      const lock = getAttemptLock();
+
+      if (
+        quiz.oneAttemptOnly &&
+        lock
+      ) {
+
+        showStartLocked(
+          "Quiz Attempt Locked",
+          "এই Quiz-এর জন্য আপনার attempt locked আছে। Admin reset করলে আবার শুরু করতে পারবেন।"
+        );
+
+        return;
+      }
+
+      const effective = getEffectiveWindow();
+
+      if (
+        !isWithinWindow(
+          effective.startDate,
+          effective.endDate
+        )
+      ) {
+
+        showStartLocked(
+          "Quiz Window শেষ হয়েছে।",
+          `Allowed Window: ${getDateWindowText(
+            effective.startDate,
+            effective.endDate
+          )}`
+        );
+
+        return;
+      }
+
+      /*
+        Timer starts ONLY here.
+      */
+
+      const now = new Date();
+
+      const expiresAt =
+        now.getTime() +
+        quiz.durationMinutes * 60 * 1000;
+
+      attempt = {
+        id:
+          "ATTEMPT-" +
+          Date.now(),
+
+        quizId: quiz.id,
+
+        quizName: quiz.title,
+
+        studentId: student.id,
+
+        studentName: student.name,
+
+        course: student.course,
+
+        batch: student.batch,
+
+        answers: {},
+
+        startedAt: now.toISOString(),
+
+        expiresAt: expiresAt,
+
+        durationMinutes: quiz.durationMinutes,
+
+        windowSource: effective.source,
+
+        windowStartDate: effective.startDate,
+
+        windowEndDate: effective.endDate,
+
+        makeupPermissionId:
+          activeMakeup?.id || null,
+
+        version: "2.5.14"
+      };
+
+      answers = {};
+
+      currentQuestion = 0;
+
+      setJSON(
+        STORAGE.activeAttempt,
+        attempt
+      );
+
+      startQuizInterface();
+    }
+
+    /* =========================================================
+       QUIZ INTERFACE
+    ========================================================= */
+
+    function startQuizInterface() {
+
+      document.getElementById("startArea").style.display =
+        "none";
+
+      document.getElementById("lockedArea").style.display =
+        "none";
+
+      document.getElementById("resultBox").style.display =
+        "none";
+
+      document.getElementById("quizArea").style.display =
+        "block";
+
+      renderQuestion();
+
+      startTimer();
+    }
+
+    /* =========================================================
+       QUESTIONS
+    ========================================================= */
+
+    function renderQuestion() {
+
+      const q =
+        questions[currentQuestion];
+
+      if (!q) {
+        return;
+      }
+
+      document.getElementById("questionNumber").textContent =
+        `Question ${currentQuestion + 1}`;
+
+      document.getElementById("questionText").textContent =
+        q.question || "";
+
+      document.getElementById("progressQuestion").textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+      const answered =
+        Object.keys(answers).length;
+
+      document.getElementById("answeredCount").textContent =
+        `${answered} Answered`;
+
+      const progress =
+        ((currentQuestion + 1) / questions.length) * 100;
+
+      document.getElementById("progressBar").style.width =
+        `${progress}%`;
+
+      const container =
+        document.getElementById("optionsContainer");
+
+      container.innerHTML = "";
+
+      const optionKeys = ["A", "B", "C", "D"];
+
+      optionKeys.forEach(letter => {
+
+        if (
+          !q.options ||
+          typeof q.options[letter] === "undefined"
+        ) {
+          return;
+        }
+
+        const label =
+          document.createElement("label");
+
+        label.className =
+          "option";
+
+        if (
+          answers[q.id] === letter
+        ) {
+          label.classList.add("selected");
+        }
+
+        label.innerHTML = `
+          <input
+            type="radio"
+            name="question-${q.id}"
+            value="${letter}"
+            ${answers[q.id] === letter ? "checked" : ""}
+          >
+
+          <span class="option-letter">
+            ${letter}
+          </span>
+
+          <span class="option-text">
+            ${escapeHTML(q.options[letter])}
+          </span>
+        `;
+
+        const radio =
+          label.querySelector("input");
+
+        radio.addEventListener(
+          "change",
+          () => {
+
+            answers[q.id] =
+              radio.value;
+
+            if (!attempt) {
+              return;
+            }
+
+            attempt.answers =
+              answers;
+
+            attempt.lastActivityAt =
+              new Date().toISOString();
+
+            setJSON(
+              STORAGE.activeAttempt,
+              attempt
+            );
+
+            renderQuestion();
+          }
+        );
+
+        container.appendChild(label);
+      });
+
+      document.getElementById("prevBtn").disabled =
+        currentQuestion === 0;
+
+      document.getElementById("nextBtn").disabled =
+        currentQuestion === questions.length - 1;
+    }
+
+    function escapeHTML(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
+    function nextQuestion() {
+
+      if (
+        currentQuestion <
+        questions.length - 1
+      ) {
+
+        currentQuestion++;
+
+        renderQuestion();
+      }
+    }
+
+    function previousQuestion() {
+
+      if (
+        currentQuestion > 0
+      ) {
+
+        currentQuestion--;
+
+        renderQuestion();
+      }
+    }
+
+    /* =========================================================
+       TIMER
+    ========================================================= */
+
+    function startTimer() {
+
+      clearInterval(timerInterval);
+
+      updateTimer();
+
+      timerInterval =
+        setInterval(
+          updateTimer,
+          1000
+        );
+    }
+
+    function updateTimer() {
+
+      if (!attempt) {
+        return;
+      }
+
+      const remaining =
+        Math.max(
+          0,
+          attempt.expiresAt -
+          Date.now()
+        );
+
+      const totalSeconds =
+        Math.floor(
+          remaining / 1000
+        );
+
+      const minutes =
+        Math.floor(
+          totalSeconds / 60
+        );
+
+      const seconds =
+        totalSeconds % 60;
+
+      const timer =
+        document.getElementById("timer");
+
+      timer.textContent =
+        `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+      timer.classList.remove(
+        "warning",
+        "danger"
+      );
+
+      if (totalSeconds <= 60) {
+
+        timer.classList.add(
+          "danger"
+        );
+
+      } else if (totalSeconds <= 300) {
+
+        timer.classList.add(
+          "warning"
+        );
+      }
+
+      if (remaining <= 0) {
+
+        clearInterval(timerInterval);
+
+        autoSubmitQuiz();
+      }
+    }
+
+    /* =========================================================
+       SUBMIT
+    ========================================================= */
+
+    function submitQuiz() {
+
+      if (!attempt) {
+        return;
+      }
+
+      const unanswered =
+        questions.filter(
+          q => !answers[q.id]
+        ).length;
+
+      if (unanswered > 0) {
+
+        const proceed =
+          confirm(
+            `আপনি ${unanswered}টি প্রশ্নের উত্তর দেননি। Quiz submit করবেন?`
+          );
+
+        if (!proceed) {
+          return;
+        }
+      }
+
+      const proceed =
+        confirm(
+          "আপনি কি Quiz Submit করতে চান?"
+        );
+
+      if (!proceed) {
+        return;
+      }
+
+      finalizeQuiz(
+        "manual"
+      );
+    }
+
+    function autoSubmitQuiz() {
+
+      if (!attempt) {
+        return;
+      }
+
+      showMessage(
+        "সময় শেষ হয়েছে। Quiz automatically submit হচ্ছে...",
+        "success"
+      );
+
+      setTimeout(() => {
+
+        finalizeQuiz(
+          "auto"
+        );
+
+      }, 700);
+    }
+
+    /* =========================================================
+       FINAL RESULT CALCULATION
+    ========================================================= */
+
+    function finalizeQuiz(
+      submitMethod = "manual"
+    ) {
+
+      clearInterval(
+        timerInterval
+      );
+
+      if (!attempt) {
+        return;
+      }
+
+      const existing =
+        hasSubmittedResult();
+
+      if (
+        quiz.oneAttemptOnly &&
+        existing
+      ) {
+
+        showResult(existing);
+
+        return;
+      }
+
+      let correct = 0;
+      let wrong = 0;
+      let unanswered = 0;
+
+      const answerSheet = [];
+
+      questions.forEach(
+        (q, index) => {
+
+          const selected =
+            answers[q.id] || "";
+
+          const correctAnswer =
+            q.correct || "";
+
+          let status =
+            "unanswered";
+
+          let marks = 0;
+
+          if (!selected) {
+
+            unanswered++;
+
+          } else if (
+            selected === correctAnswer
+          ) {
+
+            correct++;
+
+            marks =
+              Number(
+                quiz.marksPerQuestion
+              ) || 0;
+
+            status =
+              "correct";
+
+          } else {
+
+            wrong++;
+
+            status =
+              "wrong";
+          }
+
+          answerSheet.push({
+
+            questionId:
+              q.id,
+
+            questionNumber:
+              index + 1,
+
+            question:
+              q.question,
+
+            options:
+              q.options,
+
+            selectedAnswer:
+              selected,
+
+            correctAnswer:
+              correctAnswer,
+
+            status:
+              status,
+
+            marks:
+              marks
+          });
+        }
+      );
+
+      const totalQuestions =
+        questions.length;
+
+      const totalMarks =
+        totalQuestions *
+        Number(
+          quiz.marksPerQuestion
+        );
+
+      const obtainedMarks =
+        correct *
+        Number(
+          quiz.marksPerQuestion
+        );
+
+      const percentage =
+        totalMarks > 0
+          ? Number(
+              (
+                obtainedMarks /
+                totalMarks
+              ) *
+              100
+            ).toFixed(2)
+          : 0;
+
+      const result =
+        percentage >=
+        Number(
+          quiz.passPercentage
+        )
+          ? "Passed"
+          : "Failed";
+
+      const now =
+        Date.now();
+
+      const startedAt =
+        new Date(
+          attempt.startedAt
+        ).getTime();
+
+      const timeTakenSeconds =
+        Math.max(
+          0,
+          Math.floor(
+            (
+              now -
+              startedAt
+            ) / 1000
+          )
+        );
+
+      const resultObject = {
+
+        id:
+          "RESULT-" +
+          Date.now(),
+
+        quizId:
+          quiz.id,
+
+        quizName:
+          quiz.title,
+
+        studentId:
+          student.id,
+
+        studentName:
+          student.name,
+
+        course:
+          student.course,
+
+        batch:
+          student.batch,
+
+        totalQuestions:
+          totalQuestions,
+
+        correct:
+          correct,
+
+        wrong:
+          wrong,
+
+        unanswered:
+          unanswered,
+
+        marksPerQuestion:
+          Number(
+            quiz.marksPerQuestion
+          ),
+
+        obtainedMarks:
+          obtainedMarks,
+
+        totalMarks:
+          totalMarks,
+
+        percentage:
+          percentage,
+
+        result:
+          result,
+
+        passPercentage:
+          Number(
+            quiz.passPercentage
+          ),
+
+        submitMethod:
+          submitMethod,
+
+        timeTakenSeconds:
+          timeTakenSeconds,
+
+        startedAt:
+          attempt.startedAt,
+
+        submittedAt:
+          new Date(
+            now
+          ).toISOString(),
+
+        published:
+          true,
+
+        source:
+          "student-quiz",
+
+        version:
+          "2.5.14",
+
+        windowSource:
+          attempt.windowSource ||
+          "normal",
+
+        windowStartDate:
+          attempt.windowStartDate ||
+          quiz.startDate,
+
+        windowEndDate:
+          attempt.windowEndDate ||
+          quiz.endDate,
+
+        makeupPermissionId:
+          attempt.makeupPermissionId ||
+          null,
+
+        answers:
+          answers,
+
+        selectedAnswers:
+          answers,
+
+        answerSheet:
+          answerSheet
+      };
+
+      const results =
+        getJSON(
+          STORAGE.results,
+          []
+        );
+
+      const safeResults =
+        Array.isArray(results)
+          ? results
+          : [];
+
+      /*
+        Do not duplicate same quiz/student result.
+      */
+
+      const alreadyExists =
+        safeResults.some(
+          item =>
+            item &&
+            item.quizId === quiz.id &&
+            item.studentId === student.id
+        );
+
+      if (!alreadyExists) {
+
+        safeResults.push(
+          resultObject
+        );
+
+        setJSON(
+          STORAGE.results,
+          safeResults
+        );
+      }
+
+      /*
+        Hard one-attempt lock.
+      */
+
+      if (
+        quiz.oneAttemptOnly
+      ) {
+
+        setJSON(
+          STORAGE.attemptLock,
+          {
+            quizId:
+              quiz.id,
+
+            studentId:
+              student.id,
+
+            resultId:
+              resultObject.id,
+
+            lockedAt:
+              new Date().toISOString(),
+
+            reason:
+              "quiz-submitted",
+
+            version:
+              "2.5.14"
+          }
+        );
+      }
+
+      /*
+        Active attempt must disappear
+        after submission.
+      */
+
+      localStorage.removeItem(
+        STORAGE.activeAttempt
+      );
+
+      attempt = null;
+
+      showResult(
+        resultObject
+      );
+    }
+
+    /* =========================================================
+       SHOW RESULT
+    ========================================================= */
+
+    function showResult(result) {
+
+      clearInterval(
+        timerInterval
+      );
+
+      document.getElementById("startArea").style.display =
+        "none";
+
+      document.getElementById("lockedArea").style.display =
+        "none";
+
+      document.getElementById("quizArea").style.display =
+        "none";
+
+      document.getElementById("resultBox").style.display =
+        "block";
+
+      document.getElementById("resultPercent").textContent =
+        `${result.percentage}%`;
+
+      document.getElementById("resultCorrect").textContent =
+        result.correct ?? 0;
+
+      document.getElementById("resultWrong").textContent =
+        result.wrong ?? 0;
+
+      document.getElementById("resultUnanswered").textContent =
+        result.unanswered ?? 0;
+
+      document.getElementById("resultMarks").textContent =
+        `${result.obtainedMarks ?? 0}/${result.totalMarks ?? 0}`;
+
+      const resultTitle =
+        document.getElementById("resultTitle");
+
+      const resultSub =
+        document.getElementById("resultSub");
+
+      if (
+        result.result === "Passed"
+      ) {
+
+        resultTitle.textContent =
+          "Congratulations! Passed";
+
+        resultSub.textContent =
+          `আপনার Quiz score ${result.percentage}%। Pass mark ${quiz.passPercentage}%।`;
+
+      } else {
+
+        resultTitle.textContent =
+          "Quiz Result";
+
+        resultSub.textContent =
+          `আপনার Quiz score ${result.percentage}%। Pass mark ${quiz.passPercentage}%।`;
+      }
+    }
+
+    /* =========================================================
+       STORAGE / REFRESH RECOVERY
+    ========================================================= */
+
+    function recoverActiveAttempt() {
+
+      const active =
+        getActiveAttempt();
+
+      if (!active) {
+        return false;
+      }
+
+      /*
+        If the active attempt has expired
+        while browser was closed,
+        automatically submit it.
+      */
+
+      if (
+        Date.now() >=
+        Number(
+          active.expiresAt
+        )
+      ) {
+
+        attempt =
+          active;
+
+        answers =
+          active.answers || {};
+
+        autoSubmitQuiz();
+
+        return true;
+      }
+
+      attempt =
+        active;
+
+      answers =
+        active.answers || {};
+
+      currentQuestion =
+        0;
+
+      startQuizInterface();
+
+      return true;
+    }
+
+    /* =========================================================
+       THEME
+    ========================================================= */
+
+    function applyTheme() {
+
+      const theme =
+        localStorage.getItem(
+          STORAGE.theme
+        ) || "dark";
+
+      document.body.classList.toggle(
+        "light",
+        theme === "light"
+      );
+
+      document.getElementById(
+        "themeBtn"
+      ).textContent =
+        theme === "light"
+          ? "☀️"
+          : "🌙";
+    }
+
+    function toggleTheme() {
+
+      const current =
+        localStorage.getItem(
+          STORAGE.theme
+        ) || "dark";
+
+      const next =
+        current === "light"
+          ? "dark"
+          : "light";
+
+      localStorage.setItem(
+        STORAGE.theme,
+        next
+      );
+
+      applyTheme();
+    }
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    function logout() {
+
+      const active =
+        getActiveAttempt();
+
+      if (active) {
+
+        const leave =
+          confirm(
+            "আপনার Quiz attempt active আছে। Logout করলে attempt বন্ধ হবে না; পরে login করে continue করতে পারবেন। Logout করবেন?"
+          );
+
+        if (!leave) {
+          return;
+        }
+      }
+
+      sessionStorage.removeItem(
+        STORAGE.studentLoggedIn
+      );
+
+      window.location.href =
+        "login.html";
+    }
+
+    /* =========================================================
+       VISIBILITY
+    ========================================================= */
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+
+        if (
+          document.visibilityState ===
+          "visible"
+        ) {
+
+          const active =
+            getActiveAttempt();
+
+          if (
+            active &&
+            !attempt
+          ) {
+
+            attempt =
+              active;
+
+            answers =
+              active.answers || {};
+          }
+
+          if (
+            attempt
+          ) {
+
+            updateTimer();
+          }
+        }
+      }
+    );
+
+    /* =========================================================
+       BEFORE UNLOAD
+    ========================================================= */
+
+    window.addEventListener(
+      "beforeunload",
+      event => {
+
+        if (
+          attempt &&
+          document.getElementById(
+            "quizArea"
+          ).style.display !== "none"
+        ) {
+
+          attempt.answers =
+            answers;
+
+          attempt.lastActivityAt =
+            new Date().toISOString();
+
+          setJSON(
+            STORAGE.activeAttempt,
+            attempt
+          );
+
+          event.preventDefault();
+          event.returnValue = "";
+        }
+      }
+    );
+
+    /* =========================================================
+       EVENTS
+    ========================================================= */
+
+    document.getElementById(
+      "startBtn"
+    ).addEventListener(
+      "click",
+      startQuiz
+    );
+
+    document.getElementById(
+      "prevBtn"
+    ).addEventListener(
+      "click",
+      previousQuestion
+    );
+
+    document.getElementById(
+      "nextBtn"
+    ).addEventListener(
+      "click",
+      nextQuestion
+    );
+
+    document.getElementById(
+      "submitBtn"
+    ).addEventListener(
+      "click",
+      submitQuiz
+    );
+
+    document.getElementById(
+      "themeBtn"
+    ).addEventListener(
+      "click",
+      toggleTheme
+    );
+
+    document.getElementById(
+      "logoutBtn"
+    ).addEventListener(
+      "click",
+      logout
+    );
+
+    /* =========================================================
+       KEYBOARD SUPPORT
+    ========================================================= */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          document.getElementById(
+            "quizArea"
+          ).style.display === "none"
+        ) {
+          return;
+        }
+
+        if (
+          event.key === "ArrowRight"
+        ) {
+
+          nextQuestion();
+        }
+
+        if (
+          event.key === "ArrowLeft"
+        ) {
+
+          previousQuestion();
+        }
+      }
+    );
+
+    /* =========================================================
+       PUBLIC API
+    ========================================================= */
+
+    window.SNKStudentQuiz = {
+
+      getStudent:
+        () => ({ ...student }),
+
+      getCourse:
+        () => ({ ...course }),
+
+      getQuiz:
+        () => ({ ...quiz }),
+
+      getQuestions:
+        () => ([ ...questions ]),
+
+      getCurrentMakeup:
+        () => activeMakeup
+          ? { ...activeMakeup }
+          : null,
+
+      getEffectiveWindow:
+        () => ({
+          ...getEffectiveWindow()
+        }),
+
+      getActiveAttempt:
+        () => getActiveAttempt(),
+
+      getResult:
+        () => hasSubmittedResult(),
+
+      getAnswers:
+        () => ({ ...answers }),
+
+      startQuiz,
+
+      submitQuiz,
+
+      autoSubmitQuiz,
+
+      refresh:
+        () => {
+          loadSettings();
+          renderStudent();
+          renderWindow();
+          validateQuizAccess();
+        }
+    };
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    (function init() {
+
+      applyTheme();
+
+      loadSettings();
+
+      student =
+        getStudent();
+
+      renderStudent();
+
+      renderWindow();
+
+      /*
+        Login is kept compatible with the
+        existing demo/session system.
+      */
+
+      const loggedIn =
+        sessionStorage.getItem(
+          STORAGE.studentLoggedIn
+        );
+
+      /*
+        We do not hard-block the page here,
+        because the existing portal currently
+        uses demo/local student data.
+      */
+
+      if (
+        recoverActiveAttempt()
+      ) {
+
+        return;
+      }
+
+      validateQuizAccess();
+
+    })();
+
+  </script>
+
+</body>
+</html>
+```

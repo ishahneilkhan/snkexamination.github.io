@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#0b1020">
+
+  <meta
+    name="description"
+    content="SNK AI Academy Student Portal - Offline Course Student Portal"
+  >
+
+  <title>SNK AI Academy | Student Portal</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Dynamic Site Notice (Firestore-driven, hidden by default) -->
+  <div
+    id="dynNoticeBanner"
+    style="display:none;background:#b7ff00;color:#050505;font-weight:800;font-size:13px;text-align:center;padding:10px 14px;"
+  ></div>
+
+  <!-- =========================================================
+       1. HEADER / NAVIGATION
+  ========================================================== -->
+  <header class="site-header" id="siteHeader">
+
+    <div class="container nav-container">
+
+      <!-- Logo -->
+      <a href="index.html" class="brand" aria-label="SNK AI Academy Home">
+        <div class="brand-logo" id="dynHeaderLogoBox">
+          <span class="logo-fallback-text">SNK</span>
+        </div>
+
+        <div class="brand-text">
+          <strong id="dynHeaderInstituteName">SNK AI Academy</strong>
+          <span>Student Portal</span>
+        </div>
+      </a>
+
+
+      <!-- Desktop Navigation -->
+      <nav class="main-nav" id="mainNav" aria-label="Main Navigation">
+
+        <a href="index.html" class="nav-link active">
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="student-dashboard.html" class="nav-link">
+          <i class="fa-solid fa-gauge-high"></i>
+          <span>My Dashboard</span>
+        </a>
+
+        <a href="courses.html" class="nav-link">
+          <i class="fa-solid fa-book-open"></i>
+          <span>My Course</span>
+        </a>
+
+        <a href="assignments.html" class="nav-link">
+          <i class="fa-solid fa-file-pen"></i>
+          <span>Assignment</span>
+        </a>
+
+        <a href="quiz.html" class="nav-link">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>Quiz</span>
+        </a>
+
+        <a href="results.html" class="nav-link">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Result</span>
+        </a>
+
+        <a href="student-attendance.html" class="nav-link">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>Attendance</span>
+        </a>
+
+        <a href="student-resources.html" class="nav-link">
+          <i class="fa-solid fa-folder-open"></i>
+          <span>Resources</span>
+        </a>
+
+        <a href="student-notifications.html" class="nav-link">
+          <i class="fa-solid fa-bell"></i>
+          <span>Notifications</span>
+        </a>
+
+        <a href="student-support.html" class="nav-link">
+          <i class="fa-solid fa-headset"></i>
+          <span>Support</span>
+        </a>
+
+        <a href="student-settings.html" class="nav-link">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </a>
+
+        <a href="student-contact.html" class="nav-link">
+          <i class="fa-solid fa-address-book"></i>
+          <span>Contact</span>
+        </a>
+
+      </nav>
+
+
+      <!-- Right Actions -->
+      <div class="nav-actions">
+
+        <!-- Language -->
+        <button
+          type="button"
+          class="nav-action-btn"
+          id="languageToggle"
+          title="Change Language"
+          aria-label="Change Language"
+        >
+          <i class="fa-solid fa-language"></i>
+          <span>English</span>
+        </button>
+
+
+        <!-- Theme -->
+        <button
+          type="button"
+          class="nav-icon-btn"
+          id="themeToggle"
+          title="Toggle Theme"
+          aria-label="Toggle Theme"
+        >
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+
+        <!-- Login -->
+        <a href="login.html" class="nav-login-btn">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Login</span>
+        </a>
+
+
+        <!-- Mobile Menu -->
+        <button
+          type="button"
+          class="mobile-menu-btn"
+          id="mobileMenuBtn"
+          aria-label="Open Menu"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================================
+       2. HERO SECTION
+  ========================================================== -->
+  <main>
+
+    <section class="hero-section" id="home">
+
+      <!-- CSS Galaxy Background -->
+      <div class="galaxy-bg" aria-hidden="true">
+
+        <span class="galaxy-star star-1"></span>
+        <span class="galaxy-star star-2"></span>
+        <span class="galaxy-star star-3"></span>
+        <span class="galaxy-star star-4"></span>
+        <span class="galaxy-star star-5"></span>
+        <span class="galaxy-star star-6"></span>
+        <span class="galaxy-star star-7"></span>
+        <span class="galaxy-star star-8"></span>
+        <span class="galaxy-star star-9"></span>
+        <span class="galaxy-star star-10"></span>
+
+        <div class="galaxy-glow glow-one"></div>
+        <div class="galaxy-glow glow-two"></div>
+        <div class="galaxy-glow glow-three"></div>
+
+        <div class="galaxy-orbit orbit-one"></div>
+        <div class="galaxy-orbit orbit-two"></div>
+
+      </div>
+
+
+      <div class="container hero-container">
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span id="dynHeroBadge">Student Portal • Batch 01</span>
+          </div>
+
+
+          <h1>
+            <span id="dynHeroHeading">Learn.</span>
+            <span id="dynHeroHighlight">Practice.</span>
+            Grow.
+          </h1>
+
+
+          <p class="hero-description" id="dynHeroDescription">
+            Welcome to the SNK AI Academy Student Portal.
+            Manage your course, assignments, quizzes, results,
+            attendance and learning resources from one place.
+          </p>
+
+
+          <!-- Class Notice -->
+          <div class="class-start-notice">
+
+            <div class="notice-icon">
+              <i class="fa-solid fa-calendar-days"></i>
+            </div>
+
+            <div class="notice-content">
+              <strong>Class Started</strong>
+              <span>08 September 2026 • 4:00 PM – 6:00 PM</span>
+            </div>
+
+          </div>
+
+
+          <!-- Countdown -->
+          <div class="countdown-box" id="classCountdownBox">
+
+            <div class="countdown-title">
+              <i class="fa-solid fa-clock"></i>
+              <span id="countdownTitle">Course Status</span>
+            </div>
+
+            <div class="countdown" id="classCountdown">
+              <div class="count-item">
+                <strong id="countDays">0</strong>
+                <span>Days</span>
+              </div>
+
+              <div class="count-item">
+                <strong id="countHours">0</strong>
+                <span>Hours</span>
+              </div>
+
+              <div class="count-item">
+                <strong id="countMinutes">0</strong>
+                <span>Minutes</span>
+              </div>
+
+              <div class="count-item">
+                <strong id="countSeconds">0</strong>
+                <span>Seconds</span>
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- Hero Buttons -->
+          <div class="hero-actions">
+
+            <a
+              href="student-dashboard.html"
+              class="btn btn-primary"
+              data-login-required="true"
+            >
+              <i class="fa-solid fa-gauge-high"></i>
+              My Dashboard
+            </a>
+
+            <a
+              href="courses.html"
+              class="btn btn-secondary"
+              data-login-required="true"
+            >
+              <i class="fa-solid fa-book-open"></i>
+              My Course
+            </a>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Student Visual Card -->
+        <div class="hero-visual">
+
+          <div class="student-card">
+
+            <div class="student-card-top">
+
+              <div class="portal-icon">
+                <i class="fa-solid fa-user-graduate"></i>
+              </div>
+
+              <span class="active-status">
+                <span></span>
+                Active
+              </span>
+
+            </div>
+
+
+            <div class="student-avatar">
+
+              <div class="avatar-ring">
+                <i class="fa-solid fa-user"></i>
+              </div>
+
+            </div>
+
+
+            <div class="student-card-info">
+
+              <span class="student-label">WELCOME BACK</span>
+
+              <h2 id="heroStudentName">
+                Student
+              </h2>
+
+              <p id="heroStudentId">
+                Student ID: SNK-1001
+              </p>
+
+            </div>
+
+
+            <div class="student-course-box">
+
+              <div>
+                <span>COURSE</span>
+                <strong id="heroCourseName">
+                  আপনার কোর্স
+                </strong>
+              </div>
+
+              <i class="fa-solid fa-laptop-code"></i>
+
+            </div>
+
+
+            <div class="student-card-footer">
+
+              <div>
+                <span>Batch</span>
+                <strong>Batch 01</strong>
+              </div>
+
+              <div>
+                <span>Mode</span>
+                <strong>Offline</strong>
+              </div>
+
+              <div>
+                <span>Duration</span>
+                <strong>6 Months</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         3. QUICK ACCESS
+    ========================================================== -->
+    <section class="quick-access-section" id="quickAccess">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="section-kicker">
+            STUDENT AREA
+          </span>
+
+          <h2>
+            Quick Access
+          </h2>
+
+          <p>
+            Everything you need for your course is just one click away.
+          </p>
+
+        </div>
+
+
+        <div class="access-grid">
+
+          <!-- Dashboard -->
+          <a
+            href="student-dashboard.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-gauge-high"></i>
+            </div>
+
+            <div>
+              <h3>My Dashboard</h3>
+              <p>View your student overview.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+
+          <!-- Course -->
+          <a
+            href="courses.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-book-open"></i>
+            </div>
+
+            <div>
+              <h3>My Course</h3>
+              <p>View modules and course details.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+
+          <!-- Assignment -->
+          <a
+            href="assignments.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-file-pen"></i>
+            </div>
+
+            <div>
+              <h3>Assignment</h3>
+              <p>Check tasks and submission status.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+
+          <!-- Quiz -->
+          <a
+            href="quiz.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-circle-question"></i>
+            </div>
+
+            <div>
+              <h3>Quiz</h3>
+              <p>Take your online practice quiz.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+
+          <!-- Result -->
+          <a
+            href="results.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <div>
+              <h3>Result</h3>
+              <p>View quiz and academic results.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+
+          <!-- Attendance -->
+          <a
+            href="student-attendance.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+            <div>
+              <h3>Attendance</h3>
+              <p>Track your attendance history.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+
+          <!-- Resources -->
+          <a
+            href="student-resources.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+
+            <div>
+              <h3>Resources</h3>
+              <p>Access learning materials.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+
+          <!-- Notifications -->
+          <a
+            href="student-notifications.html"
+            class="access-card"
+            data-login-required="true"
+          >
+            <div class="access-icon">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+
+            <div>
+              <h3>Notifications</h3>
+              <p>Check your latest updates.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right card-arrow"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         4. COURSE SECTION
+    ========================================================== -->
+    <section class="course-section" id="course">
+
+      <div class="container">
+
+        <div class="course-layout">
+
+          <div class="course-content">
+
+            <span class="section-kicker">
+              MY COURSE
+            </span>
+
+            <h2 id="courseTitle">
+              কোর্সের নাম শীঘ্রই যুক্ত হবে
+            </h2>
+
+            <p id="courseDescription">
+              A practical offline course designed to build
+              essential computer and office application skills.
+            </p>
+
+
+            <div class="course-meta-grid">
+
+              <div class="course-meta-item">
+                <i class="fa-solid fa-clock"></i>
+                <div>
+                  <span>Duration</span>
+                  <strong id="courseDuration">6 Months</strong>
+                </div>
+              </div>
+
+
+              <div class="course-meta-item">
+                <i class="fa-solid fa-calendar-days"></i>
+                <div>
+                  <span>Class Days</span>
+                  <strong id="courseDays">Saturday – Monday</strong>
+                </div>
+              </div>
+
+
+              <div class="course-meta-item">
+                <i class="fa-solid fa-business-time"></i>
+                <div>
+                  <span>Class Time</span>
+                  <strong id="courseTime">4:00 PM – 6:00 PM</strong>
+                </div>
+              </div>
+
+
+              <div class="course-meta-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                  <span>Mode</span>
+                  <strong id="courseMode">Offline</strong>
+                </div>
+              </div>
+
+            </div>
+
+
+            <a
+              href="courses.html"
+              class="btn btn-primary"
+              data-login-required="true"
+            >
+              <i class="fa-solid fa-arrow-right"></i>
+              View Course
+            </a>
+
+          </div>
+
+
+          <div class="course-progress-card">
+
+            <div class="progress-card-header">
+
+              <div>
+                <span>COURSE PROGRESS</span>
+                <h3 id="courseProgressPercent">
+                  0%
+                </h3>
+              </div>
+
+              <div class="progress-icon">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+
+            </div>
+
+
+            <div class="progress-track">
+              <div
+                class="progress-fill"
+                id="courseProgressBar"
+                style="width:0%;"
+              ></div>
+            </div>
+
+
+            <div class="progress-info">
+              <span>Pre-class Progress</span>
+              <strong>0%</strong>
+            </div>
+
+
+            <div class="course-start-mini">
+
+              <i class="fa-solid fa-calendar-check"></i>
+
+              <div>
+                <span>Course Start</span>
+                <strong>08 September 2026</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         5. STUDENT FEATURES
+    ========================================================== -->
+    <section class="features-section" id="features">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="section-kicker">
+            STUDENT FEATURES
+          </span>
+
+          <h2>
+            Your Learning, One Portal
+          </h2>
+
+          <p>
+            Manage your complete student journey from one place.
+          </p>
+
+        </div>
+
+
+        <div class="features-grid">
+
+          <a
+            href="student-profiles.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-user"></i>
+            <h3>Student Profile</h3>
+            <p>Manage your personal information.</p>
+          </a>
+
+
+          <a
+            href="student-class.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-chalkboard-user"></i>
+            <h3>My Class</h3>
+            <p>See your next and regular classes.</p>
+          </a>
+
+
+          <a
+            href="student-timetable.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-calendar-week"></i>
+            <h3>Timetable</h3>
+            <p>Check your weekly class routine.</p>
+          </a>
+
+
+          <a
+            href="student-certificates.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-certificate"></i>
+            <h3>Certificates</h3>
+            <p>View your certificate status.</p>
+          </a>
+
+
+          <a
+            href="student-id-cards.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-id-card"></i>
+            <h3>Student ID Card</h3>
+            <p>View and print your student ID card.</p>
+          </a>
+
+
+          <a
+            href="student-support.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-headset"></i>
+            <h3>Help & Support</h3>
+            <p>Get help with your student portal.</p>
+          </a>
+
+
+          <a
+            href="student-settings.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-sliders"></i>
+            <h3>Settings</h3>
+            <p>Customize your portal preferences.</p>
+          </a>
+
+
+          <a
+            href="student-contact.html"
+            class="feature-card"
+            data-login-required="true"
+          >
+            <i class="fa-solid fa-envelope"></i>
+            <h3>Contact</h3>
+            <p>Contact SNK AI Academy.</p>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         6. CTA
+    ========================================================== -->
+    <section class="cta-section">
+
+      <div class="container">
+
+        <div class="cta-card">
+
+          <div class="cta-content">
+
+            <span class="section-kicker">
+              STUDENT PORTAL
+            </span>
+
+            <h2>
+              Ready to continue learning?
+            </h2>
+
+            <p>
+              Open your dashboard and manage your complete course journey.
+            </p>
+
+          </div>
+
+
+          <div class="cta-actions">
+
+            <a
+              href="student-dashboard.html"
+              class="btn btn-primary"
+              data-login-required="true"
+            >
+              <i class="fa-solid fa-gauge-high"></i>
+              Open Dashboard
+            </a>
+
+            <a
+              href="student-support.html"
+              class="btn btn-secondary"
+              data-login-required="true"
+            >
+              <i class="fa-solid fa-headset"></i>
+              Get Support
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =========================================================
+       7. FOOTER
+  ========================================================== -->
+  <footer class="site-footer">
+
+    <div class="container footer-grid">
+
+      <div class="footer-brand">
+
+        <a href="index.html" class="brand">
+
+          <div class="brand-logo small" id="dynFooterLogoBox">
+            <span class="logo-fallback-text">SNK</span>
+          </div>
+
+          <div class="brand-text">
+            <strong id="dynFooterInstituteName">SNK AI Academy</strong>
+            <span>Student Portal</span>
+          </div>
+
+        </a>
+
+
+        <p id="dynFooterAbout">
+          Learn practical IT skills and build your future
+          with SNK AI Academy.
+        </p>
+
+        <div
+          id="dynSocialLinks"
+          style="display:flex;gap:10px;margin-top:14px;"
+        ></div>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <h3>Student Portal</h3>
+
+        <a href="student-dashboard.html" data-login-required="true">
+          My Dashboard
+        </a>
+
+        <a href="courses.html" data-login-required="true">
+          My Course
+        </a>
+
+        <a href="assignments.html" data-login-required="true">
+          Assignment
+        </a>
+
+        <a href="quiz.html" data-login-required="true">
+          Quiz
+        </a>
+
+        <a href="results.html" data-login-required="true">
+          Result
+        </a>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <h3>Student Services</h3>
+
+        <a href="student-attendance.html" data-login-required="true">
+          Attendance
+        </a>
+
+        <a href="student-resources.html" data-login-required="true">
+          Resources
+        </a>
+
+        <a href="student-notifications.html" data-login-required="true">
+          Notifications
+        </a>
+
+        <a href="student-support.html" data-login-required="true">
+          Support
+        </a>
+
+        <a href="student-contact.html" data-login-required="true">
+          Contact
+        </a>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <h3>Account</h3>
+
+        <a href="student-profiles.html" data-login-required="true">
+          Profile
+        </a>
+
+        <a href="student-id-cards.html" data-login-required="true">
+          Student ID Card
+        </a>
+
+        <a href="student-certificates.html" data-login-required="true">
+          Certificates
+        </a>
+
+        <a href="student-settings.html" data-login-required="true">
+          Settings
+        </a>
+
+        <a href="login.html">
+          Login
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <div class="container footer-bottom-inner">
+
+        <p id="dynFooterCopyright">
+          © <span id="currentYear"></span>
+          SNK AI Academy. All Rights Reserved.
+        </p>
+
+        <p>
+          Student Portal • Batch 01
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- =========================================================
+       8. TOAST
+  ========================================================== -->
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+
+
+  <!-- =========================================================
+       9. LOGIN REQUIRED MESSAGE
+  ========================================================== -->
+  <div
+    class="modal-overlay"
+    id="loginRequiredModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-card">
+
+      <button
+        type="button"
+        class="modal-close"
+        id="closeLoginModal"
+        aria-label="Close"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-icon">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+
+      <h2>Student Login Required</h2>
+
+      <p>
+        Please login first to access your student portal page.
+      </p>
+
+      <div class="modal-actions">
+
+        <a href="login.html" class="btn btn-primary">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Login Now
+        </a>
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="cancelLoginModal"
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       10. PAGE DATA
+  ========================================================== -->
+  <script>
+
+    /*
+      Step 1.19.1
+      Navigation/Data Connection Base
+
+      Existing storage keys:
+      - snkStudentLoggedIn
+      - snkStudentId
+      - snkStudentName
+      - snkStudentCourse
+      - snkTheme
+      - snkLanguage
+    */
+
+    window.SNKPortalConfig = {
+
+      student: {
+        defaultId: "SNK-1001",
+        defaultName: "Student",
+        defaultCourse: "আপনার কোর্স",
+        batch: "Batch 01"
+      },
+
+      course: {
+        name: "কোর্সের নাম শীঘ্রই যুক্ত হবে",
+        duration: "6 Months",
+        mode: "Offline",
+        days: "Saturday – Monday",
+        time: "4:00 PM – 6:00 PM",
+        startDate: "08 September 2026"
+      },
+
+      pages: {
+        home: "index.html",
+        dashboard: "student-dashboard.html",
+        course: "courses.html",
+        assignment: "assignments.html",
+        quiz: "quiz.html",
+        result: "results.html",
+        attendance: "student-attendance.html",
+        resources: "student-resources.html",
+        notifications: "student-notifications.html",
+        support: "student-support.html",
+        settings: "student-settings.html",
+        contact: "student-contact.html",
+        profile: "student-profiles.html",
+        class: "student-class.html",
+        timetable: "student-timetable.html",
+        certificates: "student-certificates.html",
+        idCard: "student-id-cards.html",
+        login: "login.html"
+      }
+
+    };
+
+  </script>
+
+
+
+  <!-- Main JS -->
+  <script src="script.js"></script>
+
+
+  <!-- =========================================================
+       11. INDEX PAGE FALLBACK JS
+       Works together with script.js
+  ========================================================== -->
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      /* -------------------------------------------------------
+         Current Year
+      ------------------------------------------------------- */
+      const yearElement = document.getElementById("currentYear");
+
+      if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+      }
+
+
+      /* -------------------------------------------------------
+         Student Data
+      ------------------------------------------------------- */
+      function getStudentData() {
+
+        const studentId =
+          sessionStorage.getItem("snkStudentId") ||
+          localStorage.getItem("snkStudentId") ||
+          "SNK-1001";
+
+        const studentName =
+          sessionStorage.getItem("snkStudentName") ||
+          localStorage.getItem("snkStudentName") ||
+          "Student";
+
+        const studentCourse =
+          sessionStorage.getItem("snkStudentCourse") ||
+          localStorage.getItem("snkStudentCourse") ||
+          "আপনার কোর্স";
+
+        return {
+          id: studentId,
+          name: studentName,
+          course: studentCourse
+        };
+      }
+
+
+      function updateStudentVisual() {
+
+        const student = getStudentData();
+
+        const nameElement =
+          document.getElementById("heroStudentName");
+
+        const idElement =
+          document.getElementById("heroStudentId");
+
+        const courseElement =
+          document.getElementById("heroCourseName");
+
+
+        if (nameElement) {
+          nameElement.textContent = student.name;
+        }
+
+        if (idElement) {
+          idElement.textContent =
+            "Student ID: " + student.id;
+        }
+
+        if (courseElement) {
+          courseElement.textContent = student.course;
+        }
+
+      }
+
+      updateStudentVisual();
+
+
+      /* -------------------------------------------------------
+         Login Status
+      ------------------------------------------------------- */
+      function isLoggedIn() {
+
+        return (
+          sessionStorage.getItem("snkStudentLoggedIn") === "true" ||
+          localStorage.getItem("snkStudentLoggedIn") === "true"
+        );
+
+      }
+
+
+      /* -------------------------------------------------------
+         Login Required Navigation
+      ------------------------------------------------------- */
+      const protectedLinks =
+        document.querySelectorAll("[data-login-required='true']");
+
+
+      protectedLinks.forEach(function (link) {
+
+        link.addEventListener("click", function (event) {
+
+          if (!isLoggedIn()) {
+
+            event.preventDefault();
+
+            const modal =
+              document.getElementById("loginRequiredModal");
+
+            if (modal) {
+
+              modal.classList.add("show");
+              modal.setAttribute("aria-hidden", "false");
+
+            }
+
+          }
+
+        });
+
+      });
+
+
+      /* -------------------------------------------------------
+         Login Modal
+      ------------------------------------------------------- */
+      const loginModal =
+        document.getElementById("loginRequiredModal");
+
+      const closeLoginModal =
+        document.getElementById("closeLoginModal");
+
+      const cancelLoginModal =
+        document.getElementById("cancelLoginModal");
+
+
+      function closeModal() {
+
+        if (!loginModal) return;
+
+        loginModal.classList.remove("show");
+        loginModal.setAttribute("aria-hidden", "true");
+
+      }
+
+
+      if (closeLoginModal) {
+        closeLoginModal.addEventListener("click", closeModal);
+      }
+
+
+      if (cancelLoginModal) {
+        cancelLoginModal.addEventListener("click", closeModal);
+      }
+
+
+      if (loginModal) {
+
+        loginModal.addEventListener("click", function (event) {
+
+          if (event.target === loginModal) {
+            closeModal();
+          }
+
+        });
+
+      }
+
+
+      document.addEventListener("keydown", function (event) {
+
+        if (event.key === "Escape") {
+          closeModal();
+        }
+
+      });
+
+
+      /* -------------------------------------------------------
+         Local Storage / Session Storage Refresh
+      ------------------------------------------------------- */
+      window.addEventListener("storage", function () {
+
+        updateStudentVisual();
+
+      });
+
+
+      document.addEventListener("visibilitychange", function () {
+
+        if (!document.hidden) {
+          updateStudentVisual();
+        }
+
+      });
+
+
+      /* -------------------------------------------------------
+         Mobile Navigation Fallback
+      ------------------------------------------------------- */
+      const mobileMenuBtn =
+        document.getElementById("mobileMenuBtn");
+
+      const mainNav =
+        document.getElementById("mainNav");
+
+
+      if (mobileMenuBtn && mainNav) {
+
+        mobileMenuBtn.addEventListener("click", function () {
+
+          const isOpen =
+            mainNav.classList.toggle("mobile-open");
+
+          mobileMenuBtn.setAttribute(
+            "aria-expanded",
+            isOpen ? "true" : "false"
+          );
+
+          mobileMenuBtn.innerHTML = isOpen
+            ? '<i class="fa-solid fa-xmark"></i>'
+            : '<i class="fa-solid fa-bars"></i>';
+
+        });
+
+
+        mainNav.querySelectorAll("a").forEach(function (link) {
+
+          link.addEventListener("click", function () {
+
+            mainNav.classList.remove("mobile-open");
+
+            mobileMenuBtn.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+
+            mobileMenuBtn.innerHTML =
+              '<i class="fa-solid fa-bars"></i>';
+
+          });
+
+        });
+
+      }
+
+
+      /* -------------------------------------------------------
+         Class Status
+      ------------------------------------------------------- */
+      const countdownTitle =
+        document.getElementById("countdownTitle");
+
+
+      const countdownBox =
+        document.getElementById("classCountdownBox");
+
+
+      const startDate =
+        new Date("2026-09-08T16:00:00");
+
+
+      function updateCourseStatus() {
+
+        const now = new Date();
+
+        if (now >= startDate) {
+
+          if (countdownTitle) {
+            countdownTitle.textContent =
+              "Course Started";
+          }
+
+          if (countdownBox) {
+            countdownBox.classList.add("course-started");
+          }
+
+          const days =
+            document.getElementById("countDays");
+
+          const hours =
+            document.getElementById("countHours");
+
+          const minutes =
+            document.getElementById("countMinutes");
+
+          const seconds =
+            document.getElementById("countSeconds");
+
+
+          if (days) days.textContent = "✓";
+          if (hours) hours.textContent = "✓";
+          if (minutes) minutes.textContent = "✓";
+          if (seconds) seconds.textContent = "✓";
+
+          return;
+
+        }
+
+        const difference =
+          startDate.getTime() - now.getTime();
+
+        const totalSeconds =
+          Math.floor(difference / 1000);
+
+        const daysValue =
+          Math.floor(totalSeconds / 86400);
+
+        const hoursValue =
+          Math.floor(
+            (totalSeconds % 86400) / 3600
+          );
+
+        const minutesValue =
+          Math.floor(
+            (totalSeconds % 3600) / 60
+          );
+
+        const secondsValue =
+          totalSeconds % 60;
+
+
+        const days =
+          document.getElementById("countDays");
+
+        const hours =
+          document.getElementById("countHours");
+
+        const minutes =
+          document.getElementById("countMinutes");
+
+        const seconds =
+          document.getElementById("countSeconds");
+
+
+        if (days) {
+          days.textContent = daysValue;
+        }
+
+        if (hours) {
+          hours.textContent = hoursValue;
+        }
+
+        if (minutes) {
+          minutes.textContent = minutesValue;
+        }
+
+        if (seconds) {
+          seconds.textContent = secondsValue;
+        }
+
+      }
+
+
+      updateCourseStatus();
+
+      setInterval(updateCourseStatus, 1000);
+
+
+      /* -------------------------------------------------------
+         Smooth Internal Navigation
+      ------------------------------------------------------- */
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+
+        link.addEventListener("click", function (event) {
+
+          const targetId =
+            this.getAttribute("href");
+
+          if (!targetId || targetId === "#") {
+            return;
+          }
+
+          const target =
+            document.querySelector(targetId);
+
+          if (target) {
+
+            event.preventDefault();
+
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+
+          }
+
+        });
+
+      });
+
+    });
+
+  </script>
+
+  <!-- =========================================================
+       DYNAMIC SITE SETTINGS (Firestore)
+       admin-profile.html থেকে save করা settings এখান থেকেই
+       homepage-এ apply হয়। কোনো field খালি থাকলে সেটা বদলানো
+       হয় না, ডিফল্ট লেখাই থেকে যায়।
+  ========================================================== -->
+  <script type="module">
+    import { db } from "./firebase-config.js";
+    import {
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    function setText(id, value){
+      if(!value) return;
+      const el = document.getElementById(id);
+      if(el) el.textContent = value;
+    }
+
+    function setLogo(boxId, url){
+      if(!url) return;
+      const box = document.getElementById(boxId);
+      if(box) box.innerHTML = `<img src="${url}" alt="Logo" style="width:100%;height:100%;object-fit:contain;">`;
+    }
+
+    async function applySiteSettings(){
+      try{
+        const snap = await getDoc(doc(db, "siteSettings", "main"));
+        if(!snap.exists()) return;
+
+        const d = snap.data();
+
+        /* Notice banner */
+        if(d.noticeActive && d.noticeText){
+          const banner = document.getElementById("dynNoticeBanner");
+          if(banner){
+            if(d.noticeLink){
+              banner.innerHTML =
+                `<a href="${d.noticeLink}" style="color:#050505;text-decoration:underline;">${d.noticeText}</a>`;
+            }else{
+              banner.textContent = d.noticeText;
+            }
+            banner.style.display = "block";
+          }
+        }
+
+        /* Institute name + logo (header + footer) */
+        setText("dynHeaderInstituteName", d.instituteName);
+        setText("dynFooterInstituteName", d.instituteName);
+        setLogo("dynHeaderLogoBox", d.logoUrl);
+        setLogo("dynFooterLogoBox", d.logoUrl);
+
+        /* Hero */
+        setText("dynHeroBadge", d.heroBadge);
+        setText("dynHeroHeading", d.heroHeading);
+        setText("dynHeroHighlight", d.heroHighlight);
+        setText("dynHeroDescription", d.heroDescription);
+
+        /* Featured Course (homepage "My Course" showcase) */
+        setText("courseTitle", d.courseName);
+        setText("courseDescription", d.courseDescription);
+        setText("courseDuration", d.courseDuration);
+        setText("courseDays", d.courseDays);
+        setText("courseTime", d.courseTime);
+        setText("courseMode", d.courseMode);
+
+        /* Footer */
+        setText("dynFooterAbout", d.footerAbout);
+        if(d.footerCopyright){
+          const cp = document.getElementById("dynFooterCopyright");
+          if(cp) cp.textContent = d.footerCopyright;
+        }
+
+        /* Social links */
+        const socialWrap = document.getElementById("dynSocialLinks");
+        if(socialWrap){
+          const links = [
+            { url: d.socialFacebook, icon: "📘", label: "Facebook" },
+            { url: d.socialYoutube, icon: "▶️", label: "YouTube" },
+            { url: d.socialWhatsapp, icon: "💬", label: "WhatsApp" },
+            { url: d.socialInstagram, icon: "📸", label: "Instagram" }
+          ].filter(item => item.url);
+
+          socialWrap.innerHTML = links.map(item => `
+            <a
+              href="${item.url}"
+              target="_blank"
+              rel="noopener"
+              aria-label="${item.label}"
+              style="
+                width:36px;height:36px;border-radius:10px;
+                display:flex;align-items:center;justify-content:center;
+                background:rgba(183,255,0,.1);border:1px solid rgba(183,255,0,.25);
+                font-size:15px;
+              "
+            >${item.icon}</a>
+          `).join("");
+        }
+
+      }catch(error){
+        console.warn("Site settings load skipped:", error);
+      }
+    }
+
+    applySiteSettings();
+  </script>
+
+</body>
+</html>
+```

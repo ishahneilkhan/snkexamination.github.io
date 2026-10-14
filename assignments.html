@@ -1,0 +1,3790 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Assignments | SNK AI Academy</title>
+
+  <meta
+    name="description"
+    content="SNK AI Academy Student Portal - Assignments"
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root{
+      --bg:#050505;
+      --bg2:#0a0a0a;
+      --card:rgba(20,20,20,.88);
+      --card2:rgba(255,255,255,.045);
+      --text:#ffffff;
+      --muted:#999999;
+      --line:rgba(183,255,0,.14);
+
+      --primary:#b7ff00;
+      --primary2:#ccff4d;
+
+      --success:#22c55e;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+
+      --shadow:0 20px 60px rgba(0,0,0,.40);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      font-family:"Inter","Noto Sans Bengali",sans-serif;
+      color:var(--text);
+      line-height:1.6;
+
+      background:
+        radial-gradient(
+          circle at 15% 8%,
+          rgba(183,255,0,.15),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 85% 12%,
+          rgba(183,255,0,.14),
+          transparent 27%
+        ),
+        linear-gradient(
+          145deg,
+          var(--bg),
+          var(--bg2)
+        );
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.07;
+
+      background-image:
+        radial-gradient(
+          circle,
+          rgba(255,255,255,.8) 1px,
+          transparent 1px
+        );
+
+      background-size:90px 90px;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .container{
+      width:min(1180px,calc(100% - 32px));
+      margin:auto;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      background:rgba(7,17,31,.86);
+      backdrop-filter:blur(18px);
+
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav-inner{
+      min-height:72px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      white-space:nowrap;
+    }
+
+    .brand-logo{
+      width:44px;
+      height:44px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      border-radius:13px;
+
+      background:#b7ff00;
+      color:#050505;
+      font-weight:900;
+      font-size:14px;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+
+      line-height:1.15;
+    }
+
+    .brand-title{
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .brand-sub{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:600;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:3px;
+    }
+
+    .nav-links a{
+      padding:9px 10px;
+
+      border-radius:10px;
+
+      color:#c9d7e7;
+
+      font-size:11px;
+      font-weight:600;
+
+      transition:.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:#fff;
+      background:rgba(183,255,0,.12);
+    }
+
+    .nav-actions{
+      display:flex;
+      gap:8px;
+    }
+
+    .icon-btn{
+      width:40px;
+      height:40px;
+
+      display:grid;
+      place-items:center;
+
+      border:1px solid var(--line);
+      border-radius:12px;
+
+      background:rgba(255,255,255,.04);
+      color:#fff;
+
+      transition:.2s;
+    }
+
+    .icon-btn:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.08);
+    }
+
+    .menu-btn{
+      display:none;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero{
+      padding:45px 0 26px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.3fr .7fr;
+      gap:20px;
+    }
+
+    .hero-card{
+      position:relative;
+      overflow:hidden;
+
+      padding:34px;
+
+      border-radius:27px;
+
+      border:1px solid var(--line);
+
+      background:
+        radial-gradient(
+          circle at 85% 15%,
+          rgba(183,255,0,.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 15% 85%,
+          rgba(183,255,0,.14),
+          transparent 32%
+        ),
+        rgba(12,27,46,.82);
+
+      box-shadow:var(--shadow);
+    }
+
+    .hero-card::after{
+      content:"";
+
+      position:absolute;
+
+      width:250px;
+      height:250px;
+
+      right:-90px;
+      top:-90px;
+
+      border:1px solid rgba(183,255,0,.15);
+
+      border-radius:50%;
+
+      box-shadow:
+        0 0 0 38px rgba(183,255,0,.025),
+        0 0 0 76px rgba(183,255,0,.025);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+
+      margin-bottom:14px;
+
+      padding:7px 12px;
+
+      border-radius:999px;
+
+      color:#8ff0ae;
+
+      background:rgba(34,197,94,.09);
+
+      border:1px solid rgba(34,197,94,.2);
+
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .eyebrow-dot{
+      width:7px;
+      height:7px;
+
+      border-radius:50%;
+
+      background:var(--success);
+
+      box-shadow:
+        0 0 12px
+        rgba(34,197,94,.8);
+    }
+
+    .hero h1{
+      font-size:clamp(34px,5vw,52px);
+      line-height:1.08;
+
+      letter-spacing:-1.5px;
+
+      margin-bottom:13px;
+    }
+
+    .hero h1 span{
+      color:transparent;
+
+      background:
+        linear-gradient(
+          90deg,
+          #6ea4ff,
+          #a28dff
+        );
+
+      -webkit-background-clip:text;
+      background-clip:text;
+    }
+
+    .hero-description{
+      max-width:650px;
+
+      color:var(--muted);
+
+      font-size:13px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+
+      margin-top:21px;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+      min-height:42px;
+
+      padding:0 16px;
+
+      border-radius:12px;
+
+      font-size:11px;
+      font-weight:700;
+
+      border:1px solid transparent;
+
+      transition:.2s;
+    }
+
+    .primary-btn{
+      color:#050505;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+    }
+
+    .secondary-btn{
+      color:#dce8f8;
+
+      background:rgba(255,255,255,.04);
+
+      border-color:var(--line);
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    /* =========================
+       STUDENT CARD
+    ========================= */
+
+    .student-card{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+
+      padding:26px;
+
+      border-radius:24px;
+
+      border:1px solid var(--line);
+
+      background:rgba(255,255,255,.045);
+
+      box-shadow:var(--shadow);
+    }
+
+    .avatar{
+      width:64px;
+      height:64px;
+
+      display:grid;
+      place-items:center;
+
+      margin-bottom:13px;
+
+      border-radius:19px;
+
+      color:#050505;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+
+      font-size:24px;
+      font-weight:800;
+    }
+
+    .student-card h3{
+      font-size:19px;
+    }
+
+    .student-id{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .student-meta{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+
+      gap:9px;
+
+      margin-top:16px;
+    }
+
+    .meta-box{
+      padding:10px;
+
+      border:1px solid var(--line);
+
+      border-radius:12px;
+
+      background:rgba(255,255,255,.035);
+    }
+
+    .meta-label{
+      display:block;
+
+      color:var(--muted);
+
+      font-size:9px;
+      margin-bottom:2px;
+    }
+
+    .meta-value{
+      display:block;
+
+      font-size:11px;
+      font-weight:700;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main{
+      padding-bottom:60px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+
+      gap:15px;
+
+      margin:27px 0 16px;
+    }
+
+    .section-head h2{
+      font-size:23px;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+
+      gap:12px;
+    }
+
+    .stat{
+      padding:18px;
+
+      border-radius:18px;
+
+      border:1px solid var(--line);
+
+      background:var(--card);
+
+      box-shadow:var(--shadow);
+    }
+
+    .stat-icon{
+      font-size:21px;
+      margin-bottom:5px;
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .stat-value{
+      font-size:18px;
+      font-weight:800;
+    }
+
+    /* =========================
+       ASSIGNMENT GRID
+    ========================= */
+
+    .assignment-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+
+      gap:17px;
+    }
+
+    .assignment-card{
+      position:relative;
+
+      overflow:hidden;
+
+      padding:23px;
+
+      border-radius:22px;
+
+      border:1px solid var(--line);
+
+      background:var(--card);
+
+      box-shadow:var(--shadow);
+
+      transition:.2s;
+    }
+
+    .assignment-card:hover{
+      transform:translateY(-3px);
+
+      border-color:
+        rgba(183,255,0,.24);
+    }
+
+    .assignment-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+
+      gap:15px;
+
+      margin-bottom:14px;
+    }
+
+    .assignment-icon{
+      width:48px;
+      height:48px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:14px;
+
+      background:rgba(183,255,0,.1);
+
+      font-size:22px;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+
+      padding:5px 9px;
+
+      border-radius:999px;
+
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .status.pending{
+      color:#ffd891;
+      background:rgba(245,158,11,.11);
+      border:1px solid rgba(245,158,11,.2);
+    }
+
+    .status.upcoming{
+      color:#b8d0ff;
+      background:rgba(183,255,0,.1);
+      border:1px solid rgba(183,255,0,.18);
+    }
+
+    .status.submitted{
+      color:#8ff0ae;
+      background:rgba(34,197,94,.1);
+      border:1px solid rgba(34,197,94,.2);
+    }
+
+    .status.late{
+      color:#ffb3b3;
+      background:rgba(239,68,68,.1);
+      border:1px solid rgba(239,68,68,.2);
+    }
+
+    .assignment-card h3{
+      font-size:18px;
+      margin-bottom:4px;
+    }
+
+    .assignment-description{
+      color:var(--muted);
+      font-size:11px;
+
+      min-height:40px;
+    }
+
+    .assignment-details{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 16px;
+
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+    }
+
+    .detail{
+      display:flex;
+      align-items:center;
+      gap:5px;
+      font-size:11.5px;
+    }
+
+    .detail span{
+      color:var(--muted);
+    }
+
+    .detail strong{
+      font-size:11.5px;
+      font-weight:700;
+    }
+
+    .assignment-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      gap:10px;
+
+      margin-top:16px;
+      padding-top:14px;
+
+      border-top:1px solid var(--line);
+    }
+
+    .countdown{
+      color:#9ec0ff;
+
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .submit-btn{
+      min-height:36px;
+
+      padding:0 13px;
+
+      border:0;
+
+      border-radius:10px;
+
+      color:#050505;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .submit-btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    /* =========================
+       COURSE INFO
+    ========================= */
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+
+      gap:16px;
+    }
+
+    .info-card{
+      padding:22px;
+
+      border-radius:21px;
+
+      border:1px solid var(--line);
+
+      background:var(--card);
+
+      box-shadow:var(--shadow);
+    }
+
+    .info-card h3{
+      font-size:16px;
+      margin-bottom:13px;
+    }
+
+    .info-list{
+      display:grid;
+      gap:9px;
+    }
+
+    .info-row{
+      display:flex;
+      justify-content:space-between;
+
+      gap:14px;
+
+      padding-bottom:8px;
+
+      border-bottom:1px dashed
+        rgba(255,255,255,.08);
+
+      font-size:11px;
+    }
+
+    .info-row:last-child{
+      border-bottom:0;
+      padding-bottom:0;
+    }
+
+    .info-row span:first-child{
+      color:var(--muted);
+    }
+
+    .info-row span:last-child{
+      text-align:right;
+      font-weight:700;
+    }
+
+    /* =========================
+       NOTICE
+    ========================= */
+
+    .notice{
+      margin-top:17px;
+
+      padding:15px 17px;
+
+      border-radius:16px;
+
+      color:#d0e0f8;
+
+      background:rgba(183,255,0,.07);
+
+      border:1px solid rgba(183,255,0,.14);
+
+      font-size:10px;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal{
+      position:fixed;
+      inset:0;
+
+      z-index:3000;
+
+      display:none;
+      align-items:center;
+      justify-content:center;
+
+      padding:20px;
+
+      background:rgba(0,0,0,.68);
+
+      backdrop-filter:blur(7px);
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-box{
+      width:min(520px,100%);
+
+      max-height:90vh;
+
+      overflow:auto;
+
+      padding:25px;
+
+      border-radius:23px;
+
+      border:1px solid var(--line);
+
+      background:#0d1d31;
+
+      box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.5);
+    }
+
+    .modal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      gap:15px;
+
+      margin-bottom:18px;
+    }
+
+    .modal-head h3{
+      font-size:20px;
+    }
+
+    .close-btn{
+      width:35px;
+      height:35px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:10px;
+
+      border:1px solid var(--line);
+
+      background:rgba(255,255,255,.04);
+
+      color:#fff;
+    }
+
+    .form-group{
+      margin-bottom:14px;
+    }
+
+    .form-group label{
+      display:block;
+
+      margin-bottom:6px;
+
+      color:#c9d7e7;
+
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .form-group input,
+    .form-group textarea{
+      width:100%;
+
+      padding:11px 12px;
+
+      border-radius:11px;
+
+      border:1px solid var(--line);
+
+      outline:none;
+
+      background:rgba(255,255,255,.04);
+
+      color:#fff;
+
+      font-size:11px;
+    }
+
+    .form-group textarea{
+      min-height:105px;
+      resize:vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus{
+      border-color:
+        rgba(183,255,0,.55);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(183,255,0,.08);
+    }
+
+    .student-readonly{
+      opacity:.8;
+      cursor:not-allowed;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:flex-end;
+
+      gap:9px;
+
+      margin-top:18px;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    #toastContainer{
+      position:fixed;
+
+      right:18px;
+      bottom:18px;
+
+      z-index:4000;
+
+      display:grid;
+
+      gap:8px;
+    }
+
+    .toast{
+      min-width:240px;
+
+      padding:12px 15px;
+
+      border-radius:13px;
+
+      background:#102238;
+
+      border:1px solid var(--line);
+
+      color:#fff;
+
+      box-shadow:var(--shadow);
+
+      font-size:11px;
+
+      animation:
+        toastIn .25s ease;
+    }
+
+    @keyframes toastIn{
+
+      from{
+        opacity:0;
+        transform:translateY(10px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer{
+      padding:25px 0;
+
+      border-top:1px solid var(--line);
+
+      color:var(--muted);
+
+      text-align:center;
+
+      font-size:10px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media(max-width:1050px){
+
+      .nav-links{
+        position:absolute;
+
+        top:72px;
+        left:15px;
+        right:15px;
+
+        display:none;
+
+        flex-direction:column;
+        align-items:stretch;
+
+        padding:10px;
+
+        border-radius:17px;
+
+        border:1px solid var(--line);
+
+        background:#0b1a2d;
+
+        box-shadow:var(--shadow);
+      }
+
+      .nav-links.open{
+        display:flex;
+      }
+
+      .nav-links a{
+        padding:12px;
+      }
+
+      .menu-btn{
+        display:grid;
+      }
+
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+
+      .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+    }
+
+    @media(max-width:760px){
+
+      .container{
+        width:min(100% - 22px,1180px);
+      }
+
+      .hero{
+        padding-top:28px;
+      }
+
+      .hero-card{
+        padding:26px;
+      }
+
+      .hero h1{
+        font-size:36px;
+      }
+
+      .assignment-grid,
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+
+      .section-head{
+        display:block;
+      }
+
+      .section-head p{
+        margin-top:3px;
+      }
+
+    }
+
+    @media(max-width:520px){
+
+      .brand-sub{
+        display:none;
+      }
+
+      .student-meta{
+        grid-template-columns:1fr;
+      }
+
+      .stats-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .assignment-footer{
+        align-items:stretch;
+        flex-direction:column;
+      }
+
+      .submit-btn{
+        width:100%;
+      }
+
+      .hero-actions{
+        flex-direction:column;
+      }
+
+      .hero-actions .primary-btn,
+      .hero-actions .secondary-btn{
+        width:100%;
+      }
+
+      #toastContainer{
+        left:12px;
+        right:12px;
+        bottom:12px;
+      }
+
+      .toast{
+        min-width:0;
+      }
+
+    }
+
+    @media(max-width:370px){
+
+      .stats-grid{
+        grid-template-columns:1fr;
+      }
+
+    }
+
+    /* =========================
+       PRINT
+    ========================= */
+
+    @media print{
+
+      body{
+        background:#fff;
+        color:#111;
+      }
+
+      body::before,
+      .navbar,
+      .hero-actions,
+      .submit-btn,
+      .notice,
+      footer,
+      #toastContainer{
+        display:none !important;
+      }
+
+      .hero{
+        padding-top:0;
+      }
+
+      .hero-card,
+      .student-card,
+      .stat,
+      .assignment-card,
+      .info-card{
+        background:#fff !important;
+        color:#111 !important;
+
+        border:1px solid #ddd;
+
+        box-shadow:none;
+      }
+
+      .hero-description,
+      .student-id,
+      .assignment-description,
+      .section-head p,
+      .info-row span:first-child,
+      .stat-label{
+        color:#555 !important;
+      }
+
+      .assignment-card{
+        break-inside:avoid;
+      }
+
+    }
+
+    @media(prefers-reduced-motion:reduce){
+
+      *,
+      *::before,
+      *::after{
+        animation-duration:.01ms !important;
+        transition-duration:.01ms !important;
+        scroll-behavior:auto !important;
+      }
+
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+
+  <!-- =========================
+       NAVBAR
+  ========================= -->
+
+  <header class="navbar">
+
+    <div class="container nav-inner">
+
+      <a href="index.html" class="brand">
+
+        <div class="brand-logo">SNK</div>
+
+        <span class="brand-text">
+
+          <span class="brand-title">
+            SNK AI Academy
+          </span>
+
+          <span class="brand-sub">
+            Student Portal
+          </span>
+
+        </span>
+
+      </a>
+
+
+      <nav class="nav-links" id="navLinks">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="student-dashboard.html">
+          My Dashboard
+        </a>
+
+        <a href="courses.html">
+          My Course
+        </a>
+
+        <a href="student-class.html">
+          My Class
+        </a>
+
+        <a
+          href="assignments.html"
+          class="active"
+        >
+          Assignment
+        </a>
+
+        <a href="quiz.html">
+          Quiz
+        </a>
+
+        <a href="results.html">
+          Result
+        </a>
+
+        <a href="student-attendance.html">
+          Attendance
+        </a>
+
+        <a href="student-timetable.html">
+          Timetable
+        </a>
+
+        <a href="student-resources.html">
+          Resources
+        </a>
+
+      </nav>
+
+
+      <div class="nav-actions">
+
+        <button
+          class="icon-btn"
+          id="themeBtn"
+          type="button"
+          title="Toggle Theme"
+          aria-label="Toggle Theme"
+        >
+          ◐
+        </button>
+
+
+        <button
+          class="icon-btn menu-btn"
+          id="menuBtn"
+          type="button"
+          title="Menu"
+          aria-label="Open Menu"
+        >
+          ☰
+        </button>
+
+
+        <button
+          class="icon-btn"
+          id="logoutBtn"
+          type="button"
+          title="Logout"
+          aria-label="Logout"
+        >
+          ↪
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <section class="hero">
+
+    <div class="container">
+
+      <div class="hero-grid">
+
+
+        <div class="hero-card">
+
+          <div class="eyebrow">
+
+            <span class="eyebrow-dot"></span>
+
+            Student Assignment Center
+
+          </div>
+
+
+          <h1>
+            My <span>Assignments</span>
+          </h1>
+
+
+          <p class="hero-description">
+
+            আপনার Course-এর Assignment,
+            deadline এবং submission status
+            এখানে এক জায়গা থেকে দেখতে পারবেন।
+
+          </p>
+
+
+          <div class="hero-actions">
+
+            <a
+              href="student-dashboard.html"
+              class="primary-btn"
+            >
+              Back to Dashboard
+            </a>
+
+
+            <button
+              class="secondary-btn"
+              id="printBtn"
+              type="button"
+            >
+              🖨 Print Assignments
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="student-card">
+
+          <div
+            class="avatar"
+            id="studentAvatar"
+          >
+            S
+          </div>
+
+
+          <h3 id="studentName">
+            Student
+          </h3>
+
+
+          <div
+            class="student-id"
+            id="studentId"
+          >
+            SNK-1001
+          </div>
+
+
+          <div class="student-meta">
+
+
+            <div class="meta-box">
+
+              <span class="meta-label">
+                Course
+              </span>
+
+              <span
+                class="meta-value"
+                id="studentCourse"
+              >
+                Computer Office Application
+              </span>
+
+            </div>
+
+
+            <div class="meta-box">
+
+              <span class="meta-label">
+                Batch
+              </span>
+
+              <span
+                class="meta-value"
+                id="studentBatch"
+              >
+                Batch 01
+              </span>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main>
+
+    <div class="container">
+
+
+      <!-- STATS -->
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>
+            Assignment Overview
+          </h2>
+
+          <p>
+            আপনার account-এর assignment summary
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+
+        <div class="stat">
+
+          <div class="stat-icon">
+            📝
+          </div>
+
+          <div class="stat-label">
+            Total Assignments
+          </div>
+
+          <div
+            class="stat-value"
+            id="totalAssignments"
+          >
+            2
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-icon">
+            ⏳
+          </div>
+
+          <div class="stat-label">
+            Pending
+          </div>
+
+          <div
+            class="stat-value"
+            id="pendingAssignments"
+          >
+            1
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-icon">
+            ✅
+          </div>
+
+          <div class="stat-label">
+            Submitted
+          </div>
+
+          <div
+            class="stat-value"
+            id="submittedAssignments"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-icon">
+            🎯
+          </div>
+
+          <div class="stat-label">
+            Total Marks
+          </div>
+
+          <div
+            class="stat-value"
+            id="totalMarks"
+          >
+            45
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ASSIGNMENTS -->
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>
+            My Assignments
+          </h2>
+
+          <p>
+            Current course assignments
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="assignment-grid"
+        id="assignmentGrid"
+      >
+
+
+        <!-- Assignment 1 -->
+
+        <article
+          class="assignment-card"
+          data-assignment-id="ASSIGN-001"
+          data-deadline="2026-09-10T23:59:00"
+        >
+
+          <div class="assignment-top">
+
+            <div class="assignment-icon">
+              📄
+            </div>
+
+            <span
+              class="status pending"
+              id="status-ASSIGN-001"
+            >
+              Not Submitted
+            </span>
+
+          </div>
+
+
+          <h3>
+            MS Word Assignment
+          </h3>
+
+
+          <p class="assignment-description">
+
+            একটি professional document তৈরি করুন।
+            Formatting, paragraph, table এবং page setup
+            ব্যবহার করুন।
+
+          </p>
+
+
+          <div class="assignment-details">
+
+
+            <div class="detail">
+
+              <span>
+                Publish Date
+              </span>
+
+              <strong>
+                25 Aug 2026
+              </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+              <span>
+                Deadline
+              </span>
+
+              <strong>
+                10 Sep 2026
+              </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+              <span>
+                Marks
+              </span>
+
+              <strong>
+                20 Marks
+              </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+              <span>
+                Course
+              </span>
+
+              <strong>
+                MS Word
+              </strong>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="assignment-footer">
+
+            <span
+              class="countdown"
+              id="countdown-ASSIGN-001"
+            >
+              Checking deadline...
+            </span>
+
+
+            <button
+              type="button"
+              class="submit-btn"
+              data-submit="ASSIGN-001"
+            >
+              Submit Assignment
+            </button>
+
+          </div>
+
+        </article>
+
+
+        <!-- Assignment 2 -->
+
+        <article
+          class="assignment-card"
+          data-assignment-id="ASSIGN-002"
+          data-deadline="2026-09-25T23:59:00"
+        >
+
+          <div class="assignment-top">
+
+            <div class="assignment-icon">
+              📊
+            </div>
+
+            <span
+              class="status upcoming"
+              id="status-ASSIGN-002"
+            >
+              Upcoming
+            </span>
+
+          </div>
+
+
+          <h3>
+            MS Excel Assignment
+          </h3>
+
+
+          <p class="assignment-description">
+
+            Spreadsheet তৈরি করে data entry,
+            formula, calculation এবং basic formatting
+            practice করতে হবে।
+
+          </p>
+
+
+          <div class="assignment-details">
+
+
+            <div class="detail">
+
+              <span>
+                Publish Date
+              </span>
+
+              <strong>
+                12 Sep 2026
+              </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+              <span>
+                Deadline
+              </span>
+
+              <strong>
+                25 Sep 2026
+              </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+              <span>
+                Marks
+              </span>
+
+              <strong>
+                25 Marks
+              </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+              <span>
+                Course
+              </span>
+
+              <strong>
+                MS Excel
+              </strong>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="assignment-footer">
+
+            <span
+              class="countdown"
+              id="countdown-ASSIGN-002"
+            >
+              Upcoming
+            </span>
+
+
+            <button
+              type="button"
+              class="submit-btn"
+              data-submit="ASSIGN-002"
+              disabled
+            >
+              Not Available Yet
+            </button>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+
+      <!-- NOTICE -->
+
+      <div class="notice">
+
+        <strong>
+          Demo / Local Storage:
+        </strong>
+
+        এই Student Portal-এর Assignment submission
+        বর্তমানে browser-এর
+        <strong>localStorage</strong>-এ save হচ্ছে।
+
+        ভবিষ্যতে Firebase/Admin database connect করলে
+        submission সরাসরি Admin panel-এ দেখা ও manage করা যাবে।
+
+      </div>
+
+
+      <!-- =========================
+           COURSE INFO
+      ========================= -->
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>
+            Course Information
+          </h2>
+
+          <p>
+            Current student account-এর course details
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="info-grid">
+
+
+        <div class="info-card">
+
+          <h3>
+            Student Information
+          </h3>
+
+
+          <div class="info-list">
+
+
+            <div class="info-row">
+
+              <span>
+                Student Name
+              </span>
+
+              <span id="infoStudentName">
+                Student
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                Student ID
+              </span>
+
+              <span id="infoStudentId">
+                SNK-1001
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                Course
+              </span>
+
+              <span id="infoCourse">
+                Computer Office Application
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                Batch
+              </span>
+
+              <span id="infoBatch">
+                Batch 01
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <h3>
+            Assignment Rules
+          </h3>
+
+
+          <div class="info-list">
+
+
+            <div class="info-row">
+
+              <span>
+                Submission
+              </span>
+
+              <span>
+                Online / Portal
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                File Type
+              </span>
+
+              <span>
+                Document / File
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                Late Submission
+              </span>
+
+              <span>
+                Admin Review
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                Course Start
+              </span>
+
+              <span>
+                08 Sep 2026
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                Class Time
+              </span>
+
+              <span>
+                4–6 PM
+              </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span>
+                Mode
+              </span>
+
+              <span>
+                Offline
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       SUBMISSION MODAL
+  ========================= -->
+
+  <div
+    class="modal"
+    id="submissionModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-box">
+
+
+      <div class="modal-head">
+
+        <h3>
+          Submit Assignment
+        </h3>
+
+
+        <button
+          type="button"
+          class="close-btn"
+          id="closeModal"
+          aria-label="Close"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="submissionForm">
+
+
+        <input
+          type="hidden"
+          id="selectedAssignmentId"
+        >
+
+
+        <div class="form-group">
+
+          <label>
+            Assignment
+          </label>
+
+          <input
+            type="text"
+            id="selectedAssignmentName"
+            class="student-readonly"
+            readonly
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Student Name
+          </label>
+
+          <input
+            type="text"
+            id="submissionStudentName"
+            class="student-readonly"
+            readonly
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Student ID
+          </label>
+
+          <input
+            type="text"
+            id="submissionStudentId"
+            class="student-readonly"
+            readonly
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Submission Link / File Name
+          </label>
+
+          <input
+            type="text"
+            id="submissionFile"
+            placeholder="যেমন: MS-Word-Assignment.docx"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Note
+          </label>
+
+          <textarea
+            id="submissionNote"
+            placeholder="Teacher-এর জন্য কোনো note থাকলে লিখুন..."
+          ></textarea>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="secondary-btn"
+            id="cancelSubmission"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="submit"
+            class="primary-btn"
+          >
+            Submit Now
+          </button>
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <div class="container">
+
+      ©
+      <span id="year"></span>
+      SNK AI Academy.
+      All Rights Reserved.
+
+    </div>
+
+  </footer>
+
+
+  <div id="toastContainer"></div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    /* =====================================
+       STORAGE
+    ===================================== */
+
+    const STORAGE = {
+
+      theme:
+        "snkTheme",
+
+      loggedIn:
+        "snkStudentLoggedIn",
+
+      studentId:
+        "snkStudentId",
+
+      studentName:
+        "snkStudentName",
+
+      studentCourse:
+        "snkStudentCourse",
+
+      studentBatch:
+        "snkStudentBatch",
+
+      studentProfile:
+        "snkStudentProfile",
+
+      submissions:
+        "snkAssignmentSubmissions"
+
+    };
+
+
+    /* =====================================
+       DEFAULT STUDENT
+    ===================================== */
+
+    const DEFAULT_STUDENT = {
+
+      id:
+        "SNK-1001",
+
+      name:
+        "Student",
+
+      course:
+        "Computer Office Application",
+
+      batch:
+        "Batch 01"
+
+    };
+
+
+    /* =====================================
+       ASSIGNMENT DATA
+    ===================================== */
+
+    const ASSIGNMENTS = [
+
+      {
+
+        id:
+          "ASSIGN-001",
+
+        name:
+          "MS Word Assignment",
+
+        publishDate:
+          "2026-08-25",
+
+        deadline:
+          "2026-09-10T23:59:00",
+
+        marks:
+          20,
+
+        subject:
+          "MS Word",
+
+        available:
+          true
+
+      },
+
+
+      {
+
+        id:
+          "ASSIGN-002",
+
+        name:
+          "MS Excel Assignment",
+
+        publishDate:
+          "2026-09-12",
+
+        deadline:
+          "2026-09-25T23:59:00",
+
+        marks:
+          25,
+
+        subject:
+          "MS Excel",
+
+        available:
+          false
+
+      }
+
+    ];
+
+
+    /* =====================================
+       LOGIN CHECK
+    ===================================== */
+
+    function isLoggedIn(){
+
+      return (
+
+        sessionStorage.getItem(
+          STORAGE.loggedIn
+        ) === "true"
+
+        ||
+
+        localStorage.getItem(
+          STORAGE.loggedIn
+        ) === "true"
+
+      );
+
+    }
+
+
+    function protectPage(){
+
+      if(!isLoggedIn()){
+
+        const shouldLogin =
+          confirm(
+            "Student Portal ব্যবহার করতে Login করতে হবে।\n\nLogin page-এ যাবেন?"
+          );
+
+
+        if(shouldLogin){
+
+          window.location.href =
+            "login.html";
+
+        }
+
+      }
+
+    }
+
+
+    /* =====================================
+       JSON HELPER
+    ===================================== */
+
+    function readJSON(key){
+
+      try{
+
+        return JSON.parse(
+          localStorage.getItem(key) || "null"
+        );
+
+      }catch(error){
+
+        return null;
+
+      }
+
+    }
+
+
+    function saveJSON(key,value){
+
+      localStorage.setItem(
+        key,
+        JSON.stringify(value)
+      );
+
+    }
+
+
+    /* =====================================
+       STUDENT DATA SYNC
+    ===================================== */
+
+    function getStudent(){
+
+      const profile =
+        readJSON(
+          STORAGE.studentProfile
+        ) || {};
+
+
+      const id =
+
+        sessionStorage.getItem(
+          STORAGE.studentId
+        )
+
+        ||
+
+        localStorage.getItem(
+          STORAGE.studentId
+        )
+
+        ||
+
+        profile.studentId
+
+        ||
+
+        DEFAULT_STUDENT.id;
+
+
+      const name =
+
+        sessionStorage.getItem(
+          STORAGE.studentName
+        )
+
+        ||
+
+        localStorage.getItem(
+          STORAGE.studentName
+        )
+
+        ||
+
+        profile.name
+
+        ||
+
+        DEFAULT_STUDENT.name;
+
+
+      const course =
+
+        sessionStorage.getItem(
+          STORAGE.studentCourse
+        )
+
+        ||
+
+        localStorage.getItem(
+          STORAGE.studentCourse
+        )
+
+        ||
+
+        profile.course
+
+        ||
+
+        DEFAULT_STUDENT.course;
+
+
+      const batch =
+
+        sessionStorage.getItem(
+          STORAGE.studentBatch
+        )
+
+        ||
+
+        localStorage.getItem(
+          STORAGE.studentBatch
+        )
+
+        ||
+
+        profile.batch
+
+        ||
+
+        DEFAULT_STUDENT.batch;
+
+
+      return {
+
+        id,
+        name,
+        course,
+        batch
+
+      };
+
+    }
+
+
+    /* =====================================
+       UPDATE STUDENT UI
+    ===================================== */
+
+    function updateStudentUI(){
+
+      const student =
+        getStudent();
+
+
+      window.SNKStudent = student;
+
+
+      document.getElementById(
+        "studentName"
+      ).textContent =
+        student.name;
+
+
+      document.getElementById(
+        "studentId"
+      ).textContent =
+        student.id;
+
+
+      document.getElementById(
+        "studentCourse"
+      ).textContent =
+        student.course;
+
+
+      document.getElementById(
+        "studentBatch"
+      ).textContent =
+        student.batch;
+
+
+      document.getElementById(
+        "infoStudentName"
+      ).textContent =
+        student.name;
+
+
+      document.getElementById(
+        "infoStudentId"
+      ).textContent =
+        student.id;
+
+
+      document.getElementById(
+        "infoCourse"
+      ).textContent =
+        student.course;
+
+
+      document.getElementById(
+        "infoBatch"
+      ).textContent =
+        student.batch;
+
+
+      document.getElementById(
+        "submissionStudentName"
+      ).value =
+        student.name;
+
+
+      document.getElementById(
+        "submissionStudentId"
+      ).value =
+        student.id;
+
+
+      const initial =
+        (student.name || "S")
+          .trim()
+          .charAt(0)
+          .toUpperCase();
+
+
+      document.getElementById(
+        "studentAvatar"
+      ).textContent =
+        initial || "S";
+
+    }
+
+
+    /* =====================================
+       SUBMISSIONS
+    ===================================== */
+
+    function getSubmissions(){
+
+      const data =
+        readJSON(
+          STORAGE.submissions
+        );
+
+
+      if(!Array.isArray(data)){
+        return [];
+      }
+
+
+      return data;
+
+    }
+
+
+    function saveSubmissions(data){
+
+      saveJSON(
+        STORAGE.submissions,
+        data
+      );
+
+    }
+
+
+    function getCurrentStudentSubmissions(){
+
+      const student =
+        getStudent();
+
+
+      return getSubmissions()
+        .filter(
+          item =>
+            String(item.studentId) ===
+            String(student.id)
+        );
+
+    }
+
+
+    function findSubmission(
+      assignmentId
+    ){
+
+      const student =
+        getStudent();
+
+
+      return getSubmissions()
+        .find(
+          item =>
+
+            String(item.studentId) ===
+            String(student.id)
+
+            &&
+
+            String(item.assignmentId) ===
+            String(assignmentId)
+        );
+
+    }
+
+
+    /* =====================================
+       ASSIGNMENT STATUS
+    ===================================== */
+
+    function updateAssignmentStatuses(){
+
+      const now =
+        new Date();
+
+
+      let submittedCount =
+        0;
+
+      let pendingCount =
+        0;
+
+      let totalMarks =
+        0;
+
+
+      ASSIGNMENTS.forEach(
+        assignment => {
+
+          totalMarks +=
+            Number(assignment.marks) || 0;
+
+
+          const card =
+            document.querySelector(
+              `[data-assignment-id="${assignment.id}"]`
+            );
+
+
+          const statusElement =
+            document.getElementById(
+              `status-${assignment.id}`
+            );
+
+
+          const countdownElement =
+            document.getElementById(
+              `countdown-${assignment.id}`
+            );
+
+
+          const submitButton =
+            document.querySelector(
+              `[data-submit="${assignment.id}"]`
+            );
+
+
+          const submission =
+            findSubmission(
+              assignment.id
+            );
+
+
+          if(submission){
+
+            submittedCount++;
+
+
+            statusElement.textContent =
+              "Submitted";
+
+
+            statusElement.className =
+              "status submitted";
+
+
+            submitButton.disabled =
+              false;
+
+
+            submitButton.textContent =
+              "View / Resubmit";
+
+
+            const submittedDate =
+              submission.submittedAt
+                ? new Date(
+                    submission.submittedAt
+                  )
+                : null;
+
+
+            countdownElement.textContent =
+              submittedDate
+                ? "Submitted: " +
+                  formatDateTime(
+                    submittedDate
+                  )
+                : "Submitted";
+
+            return;
+
+          }
+
+
+          const deadline =
+            new Date(
+              assignment.deadline
+            );
+
+
+          if(
+            !assignment.available
+          ){
+
+            statusElement.textContent =
+              "Upcoming";
+
+            statusElement.className =
+              "status upcoming";
+
+            submitButton.disabled =
+              true;
+
+            submitButton.textContent =
+              "Not Available Yet";
+
+            countdownElement.textContent =
+              "Available from " +
+              formatDate(
+                assignment.publishDate
+              );
+
+            return;
+
+          }
+
+
+          if(now > deadline){
+
+            statusElement.textContent =
+              "Deadline Passed";
+
+            statusElement.className =
+              "status late";
+
+            submitButton.disabled =
+              false;
+
+            submitButton.textContent =
+              "Submit Late";
+
+            countdownElement.textContent =
+              "Deadline passed";
+
+            pendingCount++;
+
+            return;
+
+          }
+
+
+          statusElement.textContent =
+            "Not Submitted";
+
+          statusElement.className =
+            "status pending";
+
+
+          submitButton.disabled =
+            false;
+
+
+          submitButton.textContent =
+            "Submit Assignment";
+
+
+          countdownElement.textContent =
+            getRemainingTime(
+              deadline
+            );
+
+
+          pendingCount++;
+
+        }
+      );
+
+
+      document.getElementById(
+        "totalAssignments"
+      ).textContent =
+        ASSIGNMENTS.length;
+
+
+      document.getElementById(
+        "pendingAssignments"
+      ).textContent =
+        pendingCount;
+
+
+      document.getElementById(
+        "submittedAssignments"
+      ).textContent =
+        submittedCount;
+
+
+      document.getElementById(
+        "totalMarks"
+      ).textContent =
+        totalMarks;
+
+    }
+
+
+    /* =====================================
+       COUNTDOWN
+    ===================================== */
+
+    function getRemainingTime(
+      deadline
+    ){
+
+      const now =
+        new Date();
+
+
+      const diff =
+        deadline.getTime() -
+        now.getTime();
+
+
+      if(diff <= 0){
+        return "Deadline passed";
+      }
+
+
+      const days =
+        Math.floor(
+          diff /
+          (1000 * 60 * 60 * 24)
+        );
+
+
+      const hours =
+        Math.floor(
+          (
+            diff %
+            (1000 * 60 * 60 * 24)
+          ) /
+          (1000 * 60 * 60)
+        );
+
+
+      const minutes =
+        Math.floor(
+          (
+            diff %
+            (1000 * 60 * 60)
+          ) /
+          (1000 * 60)
+        );
+
+
+      if(days > 0){
+
+        return (
+          days +
+          " day " +
+          hours +
+          " hr remaining"
+        );
+
+      }
+
+
+      return (
+        hours +
+        " hr " +
+        minutes +
+        " min remaining"
+      );
+
+    }
+
+
+    /* =====================================
+       DATE FORMAT
+    ===================================== */
+
+    function formatDate(
+      dateString
+    ){
+
+      const date =
+        new Date(
+          dateString +
+          "T00:00:00"
+        );
+
+
+      return date.toLocaleDateString(
+        "en-GB",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric"
+        }
+      );
+
+    }
+
+
+    function formatDateTime(
+      date
+    ){
+
+      return date.toLocaleDateString(
+        "en-GB",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric"
+        }
+      ) +
+      " " +
+      date.toLocaleTimeString(
+        "en-US",
+        {
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      );
+
+    }
+
+
+    /* =====================================
+       OPEN SUBMISSION MODAL
+    ===================================== */
+
+    function openSubmissionModal(
+      assignmentId
+    ){
+
+      const assignment =
+        ASSIGNMENTS.find(
+          item =>
+            item.id === assignmentId
+        );
+
+
+      if(!assignment){
+        return;
+      }
+
+
+      if(!assignment.available){
+
+        showToast(
+          "এই Assignment এখনো available নয়।"
+        );
+
+        return;
+
+      }
+
+
+      const existing =
+        findSubmission(
+          assignmentId
+        );
+
+
+      document.getElementById(
+        "selectedAssignmentId"
+      ).value =
+        assignment.id;
+
+
+      document.getElementById(
+        "selectedAssignmentName"
+      ).value =
+        assignment.name;
+
+
+      const student =
+        getStudent();
+
+
+      document.getElementById(
+        "submissionStudentName"
+      ).value =
+        student.name;
+
+
+      document.getElementById(
+        "submissionStudentId"
+      ).value =
+        student.id;
+
+
+      document.getElementById(
+        "submissionFile"
+      ).value =
+        existing?.fileName || "";
+
+
+      document.getElementById(
+        "submissionNote"
+      ).value =
+        existing?.note || "";
+
+
+      const modal =
+        document.getElementById(
+          "submissionModal"
+        );
+
+
+      modal.classList.add(
+        "show"
+      );
+
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+
+      document.getElementById(
+        "submissionFile"
+      ).focus();
+
+    }
+
+
+    /* =====================================
+       CLOSE MODAL
+    ===================================== */
+
+    function closeSubmissionModal(){
+
+      const modal =
+        document.getElementById(
+          "submissionModal"
+        );
+
+
+      modal.classList.remove(
+        "show"
+      );
+
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+    }
+
+
+    document.getElementById(
+      "closeModal"
+    ).addEventListener(
+      "click",
+      closeSubmissionModal
+    );
+
+
+    document.getElementById(
+      "cancelSubmission"
+    ).addEventListener(
+      "click",
+      closeSubmissionModal
+    );
+
+
+    document.getElementById(
+      "submissionModal"
+    ).addEventListener(
+      "click",
+      function(event){
+
+        if(
+          event.target ===
+          this
+        ){
+
+          closeSubmissionModal();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       SUBMIT FORM
+    ===================================== */
+
+    document.getElementById(
+      "submissionForm"
+    ).addEventListener(
+      "submit",
+      function(event){
+
+        event.preventDefault();
+
+
+        const student =
+          getStudent();
+
+
+        const assignmentId =
+          document.getElementById(
+            "selectedAssignmentId"
+          ).value;
+
+
+        const assignment =
+          ASSIGNMENTS.find(
+            item =>
+              item.id ===
+              assignmentId
+          );
+
+
+        if(!assignment){
+
+          showToast(
+            "Assignment পাওয়া যায়নি।"
+          );
+
+          return;
+
+        }
+
+
+        const fileName =
+          document.getElementById(
+            "submissionFile"
+          ).value.trim();
+
+
+        const note =
+          document.getElementById(
+            "submissionNote"
+          ).value.trim();
+
+
+        if(!fileName){
+
+          showToast(
+            "Submission file/link লিখুন।"
+          );
+
+          return;
+
+        }
+
+
+        const submissions =
+          getSubmissions();
+
+
+        const existingIndex =
+          submissions.findIndex(
+            item =>
+
+              String(item.studentId) ===
+              String(student.id)
+
+              &&
+
+              String(item.assignmentId) ===
+              String(assignmentId)
+          );
+
+
+        const now =
+          new Date().toISOString();
+
+
+        const deadline =
+          new Date(
+            assignment.deadline
+          );
+
+
+        const isLate =
+          new Date() >
+          deadline;
+
+
+        const submission = {
+
+          id:
+            existingIndex >= 0
+
+              ? submissions[
+                  existingIndex
+                ].id
+
+              : "SUB-" +
+                Date.now(),
+
+          assignmentId:
+            assignment.id,
+
+          assignmentName:
+            assignment.name,
+
+          studentId:
+            student.id,
+
+          studentName:
+            student.name,
+
+          course:
+            student.course,
+
+          batch:
+            student.batch,
+
+          fileName:
+            fileName,
+
+          note:
+            note,
+
+          status:
+            isLate
+              ? "Late Submitted"
+              : "Submitted",
+
+          submittedAt:
+            now,
+
+          updatedAt:
+            now
+
+        };
+
+
+        if(
+          existingIndex >= 0
+        ){
+
+          submissions[
+            existingIndex
+          ] =
+            submission;
+
+        }else{
+
+          submissions.push(
+            submission
+          );
+
+        }
+
+
+        saveSubmissions(
+          submissions
+        );
+
+
+        closeSubmissionModal();
+
+
+        updateAssignmentStatuses();
+
+
+        showToast(
+          isLate
+            ? "Assignment late submission save হয়েছে।"
+            : "Assignment successfully submitted।"
+        );
+
+      }
+    );
+
+
+    /* =====================================
+       SUBMIT BUTTONS
+    ===================================== */
+
+    document.querySelectorAll(
+      "[data-submit]"
+    ).forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          function(){
+
+            const id =
+              this.dataset.submit;
+
+
+            openSubmissionModal(
+              id
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =====================================
+       THEME
+    ===================================== */
+
+    function applyTheme(){
+
+      const theme =
+        localStorage.getItem(
+          STORAGE.theme
+        ) || "dark";
+
+
+      if(theme === "light"){
+
+        document.body.style.background =
+          "linear-gradient(145deg,#f5f8ff,#eef3fa)";
+
+        document.body.style.color =
+          "#101828";
+
+      }else{
+
+        document.body.style.background =
+          "radial-gradient(circle at 15% 8%,rgba(183,255,0,.15),transparent 28%),radial-gradient(circle at 85% 12%,rgba(183,255,0,.14),transparent 27%),linear-gradient(145deg,#050505,#0a0a0a)";
+
+        document.body.style.color =
+          "#f7fbff";
+
+      }
+
+    }
+
+
+    document.getElementById(
+      "themeBtn"
+    ).addEventListener(
+      "click",
+      function(){
+
+        const current =
+          localStorage.getItem(
+            STORAGE.theme
+          ) || "dark";
+
+
+        const next =
+          current === "dark"
+            ? "light"
+            : "dark";
+
+
+        localStorage.setItem(
+          STORAGE.theme,
+          next
+        );
+
+
+        applyTheme();
+
+
+        showToast(
+          next === "dark"
+            ? "Dark theme চালু হয়েছে"
+            : "Light theme চালু হয়েছে"
+        );
+
+      }
+    );
+
+
+    /* =====================================
+       MOBILE MENU
+    ===================================== */
+
+    document.getElementById(
+      "menuBtn"
+    ).addEventListener(
+      "click",
+      function(){
+
+        document
+          .getElementById("navLinks")
+          .classList.toggle("open");
+
+      }
+    );
+
+
+    document.addEventListener(
+      "click",
+      function(event){
+
+        const nav =
+          document.getElementById(
+            "navLinks"
+          );
+
+
+        const menu =
+          document.getElementById(
+            "menuBtn"
+          );
+
+
+        if(
+
+          nav.classList.contains("open")
+
+          &&
+
+          !nav.contains(event.target)
+
+          &&
+
+          !menu.contains(event.target)
+
+        ){
+
+          nav.classList.remove(
+            "open"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       LOGOUT
+    ===================================== */
+
+    document.getElementById(
+      "logoutBtn"
+    ).addEventListener(
+      "click",
+      function(){
+
+        const confirmLogout =
+          confirm(
+            "আপনি কি Student Portal থেকে Logout করতে চান?"
+          );
+
+
+        if(!confirmLogout){
+          return;
+        }
+
+
+        sessionStorage.removeItem(
+          STORAGE.loggedIn
+        );
+
+        sessionStorage.removeItem(
+          STORAGE.studentId
+        );
+
+        sessionStorage.removeItem(
+          STORAGE.studentName
+        );
+
+        sessionStorage.removeItem(
+          STORAGE.studentCourse
+        );
+
+        sessionStorage.removeItem(
+          STORAGE.studentBatch
+        );
+
+
+        localStorage.removeItem(
+          STORAGE.loggedIn
+        );
+
+
+        showToast(
+          "Logout successful"
+        );
+
+
+        setTimeout(
+          function(){
+
+            window.location.href =
+              "login.html";
+
+          },
+          650
+        );
+
+      }
+    );
+
+
+    /* =====================================
+       PRINT
+    ===================================== */
+
+    document.getElementById(
+      "printBtn"
+    ).addEventListener(
+      "click",
+      function(){
+
+        window.print();
+
+      }
+    );
+
+
+    /* =====================================
+       TOAST
+    ===================================== */
+
+    function showToast(
+      message
+    ){
+
+      const container =
+        document.getElementById(
+          "toastContainer"
+        );
+
+
+      const toast =
+        document.createElement(
+          "div"
+        );
+
+
+      toast.className =
+        "toast";
+
+
+      toast.textContent =
+        message;
+
+
+      container.appendChild(
+        toast
+      );
+
+
+      setTimeout(
+        function(){
+
+          toast.style.opacity =
+            "0";
+
+          toast.style.transform =
+            "translateY(10px)";
+
+
+          setTimeout(
+            function(){
+
+              toast.remove();
+
+            },
+            250
+          );
+
+        },
+        2500
+      );
+
+    }
+
+
+    /* =====================================
+       STORAGE SYNC
+    ===================================== */
+
+    window.addEventListener(
+      "storage",
+      function(){
+
+        updateStudentUI();
+
+        updateAssignmentStatuses();
+
+        applyTheme();
+
+      }
+    );
+
+
+    /* =====================================
+       VISIBILITY SYNC
+    ===================================== */
+
+    document.addEventListener(
+      "visibilitychange",
+      function(){
+
+        if(
+          document.visibilityState ===
+          "visible"
+        ){
+
+          updateStudentUI();
+
+          updateAssignmentStatuses();
+
+          applyTheme();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       ESCAPE MODAL
+    ===================================== */
+
+    document.addEventListener(
+      "keydown",
+      function(event){
+
+        if(
+          event.key ===
+          "Escape"
+        ){
+
+          closeSubmissionModal();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================
+       YEAR
+    ===================================== */
+
+    document.getElementById(
+      "year"
+    ).textContent =
+      new Date().getFullYear();
+
+
+    /* =====================================
+       COUNTDOWN REFRESH
+    ===================================== */
+
+    setInterval(
+      function(){
+
+        updateAssignmentStatuses();
+
+      },
+      30000
+    );
+
+
+    /* =====================================
+       INITIALIZE
+    ===================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function(){
+
+        protectPage();
+
+        updateStudentUI();
+
+        updateAssignmentStatuses();
+
+        applyTheme();
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
+```

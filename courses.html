@@ -1,0 +1,3364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Course | SNK AI Academy</title>
+
+  <meta
+    name="description"
+    content="SNK AI Academy Student Portal — AI-Powered UI/UX Design Course"
+  >
+
+  <meta name="theme-color" content="#06120b">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <style>
+    /* =========================================================
+       SNK AI ACADEMY
+       GREEN PREMIUM COURSE PAGE
+       ========================================================= */
+
+    :root {
+      --green-950: #06120b;
+      --green-900: #071a0e;
+      --green-850: #092413;
+      --green-800: #0b3018;
+      --green-700: #15803d;
+      --green-600: #16a34a;
+      --green-500: #22c55e;
+      --green-400: #4ade80;
+      --green-300: #86efac;
+
+      --emerald: #10b981;
+      --lime: #a3e635;
+
+      --white: #f0fdf4;
+      --text: #dcfce7;
+      --muted: #94a3b8;
+
+      --border: rgba(134, 239, 172, .12);
+      --border-strong: rgba(74, 222, 128, .25);
+
+      --glass: rgba(7, 26, 14, .72);
+      --glass-light: rgba(255,255,255,.045);
+
+      --shadow:
+        0 20px 60px rgba(0,0,0,.35);
+
+      --radius: 22px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 10% 0%,
+          rgba(34,197,94,.12),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(16,185,129,.10),
+          transparent 25%
+        ),
+        var(--green-950);
+
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        );
+
+      background-size: 45px 45px;
+      mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 80%
+      );
+
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* =========================================================
+       NAVBAR
+       ========================================================= */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      height: 76px;
+
+      display: flex;
+      align-items: center;
+
+      border-bottom: 1px solid var(--border);
+
+      background:
+        rgba(6,18,11,.82);
+
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .nav-inner {
+      width: min(1240px, calc(100% - 36px));
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      min-width: max-content;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--green-500),
+          var(--emerald)
+        );
+
+      color: #031008;
+
+      font-weight: 950;
+      font-size: 15px;
+
+      box-shadow:
+        0 8px 28px rgba(34,197,94,.25);
+    }
+
+    .brand-text strong {
+      display: block;
+
+      color: var(--white);
+
+      font-size: 14px;
+      line-height: 1.1;
+      font-weight: 850;
+    }
+
+    .brand-text span {
+      display: block;
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      padding: 10px 12px;
+
+      border-radius: 12px;
+
+      color: #a7c5b1;
+
+      font-size: 13px;
+      font-weight: 650;
+
+      transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(74,222,128,.08);
+      color: var(--green-300);
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.active {
+      background:
+        rgba(34,197,94,.12);
+
+      color: var(--green-300);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-icon {
+      width: 40px;
+      height: 40px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border);
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.035);
+
+      color: var(--text);
+
+      cursor: pointer;
+
+      transition: .2s ease;
+    }
+
+    .nav-icon:hover {
+      border-color: var(--border-strong);
+      background: rgba(34,197,94,.08);
+      transform: translateY(-2px);
+    }
+
+    .menu-btn {
+      display: none;
+    }
+
+    /* =========================================================
+       CONTAINER
+       ========================================================= */
+
+    .container {
+      width: min(1180px, calc(100% - 36px));
+      margin: auto;
+    }
+
+    /* =========================================================
+       PAGE HEADER
+       ========================================================= */
+
+    .page-header {
+      padding: 52px 0 26px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 20px;
+
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--green-300);
+    }
+
+    .breadcrumb .current {
+      color: var(--green-300);
+    }
+
+    .page-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-bottom: 12px;
+
+      color: var(--green-300);
+
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--green-400);
+
+      box-shadow:
+        0 0 0 5px rgba(74,222,128,.08);
+    }
+
+    h1 {
+      color: var(--white);
+
+      font-size: clamp(30px, 5vw, 48px);
+
+      line-height: 1.05;
+      letter-spacing: -.045em;
+      font-weight: 900;
+    }
+
+    .page-subtitle {
+      max-width: 650px;
+
+      margin-top: 12px;
+
+      color: var(--muted);
+
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       COURSE HERO
+       ========================================================= */
+
+    .course-hero {
+      position: relative;
+
+      overflow: hidden;
+
+      display: grid;
+      grid-template-columns: 1.35fr .65fr;
+
+      gap: 28px;
+
+      padding: 34px;
+
+      border: 1px solid var(--border-strong);
+      border-radius: 28px;
+
+      background:
+        radial-gradient(
+          circle at 0% 100%,
+          rgba(34,197,94,.13),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(21,128,61,.15),
+          rgba(7,26,14,.78)
+        );
+
+      box-shadow: var(--shadow);
+    }
+
+    .course-hero::after {
+      content: "";
+
+      position: absolute;
+
+      width: 280px;
+      height: 280px;
+
+      right: -120px;
+      top: -130px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(74,222,128,.14),
+          transparent 68%
+        );
+
+      pointer-events: none;
+    }
+
+    .course-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      margin-bottom: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+
+      padding: 7px 10px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.035);
+
+      color: #b9d9c3;
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .badge.green {
+      color: var(--green-300);
+
+      background:
+        rgba(34,197,94,.10);
+
+      border-color:
+        rgba(74,222,128,.18);
+    }
+
+    .course-title {
+      max-width: 720px;
+
+      color: var(--white);
+
+      font-size: clamp(28px, 4vw, 44px);
+
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      font-weight: 900;
+    }
+
+    .course-description {
+      max-width: 650px;
+
+      margin-top: 15px;
+
+      color: #9db7a6;
+
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .course-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      margin-top: 24px;
+    }
+
+    .meta-item {
+      min-width: 120px;
+
+      padding: 12px 14px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 15px;
+
+      background: rgba(255,255,255,.025);
+    }
+
+    .meta-item small {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .meta-item strong {
+      color: var(--text);
+
+      font-size: 13px;
+    }
+
+    /* =========================================================
+       PROGRESS BOX
+       ========================================================= */
+
+    .hero-progress {
+      position: relative;
+      z-index: 2;
+
+      align-self: center;
+
+      padding: 24px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 22px;
+
+      background:
+        rgba(3,16,8,.38);
+
+      backdrop-filter: blur(12px);
+    }
+
+    .progress-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 15px;
+    }
+
+    .progress-heading span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .progress-heading strong {
+      color: var(--green-300);
+      font-size: 22px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+
+      overflow: hidden;
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.07);
+    }
+
+    .progress-fill {
+      width: 72%;
+      height: 100%;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--green-600),
+          var(--green-400),
+          var(--lime)
+        );
+
+      box-shadow:
+        0 0 20px rgba(74,222,128,.25);
+
+      transition: width 1s ease;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+
+      margin-top: 10px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .continue-btn {
+      width: 100%;
+
+      margin-top: 20px;
+
+      padding: 13px 16px;
+
+      border: 0;
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--green-500),
+          var(--emerald)
+        );
+
+      color: #031008;
+
+      font-weight: 850;
+      font-size: 13px;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 12px 28px rgba(34,197,94,.18);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .continue-btn:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 16px 34px rgba(34,197,94,.28);
+    }
+
+    /* =========================================================
+       STATS
+       ========================================================= */
+
+    .stats-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 14px;
+
+      margin: 18px 0 34px;
+    }
+
+    .stat-card {
+      padding: 19px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 19px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.045),
+          rgba(255,255,255,.018)
+        );
+
+      transition: .25s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+
+      border-color:
+        rgba(74,222,128,.20);
+
+      background:
+        rgba(34,197,94,.045);
+    }
+
+    .stat-icon {
+      width: 38px;
+      height: 38px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 13px;
+
+      border-radius: 12px;
+
+      background:
+        rgba(34,197,94,.09);
+
+      color: var(--green-300);
+
+      font-size: 17px;
+    }
+
+    .stat-card strong {
+      display: block;
+
+      color: var(--white);
+
+      font-size: 22px;
+      font-weight: 850;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       MAIN LAYOUT
+       ========================================================= */
+
+    .content-layout {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        340px;
+
+      gap: 22px;
+
+      padding-bottom: 60px;
+    }
+
+    .section-card {
+      border: 1px solid var(--border);
+
+      border-radius: 22px;
+
+      background:
+        rgba(255,255,255,.025);
+
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+
+      padding: 21px 22px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header h2 {
+      color: var(--white);
+
+      font-size: 17px;
+      font-weight: 850;
+    }
+
+    .section-header p {
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .section-count {
+      padding: 7px 10px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(34,197,94,.08);
+
+      color: var(--green-300);
+
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       MODULES
+       ========================================================= */
+
+    .module {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .module:last-child {
+      border-bottom: 0;
+    }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      padding: 17px 20px;
+
+      cursor: pointer;
+
+      transition: background .2s ease;
+    }
+
+    .module-header:hover {
+      background:
+        rgba(34,197,94,.035);
+    }
+
+    .module-number {
+      flex: 0 0 auto;
+
+      width: 39px;
+      height: 39px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 12px;
+
+      background:
+        rgba(34,197,94,.08);
+
+      color: var(--green-300);
+
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .module-title {
+      flex: 1;
+    }
+
+    .module-title strong {
+      display: block;
+
+      color: var(--text);
+
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .module-title span {
+      display: block;
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .module-chevron {
+      color: var(--muted);
+
+      font-size: 15px;
+
+      transition: transform .25s ease;
+    }
+
+    .module.open .module-chevron {
+      transform: rotate(180deg);
+    }
+
+    .lessons {
+      display: none;
+
+      padding:
+        0 20px
+        17px
+        20px;
+    }
+
+    .module.open .lessons {
+      display: block;
+      animation: reveal .25s ease;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .lesson {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      padding: 12px;
+
+      border: 1px solid transparent;
+
+      border-radius: 13px;
+
+      transition: .2s ease;
+    }
+
+    .lesson:hover {
+      border-color: var(--border);
+
+      background:
+        rgba(255,255,255,.025);
+    }
+
+    .lesson-icon {
+      width: 32px;
+      height: 32px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.045);
+
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .lesson.done .lesson-icon {
+      background:
+        rgba(34,197,94,.12);
+
+      color: var(--green-300);
+    }
+
+    .lesson.current .lesson-icon {
+      background:
+        rgba(163,230,53,.12);
+
+      color: var(--lime);
+    }
+
+    .lesson-info {
+      flex: 1;
+    }
+
+    .lesson-info strong {
+      display: block;
+
+      color: #c8ded0;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .lesson-info span {
+      display: block;
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .lesson-status {
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .lesson.done .lesson-status {
+      color: var(--green-400);
+    }
+
+    .lesson.current .lesson-status {
+      color: var(--lime);
+    }
+
+    .lesson.upcoming .lesson-status {
+      color: var(--muted);
+    }
+
+    /* =========================================================
+       SIDEBAR
+       ========================================================= */
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .side-card {
+      padding: 20px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 21px;
+
+      background:
+        rgba(255,255,255,.025);
+    }
+
+    .side-card h3 {
+      color: var(--white);
+
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .side-card-sub {
+      margin-top: 5px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    /* Next class */
+
+    .next-class {
+      margin-top: 17px;
+
+      padding: 16px;
+
+      border: 1px solid rgba(74,222,128,.12);
+
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(34,197,94,.08),
+          rgba(255,255,255,.015)
+        );
+    }
+
+    .next-class-label {
+      color: var(--green-300);
+
+      font-size: 9px;
+      font-weight: 850;
+
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .next-class h4 {
+      margin-top: 8px;
+
+      color: var(--white);
+
+      font-size: 14px;
+    }
+
+    .next-class p {
+      margin-top: 5px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .next-class-time {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      margin-top: 13px;
+
+      color: var(--green-300);
+
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    /* Course info */
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+
+      margin-top: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+
+      padding: 11px 0;
+
+      border-bottom: 1px solid var(--border);
+
+      font-size: 11px;
+    }
+
+    .info-row:last-child {
+      border-bottom: 0;
+    }
+
+    .info-row span:first-child {
+      color: var(--muted);
+    }
+
+    .info-row span:last-child {
+      color: var(--text);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Completion */
+
+    .completion {
+      margin-top: 17px;
+
+      padding: 15px;
+
+      border-radius: 15px;
+
+      background:
+        rgba(34,197,94,.06);
+
+      border: 1px solid rgba(74,222,128,.10);
+    }
+
+    .completion-top {
+      display: flex;
+      justify-content: space-between;
+
+      margin-bottom: 8px;
+    }
+
+    .completion-top span {
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    .completion-top strong {
+      color: var(--green-300);
+
+      font-size: 11px;
+    }
+
+    .mini-track {
+      height: 6px;
+
+      overflow: hidden;
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.07);
+    }
+
+    .mini-fill {
+      width: 72%;
+      height: 100%;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--green-600),
+          var(--green-400)
+        );
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      border-top: 1px solid var(--border);
+
+      padding: 30px 0 40px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 36px));
+      margin: auto;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      color: var(--green-300);
+
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       LOGIN MODAL
+       ========================================================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+
+      z-index: 5000;
+
+      display: none;
+      place-items: center;
+
+      padding: 20px;
+
+      background:
+        rgba(0,0,0,.72);
+
+      backdrop-filter: blur(10px);
+    }
+
+    .modal.show {
+      display: grid;
+    }
+
+    .modal-card {
+      width: min(420px, 100%);
+
+      padding: 30px;
+
+      border: 1px solid var(--border-strong);
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #0a2413,
+          #06120b
+        );
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.55);
+
+      text-align: center;
+    }
+
+    .modal-icon {
+      width: 58px;
+      height: 58px;
+
+      display: grid;
+      place-items: center;
+
+      margin: 0 auto 17px;
+
+      border-radius: 18px;
+
+      background:
+        rgba(34,197,94,.10);
+
+      color: var(--green-300);
+
+      font-size: 23px;
+    }
+
+    .modal-card h2 {
+      color: var(--white);
+
+      font-size: 23px;
+    }
+
+    .modal-card p {
+      margin-top: 9px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .modal-btn {
+      display: block;
+
+      width: 100%;
+
+      margin-top: 21px;
+
+      padding: 13px;
+
+      border: 0;
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--green-500),
+          var(--emerald)
+        );
+
+      color: #031008;
+
+      font-weight: 850;
+
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       TOAST
+       ========================================================= */
+
+    .toast {
+      position: fixed;
+
+      left: 50%;
+      bottom: 25px;
+
+      z-index: 6000;
+
+      transform:
+        translate(-50%, 20px);
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      padding: 12px 17px;
+
+      border: 1px solid var(--border-strong);
+
+      border-radius: 999px;
+
+      background:
+        rgba(7,26,14,.92);
+
+      color: var(--green-300);
+
+      font-size: 12px;
+      font-weight: 750;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+
+      transition: .3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+
+      transform:
+        translate(-50%, 0);
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 1050px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .menu-btn {
+        display: grid;
+      }
+
+      .nav-links.mobile-open {
+        position: absolute;
+
+        left: 18px;
+        right: 18px;
+        top: 68px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        padding: 10px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 18px;
+
+        background:
+          rgba(6,18,11,.96);
+
+        backdrop-filter: blur(20px);
+
+        box-shadow:
+          0 25px 70px rgba(0,0,0,.45);
+      }
+
+      .nav-links.mobile-open a {
+        padding: 13px 14px;
+      }
+
+      .course-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .content-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+
+      .navbar {
+        height: 68px;
+      }
+
+      .nav-inner {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .container {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .brand-text span {
+        display: none;
+      }
+
+      .brand-logo {
+        width: 38px;
+        height: 38px;
+      }
+
+      .page-header {
+        padding-top: 35px;
+      }
+
+      .page-title-row {
+        align-items: flex-start;
+      }
+
+      .course-hero {
+        padding: 22px;
+
+        border-radius: 22px;
+      }
+
+      .course-title {
+        font-size: 30px;
+      }
+
+      .course-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .meta-item {
+        min-width: 0;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 470px) {
+
+      .course-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-progress {
+        padding: 19px;
+      }
+
+      .section-header {
+        padding: 18px;
+      }
+
+      .module-header {
+        padding: 15px;
+      }
+
+      .lessons {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .lesson {
+        padding: 10px 6px;
+      }
+
+      .lesson-status {
+        display: none;
+      }
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <!-- =======================================================
+       NAVBAR
+       ======================================================= -->
+
+  <header class="navbar">
+
+    <div class="nav-inner">
+
+      <a href="index.html" class="brand">
+
+        <div class="brand-logo">
+          SNK
+        </div>
+
+        <div class="brand-text">
+          <strong>SNK AI Academy</strong>
+          <span>Student Portal</span>
+        </div>
+
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="courses.html" class="active">
+          My Course
+        </a>
+
+        <a href="assignments.html">
+          Assignment
+        </a>
+
+        <a href="quiz.html">
+          Quiz
+        </a>
+
+        <a href="results.html">
+          Result
+        </a>
+
+        <a href="student-attendance.html">
+          Attendance
+        </a>
+
+        <a href="student-resources.html">
+          Resources
+        </a>
+
+      </nav>
+
+      <div class="nav-actions">
+
+        <button
+          class="nav-icon"
+          onclick="showToast('Theme is already set to Green Premium')"
+          aria-label="Theme"
+        >
+          ◐
+        </button>
+
+        <button
+          class="nav-icon"
+          onclick="showToast('Language: English')"
+          aria-label="Language"
+        >
+          EN
+        </button>
+
+        <button
+          class="nav-icon menu-btn"
+          id="menuBtn"
+          onclick="toggleMenu()"
+          aria-label="Menu"
+        >
+          ☰
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       MAIN
+       ======================================================= -->
+
+  <main>
+
+    <div class="container">
+
+      <!-- PAGE HEADER -->
+
+      <section class="page-header">
+
+        <div class="breadcrumb">
+
+          <a href="index.html">Home</a>
+
+          <span>›</span>
+
+          <a href="student-dashboard.html">
+            Dashboard
+          </a>
+
+          <span>›</span>
+
+          <span class="current">
+            My Course
+          </span>
+
+        </div>
+
+        <div class="page-title-row">
+
+          <div>
+
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Your Learning Space
+            </div>
+
+            <h1>
+              My Course
+            </h1>
+
+            <p class="page-subtitle">
+              Continue your learning journey, track your progress,
+              explore modules and stay on top of your upcoming classes.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           COURSE HERO
+           ===================================================== -->
+
+      <section class="course-hero">
+
+        <div>
+
+          <div class="course-badge-row">
+
+            <span class="badge green">
+              ● ACTIVE COURSE
+            </span>
+
+            <span class="badge">
+              Batch 01
+            </span>
+
+            <span class="badge">
+              Offline • Moulvibazar
+            </span>
+
+          </div>
+
+          <h2 class="course-title">
+            AI-Powered UI/UX Design
+          </h2>
+
+          <p class="course-description">
+            Build practical UI/UX skills through a structured
+            3-month learning journey covering design thinking,
+            user research, wireframing, Figma, visual design,
+            prototyping and AI-powered design workflows.
+          </p>
+
+          <div class="course-meta">
+
+            <div class="meta-item">
+              <small>Duration</small>
+              <strong>3 Months</strong>
+            </div>
+
+            <div class="meta-item">
+              <small>Total Classes</small>
+              <strong>36 Classes</strong>
+            </div>
+
+            <div class="meta-item">
+              <small>Class Time</small>
+              <strong>4:00–6:00 PM</strong>
+            </div>
+
+            <div class="meta-item">
+              <small>Mode</small>
+              <strong>Offline</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="hero-progress">
+
+          <div class="progress-heading">
+
+            <span>
+              Course Progress
+            </span>
+
+            <strong id="progressPercent">
+              72%
+            </strong>
+
+          </div>
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              id="progressFill"
+            ></div>
+
+          </div>
+
+          <div class="progress-info">
+
+            <span id="completedClasses">
+              26 of 36 classes completed
+            </span>
+
+            <span>
+              Keep going!
+            </span>
+
+          </div>
+
+          <button
+            class="continue-btn"
+            onclick="continueLearning()"
+          >
+            ▶ Continue Learning
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           STATS
+           ===================================================== -->
+
+      <section class="stats-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            ✓
+          </div>
+
+          <strong id="statCompleted">
+            26
+          </strong>
+
+          <span>
+            Classes Completed
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            ◷
+          </div>
+
+          <strong>
+            10
+          </strong>
+
+          <span>
+            Classes Remaining
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            ◉
+          </div>
+
+          <strong>
+            92%
+          </strong>
+
+          <span>
+            Attendance
+          </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-icon">
+            ★
+          </div>
+
+          <strong>
+            8.7
+          </strong>
+
+          <span>
+            Average Score
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           CONTENT
+           ===================================================== -->
+
+      <div class="content-layout">
+
+
+        <!-- ===================================================
+             MODULE LIST
+             =================================================== -->
+
+        <section class="section-card">
+
+          <div class="section-header">
+
+            <div>
+
+              <h2>
+                Course Curriculum
+              </h2>
+
+              <p>
+                Explore all modules and lessons
+              </p>
+
+            </div>
+
+            <span class="section-count">
+              36 Classes
+            </span>
+
+          </div>
+
+
+          <!-- MODULE 01 -->
+
+          <div class="module open">
+
+            <div
+              class="module-header"
+              onclick="toggleModule(this)"
+            >
+
+              <div class="module-number">
+                01
+              </div>
+
+              <div class="module-title">
+
+                <strong>
+                  UI/UX Fundamentals
+                </strong>
+
+                <span>
+                  Classes 01–06 • Foundation
+                </span>
+
+              </div>
+
+              <div class="module-chevron">
+               ⌄
+              </div>
+
+            </div>
+
+            <div class="lessons">
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Introduction to UI/UX
+                  </strong>
+
+                  <span>
+                    Class 01 • Completed
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Design Thinking
+                  </strong>
+
+                  <span>
+                    Class 02 • Completed
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    User-Centered Design
+                  </strong>
+
+                  <span>
+                    Class 03 • Completed
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    User Research
+                  </strong>
+
+                  <span>
+                    Class 04 • Completed
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Personas & User Journey
+                  </strong>
+
+                  <span>
+                    Class 05 • Completed
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    UX Case Study Basics
+                  </strong>
+
+                  <span>
+                    Class 06 • Completed
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- MODULE 02 -->
+
+          <div class="module">
+
+            <div
+              class="module-header"
+              onclick="toggleModule(this)"
+            >
+
+              <div class="module-number">
+                02
+              </div>
+
+              <div class="module-title">
+
+                <strong>
+                  Wireframing & Information Architecture
+                </strong>
+
+                <span>
+                  Classes 07–12 • UX Structure
+                </span>
+
+              </div>
+
+              <div class="module-chevron">
+                ⌄
+              </div>
+
+            </div>
+
+            <div class="lessons">
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Information Architecture
+                  </strong>
+
+                  <span>
+                    Class 07
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    User Flow
+                  </strong>
+
+                  <span>
+                    Class 08
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Low-Fidelity Wireframes
+                  </strong>
+
+                  <span>
+                    Class 09
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Mobile Wireframing
+                  </strong>
+
+                  <span>
+                    Class 10
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Web Wireframing
+                  </strong>
+
+                  <span>
+                    Class 11
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+
+                  <strong>
+                    Wireframe Review
+                  </strong>
+
+                  <span>
+                    Class 12
+                  </span>
+
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- MODULE 03 -->
+
+          <div class="module">
+
+            <div
+              class="module-header"
+              onclick="toggleModule(this)"
+            >
+
+              <div class="module-number">
+                03
+              </div>
+
+              <div class="module-title">
+
+                <strong>
+                  Figma & Interface Design
+                </strong>
+
+                <span>
+                  Classes 13–18 • UI Design
+                </span>
+
+              </div>
+
+              <div class="module-chevron">
+                ⌄
+              </div>
+
+            </div>
+
+            <div class="lessons">
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Figma Workspace
+                  </strong>
+
+                  <span>
+                    Class 13
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Components & Auto Layout
+                  </strong>
+
+                  <span>
+                    Class 14
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Typography
+                  </strong>
+
+                  <span>
+                    Class 15
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Color Systems
+                  </strong>
+
+                  <span>
+                    Class 16
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Design Systems
+                  </strong>
+
+                  <span>
+                    Class 17
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">✓</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Responsive UI
+                  </strong>
+
+                  <span>
+                    Class 18
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- MODULE 04 -->
+
+          <div class="module open">
+
+            <div
+              class="module-header"
+              onclick="toggleModule(this)"
+            >
+
+              <div class="module-number">
+                04
+              </div>
+
+              <div class="module-title">
+
+                <strong>
+                  Prototyping & Interaction
+                </strong>
+
+                <span>
+                  Classes 19–24 • Interaction Design
+                </span>
+
+              </div>
+
+              <div class="module-chevron">
+                ⌄
+              </div>
+
+            </div>
+
+            <div class="lessons">
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Prototype Basics
+                  </strong>
+
+                  <span>
+                    Class 19
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Micro Interactions
+                  </strong>
+
+                  <span>
+                    Class 20
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson done">
+
+                <div class="lesson-icon">
+                  ✓
+                </div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Interactive Prototype
+                  </strong>
+
+                  <span>
+                    Class 21
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Done
+                </div>
+
+              </div>
+
+
+              <div class="lesson current">
+
+                <div class="lesson-icon">
+                  ▶
+                </div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Usability Testing
+                  </strong>
+
+                  <span>
+                    Class 22 • Current
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Current
+                </div>
+
+              </div>
+
+
+              <div class="lesson upcoming">
+
+                <div class="lesson-icon">
+                  ○
+                </div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Design Iteration
+                  </strong>
+
+                  <span>
+                    Class 23 • Upcoming
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+
+              </div>
+
+
+              <div class="lesson upcoming">
+
+                <div class="lesson-icon">
+                  ○
+                </div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Prototype Presentation
+                  </strong>
+
+                  <span>
+                    Class 24 • Upcoming
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- MODULE 05 -->
+
+          <div class="module">
+
+            <div
+              class="module-header"
+              onclick="toggleModule(this)"
+            >
+
+              <div class="module-number">
+                05
+              </div>
+
+              <div class="module-title">
+
+                <strong>
+                  AI-Powered Design Workflow
+                </strong>
+
+                <span>
+                  Classes 25–30 • AI + UX
+                </span>
+
+              </div>
+
+              <div class="module-chevron">
+                ⌄
+              </div>
+
+            </div>
+
+            <div class="lessons">
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    AI for UX Research
+                  </strong>
+
+                  <span>
+                    Class 25
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    AI Design Prompts
+                  </strong>
+
+                  <span>
+                    Class 26
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    AI-Assisted Wireframing
+                  </strong>
+
+                  <span>
+                    Class 27
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    AI Visual Exploration
+                  </strong>
+
+                  <span>
+                    Class 28
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    AI + Figma Workflow
+                  </strong>
+
+                  <span>
+                    Class 29
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    AI Design Project
+                  </strong>
+
+                  <span>
+                    Class 30
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- MODULE 06 -->
+
+          <div class="module">
+
+            <div
+              class="module-header"
+              onclick="toggleModule(this)"
+            >
+
+              <div class="module-number">
+                06
+              </div>
+
+              <div class="module-title">
+
+                <strong>
+                  Portfolio & Final Project
+                </strong>
+
+                <span>
+                  Classes 31–36 • Career Ready
+                </span>
+
+              </div>
+
+              <div class="module-chevron">
+                ⌄
+              </div>
+
+            </div>
+
+            <div class="lessons">
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Case Study Structure
+                  </strong>
+
+                  <span>
+                    Class 31
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Portfolio Design
+                  </strong>
+
+                  <span>
+                    Class 32
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Real Client Project
+                  </strong>
+
+                  <span>
+                    Class 33
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Portfolio Review
+                  </strong>
+
+                  <span>
+                    Class 34
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Final Presentation
+                  </strong>
+
+                  <span>
+                    Class 35
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+
+              <div class="lesson upcoming">
+                <div class="lesson-icon">○</div>
+
+                <div class="lesson-info">
+                  <strong>
+                    Final Assessment
+                  </strong>
+
+                  <span>
+                    Class 36
+                  </span>
+                </div>
+
+                <div class="lesson-status">
+                  Upcoming
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================
+             SIDEBAR
+             =================================================== -->
+
+        <aside class="sidebar">
+
+
+          <!-- NEXT CLASS -->
+
+          <div class="side-card">
+
+            <h3>
+              Next Class
+            </h3>
+
+            <p class="side-card-sub">
+              Your upcoming learning session
+            </p>
+
+            <div class="next-class">
+
+              <div class="next-class-label">
+                Up Next
+              </div>
+
+              <h4>
+                Usability Testing
+              </h4>
+
+              <p>
+                Learn how to test your designs,
+                collect feedback and improve the
+                user experience.
+              </p>
+
+              <div class="next-class-time">
+                ◷
+                Class 22 • 4:00 PM
+              </div>
+
+            </div>
+
+            <button
+              class="continue-btn"
+              onclick="continueLearning()"
+            >
+              Open Class
+            </button>
+
+          </div>
+
+
+          <!-- COURSE INFORMATION -->
+
+          <div class="side-card">
+
+            <h3>
+              Course Information
+            </h3>
+
+            <p class="side-card-sub">
+              Your current enrollment details
+            </p>
+
+            <div class="info-list">
+
+              <div class="info-row">
+                <span>Course</span>
+                <span>AI-Powered UI/UX</span>
+              </div>
+
+              <div class="info-row">
+                <span>Batch</span>
+                <span>Batch 01</span>
+              </div>
+
+              <div class="info-row">
+                <span>Duration</span>
+                <span>3 Months</span>
+              </div>
+
+              <div class="info-row">
+                <span>Classes</span>
+                <span>36</span>
+              </div>
+
+              <div class="info-row">
+                <span>Schedule</span>
+                <span>4–6 PM</span>
+              </div>
+
+              <div class="info-row">
+                <span>Mode</span>
+                <span>Offline</span>
+              </div>
+
+              <div class="info-row">
+                <span>Location</span>
+                <span>Moulvibazar</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- COMPLETION -->
+
+          <div class="side-card">
+
+            <h3>
+              Completion
+            </h3>
+
+            <p class="side-card-sub">
+              Your overall course completion
+            </p>
+
+            <div class="completion">
+
+              <div class="completion-top">
+
+                <span>
+                  Overall Progress
+                </span>
+
+                <strong id="sideProgress">
+                  72%
+                </strong>
+
+              </div>
+
+              <div class="mini-track">
+
+                <div
+                  class="mini-fill"
+                  id="miniFill"
+                ></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
+  <footer>
+
+    <div class="footer-inner">
+
+      <div>
+        © 2026
+        <span class="footer-brand">
+          SNK AI Academy
+        </span>
+        — Student Portal
+      </div>
+
+      <div>
+        Learn • Practice • Grow
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =======================================================
+       LOGIN MODAL
+       ======================================================= -->
+
+  <div
+    class="modal"
+    id="loginModal"
+  >
+
+    <div class="modal-card">
+
+      <div class="modal-icon">
+        🔐
+      </div>
+
+      <h2>
+        Login Required
+      </h2>
+
+      <p>
+        Please login to access your course
+        and continue your learning journey.
+      </p>
+
+      <button
+        class="modal-btn"
+        onclick="goLogin()"
+      >
+        Go to Login
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =======================================================
+       TOAST
+       ======================================================= -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+       ======================================================= -->
+
+  <script>
+
+    /* =======================================================
+       LOGIN PROTECTION
+       ======================================================= */
+
+    const isLoggedIn =
+      localStorage.getItem("snkStudentLoggedIn") === "true" ||
+      sessionStorage.getItem("snkStudentLoggedIn") === "true";
+
+    const REQUIRE_LOGIN = true;
+
+    if (!isLoggedIn && REQUIRE_LOGIN) {
+
+      document
+        .getElementById("loginModal")
+        .classList
+        .add("show");
+
+      document.body.style.overflow = "hidden";
+    }
+
+
+    /* =======================================================
+       STUDENT DATA
+       ======================================================= */
+
+    const studentName =
+      localStorage.getItem("snkStudentName") ||
+      "Student";
+
+    const studentId =
+      localStorage.getItem("snkStudentId") ||
+      "SNK-0001";
+
+    const studentCourse =
+      localStorage.getItem("snkStudentCourse") ||
+      "AI-Powered UI/UX Design";
+
+
+    /* =======================================================
+       PROGRESS
+       ======================================================= */
+
+    let storedProgress =
+      localStorage.getItem("snkCourseProgress");
+
+    let progress =
+      storedProgress !== null
+        ? parseInt(storedProgress, 10)
+        : 72;
+
+    if (
+      Number.isNaN(progress) ||
+      progress < 0 ||
+      progress > 100
+    ) {
+      progress = 72;
+    }
+
+
+    const completed =
+      Math.round((progress / 100) * 36);
+
+    const remaining =
+      36 - completed;
+
+
+    document
+      .getElementById("progressPercent")
+      .textContent =
+      progress + "%";
+
+
+    document
+      .getElementById("progressFill")
+      .style.width =
+      progress + "%";
+
+
+    document
+      .getElementById("miniFill")
+      .style.width =
+      progress + "%";
+
+
+    document
+      .getElementById("sideProgress")
+      .textContent =
+      progress + "%";
+
+
+    document
+      .getElementById("statCompleted")
+      .textContent =
+      completed;
+
+
+    document
+      .getElementById("completedClasses")
+      .textContent =
+      completed +
+      " of 36 classes completed";
+
+
+    /* =======================================================
+       MOBILE MENU
+       ======================================================= */
+
+    function toggleMenu() {
+
+      const nav =
+        document.getElementById("navLinks");
+
+      nav.classList.toggle("mobile-open");
+
+    }
+
+
+    /* =======================================================
+       MODULE ACCORDION
+       ======================================================= */
+
+    function toggleModule(header) {
+
+      const module =
+        header.parentElement;
+
+      module.classList.toggle("open");
+
+    }
+
+
+    /* =======================================================
+       CONTINUE LEARNING
+       ======================================================= */
+
+    function continueLearning() {
+
+      showToast(
+        "Opening your current class..."
+      );
+
+      setTimeout(() => {
+
+        window.location.href =
+          "student-class.html";
+
+      }, 700);
+
+    }
+
+
+    /* =======================================================
+       LOGIN
+       ======================================================= */
+
+    function goLogin() {
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    /* =======================================================
+       TOAST
+       ======================================================= */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById("toast");
+
+      toast.textContent =
+        message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer =
+        setTimeout(() => {
+
+          toast.classList.remove("show");
+
+        }, 2600);
+
+    }
+
+
+    /* =======================================================
+       CLOSE MOBILE MENU AFTER CLICK
+       ======================================================= */
+
+    document
+      .querySelectorAll(".nav-links a")
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          () => {
+
+            document
+              .getElementById("navLinks")
+              .classList
+              .remove("mobile-open");
+
+          }
+        );
+
+      });
+
+
+    /* =======================================================
+       ESC KEY
+       ======================================================= */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (event.key === "Escape") {
+
+          document
+            .getElementById("navLinks")
+            .classList
+            .remove("mobile-open");
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
