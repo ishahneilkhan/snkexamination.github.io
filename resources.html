@@ -1,0 +1,2819 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Resources Management</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#f4f6fa;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --soft:#f1ffdd;
+
+    --success:#16a34a;
+    --success-soft:#dcfce7;
+
+    --warning:#d97706;
+    --warning-soft:#fef3c7;
+
+    --danger:#dc2626;
+    --danger-soft:#fee2e2;
+
+    --purple:#7c3aed;
+    --purple-soft:#f5f3ff;
+
+    --sidebar:#111827;
+
+    --shadow:0 10px 30px rgba(15,23,42,.07);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --soft:#172554;
+
+    --sidebar:#020617;
+
+    --purple-soft:#2e1065;
+
+    --shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:.25s;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+    width:255px;
+    min-width:255px;
+    background:var(--sidebar);
+    color:#fff;
+    min-height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+    transition:.25s;
+}
+
+.sidebar-logo{
+    height:76px;
+    padding:13px 17px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-logo-badge{
+    width:45px;
+    height:45px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#b7ff00;
+    color:#050505;
+    font-weight:900;
+    font-size:14px;
+    flex-shrink:0;
+}
+
+.sidebar-logo-text{
+    font-size:15px;
+    font-weight:800;
+}
+
+.sidebar-logo-text small{
+    display:block;
+    color:#9ca3af;
+    font-size:9px;
+    font-weight:500;
+}
+
+.sidebar-menu{
+    padding:18px 12px;
+    flex:1;
+    overflow-y:auto;
+}
+
+.menu-label{
+    color:#6b7280;
+    font-size:9px;
+    font-weight:800;
+    padding:8px 11px;
+    letter-spacing:.5px;
+}
+
+.menu-item{
+    width:100%;
+    border:none;
+    background:transparent;
+    color:#d1d5db;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px 12px;
+    border-radius:9px;
+    margin-bottom:4px;
+    font-size:11px;
+    font-weight:600;
+    text-align:left;
+}
+
+.menu-item:hover{
+    background:rgba(255,255,255,.07);
+    color:#fff;
+}
+
+.menu-item.active{
+    background:#5a8a00;
+    color:#fff;
+}
+
+.menu-icon{
+    width:22px;
+    text-align:center;
+    font-size:15px;
+}
+
+.sidebar-footer{
+    padding:13px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.admin-mini{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:9px;
+    background:rgba(255,255,255,.05);
+    border-radius:10px;
+}
+
+.admin-avatar{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    background:#5a8a00;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.admin-mini-info{
+    flex:1;
+}
+
+.admin-mini-info strong{
+    display:block;
+    font-size:10px;
+}
+
+.admin-mini-info span{
+    display:block;
+    color:#9ca3af;
+    font-size:8px;
+}
+
+.logout-small{
+    border:none;
+    background:transparent;
+    color:#9ca3af;
+    font-size:14px;
+}
+
+
+/* =========================
+MAIN
+========================= */
+
+.main{
+    margin-left:255px;
+    width:calc(100% - 255px);
+    min-width:0;
+}
+
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+    height:76px;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:sticky;
+    top:0;
+    z-index:900;
+}
+
+.topbar-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.mobile-menu-btn{
+    display:none;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    width:38px;
+    height:38px;
+    border-radius:9px;
+    font-size:18px;
+}
+
+.page-heading h1{
+    font-size:20px;
+}
+
+.page-heading p{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.topbar-btn{
+    width:37px;
+    height:37px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:9px;
+}
+
+.admin-top-profile{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding-left:9px;
+    border-left:1px solid var(--border);
+}
+
+.top-avatar{
+    width:36px;
+    height:36px;
+    border-radius:9px;
+    background:var(--soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.top-profile-text strong{
+    display:block;
+    font-size:10px;
+}
+
+.top-profile-text span{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+}
+
+
+/* =========================
+CONTENT
+========================= */
+
+.content{
+    padding:25px;
+}
+
+.page-intro{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.page-intro h2{
+    font-size:21px;
+    margin-bottom:4px;
+}
+
+.page-intro p{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.primary-btn{
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    padding:11px 16px;
+    border-radius:9px;
+    font-size:10px;
+    font-weight:800;
+}
+
+.primary-btn:hover{
+    background:var(--primary-dark);
+}
+
+
+/* =========================
+STATS
+========================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:17px;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:39px;
+    height:39px;
+    border-radius:10px;
+    background:var(--soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+    margin-bottom:11px;
+}
+
+.stat-number{
+    font-size:23px;
+    font-weight:800;
+}
+
+.stat-title{
+    font-size:10px;
+}
+
+.stat-description{
+    color:var(--muted);
+    font-size:8px;
+}
+
+
+/* =========================
+TOOLBAR
+========================= */
+
+.toolbar{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:14px;
+    box-shadow:var(--shadow);
+    margin-bottom:15px;
+}
+
+.toolbar-row{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    flex:1;
+    min-width:220px;
+    position:relative;
+}
+
+.search-box span{
+    position:absolute;
+    left:11px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+}
+
+.search-box input{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    padding:10px 12px 10px 33px;
+    border-radius:8px;
+    outline:none;
+    font-size:10px;
+}
+
+.filter-select{
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    padding:10px 12px;
+    border-radius:8px;
+    outline:none;
+    font-size:9px;
+    min-width:135px;
+}
+
+
+/* =========================
+RESOURCE GRID
+========================= */
+
+.resource-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.resource-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:17px;
+    box-shadow:var(--shadow);
+    transition:.2s;
+}
+
+.resource-card:hover{
+    transform:translateY(-2px);
+}
+
+.resource-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.resource-icon{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:var(--soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+}
+
+.resource-actions{
+    display:flex;
+    gap:5px;
+}
+
+.small-action{
+    width:30px;
+    height:30px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:7px;
+}
+
+.small-action:hover{
+    background:var(--soft);
+}
+
+.resource-card h3{
+    font-size:13px;
+    margin-bottom:6px;
+    line-height:1.4;
+}
+
+.resource-description{
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.6;
+    min-height:29px;
+    margin-bottom:12px;
+}
+
+.resource-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-bottom:14px;
+}
+
+.meta-badge{
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:7px;
+    font-weight:800;
+    background:var(--soft);
+    color:var(--primary);
+}
+
+.meta-badge.pdf{
+    background:var(--danger-soft);
+    color:var(--danger);
+}
+
+.meta-badge.video{
+    background:var(--purple-soft);
+    color:var(--purple);
+}
+
+.meta-badge.note{
+    background:var(--warning-soft);
+    color:#a16207;
+}
+
+.resource-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding-top:12px;
+    border-top:1px solid var(--border);
+}
+
+.resource-date{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.open-btn{
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    padding:7px 10px;
+    border-radius:7px;
+    font-size:8px;
+    font-weight:800;
+}
+
+.open-btn:hover{
+    background:var(--primary-dark);
+}
+
+
+/* =========================
+EMPTY
+========================= */
+
+.empty-state{
+    display:none;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:55px 20px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.empty-state-icon{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+.empty-state strong{
+    display:block;
+    color:var(--text);
+    font-size:12px;
+    margin-bottom:4px;
+}
+
+.empty-state span{
+    font-size:9px;
+}
+
+
+/* =========================
+MODAL
+========================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:3000;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:600px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.modal-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:17px;
+}
+
+.modal-header h3{
+    font-size:16px;
+}
+
+.modal-header p{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.modal-close{
+    width:30px;
+    height:30px;
+    border:none;
+    background:var(--bg);
+    color:var(--text);
+    border-radius:8px;
+    font-size:16px;
+}
+
+
+/* =========================
+FORM
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.form-group{
+    margin-bottom:12px;
+}
+
+.form-group.full{
+    grid-column:1 / -1;
+}
+
+.form-group label{
+    display:block;
+    font-size:9px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    padding:10px;
+    border-radius:8px;
+    outline:none;
+    font-size:9px;
+}
+
+.form-group textarea{
+    min-height:80px;
+    resize:vertical;
+}
+
+.form-help{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:4px;
+}
+
+.form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+    margin-top:8px;
+}
+
+.secondary-btn{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    padding:10px 14px;
+    border-radius:8px;
+    font-size:9px;
+    font-weight:700;
+}
+
+.save-btn{
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    font-size:9px;
+    font-weight:800;
+}
+
+
+/* =========================
+VIEW MODAL
+========================= */
+
+.view-resource-icon{
+    width:60px;
+    height:60px;
+    border-radius:15px;
+    background:var(--soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin:0 auto 12px;
+}
+
+.view-title{
+    text-align:center;
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.view-subtitle{
+    text-align:center;
+    color:var(--muted);
+    font-size:9px;
+    margin-bottom:18px;
+}
+
+.detail-box{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:13px;
+    margin-bottom:15px;
+}
+
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:7px 0;
+    border-bottom:1px dashed var(--border);
+}
+
+.detail-row:last-child{
+    border-bottom:none;
+}
+
+.detail-row span{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.detail-row strong{
+    font-size:9px;
+    text-align:right;
+}
+
+
+/* =========================
+FOOTER
+========================= */
+
+.footer{
+    padding:20px 25px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:9px;
+    text-align:center;
+    margin-top:25px;
+}
+
+
+/* =========================
+MOBILE
+========================= */
+
+.sidebar-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:950;
+    display:none;
+}
+
+.sidebar-overlay.show{
+    display:block;
+}
+
+@media(max-width:1150px){
+
+    .resource-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        width:100%;
+    }
+
+    .mobile-menu-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .top-profile-text{
+        display:none;
+    }
+
+    .admin-top-profile{
+        border-left:none;
+    }
+}
+
+@media(max-width:650px){
+
+    .topbar{
+        height:65px;
+        padding:0 13px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .page-heading h1{
+        font-size:16px;
+    }
+
+    .page-heading p{
+        display:none;
+    }
+
+    .page-intro{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .resource-grid{
+        grid-template-columns:1fr;
+    }
+
+    .toolbar-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .search-box{
+        min-width:0;
+    }
+
+    .filter-select{
+        width:100%;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+}
+
+</style>
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <div class="sidebar-logo-badge">SNK</div>
+
+        <div class="sidebar-logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Admin Control Panel
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="sidebar-menu">
+
+
+        <div class="menu-label">
+            MAIN
+        </div>
+
+
+        <a class="menu-item" href="admin-dashboard.html">
+
+            <span class="menu-icon">📊</span>
+
+            Dashboard
+
+        </a>
+
+
+        <a class="menu-item" href="students.html">
+
+            <span class="menu-icon">👨‍🎓</span>
+
+            Students
+
+        </a>
+
+
+        <a class="menu-item" href="courses.html">
+
+            <span class="menu-icon">🎓</span>
+
+            Courses
+
+        </a>
+
+
+        <div class="menu-label">
+            ACADEMIC
+        </div>
+
+
+        <a class="menu-item" href="assignments.html">
+
+            <span class="menu-icon">📝</span>
+
+            Assignments
+
+        </a>
+
+
+        <a class="menu-item" href="quiz.html">
+
+            <span class="menu-icon">🎯</span>
+
+            Quiz
+
+        </a>
+
+
+        <a class="menu-item" href="results.html">
+
+            <span class="menu-icon">🏆</span>
+
+            Results
+
+        </a>
+
+
+        <div class="menu-label">
+            CONTENT
+        </div>
+
+
+        <a
+            class="menu-item active"
+            href="resources.html"
+        >
+
+            <span class="menu-icon">📚</span>
+
+            Resources
+
+        </a>
+
+
+        <button
+            class="menu-item"
+            onclick="showDemo('Notices')"
+        >
+
+            <span class="menu-icon">📢</span>
+
+            Notices
+
+        </button>
+
+
+        <div class="menu-label">
+            SYSTEM
+        </div>
+
+
+        <button
+            class="menu-item"
+            onclick="showDemo('Settings')"
+        >
+
+            <span class="menu-icon">⚙️</span>
+
+            Settings
+
+        </button>
+
+    </div>
+
+
+    <div class="sidebar-footer">
+
+
+        <div class="admin-mini">
+
+            <div class="admin-avatar">
+                👨‍💼
+            </div>
+
+
+            <div class="admin-mini-info">
+
+                <strong>
+                    Super Admin
+                </strong>
+
+                <span>
+                    Administrator
+                </span>
+
+            </div>
+
+
+            <button
+                class="logout-small"
+                onclick="logoutDemo()"
+            >
+                🚪
+            </button>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+    onclick="closeSidebar()"
+></div>
+
+
+<!-- =========================
+MAIN
+========================= -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+
+    <div class="topbar-left">
+
+
+        <button
+            class="mobile-menu-btn"
+            onclick="toggleSidebar()"
+        >
+            ☰
+        </button>
+
+
+        <div class="page-heading">
+
+            <h1>
+                Resources Management
+            </h1>
+
+            <p>
+                SNK AI Academy • Learning Resources
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="topbar-actions">
+
+
+        <button
+            class="topbar-btn"
+            onclick="toggleTheme()"
+            id="themeBtn"
+        >
+            🌙
+        </button>
+
+
+        <button
+            class="topbar-btn"
+            onclick="showDemo('Notifications')"
+        >
+            🔔
+        </button>
+
+
+        <div class="admin-top-profile">
+
+            <div class="top-avatar">
+                👨‍💼
+            </div>
+
+
+            <div class="top-profile-text">
+
+                <strong>
+                    Super Admin
+                </strong>
+
+                <span>
+                    Administrator
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<section class="content">
+
+
+    <div class="page-intro">
+
+
+        <div>
+
+            <h2>
+                Learning Resources
+            </h2>
+
+            <p>
+                Students-এর জন্য PDF, Notes, Video ও অন্যান্য resource manage করুন।
+            </p>
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="openAddModal()"
+        >
+            ＋ Add Resource
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+    STATS
+    ========================= -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📚
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalResources"
+            >
+                6
+            </div>
+
+            <div class="stat-title">
+                Total Resources
+            </div>
+
+            <div class="stat-description">
+                মোট learning resource
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📄
+            </div>
+
+            <div
+                class="stat-number"
+                id="pdfCount"
+            >
+                2
+            </div>
+
+            <div class="stat-title">
+                PDF
+            </div>
+
+            <div class="stat-description">
+                PDF resources
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🎥
+            </div>
+
+            <div
+                class="stat-number"
+                id="videoCount"
+            >
+                2
+            </div>
+
+            <div class="stat-title">
+                Videos
+            </div>
+
+            <div class="stat-description">
+                Video resources
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📝
+            </div>
+
+            <div
+                class="stat-number"
+                id="noteCount"
+            >
+                2
+            </div>
+
+            <div class="stat-title">
+                Notes
+            </div>
+
+            <div class="stat-description">
+                Notes & documents
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+    TOOLBAR
+    ========================= -->
+
+    <div class="toolbar">
+
+
+        <div class="toolbar-row">
+
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Resource name, course বা description খুঁজুন..."
+                    oninput="renderResources()"
+                >
+
+            </div>
+
+
+            <select
+                class="filter-select"
+                id="typeFilter"
+                onchange="renderResources()"
+            >
+
+                <option value="all">
+                    সব Type
+                </option>
+
+                <option value="PDF">
+                    PDF
+                </option>
+
+                <option value="Video">
+                    Video
+                </option>
+
+                <option value="Note">
+                    Note
+                </option>
+
+                <option value="Link">
+                    Link
+                </option>
+
+            </select>
+
+
+            <select
+                class="filter-select"
+                id="courseFilter"
+                onchange="renderResources()"
+            >
+
+                <option value="all">
+                    সব Course
+                </option>
+
+                <option value="Computer Basic">
+                    Computer Basic
+                </option>
+
+                <option value="MS Word">
+                    MS Word
+                </option>
+
+                <option value="MS Excel">
+                    MS Excel
+                </option>
+
+                <option value="Graphic Design">
+                    Graphic Design
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+    RESOURCE AREA
+    ========================= -->
+
+    <div
+        class="resource-grid"
+        id="resourceGrid"
+    ></div>
+
+
+    <div
+        class="empty-state"
+        id="emptyState"
+    >
+
+        <div class="empty-state-icon">
+            📚
+        </div>
+
+        <strong>
+            কোনো Resource পাওয়া যায়নি
+        </strong>
+
+        <span>
+            Search বা filter পরিবর্তন করে আবার চেষ্টা করুন।
+        </span>
+
+    </div>
+
+
+    <footer class="footer">
+
+        © 2026 SNK AI Academy • Resources Management
+
+    </footer>
+
+
+</section>
+
+</main>
+
+
+<!-- =========================
+ADD / EDIT MODAL
+========================= -->
+
+<div
+    class="modal-overlay"
+    id="resourceModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+
+            <div>
+
+                <h3 id="modalTitle">
+                    Add Resource
+                </h3>
+
+                <p>
+                    Student-এর জন্য নতুন learning resource তৈরি করুন।
+                </p>
+
+            </div>
+
+
+            <button
+                class="modal-close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="resourceForm"
+            onsubmit="saveResource(event)"
+        >
+
+
+            <input
+                type="hidden"
+                id="editIndex"
+                value=""
+            >
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Resource Title *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="resourceTitle"
+                        required
+                        placeholder="যেমন: MS Word Basic Notes"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Resource Type *
+                    </label>
+
+                    <select
+                        id="resourceType"
+                        required
+                    >
+
+                        <option value="">
+                            Select Type
+                        </option>
+
+                        <option value="PDF">
+                            📄 PDF
+                        </option>
+
+                        <option value="Video">
+                            🎥 Video
+                        </option>
+
+                        <option value="Note">
+                            📝 Note
+                        </option>
+
+                        <option value="Link">
+                            🔗 Link
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Course *
+                    </label>
+
+                    <select
+                        id="resourceCourse"
+                        required
+                    >
+
+                        <option value="">
+                            Select Course
+                        </option>
+
+                        <option value="Computer Basic">
+                            Computer Basic
+                        </option>
+
+                        <option value="MS Word">
+                            MS Word
+                        </option>
+
+                        <option value="MS Excel">
+                            MS Excel
+                        </option>
+
+                        <option value="Graphic Design">
+                            Graphic Design
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Resource URL *
+                    </label>
+
+                    <input
+                        type="url"
+                        id="resourceUrl"
+                        required
+                        placeholder="https://..."
+                    >
+
+                    <div class="form-help">
+                        Google Drive, YouTube, PDF বা অন্য valid link দিতে পারেন।
+                    </div>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        id="resourceDescription"
+                        placeholder="Resource সম্পর্কে সংক্ষিপ্ত description..."
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-actions">
+
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="closeModal()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    💾 Save Resource
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+VIEW MODAL
+========================= -->
+
+<div
+    class="modal-overlay"
+    id="viewModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+
+            <div>
+
+                <h3>
+                    Resource Details
+                </h3>
+
+                <p>
+                    Resource information
+                </p>
+
+            </div>
+
+
+            <button
+                class="modal-close"
+                onclick="closeViewModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="view-resource-icon"
+            id="viewIcon"
+        >
+            📚
+        </div>
+
+
+        <div
+            class="view-title"
+            id="viewTitle"
+        >
+            —
+        </div>
+
+
+        <div
+            class="view-subtitle"
+            id="viewDescription"
+        >
+            —
+        </div>
+
+
+        <div class="detail-box">
+
+
+            <div class="detail-row">
+
+                <span>
+                    Type
+                </span>
+
+                <strong id="viewType">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span>
+                    Course
+                </span>
+
+                <strong id="viewCourse">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span>
+                    Added
+                </span>
+
+                <strong id="viewDate">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span>
+                    Link
+                </span>
+
+                <strong id="viewUrl">
+                    —
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="form-actions">
+
+
+            <button
+                class="secondary-btn"
+                onclick="closeViewModal()"
+            >
+                Close
+            </button>
+
+
+            <button
+                class="save-btn"
+                onclick="openSelectedResource()"
+            >
+                🔗 Open Resource
+            </button>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+DEFAULT RESOURCE DATA
+========================= */
+
+const defaultResources = [
+
+    {
+        title:"Computer Basic PDF Notes",
+        type:"PDF",
+        course:"Computer Basic",
+        url:"https://example.com/computer-basic.pdf",
+        description:"Computer Basic-এর গুরুত্বপূর্ণ PDF notes।",
+        date:"02 Sep 2026"
+    },
+
+    {
+        title:"Computer Basic Video Class",
+        type:"Video",
+        course:"Computer Basic",
+        url:"https://www.youtube.com/",
+        description:"Computer Basic-এর recorded video class।",
+        date:"02 Sep 2026"
+    },
+
+    {
+        title:"MS Word Basic Notes",
+        type:"Note",
+        course:"MS Word",
+        url:"https://example.com/ms-word-notes",
+        description:"MS Word শেখার জন্য প্রয়োজনীয় basic notes।",
+        date:"02 Sep 2026"
+    },
+
+    {
+        title:"MS Word Practical Video",
+        type:"Video",
+        course:"MS Word",
+        url:"https://www.youtube.com/",
+        description:"MS Word practical কাজের video tutorial।",
+        date:"02 Sep 2026"
+    },
+
+    {
+        title:"Excel Formula Guide",
+        type:"PDF",
+        course:"MS Excel",
+        url:"https://example.com/excel-formula.pdf",
+        description:"MS Excel-এর গুরুত্বপূর্ণ formula guide।",
+        date:"02 Sep 2026"
+    },
+
+    {
+        title:"Graphic Design Starter Notes",
+        type:"Note",
+        course:"Graphic Design",
+        url:"https://example.com/graphic-design-notes",
+        description:"Graphic Design শেখার জন্য starter notes।",
+        date:"02 Sep 2026"
+    }
+
+];
+
+
+/* =========================
+LOCAL STORAGE
+========================= */
+
+let resources =
+    JSON.parse(
+        localStorage.getItem("snkResources")
+    );
+
+
+if(
+    !Array.isArray(resources) ||
+    resources.length === 0
+){
+
+    resources =
+        defaultResources;
+
+    saveResources();
+}
+
+
+function saveResources(){
+
+    localStorage.setItem(
+        "snkResources",
+        JSON.stringify(resources)
+    );
+}
+
+
+/* =========================
+THEME
+========================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "snkResourcesTheme",
+        dark ? "dark" : "light"
+    );
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+        dark ? "☀️" : "🌙";
+}
+
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem(
+            "snkResourcesTheme"
+        );
+
+    if(theme === "dark"){
+
+        document.body.classList.add("dark");
+
+        document.getElementById(
+            "themeBtn"
+        ).textContent =
+            "☀️";
+    }
+}
+
+
+loadTheme();
+
+
+/* =========================
+SIDEBAR
+========================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+    document
+        .getElementById("sidebarOverlay")
+        .classList.toggle("show");
+}
+
+
+function closeSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+    document
+        .getElementById("sidebarOverlay")
+        .classList.remove("show");
+}
+
+
+/* =========================
+RESOURCE ICON
+========================= */
+
+function getIcon(type){
+
+    if(type === "PDF"){
+        return "📄";
+    }
+
+    if(type === "Video"){
+        return "🎥";
+    }
+
+    if(type === "Note"){
+        return "📝";
+    }
+
+    if(type === "Link"){
+        return "🔗";
+    }
+
+    return "📚";
+}
+
+
+/* =========================
+RESOURCE CLASS
+========================= */
+
+function getTypeClass(type){
+
+    if(type === "PDF"){
+        return "pdf";
+    }
+
+    if(type === "Video"){
+        return "video";
+    }
+
+    if(type === "Note"){
+        return "note";
+    }
+
+    return "";
+}
+
+
+/* =========================
+RENDER
+========================= */
+
+function renderResources(){
+
+    const grid =
+        document.getElementById(
+            "resourceGrid"
+        );
+
+
+    const empty =
+        document.getElementById(
+            "emptyState"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const type =
+        document.getElementById(
+            "typeFilter"
+        ).value;
+
+
+    const course =
+        document.getElementById(
+            "courseFilter"
+        ).value;
+
+
+    const filtered =
+        resources.filter(resource => {
+
+
+            const text =
+                (
+                    resource.title +
+                    " " +
+                    resource.course +
+                    " " +
+                    resource.description
+                )
+                .toLowerCase();
+
+
+            const searchMatch =
+                !search ||
+                text.includes(search);
+
+
+            const typeMatch =
+                type === "all" ||
+                resource.type === type;
+
+
+            const courseMatch =
+                course === "all" ||
+                resource.course === course;
+
+
+            return (
+                searchMatch &&
+                typeMatch &&
+                courseMatch
+            );
+
+        });
+
+
+    grid.innerHTML = "";
+
+
+    filtered.forEach(resource => {
+
+
+        const index =
+            resources.indexOf(resource);
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "resource-card";
+
+
+        card.innerHTML = `
+
+            <div class="resource-top">
+
+                <div class="resource-icon">
+
+                    ${getIcon(resource.type)}
+
+                </div>
+
+
+                <div class="resource-actions">
+
+                    <button
+                        class="small-action"
+                        onclick="viewResource(${index})"
+                        title="View"
+                    >
+                        👁
+                    </button>
+
+
+                    <button
+                        class="small-action"
+                        onclick="editResource(${index})"
+                        title="Edit"
+                    >
+                        ✏️
+                    </button>
+
+
+                    <button
+                        class="small-action"
+                        onclick="deleteResource(${index})"
+                        title="Delete"
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <h3>
+                ${escapeHtml(resource.title)}
+            </h3>
+
+
+            <div class="resource-description">
+
+                ${escapeHtml(
+                    resource.description ||
+                    "No description available."
+                )}
+
+            </div>
+
+
+            <div class="resource-meta">
+
+                <span
+                    class="meta-badge ${getTypeClass(resource.type)}"
+                >
+                    ${getIcon(resource.type)}
+                    ${escapeHtml(resource.type)}
+                </span>
+
+
+                <span class="meta-badge">
+
+                    🎓
+                    ${escapeHtml(resource.course)}
+
+                </span>
+
+            </div>
+
+
+            <div class="resource-footer">
+
+                <span class="resource-date">
+
+                    📅
+                    ${escapeHtml(resource.date)}
+
+                </span>
+
+
+                <button
+                    class="open-btn"
+                    onclick="openResource(${index})"
+                >
+                    Open →
+                </button>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    empty.style.display =
+        filtered.length === 0
+        ? "block"
+        : "none";
+
+
+    updateStats();
+
+}
+
+
+/* =========================
+ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value == null ? "" : value;
+
+    return div.innerHTML;
+}
+
+
+/* =========================
+STATS
+========================= */
+
+function updateStats(){
+
+    document.getElementById(
+        "totalResources"
+    ).textContent =
+        resources.length;
+
+
+    document.getElementById(
+        "pdfCount"
+    ).textContent =
+        resources.filter(
+            item => item.type === "PDF"
+        ).length;
+
+
+    document.getElementById(
+        "videoCount"
+    ).textContent =
+        resources.filter(
+            item => item.type === "Video"
+        ).length;
+
+
+    document.getElementById(
+        "noteCount"
+    ).textContent =
+        resources.filter(
+            item => item.type === "Note"
+        ).length;
+}
+
+
+/* =========================
+ADD MODAL
+========================= */
+
+function openAddModal(){
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Add Resource";
+
+
+    document.getElementById(
+        "resourceForm"
+    ).reset();
+
+
+    document.getElementById(
+        "editIndex"
+    ).value = "";
+
+
+    document.getElementById(
+        "resourceModal"
+    ).classList.add("show");
+}
+
+
+/* =========================
+EDIT
+========================= */
+
+function editResource(index){
+
+    const resource =
+        resources[index];
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Edit Resource";
+
+
+    document.getElementById(
+        "editIndex"
+    ).value =
+        index;
+
+
+    document.getElementById(
+        "resourceTitle"
+    ).value =
+        resource.title;
+
+
+    document.getElementById(
+        "resourceType"
+    ).value =
+        resource.type;
+
+
+    document.getElementById(
+        "resourceCourse"
+    ).value =
+        resource.course;
+
+
+    document.getElementById(
+        "resourceUrl"
+    ).value =
+        resource.url;
+
+
+    document.getElementById(
+        "resourceDescription"
+    ).value =
+        resource.description;
+
+
+    document.getElementById(
+        "resourceModal"
+    ).classList.add("show");
+}
+
+
+/* =========================
+SAVE RESOURCE
+========================= */
+
+function saveResource(event){
+
+    event.preventDefault();
+
+
+    const title =
+        document.getElementById(
+            "resourceTitle"
+        ).value.trim();
+
+
+    const type =
+        document.getElementById(
+            "resourceType"
+        ).value;
+
+
+    const course =
+        document.getElementById(
+            "resourceCourse"
+        ).value;
+
+
+    const url =
+        document.getElementById(
+            "resourceUrl"
+        ).value.trim();
+
+
+    const description =
+        document.getElementById(
+            "resourceDescription"
+        ).value.trim();
+
+
+    const editIndex =
+        document.getElementById(
+            "editIndex"
+        ).value;
+
+
+    const resource = {
+
+        title,
+        type,
+        course,
+        url,
+        description,
+
+        date:
+            editIndex === ""
+            ? formatDate(new Date())
+            : resources[
+                Number(editIndex)
+            ].date
+
+    };
+
+
+    if(editIndex === ""){
+
+        resources.unshift(resource);
+
+    }else{
+
+        resources[
+            Number(editIndex)
+        ] = resource;
+
+    }
+
+
+    saveResources();
+
+    renderResources();
+
+    closeModal();
+
+
+    alert(
+        "✅ Resource successfully saved!"
+    );
+}
+
+
+/* =========================
+DATE
+========================= */
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+}
+
+
+/* =========================
+DELETE
+========================= */
+
+function deleteResource(index){
+
+    const resource =
+        resources[index];
+
+
+    const ok =
+        confirm(
+            "আপনি কি এই resource delete করতে চান?\n\n" +
+            resource.title
+        );
+
+
+    if(!ok){
+        return;
+    }
+
+
+    resources.splice(
+        index,
+        1
+    );
+
+
+    saveResources();
+
+    renderResources();
+
+
+    alert(
+        "🗑️ Resource deleted."
+    );
+}
+
+
+/* =========================
+OPEN RESOURCE
+========================= */
+
+function openResource(index){
+
+    const resource =
+        resources[index];
+
+
+    if(!resource.url){
+
+        alert(
+            "এই resource-এর কোনো link নেই।"
+        );
+
+        return;
+    }
+
+
+    window.open(
+        resource.url,
+        "_blank"
+    );
+}
+
+
+/* =========================
+VIEW RESOURCE
+========================= */
+
+let selectedResourceIndex = null;
+
+
+function viewResource(index){
+
+    const resource =
+        resources[index];
+
+
+    selectedResourceIndex =
+        index;
+
+
+    document.getElementById(
+        "viewIcon"
+    ).textContent =
+        getIcon(resource.type);
+
+
+    document.getElementById(
+        "viewTitle"
+    ).textContent =
+        resource.title;
+
+
+    document.getElementById(
+        "viewDescription"
+    ).textContent =
+        resource.description ||
+        "No description available.";
+
+
+    document.getElementById(
+        "viewType"
+    ).textContent =
+        resource.type;
+
+
+    document.getElementById(
+        "viewCourse"
+    ).textContent =
+        resource.course;
+
+
+    document.getElementById(
+        "viewDate"
+    ).textContent =
+        resource.date;
+
+
+    document.getElementById(
+        "viewUrl"
+    ).textContent =
+        shortenUrl(resource.url);
+
+
+    document.getElementById(
+        "viewModal"
+    ).classList.add("show");
+}
+
+
+function shortenUrl(url){
+
+    if(!url){
+        return "—";
+    }
+
+    if(url.length <= 40){
+        return url;
+    }
+
+    return url.substring(0,37) + "...";
+}
+
+
+/* =========================
+OPEN SELECTED
+========================= */
+
+function openSelectedResource(){
+
+    if(
+        selectedResourceIndex === null
+    ){
+        return;
+    }
+
+
+    openResource(
+        selectedResourceIndex
+    );
+}
+
+
+/* =========================
+CLOSE MODALS
+========================= */
+
+function closeModal(){
+
+    document.getElementById(
+        "resourceModal"
+    ).classList.remove("show");
+}
+
+
+function closeViewModal(){
+
+    document.getElementById(
+        "viewModal"
+    ).classList.remove("show");
+
+    selectedResourceIndex = null;
+}
+
+
+/* =========================
+DEMO
+========================= */
+
+function showDemo(name){
+
+    alert(
+        "📌 " +
+        name +
+        " feature পরবর্তী step-এ functional করা হবে।"
+    );
+}
+
+
+/* =========================
+LOGOUT
+========================= */
+
+function logoutDemo(){
+
+    const ok =
+        confirm(
+            "আপনি কি Logout করতে চান?"
+        );
+
+
+    if(ok){
+
+        sessionStorage.removeItem(
+            "snkAdminLoggedIn"
+        );
+
+
+        alert(
+            "আপনি Admin Panel থেকে Logout করেছেন।"
+        );
+    }
+}
+
+
+/* =========================
+OUTSIDE CLICK
+========================= */
+
+document
+    .getElementById("resourceModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("viewModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target === this
+            ){
+
+                closeViewModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================
+INITIAL LOAD
+========================= */
+
+renderResources();
+
+</script>
+
+</body>
+</html>
+```

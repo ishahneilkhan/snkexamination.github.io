@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Contact | SNK AI Academy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#667085;
+      --primary:#5a8a00;
+      --primary-dark:#3d6600;
+      --border:#e5e7eb;
+      --success:#16a34a;
+      --warning:#f59e0b;
+      --danger:#dc2626;
+      --shadow:0 12px 35px rgba(15,23,42,.08);
+      --radius:18px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Noto Sans Bengali",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    body.dark{
+      --bg:#0b1120;
+      --card:#111827;
+      --text:#f3f4f6;
+      --muted:#9ca3af;
+      --border:#243044;
+      --shadow:0 12px 35px rgba(0,0,0,.25);
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .topbar{
+      background:linear-gradient(135deg,#3d6600,#5a8a00);
+      color:#fff;
+      text-align:center;
+      padding:8px 15px;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+
+    body.dark .header{
+      background:rgba(17,24,39,.94);
+    }
+
+    .nav{
+      max-width:1200px;
+      margin:auto;
+      min-height:72px;
+      padding:10px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:48px;
+      height:48px;
+      object-fit:contain;
+      border-radius:12px;
+      background:#fff;
+      padding:4px;
+      border:1px solid var(--border);
+    }
+
+.brand-badge{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:15px;flex-shrink:0}
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:18px;
+      font-weight:800;
+      line-height:1.2;
+    }
+
+    .brand-subtitle{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-btn{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:9px 13px;
+      border-radius:10px;
+      font-weight:700;
+      font-size:13px;
+      transition:.2s;
+    }
+
+    .nav-btn:hover{
+      border-color:var(--primary);
+      color:var(--primary);
+      transform:translateY(-1px);
+    }
+
+    .logout{
+      background:#fee2e2;
+      color:#b91c1c;
+      border-color:#fecaca;
+    }
+
+    body.dark .logout{
+      background:#3a1717;
+      color:#fca5a5;
+      border-color:#5b2424;
+    }
+
+    .container{
+      width:min(1200px,calc(100% - 30px));
+      margin:auto;
+    }
+
+    .hero{
+      margin:28px 0;
+      padding:42px 32px;
+      border-radius:24px;
+      background:
+        radial-gradient(circle at top right,rgba(255,255,255,.20),transparent 30%),
+        linear-gradient(135deg,#3d6600,#5a8a00 55%,#0ea5e9);
+      color:#fff;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:230px;
+      height:230px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+      right:-70px;
+      bottom:-100px;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:760px;
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.25);
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    .hero h1{
+      font-size:clamp(28px,5vw,44px);
+      line-height:1.15;
+      margin-bottom:12px;
+      font-weight:800;
+    }
+
+    .hero p{
+      max-width:680px;
+      opacity:.94;
+      font-size:15px;
+    }
+
+    .section{
+      margin:30px 0;
+    }
+
+    .section-head{
+      margin-bottom:18px;
+    }
+
+    .section-head h2{
+      font-size:25px;
+      margin-bottom:5px;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .contact-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+      transition:.2s;
+    }
+
+    .contact-card:hover{
+      transform:translateY(-3px);
+    }
+
+    .contact-icon{
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:14px;
+      background:#f1ffdd;
+      color:var(--primary);
+      font-size:22px;
+      margin-bottom:14px;
+    }
+
+    body.dark .contact-icon{
+      background:#1c2e00;
+    }
+
+    .contact-card h3{
+      font-size:17px;
+      margin-bottom:5px;
+    }
+
+    .contact-card p{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:12px;
+    }
+
+    .contact-link{
+      display:inline-block;
+      color:var(--primary);
+      font-weight:800;
+      font-size:13px;
+      word-break:break-word;
+    }
+
+    .main-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:25px;
+      box-shadow:var(--shadow);
+    }
+
+    .panel h2{
+      font-size:22px;
+      margin-bottom:5px;
+    }
+
+    .panel-sub{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:20px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .field.full{
+      grid-column:1/-1;
+    }
+
+    label{
+      font-size:13px;
+      font-weight:800;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      border:1px solid var(--border);
+      background:var(--bg);
+      color:var(--text);
+      border-radius:11px;
+      padding:11px 13px;
+      outline:none;
+      transition:.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(90,138,0,.12);
+    }
+
+    input[readonly]{
+      opacity:.8;
+    }
+
+    textarea{
+      min-height:135px;
+      resize:vertical;
+    }
+
+    .submit-btn{
+      margin-top:17px;
+      border:0;
+      background:var(--primary);
+      color:#fff;
+      padding:12px 18px;
+      border-radius:11px;
+      font-weight:800;
+      transition:.2s;
+    }
+
+    .submit-btn:hover{
+      background:var(--primary-dark);
+      transform:translateY(-1px);
+    }
+
+    .info-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .info-item{
+      display:flex;
+      gap:13px;
+      padding:14px;
+      border:1px solid var(--border);
+      border-radius:13px;
+      background:var(--bg);
+    }
+
+    .info-item-icon{
+      width:40px;
+      height:40px;
+      flex:0 0 40px;
+      border-radius:11px;
+      background:#f1ffdd;
+      color:var(--primary);
+      display:grid;
+      place-items:center;
+      font-size:18px;
+    }
+
+    body.dark .info-item-icon{
+      background:#1c2e00;
+    }
+
+    .info-item strong{
+      display:block;
+      font-size:14px;
+      margin-bottom:2px;
+    }
+
+    .info-item span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .support-box{
+      margin-top:18px;
+      padding:18px;
+      border-radius:15px;
+      background:linear-gradient(135deg,#ecfdf5,#f0fdf4);
+      border:1px solid #bbf7d0;
+    }
+
+    body.dark .support-box{
+      background:#0d281a;
+      border-color:#174d2a;
+    }
+
+    .support-box h3{
+      font-size:16px;
+      margin-bottom:5px;
+    }
+
+    .support-box p{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:12px;
+    }
+
+    .whatsapp-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#16a34a;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .faq-grid{
+      display:grid;
+      gap:10px;
+    }
+
+    .faq{
+      border:1px solid var(--border);
+      border-radius:13px;
+      overflow:hidden;
+      background:var(--card);
+    }
+
+    .faq-question{
+      width:100%;
+      border:0;
+      background:transparent;
+      color:var(--text);
+      padding:15px 17px;
+      text-align:left;
+      font-weight:800;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .faq-answer{
+      display:none;
+      padding:0 17px 16px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .faq.open .faq-answer{
+      display:block;
+    }
+
+    .faq-arrow{
+      transition:.2s;
+    }
+
+    .faq.open .faq-arrow{
+      transform:rotate(180deg);
+    }
+
+    .course-card{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:20px;
+      align-items:center;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .course-title{
+      font-size:19px;
+      font-weight:800;
+      margin-bottom:4px;
+    }
+
+    .course-meta{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .course-badges{
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .badge{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      background:#f1ffdd;
+      color:#3d6600;
+    }
+
+    body.dark .badge{
+      background:#1c2e00;
+      color:#93c5fd;
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:800;
+      font-size:13px;
+    }
+
+    footer{
+      margin-top:40px;
+      padding:28px 15px;
+      border-top:1px solid var(--border);
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .footer-title{
+      color:var(--text);
+      font-weight:800;
+      margin-bottom:3px;
+    }
+
+    .notice{
+      margin-top:18px;
+      padding:13px 15px;
+      border-radius:12px;
+      background:#fffbeb;
+      border:1px solid #fde68a;
+      color:#92400e;
+      font-size:12px;
+    }
+
+    body.dark .notice{
+      background:#2a2108;
+      border-color:#5a4710;
+      color:#fcd34d;
+    }
+
+    .toast{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:2000;
+      background:#111827;
+      color:#fff;
+      padding:12px 16px;
+      border-radius:11px;
+      font-size:13px;
+      box-shadow:0 12px 30px rgba(0,0,0,.22);
+      transform:translateY(100px);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    @media(max-width:1000px){
+      .contact-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .main-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .nav{
+        padding:9px 12px;
+      }
+
+      .brand-title{
+        font-size:15px;
+      }
+
+      .brand-subtitle{
+        display:none;
+      }
+
+      .brand img{
+        width:42px;
+        height:42px;
+      }
+
+      .nav-actions{
+        gap:5px;
+      }
+
+      .nav-btn{
+        padding:8px 9px;
+        font-size:11px;
+      }
+
+      .hero{
+        padding:30px 21px;
+        margin-top:18px;
+      }
+
+      .hero h1{
+        font-size:30px;
+      }
+
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .field.full{
+        grid-column:auto;
+      }
+
+      .panel{
+        padding:19px;
+      }
+
+      .course-card{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media print{
+      .topbar,
+      .header,
+      .hero,
+      .submit-btn,
+      .whatsapp-btn,
+      .back-btn,
+      .notice{
+        display:none!important;
+      }
+
+      body{
+        background:#fff!important;
+        color:#000!important;
+      }
+
+      .panel,
+      .contact-card,
+      .course-card{
+        box-shadow:none!important;
+        break-inside:avoid;
+      }
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <div class="topbar">
+    🎓 SNK AI Academy Student Portal • Student Support & Contact
+  </div>
+
+  <header class="header">
+    <nav class="nav">
+
+      <a href="student-dashboard.html" class="brand">
+        <div class="brand-badge">SNK</div>
+
+        <div class="brand-text">
+          <div class="brand-title">SNK AI Academy</div>
+          <div class="brand-subtitle">Student Portal</div>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="student-dashboard.html" class="nav-btn">🏠 Dashboard</a>
+        <a href="student-support.html" class="nav-btn">🆘 Support</a>
+        <button class="nav-btn" id="themeBtn" type="button">🌙</button>
+        <button class="nav-btn logout" id="logoutBtn" type="button">Logout</button>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="hero-content">
+
+        <div class="hero-badge">
+          📞 Student Contact Center
+        </div>
+
+        <h1>আমাদের সাথে যোগাযোগ করুন</h1>
+
+        <p>
+          আপনার course, assignment, quiz, result, attendance অথবা
+          Student Portal সংক্রান্ত কোনো সাহায্যের প্রয়োজন হলে
+          নিচের যেকোনো মাধ্যমে SNK AI Academy-এর সাথে যোগাযোগ করুন।
+        </p>
+
+      </div>
+    </section>
+
+    <section class="section">
+
+      <div class="section-head">
+        <h2>যোগাযোগের মাধ্যম</h2>
+        <p>আপনার প্রয়োজন অনুযায়ী যেকোনো একটি option ব্যবহার করুন।</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-card">
+          <div class="contact-icon">📱</div>
+          <h3>Phone</h3>
+          <p>সরাসরি ফোনে যোগাযোগ করুন।</p>
+          <a class="contact-link" href="tel:+8801700000000">
+            +880 1700-000000
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">💬</div>
+          <h3>WhatsApp</h3>
+          <p>দ্রুত support-এর জন্য WhatsApp ব্যবহার করুন।</p>
+          <a
+            class="contact-link"
+            href="https://wa.me/8801700000000"
+            target="_blank"
+            rel="noopener"
+          >
+            WhatsApp Support
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <h3>Email</h3>
+          <p>বিস্তারিত বিষয় email-এর মাধ্যমে পাঠাতে পারেন।</p>
+          <a
+            class="contact-link"
+            href="mailto:snkitinstitute@gmail.com"
+          >
+            snkitinstitute@gmail.com
+          </a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">🕓</div>
+          <h3>Support Time</h3>
+          <p>Student support-এর জন্য নির্ধারিত সময়।</p>
+          <span class="contact-link">
+            10:00 AM – 8:00 PM
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="section">
+
+      <div class="main-grid">
+
+        <!-- CONTACT FORM -->
+
+        <div class="panel">
+
+          <h2>📩 Contact Request</h2>
+
+          <p class="panel-sub">
+            নিচের form পূরণ করে আপনার সমস্যাটি আমাদের জানাতে পারেন।
+          </p>
+
+          <form id="contactForm">
+
+            <div class="form-grid">
+
+              <div class="field">
+                <label for="studentName">Student Name</label>
+                <input
+                  id="studentName"
+                  type="text"
+                  readonly
+                >
+              </div>
+
+              <div class="field">
+                <label for="studentId">Student ID</label>
+                <input
+                  id="studentId"
+                  type="text"
+                  readonly
+                >
+              </div>
+
+              <div class="field">
+                <label for="contactType">Contact Type</label>
+
+                <select id="contactType" required>
+                  <option value="">Select Type</option>
+                  <option value="Course Help">Course Help</option>
+                  <option value="Assignment Help">Assignment Help</option>
+                  <option value="Quiz Help">Quiz Help</option>
+                  <option value="Result Help">Result Help</option>
+                  <option value="Attendance Help">Attendance Help</option>
+                  <option value="Portal Problem">Portal Problem</option>
+                  <option value="Other">Other</option>
+                </select>
+
+              </div>
+
+              <div class="field">
+                <label for="priority">Priority</label>
+
+                <select id="priority" required>
+                  <option value="Normal">Normal</option>
+                  <option value="Important">Important</option>
+                  <option value="Urgent">Urgent</option>
+                </select>
+
+              </div>
+
+              <div class="field full">
+                <label for="subject">Subject</label>
+
+                <input
+                  id="subject"
+                  type="text"
+                  placeholder="যেমন: Assignment জমা দিতে পারছি না"
+                  required
+                >
+              </div>
+
+              <div class="field full">
+                <label for="message">Message</label>
+
+                <textarea
+                  id="message"
+                  placeholder="আপনার সমস্যাটি বিস্তারিত লিখুন..."
+                  required
+                ></textarea>
+              </div>
+
+            </div>
+
+            <button class="submit-btn" type="submit">
+              📤 Request পাঠান
+            </button>
+
+          </form>
+
+          <div class="notice">
+            ℹ️ এটি বর্তমানে Demo/Local Portal system।
+            আপনার request এই browser-এর localStorage-এ সংরক্ষণ হবে।
+          </div>
+
+        </div>
+
+
+        <!-- CONTACT INFORMATION -->
+
+        <div class="panel">
+
+          <h2>🏢 Institute Information</h2>
+
+          <p class="panel-sub">
+            আপনার course সম্পর্কিত গুরুত্বপূর্ণ তথ্য।
+          </p>
+
+          <div class="info-list">
+
+            <div class="info-item">
+              <div class="info-item-icon">🎓</div>
+
+              <div>
+                <strong>Institute</strong>
+                <span>SNK AI Academy</span>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-item-icon">💻</div>
+
+              <div>
+                <strong>Course</strong>
+                <span>আপনার কোর্স</span>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-item-icon">👥</div>
+
+              <div>
+                <strong>Batch</strong>
+                <span>Batch 01</span>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-item-icon">🏫</div>
+
+              <div>
+                <strong>Class Mode</strong>
+                <span>Offline</span>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-item-icon">📅</div>
+
+              <div>
+                <strong>Class Start</strong>
+                <span>08 September 2026</span>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-item-icon">⏰</div>
+
+              <div>
+                <strong>Class Time</strong>
+                <span>Saturday–Monday • 4:00 PM–6:00 PM</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="support-box">
+
+            <h3>💚 দ্রুত সাহায্য দরকার?</h3>
+
+            <p>
+              জরুরি কোনো বিষয়ে দ্রুত যোগাযোগের জন্য WhatsApp Support ব্যবহার করুন।
+            </p>
+
+            <a
+              class="whatsapp-btn"
+              href="https://wa.me/8801700000000"
+              target="_blank"
+              rel="noopener"
+            >
+              💬 WhatsApp Support
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FAQ -->
+
+    <section class="section">
+
+      <div class="section-head">
+        <h2>❓ Frequently Asked Questions</h2>
+        <p>সাধারণ কিছু প্রশ্নের উত্তর এখানে পাওয়া যাবে।</p>
+      </div>
+
+      <div class="faq-grid">
+
+        <div class="faq">
+          <button class="faq-question" type="button">
+            <span>Class কখন শুরু হবে?</span>
+            <span class="faq-arrow">⌄</span>
+          </button>
+
+          <div class="faq-answer">
+            Batch 01-এর class start date হলো
+            <strong>08 September 2026</strong>।
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="faq-question" type="button">
+            <span>Class কোথায় হবে?</span>
+            <span class="faq-arrow">⌄</span>
+          </button>
+
+          <div class="faq-answer">
+            বর্তমান course information অনুযায়ী
+            আপনার কোর্স courseটি Offline mode-এ অনুষ্ঠিত হবে।
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="faq-question" type="button">
+            <span>Assignment জমা দিতে সমস্যা হলে কী করব?</span>
+            <span class="faq-arrow">⌄</span>
+          </button>
+
+          <div class="faq-answer">
+            Student Support অথবা এই Contact page-এর request form ব্যবহার করে
+            Assignment Help নির্বাচন করে আপনার সমস্যাটি পাঠাতে পারেন।
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="faq-question" type="button">
+            <span>Result কোথায় দেখা যাবে?</span>
+            <span class="faq-arrow">⌄</span>
+          </button>
+
+          <div class="faq-answer">
+            Student Dashboard থেকে
+            <strong>My Result</strong> section-এ গিয়ে result দেখা যাবে।
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="faq-question" type="button">
+            <span>Attendance কোথায় দেখা যাবে?</span>
+            <span class="faq-arrow">⌄</span>
+          </button>
+
+          <div class="faq-answer">
+            Dashboard অথবা Student Attendance page থেকে
+            আপনার attendance history ও percentage দেখা যাবে।
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- COURSE -->
+
+    <section class="section">
+
+      <div class="section-head">
+        <h2>📚 Current Course</h2>
+        <p>আপনার বর্তমান enrollment information।</p>
+      </div>
+
+      <div class="course-card">
+
+        <div>
+
+          <div class="course-title">
+            আপনার কোর্স
+          </div>
+
+          <div class="course-meta">
+            SNK AI Academy • Batch 01
+          </div>
+
+          <div class="course-badges">
+            <span class="badge">Offline</span>
+            <span class="badge">6 Months</span>
+            <span class="badge">Sat–Mon</span>
+            <span class="badge">4–6 PM</span>
+            <span class="badge">Active</span>
+          </div>
+
+        </div>
+
+        <a
+          href="courses.html"
+          class="back-btn"
+        >
+          📚 My Course
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <section class="section" style="text-align:center;">
+      <a
+        href="student-dashboard.html"
+        class="back-btn"
+      >
+        ← Dashboard-এ ফিরে যান
+      </a>
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <div class="footer-title">
+      SNK AI Academy — Student Portal
+    </div>
+
+    <div>
+      আপনার কোর্স • Batch 01 • Offline
+    </div>
+
+    <div style="margin-top:5px;">
+      © 2026 SNK AI Academy. Student Portal Demo.
+    </div>
+
+  </footer>
+
+
+  <div class="toast" id="toast"></div>
+
+
+  <script>
+
+    /* ================================
+       SESSION PROTECTION
+    ================================= */
+
+    if(
+      sessionStorage.getItem("snkStudentLoggedIn") !== "true"
+    ){
+      window.location.replace("login.html");
+    }
+
+
+    /* ================================
+       STUDENT INFORMATION
+    ================================= */
+
+    const studentId =
+      sessionStorage.getItem("snkStudentId") || "SNK-1001";
+
+    const studentName =
+      sessionStorage.getItem("snkStudentName") || "Demo Student";
+
+    document.getElementById("studentId").value =
+      studentId;
+
+    document.getElementById("studentName").value =
+      studentName;
+
+
+    /* ================================
+       THEME
+    ================================= */
+
+    const themeBtn =
+      document.getElementById("themeBtn");
+
+    function applyTheme(){
+
+      const theme =
+        localStorage.getItem("snkTheme") || "light";
+
+      document.body.classList.toggle(
+        "dark",
+        theme === "dark"
+      );
+
+      themeBtn.textContent =
+        theme === "dark" ? "☀️" : "🌙";
+    }
+
+    applyTheme();
+
+    themeBtn.addEventListener("click",function(){
+
+      const current =
+        localStorage.getItem("snkTheme") || "light";
+
+      const next =
+        current === "dark" ? "light" : "dark";
+
+      localStorage.setItem("snkTheme",next);
+
+      applyTheme();
+
+      showToast(
+        next === "dark"
+          ? "Dark mode চালু হয়েছে"
+          : "Light mode চালু হয়েছে"
+      );
+
+    });
+
+
+    /* ================================
+       LOGOUT
+    ================================= */
+
+    document
+      .getElementById("logoutBtn")
+      .addEventListener("click",function(){
+
+        const ok =
+          confirm("আপনি কি Logout করতে চান?");
+
+        if(!ok) return;
+
+        sessionStorage.removeItem(
+          "snkStudentLoggedIn"
+        );
+
+        sessionStorage.removeItem(
+          "snkStudentId"
+        );
+
+        sessionStorage.removeItem(
+          "snkStudentName"
+        );
+
+        sessionStorage.removeItem(
+          "snkStudentCourse"
+        );
+
+        window.location.href =
+          "login.html";
+      });
+
+
+    /* ================================
+       TOAST
+    ================================= */
+
+    const toast =
+      document.getElementById("toast");
+
+    let toastTimer;
+
+    function showToast(message){
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer =
+        setTimeout(function(){
+
+          toast.classList.remove("show");
+
+        },3000);
+    }
+
+
+    /* ================================
+       CONTACT REQUEST
+    ================================= */
+
+    const CONTACT_KEY =
+      "snkStudentContactRequests";
+
+    function getRequests(){
+
+      try{
+
+        const data =
+          JSON.parse(
+            localStorage.getItem(CONTACT_KEY) || "[]"
+          );
+
+        return Array.isArray(data)
+          ? data
+          : [];
+
+      }catch(error){
+
+        return [];
+      }
+    }
+
+
+    function saveRequests(data){
+
+      localStorage.setItem(
+        CONTACT_KEY,
+        JSON.stringify(data)
+      );
+    }
+
+
+    document
+      .getElementById("contactForm")
+      .addEventListener("submit",function(event){
+
+        event.preventDefault();
+
+        const type =
+          document.getElementById("contactType").value;
+
+        const priority =
+          document.getElementById("priority").value;
+
+        const subject =
+          document.getElementById("subject").value.trim();
+
+        const message =
+          document.getElementById("message").value.trim();
+
+
+        if(!type || !priority || !subject || !message){
+
+          showToast(
+            "দয়া করে সব প্রয়োজনীয় তথ্য পূরণ করুন।"
+          );
+
+          return;
+        }
+
+
+        const request = {
+
+          id:
+            "CONTACT-" + Date.now(),
+
+          studentId:
+            studentId,
+
+          studentName:
+            studentName,
+
+          course:
+            "আপনার কোর্স",
+
+          batch:
+            "Batch 01",
+
+          type:
+            type,
+
+          priority:
+            priority,
+
+          subject:
+            subject,
+
+          message:
+            message,
+
+          status:
+            "Pending",
+
+          createdAt:
+            new Date().toISOString()
+
+        };
+
+
+        const requests =
+          getRequests();
+
+        requests.unshift(request);
+
+        saveRequests(requests);
+
+
+        this.reset();
+
+        document.getElementById(
+          "studentId"
+        ).value = studentId;
+
+        document.getElementById(
+          "studentName"
+        ).value = studentName;
+
+
+        showToast(
+          "আপনার Contact Request সফলভাবে পাঠানো হয়েছে।"
+        );
+
+      });
+
+
+    /* ================================
+       FAQ ACCORDION
+    ================================= */
+
+    document
+      .querySelectorAll(".faq-question")
+      .forEach(function(button){
+
+        button.addEventListener("click",function(){
+
+          const faq =
+            this.closest(".faq");
+
+          const isOpen =
+            faq.classList.contains("open");
+
+
+          document
+            .querySelectorAll(".faq.open")
+            .forEach(function(item){
+
+              item.classList.remove("open");
+
+            });
+
+
+          if(!isOpen){
+
+            faq.classList.add("open");
+
+          }
+
+        });
+
+      });
+
+
+    /* ================================
+       STORAGE REFRESH
+    ================================= */
+
+    window.addEventListener(
+      "storage",
+      function(){
+
+        applyTheme();
+
+      }
+    );
+
+
+    document.addEventListener(
+      "visibilitychange",
+      function(){
+
+        if(
+          document.visibilityState === "visible"
+        ){
+
+          applyTheme();
+
+        }
+
+      }
+    );
+
+
+    /* ================================
+       SYSTEM THEME
+    ================================= */
+
+    const mediaQuery =
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+
+
+    mediaQuery.addEventListener(
+      "change",
+      function(){
+
+        const saved =
+          localStorage.getItem("snkTheme");
+
+        if(!saved){
+
+          document.body.classList.toggle(
+            "dark",
+            mediaQuery.matches
+          );
+
+          themeBtn.textContent =
+            mediaQuery.matches
+              ? "☀️"
+              : "🌙";
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
+```

@@ -1,0 +1,2582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071a0e">
+
+  <title>Attendance | SNK AI Academy</title>
+
+  <meta
+    name="description"
+    content="SNK AI Academy Student Attendance Portal"
+  >
+
+  <style>
+    :root{
+      --green-950:#06120b;
+      --green-900:#071a0e;
+      --green-850:#092413;
+      --green-800:#0b3018;
+      --green-700:#15803d;
+      --green-600:#16a34a;
+      --green-500:#22c55e;
+      --green-400:#4ade80;
+      --green-300:#86efac;
+      --emerald:#10b981;
+      --lime:#a3e635;
+
+      --white:#f0fdf4;
+      --text:#dcfce7;
+      --muted:#94a3b8;
+
+      --border:rgba(134,239,172,.13);
+      --glass:rgba(9,36,19,.72);
+      --shadow:0 20px 60px rgba(0,0,0,.25);
+
+      --radius:24px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      color:var(--text);
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 8% 8%,
+          rgba(34,197,94,.12),
+          transparent 27%
+        ),
+        radial-gradient(
+          circle at 92% 25%,
+          rgba(16,185,129,.09),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 50% 100%,
+          rgba(163,230,53,.06),
+          transparent 30%
+        ),
+        var(--green-950);
+
+      overflow-x:hidden;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button{
+      font:inherit;
+    }
+
+    /* =========================================
+       BACKGROUND
+    ========================================= */
+
+    .page-glow{
+      position:fixed;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      filter:blur(100px);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .glow-one{
+      top:-190px;
+      left:-170px;
+      background:rgba(34,197,94,.07);
+    }
+
+    .glow-two{
+      top:45%;
+      right:-190px;
+      background:rgba(16,185,129,.06);
+    }
+
+    /* =========================================
+       NAVBAR
+    ========================================= */
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      height:76px;
+
+      border-bottom:1px solid var(--border);
+
+      background:rgba(6,18,11,.78);
+
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+    }
+
+    .nav-inner{
+      width:min(1400px,calc(100% - 36px));
+      height:100%;
+      margin:auto;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-shrink:0;
+    }
+
+    .brand-logo{
+      width:42px;
+      height:42px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:13px;
+
+      color:#06120b;
+      font-size:17px;
+      font-weight:950;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      box-shadow:
+        0 0 28px rgba(74,222,128,.18);
+    }
+
+    .brand-text strong{
+      display:block;
+      color:var(--white);
+      font-size:14px;
+    }
+
+    .brand-text span{
+      display:block;
+      margin-top:2px;
+
+      color:var(--muted);
+      font-size:10px;
+      letter-spacing:1.5px;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .nav-links a{
+      padding:10px 12px;
+      border-radius:11px;
+
+      color:var(--muted);
+
+      font-size:12px;
+      font-weight:750;
+
+      transition:.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:var(--white);
+      background:rgba(34,197,94,.10);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .nav-btn{
+      width:38px;
+      height:38px;
+
+      border:1px solid var(--border);
+      border-radius:12px;
+
+      color:var(--text);
+      background:rgba(255,255,255,.03);
+
+      cursor:pointer;
+
+      transition:.25s ease;
+    }
+
+    .nav-btn:hover{
+      border-color:rgba(134,239,172,.25);
+      background:rgba(34,197,94,.08);
+    }
+
+    .menu-btn{
+      display:none;
+    }
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    .container{
+      width:min(1400px,calc(100% - 36px));
+      margin:auto;
+    }
+
+    main{
+      padding:44px 0 80px;
+    }
+
+    .breadcrumb{
+      display:flex;
+      align-items:center;
+      gap:8px;
+
+      margin-bottom:18px;
+
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .breadcrumb span:last-child{
+      color:var(--green-300);
+    }
+
+    .page-heading{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:25px;
+
+      margin-bottom:30px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+
+      padding:7px 11px;
+      margin-bottom:13px;
+
+      border:1px solid rgba(74,222,128,.13);
+      border-radius:999px;
+
+      color:var(--green-300);
+      background:rgba(34,197,94,.08);
+
+      font-size:10px;
+      font-weight:850;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .eyebrow-dot{
+      width:6px;
+      height:6px;
+
+      border-radius:50%;
+
+      background:var(--green-400);
+
+      box-shadow:
+        0 0 10px var(--green-400);
+    }
+
+    h1{
+      color:var(--white);
+
+      font-size:clamp(32px,5vw,52px);
+      line-height:1;
+
+      letter-spacing:-1.8px;
+    }
+
+    .heading-copy{
+      max-width:650px;
+
+      margin-top:12px;
+
+      color:var(--muted);
+
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .student-mini{
+      min-width:230px;
+
+      padding:17px;
+
+      border:1px solid var(--border);
+      border-radius:18px;
+
+      background:var(--glass);
+
+      box-shadow:var(--shadow);
+    }
+
+    .student-mini-label{
+      color:var(--muted);
+
+      font-size:10px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .student-mini strong{
+      display:block;
+
+      margin-top:5px;
+
+      color:var(--white);
+      font-size:16px;
+    }
+
+    .student-mini-id{
+      margin-top:4px;
+
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    /* =========================================
+       COMMON CARD
+    ========================================= */
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(11,48,24,.76),
+          rgba(7,26,14,.78)
+        );
+
+      box-shadow:var(--shadow);
+    }
+
+    /* =========================================
+       SUMMARY
+    ========================================= */
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+
+      margin-bottom:22px;
+    }
+
+    .summary-card{
+      position:relative;
+      overflow:hidden;
+
+      padding:22px;
+    }
+
+    .summary-card::after{
+      content:"";
+
+      position:absolute;
+
+      width:120px;
+      height:120px;
+
+      right:-45px;
+      top:-45px;
+
+      border-radius:50%;
+
+      background:rgba(74,222,128,.06);
+    }
+
+    .summary-icon{
+      width:44px;
+      height:44px;
+
+      display:grid;
+      place-items:center;
+
+      margin-bottom:17px;
+
+      border:1px solid rgba(134,239,172,.10);
+      border-radius:14px;
+
+      background:rgba(34,197,94,.09);
+
+      font-size:18px;
+    }
+
+    .summary-label{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .summary-value{
+      margin-top:5px;
+
+      color:var(--white);
+
+      font-size:30px;
+      font-weight:950;
+    }
+
+    .summary-note{
+      margin-top:5px;
+
+      color:var(--green-300);
+
+      font-size:11px;
+    }
+
+    /* =========================================
+       ATTENDANCE HERO
+    ========================================= */
+
+    .attendance-hero{
+      display:grid;
+      grid-template-columns:310px 1fr;
+      gap:28px;
+
+      padding:28px;
+
+      margin-bottom:22px;
+    }
+
+    .attendance-circle-wrap{
+      min-height:280px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .attendance-circle{
+      width:220px;
+      height:220px;
+
+      display:grid;
+      place-items:center;
+
+      position:relative;
+
+      border-radius:50%;
+
+      background:
+        conic-gradient(
+          var(--green-400) 0deg 331deg,
+          rgba(255,255,255,.06) 331deg 360deg
+        );
+
+      box-shadow:
+        0 0 70px rgba(34,197,94,.10);
+    }
+
+    .attendance-circle::before{
+      content:"";
+
+      position:absolute;
+
+      width:174px;
+      height:174px;
+
+      border-radius:50%;
+
+      background:var(--green-900);
+
+      border:1px solid rgba(134,239,172,.10);
+    }
+
+    .circle-content{
+      position:relative;
+      z-index:2;
+
+      text-align:center;
+    }
+
+    .circle-number{
+      color:var(--white);
+
+      font-size:52px;
+      font-weight:950;
+      line-height:1;
+    }
+
+    .circle-percent{
+      color:var(--green-300);
+
+      font-size:16px;
+      font-weight:850;
+    }
+
+    .circle-label{
+      margin-top:5px;
+
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .attendance-info{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .status-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+
+      width:max-content;
+
+      padding:8px 13px;
+
+      border:1px solid rgba(74,222,128,.15);
+      border-radius:999px;
+
+      color:#052e16;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--green-300),
+          var(--green-400)
+        );
+
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+    }
+
+    .attendance-info h2{
+      margin:16px 0 8px;
+
+      color:var(--white);
+      font-size:28px;
+    }
+
+    .attendance-info p{
+      max-width:680px;
+
+      color:var(--muted);
+
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .attendance-meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+
+      margin-top:20px;
+    }
+
+    .meta-box{
+      padding:13px;
+
+      border:1px solid var(--border);
+      border-radius:14px;
+
+      background:rgba(255,255,255,.02);
+    }
+
+    .meta-box span{
+      display:block;
+
+      color:var(--muted);
+
+      font-size:9px;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+    }
+
+    .meta-box strong{
+      display:block;
+
+      margin-top:4px;
+
+      color:var(--text);
+      font-size:13px;
+    }
+
+    /* =========================================
+       GRID
+    ========================================= */
+
+    .content-grid{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:22px;
+    }
+
+    .section-card{
+      padding:24px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+
+      margin-bottom:20px;
+    }
+
+    .section-title{
+      color:var(--white);
+
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .section-sub{
+      margin-top:4px;
+
+      color:var(--muted);
+
+      font-size:11px;
+    }
+
+    /* =========================================
+       CALENDAR
+    ========================================= */
+
+    .calendar-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      margin-bottom:18px;
+    }
+
+    .month-title{
+      color:var(--white);
+
+      font-size:15px;
+      font-weight:850;
+    }
+
+    .month-controls{
+      display:flex;
+      gap:7px;
+    }
+
+    .month-btn{
+      width:32px;
+      height:32px;
+
+      border:1px solid var(--border);
+      border-radius:10px;
+
+      color:var(--text);
+      background:rgba(255,255,255,.025);
+
+      cursor:pointer;
+    }
+
+    .weekdays,
+    .calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:6px;
+    }
+
+    .weekday{
+      padding:7px 0;
+
+      color:var(--muted);
+
+      text-align:center;
+
+      font-size:9px;
+      font-weight:850;
+      text-transform:uppercase;
+    }
+
+    .day{
+      min-height:52px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      position:relative;
+
+      border:1px solid rgba(134,239,172,.06);
+      border-radius:12px;
+
+      color:var(--muted);
+
+      background:rgba(255,255,255,.015);
+
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .day.present{
+      color:var(--green-300);
+      background:rgba(34,197,94,.08);
+      border-color:rgba(74,222,128,.12);
+    }
+
+    .day.absent{
+      color:#fda4af;
+      background:rgba(244,63,94,.06);
+      border-color:rgba(244,63,94,.10);
+    }
+
+    .day.late{
+      color:#fde68a;
+      background:rgba(234,179,8,.06);
+      border-color:rgba(234,179,8,.10);
+    }
+
+    .day.today{
+      box-shadow:
+        inset 0 0 0 1px var(--green-400),
+        0 0 20px rgba(74,222,128,.08);
+    }
+
+    .day.empty{
+      opacity:.15;
+      border-color:transparent;
+      background:transparent;
+    }
+
+    .day-dot{
+      position:absolute;
+
+      width:4px;
+      height:4px;
+
+      bottom:6px;
+
+      border-radius:50%;
+      background:currentColor;
+    }
+
+    .calendar-legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:13px;
+
+      margin-top:18px;
+    }
+
+    .legend{
+      display:flex;
+      align-items:center;
+      gap:6px;
+
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .legend-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+    }
+
+    .legend-present{
+      background:var(--green-400);
+    }
+
+    .legend-absent{
+      background:#fb7185;
+    }
+
+    .legend-late{
+      background:#facc15;
+    }
+
+    /* =========================================
+       BREAKDOWN
+    ========================================= */
+
+    .breakdown-list{
+      display:grid;
+      gap:17px;
+    }
+
+    .breakdown-item{
+      display:grid;
+      gap:8px;
+    }
+
+    .breakdown-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .breakdown-top span:first-child{
+      color:var(--text);
+
+      font-size:12px;
+      font-weight:750;
+    }
+
+    .breakdown-top span:last-child{
+      color:var(--green-300);
+
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .progress-bar{
+      height:8px;
+
+      overflow:hidden;
+
+      border-radius:999px;
+
+      background:rgba(255,255,255,.06);
+    }
+
+    .progress-bar span{
+      display:block;
+
+      height:100%;
+
+      border-radius:inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--green-600),
+          var(--green-300)
+        );
+    }
+
+    .attendance-tip{
+      margin-top:22px;
+      padding:17px;
+
+      border:1px solid rgba(163,230,53,.10);
+      border-radius:16px;
+
+      background:rgba(163,230,53,.045);
+    }
+
+    .attendance-tip strong{
+      display:block;
+
+      color:var(--lime);
+
+      font-size:12px;
+    }
+
+    .attendance-tip p{
+      margin-top:5px;
+
+      color:var(--muted);
+
+      font-size:10px;
+      line-height:1.6;
+    }
+
+    /* =========================================
+       HISTORY
+    ========================================= */
+
+    .history-card{
+      margin-top:22px;
+      padding:24px;
+    }
+
+    .history-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .history-row{
+      display:grid;
+      grid-template-columns:1.2fr .7fr .6fr .7fr;
+      align-items:center;
+      gap:15px;
+
+      padding:15px;
+
+      border:1px solid rgba(134,239,172,.07);
+      border-radius:15px;
+
+      background:rgba(255,255,255,.018);
+
+      transition:.2s ease;
+    }
+
+    .history-row:hover{
+      transform:translateY(-1px);
+      background:rgba(34,197,94,.025);
+    }
+
+    .class-name{
+      color:var(--white);
+
+      font-size:12px;
+      font-weight:850;
+    }
+
+    .class-date,
+    .class-time{
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .attendance-status{
+      display:inline-flex;
+      width:max-content;
+
+      padding:6px 9px;
+
+      border-radius:999px;
+
+      font-size:9px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .status-present{
+      color:var(--green-300);
+      background:rgba(34,197,94,.08);
+      border:1px solid rgba(74,222,128,.10);
+    }
+
+    .status-absent{
+      color:#fda4af;
+      background:rgba(244,63,94,.07);
+      border:1px solid rgba(244,63,94,.10);
+    }
+
+    .status-late{
+      color:#fde68a;
+      background:rgba(234,179,8,.07);
+      border:1px solid rgba(234,179,8,.10);
+    }
+
+    /* =========================================
+       BUTTON
+    ========================================= */
+
+    .btn{
+      border:0;
+      border-radius:13px;
+
+      padding:11px 15px;
+
+      font-size:11px;
+      font-weight:850;
+
+      cursor:pointer;
+
+      transition:.25s ease;
+    }
+
+    .btn-primary{
+      color:#052e16;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--green-300),
+          var(--green-400)
+        );
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-secondary{
+      color:var(--text);
+
+      border:1px solid var(--border);
+
+      background:rgba(255,255,255,.035);
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer{
+      padding:25px 0;
+
+      border-top:1px solid var(--border);
+
+      background:rgba(6,18,11,.55);
+    }
+
+    .footer-inner{
+      width:min(1400px,calc(100% - 36px));
+      margin:auto;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+
+      color:var(--muted);
+
+      font-size:11px;
+    }
+
+    .footer-brand{
+      color:var(--green-300);
+      font-weight:850;
+    }
+
+    /* =========================================
+       LOGIN MODAL
+    ========================================= */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:3000;
+
+      display:none;
+      align-items:center;
+      justify-content:center;
+
+      padding:20px;
+
+      background:rgba(0,0,0,.68);
+
+      backdrop-filter:blur(12px);
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-box{
+      width:min(420px,100%);
+
+      padding:28px;
+
+      border:1px solid var(--border);
+      border-radius:24px;
+
+      text-align:center;
+
+      background:
+        linear-gradient(
+          145deg,
+          #0b3018,
+          #071a0e
+        );
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.45);
+    }
+
+    .modal-icon{
+      width:60px;
+      height:60px;
+
+      display:grid;
+      place-items:center;
+
+      margin:0 auto 18px;
+
+      border-radius:18px;
+
+      background:rgba(34,197,94,.10);
+
+      font-size:25px;
+    }
+
+    .modal-box h3{
+      color:var(--white);
+      font-size:22px;
+    }
+
+    .modal-box p{
+      margin:10px 0 22px;
+
+      color:var(--muted);
+
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    .modal-actions{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+    }
+
+    /* =========================================
+       TOAST
+    ========================================= */
+
+    .toast{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      z-index:4000;
+
+      min-width:260px;
+      max-width:360px;
+
+      padding:14px 16px;
+
+      border:1px solid var(--border);
+      border-radius:15px;
+
+      background:#0b3018;
+
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+
+      transform:translateY(120px);
+      opacity:0;
+
+      transition:.3s ease;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    .toast strong{
+      display:block;
+
+      margin-bottom:3px;
+
+      color:var(--white);
+      font-size:12px;
+    }
+
+    .toast span{
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media(max-width:1100px){
+
+      .nav-links{
+        display:none;
+      }
+
+      .menu-btn{
+        display:block;
+      }
+
+      .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .content-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:760px){
+
+      .navbar{
+        height:68px;
+      }
+
+      .container,
+      .nav-inner,
+      .footer-inner{
+        width:min(100% - 24px,1400px);
+      }
+
+      main{
+        padding:28px 0 60px;
+      }
+
+      .page-heading{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .student-mini{
+        width:100%;
+      }
+
+      .summary-grid{
+        gap:10px;
+      }
+
+      .summary-card{
+        padding:17px;
+      }
+
+      .summary-value{
+        font-size:24px;
+      }
+
+      .attendance-hero{
+        grid-template-columns:1fr;
+        padding:20px;
+      }
+
+      .attendance-circle-wrap{
+        min-height:235px;
+      }
+
+      .attendance-meta{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .history-row{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .footer-inner{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:480px){
+
+      h1{
+        font-size:34px;
+      }
+
+      .summary-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .summary-card{
+        padding:15px;
+      }
+
+      .summary-icon{
+        width:38px;
+        height:38px;
+      }
+
+      .summary-value{
+        font-size:22px;
+      }
+
+      .attendance-circle{
+        width:195px;
+        height:195px;
+      }
+
+      .attendance-circle::before{
+        width:153px;
+        height:153px;
+      }
+
+      .circle-number{
+        font-size:45px;
+      }
+
+      .attendance-meta{
+        grid-template-columns:1fr;
+      }
+
+      .section-card,
+      .history-card{
+        padding:17px;
+      }
+
+      .calendar-grid{
+        gap:4px;
+      }
+
+      .day{
+        min-height:44px;
+        border-radius:9px;
+        font-size:10px;
+      }
+
+      .history-row{
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+
+      .modal-actions{
+        flex-direction:column;
+      }
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <div class="page-glow glow-one"></div>
+  <div class="page-glow glow-two"></div>
+
+  <!-- =========================================
+       NAVBAR
+  ========================================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-inner">
+
+      <a href="index.html" class="brand">
+
+        <div class="brand-logo">
+          SNK
+        </div>
+
+        <div class="brand-text">
+          <strong>SNK AI Academy</strong>
+          <span>STUDENT PORTAL</span>
+        </div>
+
+      </a>
+
+      <div class="nav-links">
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="courses.html">
+          My Course
+        </a>
+
+        <a href="assignments.html">
+          Assignment
+        </a>
+
+        <a href="quiz.html">
+          Quiz
+        </a>
+
+        <a href="results.html">
+          Result
+        </a>
+
+        <a href="student-attendance.html" class="active">
+          Attendance
+        </a>
+
+        <a href="student-resources.html">
+          Resources
+        </a>
+
+      </div>
+
+      <div class="nav-actions">
+
+        <button
+          class="nav-btn"
+          onclick="toggleTheme()"
+          title="Theme"
+        >
+          ◐
+        </button>
+
+        <button
+          class="nav-btn menu-btn"
+          onclick="toggleMenu()"
+          title="Menu"
+        >
+          ☰
+        </button>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================================
+       MAIN
+  ========================================= -->
+
+  <main>
+
+    <div class="container">
+
+      <!-- Breadcrumb -->
+
+      <div class="breadcrumb">
+
+        <a href="student-dashboard.html">
+          Dashboard
+        </a>
+
+        <span>›</span>
+
+        <span>
+          Attendance
+        </span>
+
+      </div>
+
+
+      <!-- Heading -->
+
+      <section class="page-heading">
+
+        <div>
+
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Academic Attendance
+          </div>
+
+          <h1>
+            My Attendance
+          </h1>
+
+          <p class="heading-copy">
+            Keep track of your class attendance, present days,
+            late entries and overall attendance percentage.
+          </p>
+
+        </div>
+
+
+        <div class="student-mini">
+
+          <div class="student-mini-label">
+            Student
+          </div>
+
+          <strong id="studentName">
+            Student
+          </strong>
+
+          <div class="student-mini-id" id="studentId">
+            SNK-0001
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================================
+           SUMMARY
+      ========================================= -->
+
+      <section class="summary-grid">
+
+        <div class="card summary-card">
+
+          <div class="summary-icon">
+            📅
+          </div>
+
+          <div class="summary-label">
+            Total Classes
+          </div>
+
+          <div class="summary-value">
+            26
+          </div>
+
+          <div class="summary-note">
+            Classes conducted
+          </div>
+
+        </div>
+
+
+        <div class="card summary-card">
+
+          <div class="summary-icon">
+            ✓
+          </div>
+
+          <div class="summary-label">
+            Present
+          </div>
+
+          <div class="summary-value">
+            24
+          </div>
+
+          <div class="summary-note">
+            Attended classes
+          </div>
+
+        </div>
+
+
+        <div class="card summary-card">
+
+          <div class="summary-icon">
+            ⏰
+          </div>
+
+          <div class="summary-label">
+            Late
+          </div>
+
+          <div class="summary-value">
+            1
+          </div>
+
+          <div class="summary-note">
+            Late arrival
+          </div>
+
+        </div>
+
+
+        <div class="card summary-card">
+
+          <div class="summary-icon">
+            %
+          </div>
+
+          <div class="summary-label">
+            Attendance
+          </div>
+
+          <div class="summary-value">
+            92%
+          </div>
+
+          <div class="summary-note">
+            Current percentage
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================================
+           ATTENDANCE HERO
+      ========================================= -->
+
+      <section class="card attendance-hero">
+
+        <div class="attendance-circle-wrap">
+
+          <div class="attendance-circle">
+
+            <div class="circle-content">
+
+              <div class="circle-number">
+                92
+              </div>
+
+              <div class="circle-percent">
+                %
+              </div>
+
+              <div class="circle-label">
+                Attendance
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="attendance-info">
+
+          <span class="status-badge">
+            ✓ Attendance On Track
+          </span>
+
+          <h2>
+            AI-Powered UI/UX Design
+          </h2>
+
+          <p>
+            You have attended most of your scheduled classes.
+            Continue maintaining regular attendance to stay
+            on track with the course.
+          </p>
+
+
+          <div class="attendance-meta">
+
+            <div class="meta-box">
+
+              <span>
+                Course
+              </span>
+
+              <strong>
+                Batch 01
+              </strong>
+
+            </div>
+
+
+            <div class="meta-box">
+
+              <span>
+                Class Time
+              </span>
+
+              <strong>
+                4:00 PM – 6:00 PM
+              </strong>
+
+            </div>
+
+
+            <div class="meta-box">
+
+              <span>
+                Mode
+              </span>
+
+              <strong>
+                Offline
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================================
+           CALENDAR + BREAKDOWN
+      ========================================= -->
+
+      <div class="content-grid">
+
+
+        <!-- CALENDAR -->
+
+        <section class="card section-card">
+
+          <div class="section-head">
+
+            <div>
+
+              <div class="section-title">
+                Attendance Calendar
+              </div>
+
+              <div class="section-sub">
+                October 2026 attendance overview
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="calendar-top">
+
+            <div class="month-title" id="monthTitle">
+              October 2026
+            </div>
+
+            <div class="month-controls">
+
+              <button
+                class="month-btn"
+                onclick="previousMonth()"
+                title="Previous month"
+              >
+                ‹
+              </button>
+
+              <button
+                class="month-btn"
+                onclick="nextMonth()"
+                title="Next month"
+              >
+                ›
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="weekdays">
+
+            <div class="weekday">Sun</div>
+            <div class="weekday">Mon</div>
+            <div class="weekday">Tue</div>
+            <div class="weekday">Wed</div>
+            <div class="weekday">Thu</div>
+            <div class="weekday">Fri</div>
+            <div class="weekday">Sat</div>
+
+          </div>
+
+
+          <div
+            class="calendar-grid"
+            id="calendarGrid"
+          ></div>
+
+
+          <div class="calendar-legend">
+
+            <div class="legend">
+              <span class="legend-dot legend-present"></span>
+              Present
+            </div>
+
+            <div class="legend">
+              <span class="legend-dot legend-absent"></span>
+              Absent
+            </div>
+
+            <div class="legend">
+              <span class="legend-dot legend-late"></span>
+              Late
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- BREAKDOWN -->
+
+        <section class="card section-card">
+
+          <div class="section-head">
+
+            <div>
+
+              <div class="section-title">
+                Attendance Breakdown
+              </div>
+
+              <div class="section-sub">
+                Current attendance by month
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="breakdown-list">
+
+
+            <div class="breakdown-item">
+
+              <div class="breakdown-top">
+
+                <span>
+                  August
+                </span>
+
+                <span>
+                  100%
+                </span>
+
+              </div>
+
+              <div class="progress-bar">
+                <span style="width:100%"></span>
+              </div>
+
+            </div>
+
+
+            <div class="breakdown-item">
+
+              <div class="breakdown-top">
+
+                <span>
+                  September
+                </span>
+
+                <span>
+                  94%
+                </span>
+
+              </div>
+
+              <div class="progress-bar">
+                <span style="width:94%"></span>
+              </div>
+
+            </div>
+
+
+            <div class="breakdown-item">
+
+              <div class="breakdown-top">
+
+                <span>
+                  October
+                </span>
+
+                <span>
+                  92%
+                </span>
+
+              </div>
+
+              <div class="progress-bar">
+                <span style="width:92%"></span>
+              </div>
+
+            </div>
+
+
+            <div class="breakdown-item">
+
+              <div class="breakdown-top">
+
+                <span>
+                  Overall
+                </span>
+
+                <span>
+                  92%
+                </span>
+
+              </div>
+
+              <div class="progress-bar">
+                <span style="width:92%"></span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="attendance-tip">
+
+            <strong>
+              💡 Attendance Tip
+            </strong>
+
+            <p>
+              Maintaining 90%+ attendance helps you stay
+              consistent with practical classes, assignments
+              and project work.
+            </p>
+
+          </div>
+
+        </section>
+
+      </div>
+
+
+      <!-- =========================================
+           HISTORY
+      ========================================= -->
+
+      <section class="card history-card">
+
+        <div class="section-head">
+
+          <div>
+
+            <div class="section-title">
+              Attendance History
+            </div>
+
+            <div class="section-sub">
+              Recent class attendance records
+            </div>
+
+          </div>
+
+          <button
+            class="btn btn-secondary"
+            onclick="showToast(
+              'Attendance report',
+              'Demo report download is not connected yet.'
+            )"
+          >
+            ↓ Report
+          </button>
+
+        </div>
+
+
+        <div class="history-list">
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              UI Design System
+            </div>
+
+            <div class="class-date">
+              30 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-present">
+                Present
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              Figma Components
+            </div>
+
+            <div class="class-date">
+              28 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-present">
+                Present
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              Responsive UI
+            </div>
+
+            <div class="class-date">
+              26 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-late">
+                Late
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              Wireframing Practice
+            </div>
+
+            <div class="class-date">
+              24 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-present">
+                Present
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              UX Research Workshop
+            </div>
+
+            <div class="class-date">
+              22 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-absent">
+                Absent
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              User Persona
+            </div>
+
+            <div class="class-date">
+              20 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-present">
+                Present
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              Information Architecture
+            </div>
+
+            <div class="class-date">
+              18 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-present">
+                Present
+              </span>
+            </div>
+
+          </div>
+
+
+          <div class="history-row">
+
+            <div class="class-name">
+              UX Fundamentals
+            </div>
+
+            <div class="class-date">
+              16 Sep 2026
+            </div>
+
+            <div class="class-time">
+              4:00 PM
+            </div>
+
+            <div>
+              <span class="attendance-status status-present">
+                Present
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+
+  <footer>
+
+    <div class="footer-inner">
+
+      <div>
+
+        © 2026
+        <span class="footer-brand">
+          SNK AI Academy
+        </span>
+        · Student Portal
+
+      </div>
+
+      <div>
+        Learn · Practice · Grow
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================================
+       LOGIN MODAL
+  ========================================= -->
+
+  <div class="modal" id="loginModal">
+
+    <div class="modal-box">
+
+      <div class="modal-icon">
+        🔐
+      </div>
+
+      <h3>
+        Student Login Required
+      </h3>
+
+      <p>
+        Please login to access your attendance records
+        and academic information.
+      </p>
+
+      <div class="modal-actions">
+
+        <button
+          class="btn btn-secondary"
+          onclick="closeLoginModal()"
+        >
+          Close
+        </button>
+
+        <button
+          class="btn btn-primary"
+          onclick="window.location.href='login.html'"
+        >
+          Go to Login
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================
+       TOAST
+  ========================================= -->
+
+  <div class="toast" id="toast">
+
+    <strong id="toastTitle">
+      Done
+    </strong>
+
+    <span id="toastMessage">
+      Action completed.
+    </span>
+
+  </div>
+
+
+  <script>
+
+    /* =========================================
+       STUDENT DATA
+    ========================================= */
+
+    const studentName =
+      localStorage.getItem("snkStudentName") ||
+      "Student";
+
+    const studentId =
+      localStorage.getItem("snkStudentId") ||
+      "SNK-0001";
+
+    document.getElementById("studentName")
+      .textContent = studentName;
+
+    document.getElementById("studentId")
+      .textContent = studentId;
+
+
+    /* =========================================
+       LOGIN PROTECTION
+    ========================================= */
+
+    const isLoggedIn =
+      localStorage.getItem("snkStudentLoggedIn") === "true" ||
+      sessionStorage.getItem("snkStudentLoggedIn") === "true";
+
+    const REQUIRE_LOGIN = true;
+
+    if(!isLoggedIn && REQUIRE_LOGIN){
+
+      document
+        .getElementById("loginModal")
+        .classList.add("show");
+
+      document.body.style.overflow = "hidden";
+
+    }
+
+
+    function closeLoginModal(){
+
+      document
+        .getElementById("loginModal")
+        .classList.remove("show");
+
+      document.body.style.overflow = "";
+
+    }
+
+
+    /* =========================================
+       MOBILE MENU
+    ========================================= */
+
+    function toggleMenu(){
+
+      const links =
+        document.querySelector(".nav-links");
+
+      if(links.style.display === "flex"){
+
+        links.style.display = "";
+
+      }else{
+
+        links.style.display = "flex";
+
+        links.style.position = "fixed";
+        links.style.top = "68px";
+        links.style.left = "12px";
+        links.style.right = "12px";
+
+        links.style.padding = "12px";
+
+        links.style.flexDirection = "column";
+        links.style.alignItems = "stretch";
+
+        links.style.background = "#071a0e";
+
+        links.style.border =
+          "1px solid rgba(134,239,172,.13)";
+
+        links.style.borderRadius = "18px";
+
+        links.style.boxShadow =
+          "0 20px 60px rgba(0,0,0,.35)";
+
+      }
+
+    }
+
+
+    /* =========================================
+       THEME
+    ========================================= */
+
+    function toggleTheme(){
+
+      showToast(
+        "Green Premium Theme",
+        "Theme system is ready for future customization."
+      );
+
+    }
+
+
+    /* =========================================
+       CALENDAR
+    ========================================= */
+
+    let calendarDate =
+      new Date(2026,9,1);
+
+
+    const attendanceData = {
+
+      "2026-9-1":"present",
+      "2026-9-2":"present",
+      "2026-9-3":"present",
+      "2026-9-5":"present",
+      "2026-9-6":"present",
+      "2026-9-8":"present",
+      "2026-9-9":"late",
+      "2026-9-10":"present",
+      "2026-9-12":"present",
+      "2026-9-13":"present",
+      "2026-9-15":"present",
+      "2026-9-16":"present",
+      "2026-9-17":"absent",
+      "2026-9-19":"present",
+      "2026-9-20":"present",
+      "2026-9-22":"present",
+      "2026-9-23":"present",
+      "2026-9-24":"present",
+      "2026-9-26":"present",
+      "2026-9-27":"present",
+      "2026-9-29":"present",
+      "2026-9-30":"present"
+
+    };
+
+
+    function renderCalendar(){
+
+      const year =
+        calendarDate.getFullYear();
+
+      const month =
+        calendarDate.getMonth();
+
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+
+      document.getElementById("monthTitle")
+        .textContent =
+        `${monthNames[month]} ${year}`;
+
+
+      const grid =
+        document.getElementById("calendarGrid");
+
+      grid.innerHTML = "";
+
+
+      const firstDay =
+        new Date(year,month,1).getDay();
+
+      const totalDays =
+        new Date(year,month + 1,0).getDate();
+
+
+      /* EMPTY CELLS */
+
+      for(let i=0;i<firstDay;i++){
+
+        const empty =
+          document.createElement("div");
+
+        empty.className = "day empty";
+
+        grid.appendChild(empty);
+
+      }
+
+
+      /* DAYS */
+
+      for(let day=1;day<=totalDays;day++){
+
+        const cell =
+          document.createElement("div");
+
+        cell.className = "day";
+
+        const key =
+          `${year}-${month}-${day}`;
+
+        const status =
+          attendanceData[key];
+
+        if(status){
+
+          cell.classList.add(status);
+
+          const dot =
+            document.createElement("span");
+
+          dot.className = "day-dot";
+
+          cell.appendChild(dot);
+
+        }
+
+
+        if(
+          year === 2026 &&
+          month === 9 &&
+          day === 1
+        ){
+
+          cell.classList.add("today");
+
+        }
+
+
+        const number =
+          document.createTextNode(day);
+
+        cell.prepend(number);
+
+        grid.appendChild(cell);
+
+      }
+
+    }
+
+
+    function previousMonth(){
+
+      calendarDate.setMonth(
+        calendarDate.getMonth() - 1
+      );
+
+      renderCalendar();
+
+    }
+
+
+    function nextMonth(){
+
+      calendarDate.setMonth(
+        calendarDate.getMonth() + 1
+      );
+
+      renderCalendar();
+
+    }
+
+
+    renderCalendar();
+
+
+    /* =========================================
+       TOAST
+    ========================================= */
+
+    let toastTimer;
+
+    function showToast(title,message){
+
+      const toast =
+        document.getElementById("toast");
+
+      document.getElementById("toastTitle")
+        .textContent = title;
+
+      document.getElementById("toastMessage")
+        .textContent = message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer =
+        setTimeout(()=>{
+
+          toast.classList.remove("show");
+
+        },3200);
+
+    }
+
+
+    /* =========================================
+       ESC
+    ========================================= */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(event.key === "Escape"){
+
+          closeLoginModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       OUTSIDE MODAL
+    ========================================= */
+
+    document
+      .getElementById("loginModal")
+      .addEventListener(
+        "click",
+        event => {
+
+          if(
+            event.target.id === "loginModal"
+          ){
+
+            closeLoginModal();
+
+          }
+
+        }
+      );
+
+  </script>
+
+</body>
+</html>

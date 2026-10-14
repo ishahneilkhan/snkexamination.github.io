@@ -1,0 +1,2654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Student ID Card | SNK AI Academy</title>
+
+  <meta
+    name="description"
+    content="SNK AI Academy Digital Student ID Card"
+  >
+
+  <meta name="theme-color" content="#06120b">
+
+  <style>
+    :root{
+      --green-950:#06120b;
+      --green-900:#071a0e;
+      --green-850:#092413;
+      --green-800:#0b3018;
+      --green-700:#15803d;
+      --green-600:#16a34a;
+      --green-500:#22c55e;
+      --green-400:#4ade80;
+      --green-300:#86efac;
+      --emerald:#10b981;
+      --lime:#a3e635;
+
+      --white:#f0fdf4;
+      --text:#dcfce7;
+      --muted:#94a3b8;
+
+      --border:rgba(134,239,172,.13);
+      --glass:rgba(9,36,19,.72);
+      --shadow:0 25px 70px rgba(0,0,0,.32);
+      --radius:24px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      color:var(--text);
+
+      background:
+        radial-gradient(
+          circle at 8% 0%,
+          rgba(34,197,94,.14),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 92% 15%,
+          rgba(16,185,129,.10),
+          transparent 28%
+        ),
+        linear-gradient(
+          135deg,
+          var(--green-950),
+          var(--green-900) 48%,
+          #041009
+        );
+
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+
+      background-image:
+        linear-gradient(
+          rgba(134,239,172,.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(134,239,172,.025) 1px,
+          transparent 1px
+        );
+
+      background-size:40px 40px;
+
+      mask-image:
+        linear-gradient(
+          to bottom,
+          black,
+          transparent 90%
+        );
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      border-bottom:1px solid var(--border);
+
+      background:rgba(4,16,9,.80);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+    }
+
+    .nav-inner{
+      width:min(1400px,92%);
+      min-height:76px;
+      margin:auto;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-shrink:0;
+    }
+
+    .brand-mark{
+      width:44px;
+      height:44px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:14px;
+
+      color:#031008;
+      font-size:17px;
+      font-weight:950;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      box-shadow:
+        0 0 30px rgba(74,222,128,.18);
+    }
+
+    .brand-title{
+      color:var(--white);
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:.04em;
+    }
+
+    .brand-sub{
+      margin-top:4px;
+
+      color:var(--muted);
+
+      font-size:10px;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:3px;
+    }
+
+    .nav-links a{
+      padding:10px 11px;
+
+      border-radius:12px;
+
+      color:#b8c7bd;
+
+      font-size:11px;
+      font-weight:750;
+
+      transition:.25s ease;
+    }
+
+    .nav-links a:hover{
+      color:var(--white);
+      background:rgba(74,222,128,.08);
+    }
+
+    .nav-links a.active{
+      color:var(--green-300);
+      background:rgba(34,197,94,.10);
+      border:1px solid rgba(134,239,172,.08);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .icon-btn{
+      width:40px;
+      height:40px;
+
+      display:grid;
+      place-items:center;
+
+      border:1px solid var(--border);
+      border-radius:12px;
+
+      color:var(--text);
+      background:rgba(255,255,255,.03);
+
+      transition:.25s ease;
+    }
+
+    .icon-btn:hover{
+      transform:translateY(-2px);
+      background:rgba(74,222,128,.08);
+    }
+
+    .menu-btn{
+      display:none;
+    }
+
+    /* ================= PAGE ================= */
+
+    .page{
+      width:min(1400px,92%);
+      margin:auto;
+
+      padding:48px 0 70px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+
+      padding:34px;
+
+      border:1px solid var(--border);
+      border-radius:32px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(21,128,61,.20),
+          rgba(9,36,19,.74)
+        );
+
+      box-shadow:var(--shadow);
+    }
+
+    .hero::after{
+      content:"";
+
+      position:absolute;
+
+      width:300px;
+      height:300px;
+
+      right:-100px;
+      top:-150px;
+
+      border-radius:50%;
+
+      background:
+        rgba(163,230,53,.08);
+
+      filter:blur(8px);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+
+      padding:7px 11px;
+
+      border:1px solid rgba(134,239,172,.12);
+      border-radius:999px;
+
+      color:var(--green-300);
+
+      background:rgba(34,197,94,.08);
+
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+
+    .eyebrow-dot{
+      width:7px;
+      height:7px;
+
+      border-radius:50%;
+
+      background:var(--green-400);
+
+      box-shadow:
+        0 0 12px var(--green-400);
+    }
+
+    .hero h1{
+      max-width:800px;
+
+      margin-top:18px;
+
+      color:var(--white);
+
+      font-size:
+        clamp(35px,5vw,62px);
+
+      line-height:1.02;
+      letter-spacing:-.045em;
+    }
+
+    .hero h1 span{
+      color:transparent;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--green-300),
+          var(--lime)
+        );
+
+      -webkit-background-clip:text;
+      background-clip:text;
+    }
+
+    .hero p{
+      max-width:720px;
+
+      margin-top:17px;
+
+      color:#9db1a4;
+
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    /* ================= LAYOUT ================= */
+
+    .content-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);
+
+      gap:24px;
+
+      margin-top:28px;
+
+      align-items:start;
+    }
+
+    .panel{
+      padding:24px;
+
+      border:1px solid var(--border);
+      border-radius:26px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(9,36,19,.82),
+          rgba(6,18,11,.76)
+        );
+
+      box-shadow:
+        0 15px 45px rgba(0,0,0,.18);
+    }
+
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+
+      margin-bottom:20px;
+    }
+
+    .panel-title{
+      color:var(--white);
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .panel-sub{
+      margin-top:5px;
+
+      color:var(--muted);
+
+      font-size:11px;
+      line-height:1.6;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+
+      padding:7px 10px;
+
+      border-radius:999px;
+
+      color:var(--green-300);
+
+      background:rgba(34,197,94,.08);
+      border:1px solid rgba(134,239,172,.12);
+
+      font-size:9px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .status-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--green-400);
+      box-shadow:0 0 10px var(--green-400);
+    }
+
+    /* ================= ID CARD ================= */
+
+    .card-stage{
+      min-height:590px;
+
+      display:grid;
+      place-items:center;
+
+      padding:25px;
+
+      border-radius:20px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(34,197,94,.07),
+          transparent 65%
+        ),
+        rgba(0,0,0,.10);
+    }
+
+    .id-card{
+      position:relative;
+
+      width:min(100%,430px);
+      min-height:600px;
+
+      overflow:hidden;
+
+      border-radius:30px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #0d3a1d 0%,
+          #092a15 48%,
+          #06170c 100%
+        );
+
+      border:1px solid rgba(134,239,172,.24);
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.48),
+        inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .id-card::before{
+      content:"";
+
+      position:absolute;
+
+      width:280px;
+      height:280px;
+
+      top:-145px;
+      right:-120px;
+
+      border-radius:50%;
+
+      border:1px solid rgba(163,230,53,.18);
+
+      box-shadow:
+        0 0 0 28px rgba(163,230,53,.025),
+        0 0 0 58px rgba(163,230,53,.018);
+    }
+
+    .id-card::after{
+      content:"";
+
+      position:absolute;
+
+      width:250px;
+      height:250px;
+
+      bottom:-130px;
+      left:-130px;
+
+      border-radius:50%;
+
+      border:1px solid rgba(74,222,128,.14);
+    }
+
+    .card-top{
+      position:relative;
+      z-index:2;
+
+      padding:24px 24px 20px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      border-bottom:1px solid rgba(134,239,172,.10);
+    }
+
+    .academy{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .academy-logo{
+      width:42px;
+      height:42px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:13px;
+
+      color:#031008;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      font-size:13px;
+      font-weight:950;
+    }
+
+    .academy-name{
+      color:var(--white);
+
+      font-size:12px;
+      font-weight:950;
+      letter-spacing:.04em;
+    }
+
+    .academy-type{
+      margin-top:3px;
+
+      color:#88a694;
+
+      font-size:8px;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+
+    .id-label{
+      padding:6px 9px;
+
+      border-radius:999px;
+
+      color:var(--green-300);
+
+      background:rgba(34,197,94,.09);
+      border:1px solid rgba(134,239,172,.12);
+
+      font-size:8px;
+      font-weight:950;
+      letter-spacing:.08em;
+    }
+
+    .photo-wrap{
+      position:relative;
+      z-index:2;
+
+      display:grid;
+      place-items:center;
+
+      padding-top:30px;
+    }
+
+    .student-photo{
+      width:145px;
+      height:145px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:50%;
+
+      color:#031008;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      border:7px solid rgba(240,253,244,.12);
+
+      outline:2px solid rgba(134,239,172,.25);
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,.25);
+
+      font-size:42px;
+      font-weight:950;
+    }
+
+    .active-badge{
+      position:absolute;
+
+      bottom:-5px;
+
+      padding:7px 11px;
+
+      border-radius:999px;
+
+      color:#04200d;
+
+      background:var(--green-400);
+
+      border:3px solid #0a2b16;
+
+      font-size:9px;
+      font-weight:950;
+      text-transform:uppercase;
+    }
+
+    .card-person{
+      position:relative;
+      z-index:2;
+
+      text-align:center;
+
+      padding:20px 24px 0;
+    }
+
+    .person-name{
+      color:var(--white);
+
+      font-size:25px;
+      font-weight:950;
+
+      letter-spacing:-.025em;
+    }
+
+    .person-role{
+      margin-top:5px;
+
+      color:var(--green-300);
+
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .details{
+      position:relative;
+      z-index:2;
+
+      display:grid;
+      grid-template-columns:1fr 1fr;
+
+      gap:9px;
+
+      padding:24px;
+    }
+
+    .detail-box{
+      padding:12px;
+
+      border-radius:14px;
+
+      background:rgba(0,0,0,.13);
+      border:1px solid rgba(134,239,172,.07);
+    }
+
+    .detail-label{
+      color:#73907d;
+
+      font-size:8px;
+
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .detail-value{
+      margin-top:5px;
+
+      color:var(--white);
+
+      font-size:10px;
+      font-weight:850;
+
+      line-height:1.35;
+    }
+
+    .card-bottom{
+      position:relative;
+      z-index:2;
+
+      margin:0 24px;
+      padding:16px 0;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      border-top:1px solid rgba(134,239,172,.10);
+    }
+
+    .signature{
+      color:#779180;
+
+      font-size:8px;
+      line-height:1.5;
+    }
+
+    .signature strong{
+      display:block;
+
+      color:#bce8c8;
+
+      font-size:9px;
+    }
+
+    .qr{
+      width:62px;
+      height:62px;
+
+      padding:5px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:10px;
+
+      background:#f0fdf4;
+
+      overflow:hidden;
+    }
+
+    .qr-pattern{
+      width:100%;
+      height:100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          #071a0e 10%,
+          transparent 10% 20%,
+          #071a0e 20% 35%,
+          transparent 35% 45%,
+          #071a0e 45% 60%,
+          transparent 60% 70%,
+          #071a0e 70% 82%,
+          transparent 82%
+        ),
+        linear-gradient(
+          #071a0e 10%,
+          transparent 10% 25%,
+          #071a0e 25% 38%,
+          transparent 38% 50%,
+          #071a0e 50% 65%,
+          transparent 65% 78%,
+          #071a0e 78%
+        );
+    }
+
+    .card-id{
+      position:relative;
+      z-index:2;
+
+      padding:12px 24px 20px;
+
+      color:#6f8d79;
+
+      font-size:8px;
+      letter-spacing:.12em;
+      text-align:center;
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+
+      gap:10px;
+
+      margin-top:18px;
+    }
+
+    .btn{
+      min-height:46px;
+
+      border:0;
+      border-radius:14px;
+
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+
+      padding:11px 15px;
+
+      font-size:12px;
+      font-weight:900;
+
+      transition:.25s ease;
+    }
+
+    .btn-primary{
+      color:#031008;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      box-shadow:
+        0 12px 28px rgba(34,197,94,.15);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:
+        0 17px 35px rgba(34,197,94,.23);
+    }
+
+    .btn-secondary{
+      color:var(--text);
+
+      background:rgba(255,255,255,.035);
+
+      border:1px solid var(--border);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(74,222,128,.08);
+      border-color:rgba(134,239,172,.22);
+    }
+
+    /* ================= INFO ================= */
+
+    .info-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .info-row{
+      padding:14px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+
+      border-radius:15px;
+
+      background:rgba(255,255,255,.025);
+      border:1px solid rgba(134,239,172,.07);
+    }
+
+    .info-row-label{
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .info-row-value{
+      color:var(--white);
+
+      font-size:11px;
+      font-weight:850;
+
+      text-align:right;
+    }
+
+    /* ================= VERIFICATION ================= */
+
+    .verify{
+      margin-top:18px;
+    }
+
+    .verify-form{
+      display:flex;
+      gap:9px;
+    }
+
+    .input{
+      min-width:0;
+      flex:1;
+
+      padding:12px 14px;
+
+      color:var(--white);
+
+      background:rgba(0,0,0,.16);
+
+      border:1px solid var(--border);
+      border-radius:13px;
+
+      outline:none;
+    }
+
+    .input::placeholder{
+      color:#65776b;
+    }
+
+    .input:focus{
+      border-color:rgba(74,222,128,.35);
+
+      box-shadow:
+        0 0 0 3px rgba(34,197,94,.06);
+    }
+
+    .verify-result{
+      display:none;
+
+      margin-top:12px;
+      padding:13px;
+
+      border-radius:14px;
+
+      font-size:11px;
+      line-height:1.6;
+    }
+
+    .verify-result.show{
+      display:block;
+    }
+
+    .verify-result.success{
+      color:var(--green-300);
+
+      background:rgba(34,197,94,.08);
+
+      border:1px solid rgba(134,239,172,.12);
+    }
+
+    .verify-result.error{
+      color:#fca5a5;
+
+      background:rgba(239,68,68,.06);
+
+      border:1px solid rgba(248,113,113,.12);
+    }
+
+    /* ================= NOTICE ================= */
+
+    .notice{
+      margin-top:18px;
+
+      padding:16px;
+
+      border-radius:17px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(163,230,53,.07),
+          rgba(34,197,94,.04)
+        );
+
+      border:1px solid rgba(163,230,53,.10);
+    }
+
+    .notice-title{
+      color:var(--green-300);
+
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .notice-text{
+      margin-top:6px;
+
+      color:#91a79a;
+
+      font-size:10px;
+      line-height:1.65;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer{
+      margin-top:45px;
+      padding:25px 0;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+
+      border-top:1px solid var(--border);
+    }
+
+    .footer-copy{
+      color:#718578;
+
+      font-size:10px;
+      line-height:1.7;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:15px;
+    }
+
+    .footer-links a{
+      color:#879a8e;
+      font-size:10px;
+    }
+
+    .footer-links a:hover{
+      color:var(--green-300);
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast{
+      position:fixed;
+
+      left:50%;
+      bottom:25px;
+
+      z-index:3000;
+
+      padding:12px 16px;
+
+      border:1px solid rgba(134,239,172,.15);
+      border-radius:14px;
+
+      color:var(--white);
+
+      background:rgba(6,18,11,.95);
+
+      box-shadow:var(--shadow);
+
+      font-size:11px;
+      font-weight:800;
+
+      transform:translate(-50%,20px);
+      opacity:0;
+      pointer-events:none;
+
+      transition:.3s ease;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    /* ================= LOGIN MODAL ================= */
+
+    .modal{
+      position:fixed;
+      inset:0;
+
+      z-index:2000;
+
+      display:none;
+      place-items:center;
+
+      padding:20px;
+
+      background:rgba(0,0,0,.68);
+
+      backdrop-filter:blur(10px);
+    }
+
+    .modal.show{
+      display:grid;
+    }
+
+    .modal-box{
+      width:min(430px,100%);
+
+      padding:28px;
+
+      border:1px solid var(--border);
+      border-radius:25px;
+
+      text-align:center;
+
+      background:
+        linear-gradient(
+          145deg,
+          #0b3018,
+          #06120b
+        );
+
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.45);
+    }
+
+    .modal-icon{
+      width:60px;
+      height:60px;
+
+      margin:auto;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:18px;
+
+      background:rgba(34,197,94,.10);
+
+      font-size:25px;
+    }
+
+    .modal-box h2{
+      margin-top:16px;
+
+      color:var(--white);
+
+      font-size:21px;
+    }
+
+    .modal-box p{
+      margin-top:8px;
+
+      color:var(--muted);
+
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:9px;
+
+      margin-top:22px;
+    }
+
+    .modal-actions .btn{
+      flex:1;
+    }
+
+    /* ================= PRINT ================= */
+
+    @media print{
+
+      @page{
+        size:auto;
+        margin:0;
+      }
+
+      body{
+        min-height:auto;
+        background:#fff !important;
+      }
+
+      body *{
+        visibility:hidden !important;
+      }
+
+      .id-card,
+      .id-card *{
+        visibility:visible !important;
+      }
+
+      .id-card{
+        position:absolute;
+
+        left:50%;
+        top:50%;
+
+        transform:translate(-50%,-50%);
+
+        width:86mm;
+        min-height:120mm;
+
+        box-shadow:none;
+
+        print-color-adjust:exact;
+        -webkit-print-color-adjust:exact;
+      }
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:1200px){
+
+      .nav-links{
+        display:none;
+      }
+
+      .menu-btn{
+        display:grid;
+      }
+
+      .nav-links.mobile-open{
+        position:absolute;
+
+        left:4%;
+        right:4%;
+        top:70px;
+
+        display:grid;
+
+        padding:10px;
+
+        border-radius:18px;
+
+        background:rgba(6,18,11,.97);
+
+        border:1px solid var(--border);
+
+        box-shadow:var(--shadow);
+      }
+
+      .nav-links.mobile-open a{
+        padding:13px;
+      }
+    }
+
+    @media(max-width:950px){
+
+      .content-grid{
+        grid-template-columns:1fr;
+      }
+
+      .card-stage{
+        min-height:auto;
+      }
+    }
+
+    @media(max-width:600px){
+
+      .page{
+        padding-top:28px;
+      }
+
+      .hero{
+        padding:23px;
+
+        border-radius:25px;
+      }
+
+      .hero h1{
+        font-size:38px;
+      }
+
+      .hero p{
+        font-size:13px;
+      }
+
+      .panel{
+        padding:17px;
+        border-radius:22px;
+      }
+
+      .card-stage{
+        padding:10px;
+      }
+
+      .id-card{
+        min-height:560px;
+      }
+
+      .student-photo{
+        width:125px;
+        height:125px;
+      }
+
+      .person-name{
+        font-size:22px;
+      }
+
+      .details{
+        padding:20px;
+      }
+
+      .verify-form{
+        flex-direction:column;
+      }
+
+      footer{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:390px){
+
+      .brand-sub{
+        display:none;
+      }
+
+      .brand-title{
+        font-size:12px;
+      }
+
+      .hero h1{
+        font-size:33px;
+      }
+
+      .actions{
+        grid-template-columns:1fr;
+      }
+
+      .id-card{
+        min-height:530px;
+      }
+
+      .student-photo{
+        width:112px;
+        height:112px;
+      }
+
+      .details{
+        gap:7px;
+      }
+
+      .detail-box{
+        padding:10px;
+      }
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+
+  <header class="navbar">
+
+    <div class="nav-inner">
+
+      <a
+        href="../index.html"
+        class="brand"
+      >
+
+        <div class="brand-mark">
+          SNK
+        </div>
+
+        <div>
+
+          <div class="brand-title">
+            SNK AI ACADEMY
+          </div>
+
+          <div class="brand-sub">
+            Student Portal
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <nav
+        class="nav-links"
+        id="navLinks"
+      >
+
+        <a href="../index.html">
+          Home
+        </a>
+
+        <a href="../student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="../courses.html">
+          Course
+        </a>
+
+        <a href="../assignments.html">
+          Assignments
+        </a>
+
+        <a href="../quiz.html">
+          Quiz
+        </a>
+
+        <a href="../results.html">
+          Results
+        </a>
+
+        <a href="../student-attendance/index.html">
+          Attendance
+        </a>
+
+        <a href="../student-resources/index.html">
+          Resources
+        </a>
+
+        <a href="../student-class/index.html">
+          Class
+        </a>
+
+        <a href="../student-timetable/index.html">
+          Timetable
+        </a>
+
+        <a href="../student-certificates/index.html">
+          Certificate
+        </a>
+
+        <a
+          href="index.html"
+          class="active"
+        >
+          ID Card
+        </a>
+
+        <a href="../student-support/index.html">
+          Support
+        </a>
+
+      </nav>
+
+
+      <div class="nav-actions">
+
+        <button
+          class="icon-btn"
+          onclick="printIDCard()"
+          title="Print ID Card"
+        >
+          🪪
+        </button>
+
+        <button
+          class="icon-btn menu-btn"
+          id="menuBtn"
+          onclick="toggleMenu()"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="page">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="eyebrow">
+
+        <span class="eyebrow-dot"></span>
+
+        Digital Student Identity
+
+      </div>
+
+      <h1>
+        Your official
+        <span>student ID card.</span>
+      </h1>
+
+      <p>
+        A premium digital identity card for SNK AI Academy
+        students. Use your Student ID to identify your
+        academic profile and verify your student record.
+      </p>
+
+    </section>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <div class="content-grid">
+
+
+      <!-- ID CARD PANEL -->
+
+      <section class="panel">
+
+        <div class="panel-head">
+
+          <div>
+
+            <div class="panel-title">
+              Digital Student ID
+            </div>
+
+            <div class="panel-sub">
+              Your current academy identity card
+            </div>
+
+          </div>
+
+          <div class="status">
+
+            <span class="status-dot"></span>
+
+            Active Student
+
+          </div>
+
+        </div>
+
+
+        <div class="card-stage">
+
+          <div
+            class="id-card"
+            id="idCard"
+          >
+
+
+            <!-- CARD HEADER -->
+
+            <div class="card-top">
+
+              <div class="academy">
+
+                <div class="academy-logo">
+                  SNK
+                </div>
+
+                <div>
+
+                  <div class="academy-name">
+                    SNK AI ACADEMY
+                  </div>
+
+                  <div class="academy-type">
+                    Student Identification
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="id-label">
+                STUDENT ID
+              </div>
+
+            </div>
+
+
+            <!-- PHOTO -->
+
+            <div class="photo-wrap">
+
+              <div
+                class="student-photo"
+                id="studentAvatar"
+              >
+                SN
+              </div>
+
+              <div class="active-badge">
+                ● Active
+              </div>
+
+            </div>
+
+
+            <!-- NAME -->
+
+            <div class="card-person">
+
+              <div
+                class="person-name"
+                id="cardStudentName"
+              >
+                Student Name
+              </div>
+
+              <div class="person-role">
+                SNK AI Academy Student
+              </div>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="details">
+
+              <div class="detail-box">
+
+                <div class="detail-label">
+                  Student ID
+                </div>
+
+                <div
+                  class="detail-value"
+                  id="cardStudentId"
+                >
+                  SNK-0001
+                </div>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <div class="detail-label">
+                  Batch
+                </div>
+
+                <div class="detail-value">
+                  Batch 01
+                </div>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <div class="detail-label">
+                  Course
+                </div>
+
+                <div
+                  class="detail-value"
+                  id="cardCourse"
+                >
+                  AI-Powered UI/UX Design
+                </div>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <div class="detail-label">
+                  Mode
+                </div>
+
+                <div class="detail-value">
+                  Offline
+                </div>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <div class="detail-label">
+                  Campus
+                </div>
+
+                <div class="detail-value">
+                  Moulvibazar
+                </div>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <div class="detail-label">
+                  Validity
+                </div>
+
+                <div class="detail-value">
+                  Academic Session 2026
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- CARD FOOTER -->
+
+            <div class="card-bottom">
+
+              <div class="signature">
+
+                <strong>
+                  SNK AI ACADEMY
+                </strong>
+
+                Student Affairs
+
+              </div>
+
+
+              <div class="qr">
+
+                <div class="qr-pattern"></div>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="card-id"
+              id="cardVerificationId"
+            >
+              VERIFY • SNK-AIA-0001
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="actions">
+
+          <button
+            class="btn btn-primary"
+            onclick="printIDCard()"
+          >
+            🖨️ Print / Save PDF
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="copyStudentId()"
+          >
+            📋 Copy Student ID
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="shareIDCard()"
+          >
+            🔗 Share ID
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            onclick="showToast('Download system will be connected later')"
+          >
+            ⬇️ Download
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- INFORMATION PANEL -->
+
+      <aside>
+
+
+        <!-- STUDENT INFORMATION -->
+
+        <section class="panel">
+
+          <div class="panel-head">
+
+            <div>
+
+              <div class="panel-title">
+                Student Information
+              </div>
+
+              <div class="panel-sub">
+                Current information connected to this card
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-list">
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Full Name
+              </span>
+
+              <strong
+                class="info-row-value"
+                id="infoName"
+              >
+                Student Name
+              </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Student ID
+              </span>
+
+              <strong
+                class="info-row-value"
+                id="infoId"
+              >
+                SNK-0001
+              </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Course
+              </span>
+
+              <strong
+                class="info-row-value"
+                id="infoCourse"
+              >
+                AI-Powered UI/UX Design
+              </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Batch
+              </span>
+
+              <strong class="info-row-value">
+                Batch 01
+              </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Class Schedule
+              </span>
+
+              <strong class="info-row-value">
+                4:00 PM – 6:00 PM
+              </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Learning Mode
+              </span>
+
+              <strong class="info-row-value">
+                Offline
+              </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Campus
+              </span>
+
+              <strong class="info-row-value">
+                Moulvibazar
+              </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+              <span class="info-row-label">
+                Status
+              </span>
+
+              <strong
+                class="info-row-value"
+                style="color:var(--green-300)"
+              >
+                Active
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- VERIFICATION -->
+
+        <section class="panel verify">
+
+          <div class="panel-head">
+
+            <div>
+
+              <div class="panel-title">
+                Verify Student ID
+              </div>
+
+              <div class="panel-sub">
+                Enter a Student ID to verify the demo record.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="verify-form">
+
+            <input
+              class="input"
+              id="verifyInput"
+              type="text"
+              placeholder="SNK-0001"
+            >
+
+            <button
+              class="btn btn-primary"
+              onclick="verifyStudent()"
+            >
+              Verify
+            </button>
+
+          </div>
+
+
+          <div
+            class="verify-result"
+            id="verifyResult"
+          ></div>
+
+        </section>
+
+
+        <!-- NOTICE -->
+
+        <section class="notice">
+
+          <div class="notice-title">
+            🛡️ Digital Identity Notice
+          </div>
+
+          <div class="notice-text">
+            This digital ID is currently a static demo.
+            In the final academy system, verification,
+            student photo, enrollment status and card
+            records can be connected to the academy database.
+          </div>
+
+        </section>
+
+      </aside>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+      <div class="footer-copy">
+
+        © <span id="year"></span>
+        SNK AI Academy.
+
+        <br>
+
+        Learn • Practice • Grow
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="../student-profiles/index.html">
+          Profile
+        </a>
+
+        <a href="../student-settings/index.html">
+          Settings
+        </a>
+
+        <a href="../student-certificates/index.html">
+          Certificate
+        </a>
+
+        <a href="../student-contact/index.html">
+          Contact
+        </a>
+
+        <a href="../index.html">
+          Home
+        </a>
+
+      </div>
+
+    </footer>
+
+  </main>
+
+
+  <!-- ================= TOAST ================= -->
+
+  <div
+    class="toast"
+    id="toast"
+  >
+    Done
+  </div>
+
+
+  <!-- ================= LOGIN MODAL ================= -->
+
+  <div
+    class="modal"
+    id="loginModal"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-icon">
+        🔐
+      </div>
+
+      <h2>
+        Student Login Required
+      </h2>
+
+      <p>
+        Please log in to access your digital student ID.
+        For this static demo, you can continue in demo mode.
+      </p>
+
+      <div class="modal-actions">
+
+        <button
+          class="btn btn-secondary"
+          onclick="closeLoginModal()"
+        >
+          Continue Demo
+        </button>
+
+        <a
+          href="../login.html"
+          class="btn btn-primary"
+        >
+          Login
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /* =====================================================
+       STUDENT DATA
+    ====================================================== */
+
+    const studentName =
+      localStorage.getItem("snkStudentName") ||
+      "Student Name";
+
+    const studentId =
+      localStorage.getItem("snkStudentId") ||
+      "SNK-0001";
+
+    const studentCourse =
+      localStorage.getItem("snkStudentCourse") ||
+      "AI-Powered UI/UX Design";
+
+
+    /* =====================================================
+       ELEMENTS
+    ====================================================== */
+
+    const cardStudentName =
+      document.getElementById(
+        "cardStudentName"
+      );
+
+    const cardStudentId =
+      document.getElementById(
+        "cardStudentId"
+      );
+
+    const cardCourse =
+      document.getElementById(
+        "cardCourse"
+      );
+
+    const studentAvatar =
+      document.getElementById(
+        "studentAvatar"
+      );
+
+
+    /* =====================================================
+       SET DATA
+    ====================================================== */
+
+    cardStudentName.textContent =
+      studentName;
+
+    cardStudentId.textContent =
+      studentId;
+
+    cardCourse.textContent =
+      studentCourse;
+
+
+    document.getElementById(
+      "infoName"
+    ).textContent =
+      studentName;
+
+    document.getElementById(
+      "infoId"
+    ).textContent =
+      studentId;
+
+    document.getElementById(
+      "infoCourse"
+    ).textContent =
+      studentCourse;
+
+
+    /* =====================================================
+       INITIALS
+    ====================================================== */
+
+    function getInitials(name){
+
+      const words =
+        name
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean);
+
+      if(!words.length){
+        return "SN";
+      }
+
+      if(words.length === 1){
+
+        return words[0]
+          .slice(0,2)
+          .toUpperCase();
+
+      }
+
+      return (
+        words[0][0] +
+        words[words.length - 1][0]
+      ).toUpperCase();
+
+    }
+
+    studentAvatar.textContent =
+      getInitials(studentName);
+
+
+    /* =====================================================
+       VERIFICATION ID
+    ====================================================== */
+
+    const verificationId =
+      localStorage.getItem(
+        "snkStudentVerificationId"
+      ) ||
+      studentId;
+
+    localStorage.setItem(
+      "snkStudentVerificationId",
+      verificationId
+    );
+
+    document.getElementById(
+      "cardVerificationId"
+    ).textContent =
+      "VERIFY • " + verificationId;
+
+
+    /* =====================================================
+       YEAR
+    ====================================================== */
+
+    document.getElementById(
+      "year"
+    ).textContent =
+      new Date().getFullYear();
+
+
+    /* =====================================================
+       MOBILE MENU
+    ====================================================== */
+
+    function toggleMenu(){
+
+      document
+        .getElementById("navLinks")
+        .classList.toggle(
+          "mobile-open"
+        );
+
+    }
+
+
+    document
+      .querySelectorAll(".nav-links a")
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          () => {
+
+            document
+              .getElementById("navLinks")
+              .classList.remove(
+                "mobile-open"
+              );
+
+          }
+        );
+
+      });
+
+
+    /* =====================================================
+       TOAST
+    ====================================================== */
+
+    let toastTimer;
+
+    function showToast(message){
+
+      const toast =
+        document.getElementById("toast");
+
+      toast.textContent =
+        message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer =
+        setTimeout(
+          () => {
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          2600
+        );
+
+    }
+
+
+    /* =====================================================
+       PRINT ID CARD
+    ====================================================== */
+
+    function printIDCard(){
+
+      showToast(
+        "Opening ID card print preview..."
+      );
+
+      setTimeout(
+        () => {
+          window.print();
+        },
+        500
+      );
+
+    }
+
+
+    /* =====================================================
+       COPY STUDENT ID
+    ====================================================== */
+
+    async function copyStudentId(){
+
+      try{
+
+        await navigator.clipboard.writeText(
+          studentId
+        );
+
+        showToast(
+          "Student ID copied"
+        );
+
+      }catch(error){
+
+        showToast(
+          "Could not copy Student ID"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       SHARE ID CARD
+    ====================================================== */
+
+    async function shareIDCard(){
+
+      const text =
+        `${studentName} — SNK AI Academy Student ID: ${studentId}`;
+
+      if(navigator.share){
+
+        try{
+
+          await navigator.share({
+
+            title:
+              "SNK AI Academy Student ID",
+
+            text:text,
+
+            url:
+              window.location.href
+
+          });
+
+        }catch(error){
+
+          // Share cancelled.
+
+        }
+
+      }else{
+
+        try{
+
+          await navigator.clipboard.writeText(
+            text
+          );
+
+          showToast(
+            "Student ID information copied"
+          );
+
+        }catch(error){
+
+          showToast(
+            "Sharing is not supported"
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /* =====================================================
+       VERIFY STUDENT
+    ====================================================== */
+
+    function verifyStudent(){
+
+      const input =
+        document
+          .getElementById(
+            "verifyInput"
+          )
+          .value
+          .trim()
+          .toUpperCase();
+
+      const result =
+        document.getElementById(
+          "verifyResult"
+        );
+
+
+      if(!input){
+
+        result.className =
+          "verify-result show error";
+
+        result.textContent =
+          "Please enter a Student ID.";
+
+        return;
+
+      }
+
+
+      if(
+        input ===
+        studentId.toUpperCase()
+      ){
+
+        result.className =
+          "verify-result show success";
+
+        result.innerHTML = `
+          <strong>✓ Student ID Verified</strong><br>
+          Student: ${escapeHTML(studentName)}<br>
+          Course: ${escapeHTML(studentCourse)}<br>
+          ID: ${escapeHTML(studentId)}<br>
+          Status: Active Student
+        `;
+
+        showToast(
+          "Student ID verified"
+        );
+
+      }else{
+
+        result.className =
+          "verify-result show error";
+
+        result.innerHTML = `
+          <strong>Student ID not found</strong><br>
+          Please check the ID and try again.
+        `;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ====================================================== */
+
+    function escapeHTML(value){
+
+      return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+    }
+
+
+    /* =====================================================
+       ENTER TO VERIFY
+    ====================================================== */
+
+    document
+      .getElementById("verifyInput")
+      .addEventListener(
+        "keydown",
+        function(event){
+
+          if(
+            event.key === "Enter"
+          ){
+
+            verifyStudent();
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+       LOGIN PROTECTION
+    ====================================================== */
+
+    const isLoggedIn =
+      localStorage.getItem(
+        "snkStudentLoggedIn"
+      ) === "true" ||
+      sessionStorage.getItem(
+        "snkStudentLoggedIn"
+      ) === "true";
+
+    const REQUIRE_LOGIN = true;
+
+
+    if(
+      !isLoggedIn &&
+      REQUIRE_LOGIN
+    ){
+
+      document
+        .getElementById(
+          "loginModal"
+        )
+        .classList.add("show");
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+    /* =====================================================
+       CLOSE LOGIN MODAL
+    ====================================================== */
+
+    function closeLoginModal(){
+
+      document
+        .getElementById(
+          "loginModal"
+        )
+        .classList.remove("show");
+
+      document.body.style.overflow =
+        "";
+
+      sessionStorage.setItem(
+        "snkStudentLoggedIn",
+        "true"
+      );
+
+      showToast(
+        "Demo mode enabled"
+      );
+
+    }
+
+
+    /* =====================================================
+       OUTSIDE CLICK
+    ====================================================== */
+
+    document
+      .getElementById("loginModal")
+      .addEventListener(
+        "click",
+        function(event){
+
+          if(
+            event.target === this
+          ){
+
+            closeLoginModal();
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+       ESC KEY
+    ====================================================== */
+
+    document.addEventListener(
+      "keydown",
+      function(event){
+
+        if(
+          event.key === "Escape"
+        ){
+
+          const modal =
+            document.getElementById(
+              "loginModal"
+            );
+
+          if(
+            modal.classList.contains(
+              "show"
+            )
+          ){
+
+            closeLoginModal();
+
+          }
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

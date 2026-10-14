@@ -1,0 +1,2696 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Student Settings | SNK AI Academy</title>
+
+  <meta
+    name="description"
+    content="SNK AI Academy Student Portal Settings"
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#667085;
+      --primary:#5a8a00;
+      --primary-dark:#3d6600;
+      --success:#16a34a;
+      --warning:#d97706;
+      --danger:#dc2626;
+      --border:#e5e7eb;
+      --soft:#f1ffdd;
+      --soft-green:#ecfdf5;
+      --soft-orange:#fff7ed;
+      --soft-red:#fef2f2;
+      --shadow:0 12px 35px rgba(15,23,42,.08);
+      --radius:20px;
+    }
+
+    body.dark{
+      --bg:#0b1220;
+      --card:#111827;
+      --text:#f3f4f6;
+      --muted:#9ca3af;
+      --border:#253047;
+      --soft:#1c2e00;
+      --soft-green:#052e1b;
+      --soft-orange:#29170c;
+      --soft-red:#300d0d;
+      --shadow:0 12px 35px rgba(0,0,0,.28);
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Noto Sans Bengali",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      transition:.25s ease;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    button,
+    input,
+    select{
+      font-family:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .container{
+      width:min(1180px,92%);
+      margin:auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(255,255,255,.92);
+      border-bottom:1px solid var(--border);
+      backdrop-filter:blur(15px);
+    }
+
+    body.dark header{
+      background:rgba(17,24,39,.92);
+    }
+
+    .nav{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:44px;
+      height:44px;
+      object-fit:contain;
+      border-radius:12px;
+      background:#fff;
+      padding:4px;
+      border:1px solid var(--border);
+    }
+
+.brand-badge{width:45px;height:45px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:14px;flex-shrink:0}
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:18px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .brand-subtitle{
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .nav-btn{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:9px 13px;
+      border-radius:11px;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .nav-btn:hover{
+      border-color:var(--primary);
+      color:var(--primary);
+      transform:translateY(-1px);
+    }
+
+    .nav-btn.primary{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+    }
+
+    .nav-btn.primary:hover{
+      background:var(--primary-dark);
+      color:#fff;
+    }
+
+    /* =========================
+       PAGE HERO
+    ========================== */
+
+    .hero{
+      padding:42px 0 25px;
+    }
+
+    .hero-box{
+      position:relative;
+      overflow:hidden;
+      border-radius:25px;
+      padding:32px;
+      background:
+        radial-gradient(
+          circle at 88% 10%,
+          rgba(90,138,0,.18),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 8% 90%,
+          rgba(22,163,74,.10),
+          transparent 25%
+        ),
+        var(--card);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--soft);
+      color:var(--primary);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:13px;
+    }
+
+    .hero h1{
+      font-size:clamp(28px,5vw,42px);
+      line-height:1.2;
+      margin-bottom:9px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:14px;
+      max-width:700px;
+    }
+
+    /* =========================
+       MAIN GRID
+    ========================== */
+
+    main{
+      padding-bottom:40px;
+    }
+
+    .settings-layout{
+      display:grid;
+      grid-template-columns:250px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    /* =========================
+       SETTINGS MENU
+    ========================== */
+
+    .settings-menu{
+      position:sticky;
+      top:92px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:12px;
+    }
+
+    .menu-title{
+      padding:12px;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .menu-btn{
+      width:100%;
+      border:0;
+      background:transparent;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px;
+      border-radius:12px;
+      text-align:left;
+      font-weight:700;
+      font-size:13px;
+      transition:.2s;
+    }
+
+    .menu-btn:hover{
+      background:var(--bg);
+    }
+
+    .menu-btn.active{
+      background:var(--soft);
+      color:var(--primary);
+    }
+
+    /* =========================
+       CONTENT
+    ========================== */
+
+    .settings-content{
+      display:grid;
+      gap:18px;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:24px;
+    }
+
+    .panel-head{
+      margin-bottom:20px;
+    }
+
+    .panel-head h2{
+      font-size:20px;
+      margin-bottom:4px;
+    }
+
+    .panel-head p{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* =========================
+       PROFILE CARD
+    ========================== */
+
+    .profile-summary{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      padding:17px;
+      border-radius:16px;
+      background:var(--bg);
+      border:1px solid var(--border);
+    }
+
+    .avatar{
+      width:58px;
+      height:58px;
+      flex:0 0 58px;
+      border-radius:17px;
+      background:var(--soft);
+      color:var(--primary);
+      display:grid;
+      place-items:center;
+      font-size:26px;
+      font-weight:800;
+    }
+
+    .profile-name{
+      font-weight:800;
+      font-size:17px;
+    }
+
+    .profile-id{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .active-badge{
+      display:inline-flex;
+      margin-top:5px;
+      padding:3px 8px;
+      border-radius:999px;
+      background:var(--soft-green);
+      color:var(--success);
+      font-size:10px;
+      font-weight:800;
+    }
+
+    /* =========================
+       SETTINGS ROW
+    ========================== */
+
+    .setting-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .setting-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      padding:16px;
+      border:1px solid var(--border);
+      background:var(--bg);
+      border-radius:15px;
+    }
+
+    .setting-info{
+      min-width:0;
+    }
+
+    .setting-title{
+      font-size:14px;
+      font-weight:800;
+      margin-bottom:2px;
+    }
+
+    .setting-description{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    /* =========================
+       TOGGLE
+    ========================== */
+
+    .switch{
+      position:relative;
+      width:50px;
+      height:28px;
+      flex:0 0 50px;
+    }
+
+    .switch input{
+      opacity:0;
+      width:0;
+      height:0;
+      position:absolute;
+    }
+
+    .slider{
+      position:absolute;
+      inset:0;
+      background:#cbd5e1;
+      border-radius:999px;
+      transition:.2s;
+    }
+
+    .slider::before{
+      content:"";
+      position:absolute;
+      width:22px;
+      height:22px;
+      left:3px;
+      top:3px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 2px 6px rgba(0,0,0,.18);
+      transition:.2s;
+    }
+
+    .switch input:checked + .slider{
+      background:var(--primary);
+    }
+
+    .switch input:checked + .slider::before{
+      transform:translateX(22px);
+    }
+
+    /* =========================
+       SELECT
+    ========================== */
+
+    .setting-select{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:9px 11px;
+      border-radius:10px;
+      outline:none;
+      min-width:135px;
+    }
+
+    .setting-select:focus{
+      border-color:var(--primary);
+    }
+
+    /* =========================
+       LANGUAGE OPTIONS
+    ========================== */
+
+    .language-options{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .language-btn{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      padding:9px 13px;
+      border-radius:10px;
+      font-weight:700;
+      font-size:12px;
+    }
+
+    .language-btn.active{
+      background:var(--primary);
+      color:#fff;
+      border-color:var(--primary);
+    }
+
+    /* =========================
+       ACCOUNT INFO
+    ========================== */
+
+    .account-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .account-box{
+      border:1px solid var(--border);
+      background:var(--bg);
+      border-radius:13px;
+      padding:14px;
+    }
+
+    .account-label{
+      color:var(--muted);
+      font-size:10px;
+      margin-bottom:2px;
+    }
+
+    .account-value{
+      font-size:13px;
+      font-weight:800;
+      word-break:break-word;
+    }
+
+    /* =========================
+       DANGER ZONE
+    ========================== */
+
+    .danger-zone{
+      border:1px solid rgba(220,38,38,.25);
+      background:var(--soft-red);
+    }
+
+    .danger-zone h2{
+      color:var(--danger);
+    }
+
+    .danger-text{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:15px;
+    }
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
+    .actions{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .btn{
+      border:0;
+      padding:11px 16px;
+      border-radius:11px;
+      font-weight:800;
+      font-size:12px;
+      transition:.2s;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-primary{
+      background:var(--primary);
+      color:#fff;
+    }
+
+    .btn-primary:hover{
+      background:var(--primary-dark);
+    }
+
+    .btn-secondary{
+      background:var(--card);
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+
+    .btn-danger{
+      background:var(--danger);
+      color:#fff;
+    }
+
+    /* =========================
+       NOTICE
+    ========================== */
+
+    .notice{
+      padding:14px 16px;
+      border-radius:13px;
+      background:var(--soft-orange);
+      color:var(--warning);
+      border:1px solid rgba(217,119,6,.2);
+      font-size:11px;
+      margin-top:15px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer{
+      background:var(--card);
+      border-top:1px solid var(--border);
+    }
+
+    .footer-inner{
+      min-height:100px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      flex-wrap:wrap;
+      padding:24px 0;
+    }
+
+    .footer-text{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .footer-links a{
+      color:var(--primary);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:3000;
+      background:#111827;
+      color:#fff;
+      padding:12px 16px;
+      border-radius:12px;
+      font-size:12px;
+      box-shadow:0 15px 35px rgba(0,0,0,.25);
+      transform:translateY(100px);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(2,6,23,.68);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:2000;
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-box{
+      width:min(460px,100%);
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:24px;
+      box-shadow:0 25px 70px rgba(0,0,0,.3);
+    }
+
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .modal-head h3{
+      font-size:18px;
+    }
+
+    .modal-close{
+      width:34px;
+      height:34px;
+      border:1px solid var(--border);
+      background:var(--bg);
+      color:var(--text);
+      border-radius:10px;
+      font-size:20px;
+    }
+
+    .modal-box p{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media(max-width:850px){
+
+      .settings-layout{
+        grid-template-columns:1fr;
+      }
+
+      .settings-menu{
+        position:static;
+      }
+
+      .menu-list{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:5px;
+      }
+
+    }
+
+    @media(max-width:600px){
+
+      .nav{
+        min-height:65px;
+        align-items:flex-start;
+        padding:9px 0;
+      }
+
+      .brand img{
+        width:38px;
+        height:38px;
+      }
+
+      .brand-title{
+        font-size:15px;
+      }
+
+      .brand-subtitle{
+        display:none;
+      }
+
+      .nav-actions{
+        justify-content:flex-end;
+      }
+
+      .nav-btn{
+        padding:7px 9px;
+        font-size:10px;
+      }
+
+      .hero{
+        padding-top:25px;
+      }
+
+      .hero-box{
+        padding:24px 18px;
+        border-radius:20px;
+      }
+
+      .hero h1{
+        font-size:28px;
+      }
+
+      .panel{
+        padding:18px;
+      }
+
+      .setting-row{
+        align-items:flex-start;
+      }
+
+      .account-grid{
+        grid-template-columns:1fr;
+      }
+
+      .menu-list{
+        grid-template-columns:1fr;
+      }
+
+      .profile-summary{
+        align-items:flex-start;
+      }
+
+    }
+
+    /* =========================
+       PRINT
+    ========================== */
+
+    @media print{
+
+      header,
+      .settings-menu,
+      .actions,
+      .notice,
+      footer,
+      .toast{
+        display:none !important;
+      }
+
+      body{
+        background:#fff;
+        color:#000;
+      }
+
+      .settings-layout{
+        display:block;
+      }
+
+      .panel,
+      .hero-box{
+        box-shadow:none;
+        border:1px solid #ddd;
+      }
+
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header>
+
+    <div class="container nav">
+
+      <a
+        href="student-dashboard.html"
+        class="brand"
+      >
+
+        <div class="brand-badge">SNK</div>
+
+        <div class="brand-text">
+
+          <div class="brand-title">
+            SNK AI Academy
+          </div>
+
+          <div class="brand-subtitle">
+            Student Portal
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <div class="nav-actions">
+
+        <a
+          href="student-dashboard.html"
+          class="nav-btn"
+        >
+          Dashboard
+        </a>
+
+        <a
+          href="student-notifications.html"
+          class="nav-btn"
+        >
+          🔔
+        </a>
+
+        <button
+          type="button"
+          class="nav-btn"
+          id="themeButton"
+          onclick="toggleTheme()"
+        >
+          🌙
+        </button>
+
+        <button
+          type="button"
+          class="nav-btn primary"
+          onclick="logoutStudent()"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="container">
+
+        <div class="hero-box">
+
+          <div class="hero-content">
+
+            <div class="eyebrow">
+              ⚙️ Student Portal Settings
+            </div>
+
+            <h1>
+              আপনার Portal Settings
+            </h1>
+
+            <p>
+              Theme, notification, language এবং account-related
+              preferences এখান থেকে manage করুন।
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="settings-layout">
+
+          <!-- =========================
+               SETTINGS MENU
+          ========================== -->
+
+          <aside class="settings-menu">
+
+            <div class="menu-title">
+              ⚙️ Settings Menu
+            </div>
+
+            <div class="menu-list">
+
+              <button
+                class="menu-btn active"
+                type="button"
+                onclick="scrollToSection('appearanceSection',this)"
+              >
+                🎨 Appearance
+              </button>
+
+              <button
+                class="menu-btn"
+                type="button"
+                onclick="scrollToSection('notificationSection',this)"
+              >
+                🔔 Notifications
+              </button>
+
+              <button
+                class="menu-btn"
+                type="button"
+                onclick="scrollToSection('languageSection',this)"
+              >
+                🌐 Language
+              </button>
+
+              <button
+                class="menu-btn"
+                type="button"
+                onclick="scrollToSection('accountSection',this)"
+              >
+                👤 Account
+              </button>
+
+              <button
+                class="menu-btn"
+                type="button"
+                onclick="scrollToSection('privacySection',this)"
+              >
+                🔒 Privacy
+              </button>
+
+            </div>
+
+          </aside>
+
+
+          <!-- =========================
+               SETTINGS CONTENT
+          ========================== -->
+
+          <div class="settings-content">
+
+
+            <!-- PROFILE SUMMARY -->
+
+            <div class="panel">
+
+              <div class="profile-summary">
+
+                <div
+                  class="avatar"
+                  id="avatar"
+                >
+                  👤
+                </div>
+
+                <div>
+
+                  <div
+                    class="profile-name"
+                    id="studentName"
+                  >
+                    Demo Student
+                  </div>
+
+                  <div
+                    class="profile-id"
+                    id="studentId"
+                  >
+                    SNK-1001
+                  </div>
+
+                  <span class="active-badge">
+                    Active Student
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- APPEARANCE -->
+
+            <div
+              class="panel"
+              id="appearanceSection"
+            >
+
+              <div class="panel-head">
+
+                <h2>
+                  🎨 Appearance
+                </h2>
+
+                <p>
+                  Student Portal দেখতে আপনার পছন্দ অনুযায়ী পরিবর্তন করুন।
+                </p>
+
+              </div>
+
+
+              <div class="setting-list">
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      Dark Mode
+                    </div>
+
+                    <div class="setting-description">
+                      Portal-এর dark theme চালু বা বন্ধ করুন।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="darkModeToggle"
+                      onchange="changeDarkMode(this.checked)"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      Auto Theme
+                    </div>
+
+                    <div class="setting-description">
+                      Browser/device preference অনুযায়ী theme ব্যবহার করুন।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="autoThemeToggle"
+                      onchange="changeAutoTheme(this.checked)"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+              </div>
+
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  onclick="resetAppearance()"
+                >
+                  Reset Appearance
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div
+              class="panel"
+              id="notificationSection"
+            >
+
+              <div class="panel-head">
+
+                <h2>
+                  🔔 Notification Preferences
+                </h2>
+
+                <p>
+                  কোন ধরনের notification দেখতে চান তা নির্বাচন করুন।
+                </p>
+
+              </div>
+
+
+              <div class="setting-list">
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      Class Notifications
+                    </div>
+
+                    <div class="setting-description">
+                      Class schedule, class start এবং class notice।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="classNotification"
+                      onchange="saveNotificationSetting()"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      Assignment Notifications
+                    </div>
+
+                    <div class="setting-description">
+                      Assignment publish এবং deadline reminder।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="assignmentNotification"
+                      onchange="saveNotificationSetting()"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      Quiz Notifications
+                    </div>
+
+                    <div class="setting-description">
+                      Quiz availability এবং quiz-related notice।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="quizNotification"
+                      onchange="saveNotificationSetting()"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      Result Notifications
+                    </div>
+
+                    <div class="setting-description">
+                      Result publish এবং result update।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="resultNotification"
+                      onchange="saveNotificationSetting()"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      General Notifications
+                    </div>
+
+                    <div class="setting-description">
+                      গুরুত্বপূর্ণ general announcement এবং portal notice।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="generalNotification"
+                      onchange="saveNotificationSetting()"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+              </div>
+
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="saveNotificationSetting(true)"
+                >
+                  💾 Save Notification Settings
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- LANGUAGE -->
+
+            <div
+              class="panel"
+              id="languageSection"
+            >
+
+              <div class="panel-head">
+
+                <h2>
+                  🌐 Language
+                </h2>
+
+                <p>
+                  Portal-এর interface language preference নির্বাচন করুন।
+                </p>
+
+              </div>
+
+
+              <div class="setting-row">
+
+                <div class="setting-info">
+
+                  <div class="setting-title">
+                    Preferred Language
+                  </div>
+
+                  <div class="setting-description">
+                    আপনার পছন্দের interface language save করুন।
+                  </div>
+
+                </div>
+
+
+                <div class="language-options">
+
+                  <button
+                    type="button"
+                    class="language-btn"
+                    id="banglaLanguage"
+                    onclick="setLanguage('bn')"
+                  >
+                    বাংলা
+                  </button>
+
+                  <button
+                    type="button"
+                    class="language-btn"
+                    id="englishLanguage"
+                    onclick="setLanguage('en')"
+                  >
+                    English
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- ACCOUNT -->
+
+            <div
+              class="panel"
+              id="accountSection"
+            >
+
+              <div class="panel-head">
+
+                <h2>
+                  👤 Account Information
+                </h2>
+
+                <p>
+                  আপনার বর্তমান Student Account-এর information।
+                </p>
+
+              </div>
+
+
+              <div class="account-grid">
+
+                <div class="account-box">
+
+                  <div class="account-label">
+                    Student Name
+                  </div>
+
+                  <div
+                    class="account-value"
+                    id="accountStudentName"
+                  >
+                    Demo Student
+                  </div>
+
+                </div>
+
+
+                <div class="account-box">
+
+                  <div class="account-label">
+                    Student ID
+                  </div>
+
+                  <div
+                    class="account-value"
+                    id="accountStudentId"
+                  >
+                    SNK-1001
+                  </div>
+
+                </div>
+
+
+                <div class="account-box">
+
+                  <div class="account-label">
+                    Course
+                  </div>
+
+                  <div class="account-value">
+                    আপনার কোর্স
+                  </div>
+
+                </div>
+
+
+                <div class="account-box">
+
+                  <div class="account-label">
+                    Batch
+                  </div>
+
+                  <div class="account-value">
+                    Batch 01
+                  </div>
+
+                </div>
+
+
+                <div class="account-box">
+
+                  <div class="account-label">
+                    Mode
+                  </div>
+
+                  <div class="account-value">
+                    Offline
+                  </div>
+
+                </div>
+
+
+                <div class="account-box">
+
+                  <div class="account-label">
+                    Status
+                  </div>
+
+                  <div class="account-value">
+                    Active
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="actions">
+
+                <a
+                  href="student-profiles.html"
+                  class="btn btn-primary"
+                >
+                  ✏️ Edit Profile
+                </a>
+
+                <a
+                  href="student-id-cards.html"
+                  class="btn btn-secondary"
+                >
+                  🪪 My ID Card
+                </a>
+
+              </div>
+
+            </div>
+
+
+            <!-- PRIVACY -->
+
+            <div
+              class="panel"
+              id="privacySection"
+            >
+
+              <div class="panel-head">
+
+                <h2>
+                  🔒 Privacy & Local Data
+                </h2>
+
+                <p>
+                  এই demo portal browser-এর local storage ব্যবহার করে।
+                </p>
+
+              </div>
+
+
+              <div class="setting-list">
+
+                <div class="setting-row">
+
+                  <div class="setting-info">
+
+                    <div class="setting-title">
+                      Remember My Preferences
+                    </div>
+
+                    <div class="setting-description">
+                      Theme এবং notification preferences এই browser-এ save থাকবে।
+                    </div>
+
+                  </div>
+
+
+                  <label class="switch">
+
+                    <input
+                      type="checkbox"
+                      id="rememberPreference"
+                      onchange="savePrivacySetting()"
+                    >
+
+                    <span class="slider"></span>
+
+                  </label>
+
+                </div>
+
+              </div>
+
+
+              <div class="notice">
+
+                ℹ️ এই version-এ settings data শুধুমাত্র
+                আপনার browser-এর localStorage-এ সংরক্ষিত হচ্ছে।
+                Firebase/backend integration করলে পরে account-level
+                settings server-এ সংরক্ষণ করা যাবে।
+
+              </div>
+
+            </div>
+
+
+            <!-- DANGER ZONE -->
+
+            <div class="panel danger-zone">
+
+              <div class="panel-head">
+
+                <h2>
+                  ⚠️ Reset Settings
+                </h2>
+
+                <p>
+                  শুধুমাত্র এই Student Portal-এর locally saved settings
+                  reset করার জন্য।
+                </p>
+
+              </div>
+
+
+              <div class="danger-text">
+
+                এতে আপনার Theme, Language এবং Notification preferences
+                reset হবে। Student account বা attendance/result data
+                delete হবে না।
+
+              </div>
+
+
+              <button
+                type="button"
+                class="btn btn-danger"
+                onclick="resetAllSettings()"
+              >
+                🗑️ Reset Portal Settings
+              </button>
+
+            </div>
+
+
+            <!-- PRINT -->
+
+            <div class="panel">
+
+              <div class="panel-head">
+
+                <h2>
+                  🖨️ Settings
+                </h2>
+
+                <p>
+                  আপনার current settings page print করতে পারেন।
+                </p>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="window.print()"
+              >
+                🖨️ Print Settings
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div class="footer-text">
+
+        © 2026 SNK AI Academy.
+        Student Portal Settings.
+
+      </div>
+
+      <div class="footer-links">
+
+        <a href="student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="student-profiles.html">
+          Profile
+        </a>
+
+        <a href="student-resources.html">
+          Resources
+        </a>
+
+        <a href="student-support.html">
+          Support
+        </a>
+
+        <a href="student-notifications.html">
+          Notifications
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       TOAST
+  ========================== -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    /* =========================================
+       SESSION PROTECTION
+    ========================================== */
+
+    (function(){
+
+      const loggedIn =
+        sessionStorage.getItem(
+          "snkStudentLoggedIn"
+        );
+
+      if(
+        loggedIn !== "true"
+      ){
+
+        window.location.replace(
+          "login.html"
+        );
+
+      }
+
+    })();
+
+
+    /* =========================================
+       STUDENT DATA
+    ========================================== */
+
+    const studentId =
+      sessionStorage.getItem(
+        "snkStudentId"
+      ) ||
+      "SNK-1001";
+
+    const studentName =
+      sessionStorage.getItem(
+        "snkStudentName"
+      ) ||
+      "Demo Student";
+
+
+    document.getElementById(
+      "studentName"
+    ).textContent =
+      studentName;
+
+
+    document.getElementById(
+      "studentId"
+    ).textContent =
+      studentId;
+
+
+    document.getElementById(
+      "accountStudentName"
+    ).textContent =
+      studentName;
+
+
+    document.getElementById(
+      "accountStudentId"
+    ).textContent =
+      studentId;
+
+
+    /* =========================================
+       STORAGE KEYS
+    ========================================== */
+
+    const SETTINGS_KEY =
+      "snkStudentSettings";
+
+
+    /* =========================================
+       DEFAULT SETTINGS
+    ========================================== */
+
+    const defaultSettings = {
+
+      darkMode:false,
+
+      autoTheme:false,
+
+      language:"bn",
+
+      notifications:{
+        class:true,
+        assignment:true,
+        quiz:true,
+        result:true,
+        general:true
+      },
+
+      rememberPreference:true
+
+    };
+
+
+    /* =========================================
+       GET SETTINGS
+    ========================================== */
+
+    function getSettings(){
+
+      try{
+
+        const saved =
+          localStorage.getItem(
+            SETTINGS_KEY
+          );
+
+        if(!saved){
+
+          return structuredClone(
+            defaultSettings
+          );
+
+        }
+
+        const parsed =
+          JSON.parse(saved);
+
+
+        return {
+
+          ...defaultSettings,
+
+          ...parsed,
+
+          notifications:{
+            ...defaultSettings.notifications,
+            ...(parsed.notifications || {})
+          }
+
+        };
+
+      }catch(error){
+
+        console.error(
+          "Settings load error:",
+          error
+        );
+
+        return structuredClone(
+          defaultSettings
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       SAVE SETTINGS
+    ========================================== */
+
+    function saveSettings(settings){
+
+      localStorage.setItem(
+        SETTINGS_KEY,
+        JSON.stringify(settings)
+      );
+
+    }
+
+
+    /* =========================================
+       APPLY THEME
+    ========================================== */
+
+    function applyTheme(){
+
+      const settings =
+        getSettings();
+
+
+      let dark =
+        settings.darkMode;
+
+
+      if(
+        settings.autoTheme
+      ){
+
+        dark =
+          window.matchMedia &&
+          window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+
+      }
+
+
+      document.body.classList.toggle(
+        "dark",
+        dark
+      );
+
+
+      const button =
+        document.getElementById(
+          "themeButton"
+        );
+
+
+      if(button){
+
+        button.textContent =
+          dark
+            ? "☀️"
+            : "🌙";
+
+      }
+
+
+      const darkToggle =
+        document.getElementById(
+          "darkModeToggle"
+        );
+
+
+      const autoToggle =
+        document.getElementById(
+          "autoThemeToggle"
+        );
+
+
+      if(darkToggle){
+
+        darkToggle.checked =
+          settings.darkMode;
+
+      }
+
+
+      if(autoToggle){
+
+        autoToggle.checked =
+          settings.autoTheme;
+
+      }
+
+    }
+
+
+    /* =========================================
+       TOGGLE HEADER THEME
+    ========================================== */
+
+    function toggleTheme(){
+
+      const settings =
+        getSettings();
+
+
+      settings.autoTheme =
+        false;
+
+
+      settings.darkMode =
+        !document.body.classList.contains(
+          "dark"
+        );
+
+
+      saveSettings(
+        settings
+      );
+
+
+      /* Keep compatibility with all
+         existing Student Portal pages */
+
+      localStorage.setItem(
+        "snkTheme",
+        settings.darkMode
+          ? "dark"
+          : "light"
+      );
+
+
+      applyTheme();
+
+
+      showToast(
+        settings.darkMode
+          ? "Dark Mode চালু হয়েছে।"
+          : "Light Mode চালু হয়েছে।"
+      );
+
+    }
+
+
+    /* =========================================
+       DARK MODE SETTING
+    ========================================== */
+
+    function changeDarkMode(enabled){
+
+      const settings =
+        getSettings();
+
+
+      settings.darkMode =
+        enabled;
+
+
+      if(enabled){
+
+        settings.autoTheme =
+          false;
+
+        document.getElementById(
+          "autoThemeToggle"
+        ).checked = false;
+
+      }
+
+
+      saveSettings(
+        settings
+      );
+
+
+      localStorage.setItem(
+        "snkTheme",
+        enabled
+          ? "dark"
+          : "light"
+      );
+
+
+      applyTheme();
+
+
+      showToast(
+        enabled
+          ? "Dark Mode চালু হয়েছে।"
+          : "Light Mode চালু হয়েছে।"
+      );
+
+    }
+
+
+    /* =========================================
+       AUTO THEME
+    ========================================== */
+
+    function changeAutoTheme(enabled){
+
+      const settings =
+        getSettings();
+
+
+      settings.autoTheme =
+        enabled;
+
+
+      if(enabled){
+
+        settings.darkMode =
+          false;
+
+        document.getElementById(
+          "darkModeToggle"
+        ).checked = false;
+
+      }
+
+
+      saveSettings(
+        settings
+      );
+
+
+      if(enabled){
+
+        localStorage.setItem(
+          "snkTheme",
+          "system"
+        );
+
+      }else{
+
+        localStorage.setItem(
+          "snkTheme",
+          "light"
+        );
+
+      }
+
+
+      applyTheme();
+
+
+      showToast(
+        enabled
+          ? "Auto Theme চালু হয়েছে।"
+          : "Auto Theme বন্ধ হয়েছে।"
+      );
+
+    }
+
+
+    /* =========================================
+       RESET APPEARANCE
+    ========================================== */
+
+    function resetAppearance(){
+
+      const settings =
+        getSettings();
+
+
+      settings.darkMode =
+        false;
+
+      settings.autoTheme =
+        false;
+
+
+      saveSettings(
+        settings
+      );
+
+
+      localStorage.setItem(
+        "snkTheme",
+        "light"
+      );
+
+
+      applyTheme();
+
+
+      showToast(
+        "Appearance reset করা হয়েছে।"
+      );
+
+    }
+
+
+    /* =========================================
+       NOTIFICATION SETTINGS
+    ========================================== */
+
+    function saveNotificationSetting(
+      showMessage = false
+    ){
+
+      const settings =
+        getSettings();
+
+
+      settings.notifications = {
+
+        class:
+          document.getElementById(
+            "classNotification"
+          ).checked,
+
+        assignment:
+          document.getElementById(
+            "assignmentNotification"
+          ).checked,
+
+        quiz:
+          document.getElementById(
+            "quizNotification"
+          ).checked,
+
+        result:
+          document.getElementById(
+            "resultNotification"
+          ).checked,
+
+        general:
+          document.getElementById(
+            "generalNotification"
+          ).checked
+
+      };
+
+
+      saveSettings(
+        settings
+      );
+
+
+      if(showMessage){
+
+        showToast(
+          "Notification settings save হয়েছে।"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       LOAD NOTIFICATION SETTINGS
+    ========================================== */
+
+    function loadNotificationSettings(){
+
+      const settings =
+        getSettings();
+
+
+      document.getElementById(
+        "classNotification"
+      ).checked =
+        settings.notifications.class;
+
+
+      document.getElementById(
+        "assignmentNotification"
+      ).checked =
+        settings.notifications.assignment;
+
+
+      document.getElementById(
+        "quizNotification"
+      ).checked =
+        settings.notifications.quiz;
+
+
+      document.getElementById(
+        "resultNotification"
+      ).checked =
+        settings.notifications.result;
+
+
+      document.getElementById(
+        "generalNotification"
+      ).checked =
+        settings.notifications.general;
+
+    }
+
+
+    /* =========================================
+       LANGUAGE
+    ========================================== */
+
+    function setLanguage(language){
+
+      const settings =
+        getSettings();
+
+
+      settings.language =
+        language;
+
+
+      saveSettings(
+        settings
+      );
+
+
+      updateLanguageButtons();
+
+
+      if(language === "en"){
+
+        showToast(
+          "English preference saved."
+        );
+
+      }else{
+
+        showToast(
+          "বাংলা preference save হয়েছে।"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       LANGUAGE BUTTON STATE
+    ========================================== */
+
+    function updateLanguageButtons(){
+
+      const settings =
+        getSettings();
+
+
+      const bn =
+        document.getElementById(
+          "banglaLanguage"
+        );
+
+      const en =
+        document.getElementById(
+          "englishLanguage"
+        );
+
+
+      bn.classList.toggle(
+        "active",
+        settings.language === "bn"
+      );
+
+
+      en.classList.toggle(
+        "active",
+        settings.language === "en"
+      );
+
+    }
+
+
+    /* =========================================
+       PRIVACY SETTING
+    ========================================== */
+
+    function savePrivacySetting(){
+
+      const settings =
+        getSettings();
+
+
+      settings.rememberPreference =
+        document.getElementById(
+          "rememberPreference"
+        ).checked;
+
+
+      saveSettings(
+        settings
+      );
+
+
+      showToast(
+        "Privacy preference save হয়েছে।"
+      );
+
+    }
+
+
+    /* =========================================
+       LOAD PRIVACY
+    ========================================== */
+
+    function loadPrivacySetting(){
+
+      const settings =
+        getSettings();
+
+
+      document.getElementById(
+        "rememberPreference"
+      ).checked =
+        settings.rememberPreference;
+
+    }
+
+
+    /* =========================================
+       RESET ALL SETTINGS
+    ========================================== */
+
+    function resetAllSettings(){
+
+      const confirmed =
+        confirm(
+          "আপনি কি Student Portal-এর সব settings reset করতে চান?"
+        );
+
+
+      if(!confirmed){
+
+        return;
+
+      }
+
+
+      localStorage.removeItem(
+        SETTINGS_KEY
+      );
+
+
+      localStorage.setItem(
+        "snkTheme",
+        "light"
+      );
+
+
+      applyTheme();
+
+      loadNotificationSettings();
+
+      updateLanguageButtons();
+
+      loadPrivacySetting();
+
+
+      showToast(
+        "সব Portal Settings reset হয়েছে।"
+      );
+
+    }
+
+
+    /* =========================================
+       SETTINGS MENU NAVIGATION
+    ========================================== */
+
+    function scrollToSection(
+      id,
+      button
+    ){
+
+      const section =
+        document.getElementById(
+          id
+        );
+
+
+      if(!section){
+
+        return;
+
+      }
+
+
+      document
+        .querySelectorAll(
+          ".menu-btn"
+        )
+        .forEach(function(item){
+
+          item.classList.remove(
+            "active"
+          );
+
+        });
+
+
+      if(button){
+
+        button.classList.add(
+          "active"
+        );
+
+      }
+
+
+      section.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+    }
+
+
+    /* =========================================
+       TOAST
+    ========================================== */
+
+    let toastTimer;
+
+
+    function showToast(message){
+
+      const toast =
+        document.getElementById(
+          "toast"
+        );
+
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toastTimer =
+        setTimeout(
+          function(){
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          2800
+        );
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+    ========================================== */
+
+    function logoutStudent(){
+
+      sessionStorage.removeItem(
+        "snkStudentLoggedIn"
+      );
+
+      sessionStorage.removeItem(
+        "snkStudentId"
+      );
+
+      sessionStorage.removeItem(
+        "snkStudentName"
+      );
+
+      sessionStorage.removeItem(
+        "snkStudentCourse"
+      );
+
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    /* =========================================
+       SYSTEM THEME CHANGE
+    ========================================== */
+
+    if(
+      window.matchMedia
+    ){
+
+      const media =
+        window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        );
+
+
+      if(media.addEventListener){
+
+        media.addEventListener(
+          "change",
+          function(){
+
+            const settings =
+              getSettings();
+
+
+            if(settings.autoTheme){
+
+              applyTheme();
+
+            }
+
+          }
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       STORAGE EVENT
+    ========================================== */
+
+    window.addEventListener(
+      "storage",
+      function(){
+
+        applyTheme();
+
+        loadNotificationSettings();
+
+        updateLanguageButtons();
+
+        loadPrivacySetting();
+
+      }
+    );
+
+
+    /* =========================================
+       VISIBILITY EVENT
+    ========================================== */
+
+    document.addEventListener(
+      "visibilitychange",
+      function(){
+
+        if(
+          !document.hidden
+        ){
+
+          applyTheme();
+
+          loadNotificationSettings();
+
+          updateLanguageButtons();
+
+          loadPrivacySetting();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       INITIAL LOAD
+    ========================================== */
+
+    applyTheme();
+
+    loadNotificationSettings();
+
+    updateLanguageButtons();
+
+    loadPrivacySetting();
+
+  </script>
+
+</body>
+</html>
+```

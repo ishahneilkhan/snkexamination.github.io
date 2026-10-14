@@ -1,0 +1,2498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Resources | SNK AI Academy</title>
+
+  <meta
+    name="description"
+    content="SNK AI Academy Student Resources — Notes, PDFs, Figma files, templates, videos and class materials."
+  >
+
+  <meta name="theme-color" content="#06120b">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root{
+      --green-950:#06120b;
+      --green-900:#071a0e;
+      --green-850:#092413;
+      --green-800:#0b3018;
+      --green-700:#15803d;
+      --green-600:#16a34a;
+      --green-500:#22c55e;
+      --green-400:#4ade80;
+      --green-300:#86efac;
+      --emerald:#10b981;
+      --lime:#a3e635;
+
+      --white:#f0fdf4;
+      --text:#dcfce7;
+      --muted:#94a3b8;
+
+      --border:rgba(134,239,172,.13);
+      --glass:rgba(9,36,19,.72);
+
+      --shadow:0 20px 60px rgba(0,0,0,.25);
+      --radius:24px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      font-family:"Inter",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 10%,rgba(34,197,94,.12),transparent 28%),
+        radial-gradient(circle at 90% 20%,rgba(163,230,53,.08),transparent 25%),
+        radial-gradient(circle at 50% 100%,rgba(16,185,129,.08),transparent 30%),
+        var(--green-950);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.035;
+      background-image:
+        linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+      background-size:40px 40px;
+      mask-image:linear-gradient(to bottom,black,transparent);
+      z-index:-1;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .container{
+      width:min(1180px,calc(100% - 32px));
+      margin:auto;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================== */
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      background:rgba(6,18,11,.76);
+      border-bottom:1px solid var(--border);
+    }
+
+    .nav-inner{
+      min-height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:max-content;
+    }
+
+    .brand-logo{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      color:#06120b;
+      font-weight:900;
+      font-family:"Space Grotesk",sans-serif;
+      background:linear-gradient(135deg,var(--lime),var(--green-400));
+      box-shadow:
+        0 0 0 5px rgba(163,230,53,.06),
+        0 10px 30px rgba(34,197,94,.2);
+    }
+
+    .brand-text strong{
+      display:block;
+      font-family:"Space Grotesk",sans-serif;
+      font-size:15px;
+      color:var(--white);
+    }
+
+    .brand-text span{
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .nav-links a{
+      padding:10px 11px;
+      border-radius:12px;
+      color:#a7b8ac;
+      font-size:13px;
+      font-weight:600;
+      transition:.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:var(--white);
+      background:rgba(34,197,94,.10);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .nav-icon{
+      width:40px;
+      height:40px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.025);
+      color:var(--text);
+      transition:.25s ease;
+    }
+
+    .nav-icon:hover{
+      background:rgba(34,197,94,.10);
+      border-color:rgba(134,239,172,.25);
+    }
+
+    .mobile-toggle{
+      display:none;
+    }
+
+    /* =========================
+       PAGE HEADER
+    ========================== */
+
+    .page{
+      padding:46px 0 80px;
+    }
+
+    .breadcrumb{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:20px;
+    }
+
+    .breadcrumb a:hover{
+      color:var(--green-300);
+    }
+
+    .page-hero{
+      position:relative;
+      overflow:hidden;
+      padding:34px;
+      border:1px solid var(--border);
+      border-radius:30px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(21,128,61,.22),
+          rgba(9,36,19,.72) 45%,
+          rgba(6,18,11,.86)
+        );
+      box-shadow:var(--shadow);
+    }
+
+    .page-hero::after{
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      right:-90px;
+      top:-100px;
+      border-radius:50%;
+      background:rgba(163,230,53,.09);
+      filter:blur(10px);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:720px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 11px;
+      border:1px solid rgba(134,239,172,.14);
+      border-radius:999px;
+      color:var(--green-300);
+      background:rgba(34,197,94,.08);
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:15px;
+    }
+
+    .eyebrow-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--lime);
+      box-shadow:0 0 12px var(--lime);
+    }
+
+    h1{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:clamp(34px,5vw,58px);
+      line-height:1;
+      letter-spacing:-.045em;
+      color:var(--white);
+      margin-bottom:14px;
+    }
+
+    .hero-content p{
+      max-width:650px;
+      color:#a7b8ac;
+      line-height:1.7;
+      font-size:15px;
+    }
+
+    /* =========================
+       SEARCH
+    ========================== */
+
+    .search-section{
+      margin-top:24px;
+    }
+
+    .search-box{
+      display:flex;
+      align-items:center;
+      gap:13px;
+      min-height:62px;
+      padding:0 18px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(9,36,19,.70);
+      box-shadow:0 15px 45px rgba(0,0,0,.16);
+      transition:.25s ease;
+    }
+
+    .search-box:focus-within{
+      border-color:rgba(74,222,128,.40);
+      box-shadow:
+        0 0 0 4px rgba(34,197,94,.06),
+        0 15px 45px rgba(0,0,0,.16);
+    }
+
+    .search-icon{
+      color:var(--green-300);
+      font-size:21px;
+    }
+
+    .search-box input{
+      flex:1;
+      min-width:0;
+      border:0;
+      outline:0;
+      color:var(--white);
+      background:transparent;
+      font-size:14px;
+    }
+
+    .search-box input::placeholder{
+      color:#718276;
+    }
+
+    .search-clear{
+      display:none;
+      border:0;
+      background:transparent;
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    .search-clear.show{
+      display:block;
+    }
+
+    /* =========================
+       CATEGORIES
+    ========================== */
+
+    .section{
+      margin-top:34px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:17px;
+    }
+
+    .section-title{
+      font-family:"Space Grotesk",sans-serif;
+      font-size:24px;
+      color:var(--white);
+      letter-spacing:-.02em;
+    }
+
+    .section-subtitle{
+      margin-top:5px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .resource-count{
+      color:var(--green-300);
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .categories{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+    }
+
+    .category-btn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.025);
+      color:#a7b8ac;
+      border-radius:999px;
+      padding:10px 15px;
+      font-size:12px;
+      font-weight:700;
+      transition:.25s ease;
+    }
+
+    .category-btn:hover{
+      color:var(--white);
+      border-color:rgba(134,239,172,.25);
+      background:rgba(34,197,94,.08);
+    }
+
+    .category-btn.active{
+      color:#06120b;
+      border-color:transparent;
+      background:linear-gradient(135deg,var(--lime),var(--green-400));
+      box-shadow:0 8px 25px rgba(34,197,94,.18);
+    }
+
+    /* =========================
+       FEATURED
+    ========================== */
+
+    .featured-grid{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:18px;
+    }
+
+    .featured-card{
+      position:relative;
+      overflow:hidden;
+      min-height:250px;
+      padding:27px;
+      border:1px solid var(--border);
+      border-radius:26px;
+      background:
+        linear-gradient(135deg,rgba(21,128,61,.24),rgba(9,36,19,.78));
+      box-shadow:var(--shadow);
+    }
+
+    .featured-card::before{
+      content:"";
+      position:absolute;
+      width:200px;
+      height:200px;
+      border-radius:50%;
+      background:rgba(163,230,53,.07);
+      right:-80px;
+      bottom:-100px;
+    }
+
+    .featured-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .resource-type{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 10px;
+      border-radius:10px;
+      background:rgba(163,230,53,.09);
+      border:1px solid rgba(163,230,53,.14);
+      color:var(--lime);
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    .featured-card h3{
+      max-width:650px;
+      margin:18px 0 10px;
+      font-family:"Space Grotesk",sans-serif;
+      font-size:25px;
+      color:var(--white);
+    }
+
+    .featured-card p{
+      max-width:650px;
+      color:#9caf9f;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .resource-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px 16px;
+      margin-top:20px;
+      color:#83968a;
+      font-size:11px;
+    }
+
+    .resource-meta span{
+      display:flex;
+      align-items:center;
+      gap:5px;
+    }
+
+    .featured-actions{
+      display:flex;
+      gap:9px;
+      margin-top:21px;
+    }
+
+    .btn{
+      border:0;
+      border-radius:12px;
+      padding:11px 15px;
+      font-size:12px;
+      font-weight:800;
+      transition:.25s ease;
+    }
+
+    .btn-primary{
+      color:#06120b;
+      background:linear-gradient(135deg,var(--lime),var(--green-400));
+      box-shadow:0 10px 25px rgba(34,197,94,.17);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 15px 30px rgba(34,197,94,.24);
+    }
+
+    .btn-secondary{
+      color:var(--text);
+      background:rgba(255,255,255,.045);
+      border:1px solid var(--border);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(34,197,94,.08);
+      border-color:rgba(134,239,172,.24);
+    }
+
+    /* =========================
+       RESOURCE GRID
+    ========================== */
+
+    .resource-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .resource-card{
+      display:flex;
+      flex-direction:column;
+      min-height:245px;
+      padding:20px;
+      border:1px solid var(--border);
+      border-radius:22px;
+      background:linear-gradient(
+        145deg,
+        rgba(9,36,19,.80),
+        rgba(7,26,14,.70)
+      );
+      transition:
+        transform .28s ease,
+        border-color .28s ease,
+        box-shadow .28s ease;
+    }
+
+    .resource-card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(134,239,172,.25);
+      box-shadow:
+        0 20px 50px rgba(0,0,0,.24),
+        0 0 35px rgba(34,197,94,.06);
+    }
+
+    .resource-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .resource-icon{
+      width:45px;
+      height:45px;
+      display:grid;
+      place-items:center;
+      border-radius:14px;
+      color:var(--green-300);
+      background:rgba(34,197,94,.09);
+      border:1px solid rgba(134,239,172,.10);
+      font-size:20px;
+    }
+
+    .file-badge{
+      padding:6px 9px;
+      border-radius:8px;
+      color:#8fa296;
+      background:rgba(255,255,255,.035);
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .resource-card h3{
+      margin:17px 0 8px;
+      color:var(--white);
+      font-family:"Space Grotesk",sans-serif;
+      font-size:17px;
+      line-height:1.3;
+    }
+
+    .resource-card p{
+      color:#83968a;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .card-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:auto;
+      padding-top:18px;
+    }
+
+    .card-info{
+      color:#718276;
+      font-size:10px;
+    }
+
+    .open-btn{
+      border:1px solid rgba(134,239,172,.13);
+      border-radius:10px;
+      padding:8px 11px;
+      color:var(--green-300);
+      background:rgba(34,197,94,.06);
+      font-size:11px;
+      font-weight:800;
+      transition:.2s ease;
+    }
+
+    .open-btn:hover{
+      color:#06120b;
+      background:var(--lime);
+      border-color:var(--lime);
+    }
+
+    /* =========================
+       EMPTY
+    ========================== */
+
+    .empty-state{
+      display:none;
+      text-align:center;
+      padding:55px 20px;
+      border:1px dashed rgba(134,239,172,.15);
+      border-radius:24px;
+      background:rgba(9,36,19,.45);
+    }
+
+    .empty-state.show{
+      display:block;
+    }
+
+    .empty-icon{
+      width:60px;
+      height:60px;
+      margin:0 auto 15px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      background:rgba(34,197,94,.08);
+      font-size:25px;
+    }
+
+    .empty-state h3{
+      color:var(--white);
+      margin-bottom:6px;
+      font-family:"Space Grotesk",sans-serif;
+    }
+
+    .empty-state p{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* =========================
+       STATS
+    ========================== */
+
+    .resource-stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:24px;
+    }
+
+    .mini-stat{
+      padding:18px;
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:rgba(9,36,19,.55);
+    }
+
+    .mini-stat-label{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:600;
+    }
+
+    .mini-stat-value{
+      margin-top:7px;
+      color:var(--white);
+      font-family:"Space Grotesk",sans-serif;
+      font-size:25px;
+      font-weight:700;
+    }
+
+    /* =========================
+       LOGIN MODAL
+    ========================== */
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:5000;
+      display:none;
+      place-items:center;
+      padding:20px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(12px);
+    }
+
+    .modal.show{
+      display:grid;
+    }
+
+    .modal-card{
+      width:min(430px,100%);
+      padding:28px;
+      border:1px solid rgba(134,239,172,.16);
+      border-radius:26px;
+      background:
+        linear-gradient(145deg,rgba(9,36,19,.98),rgba(6,18,11,.98));
+      box-shadow:0 30px 100px rgba(0,0,0,.55);
+      text-align:center;
+    }
+
+    .modal-icon{
+      width:58px;
+      height:58px;
+      margin:0 auto 16px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      color:#06120b;
+      background:linear-gradient(135deg,var(--lime),var(--green-400));
+      font-size:23px;
+    }
+
+    .modal-card h3{
+      color:var(--white);
+      font-family:"Space Grotesk",sans-serif;
+      font-size:22px;
+      margin-bottom:8px;
+    }
+
+    .modal-card p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:9px;
+      margin-top:21px;
+    }
+
+    .modal-actions .btn{
+      flex:1;
+    }
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      z-index:7000;
+      max-width:330px;
+      padding:14px 17px;
+      border:1px solid rgba(134,239,172,.17);
+      border-radius:15px;
+      color:var(--white);
+      background:rgba(7,26,14,.94);
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+      transform:translateY(30px);
+      opacity:0;
+      pointer-events:none;
+      transition:.3s ease;
+      font-size:12px;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer{
+      padding:28px 0 35px;
+      border-top:1px solid var(--border);
+      color:#64766b;
+      font-size:11px;
+    }
+
+    .footer-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .footer-brand{
+      color:#8da092;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:16px;
+    }
+
+    .footer-links a:hover{
+      color:var(--green-300);
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media(max-width:1050px){
+
+      .nav-links{
+        gap:0;
+      }
+
+      .nav-links a{
+        padding:9px 7px;
+        font-size:12px;
+      }
+
+      .resource-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:820px){
+
+      .mobile-toggle{
+        display:grid;
+      }
+
+      .nav-links{
+        position:absolute;
+        left:16px;
+        right:16px;
+        top:82px;
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        padding:10px;
+        border:1px solid var(--border);
+        border-radius:18px;
+        background:rgba(6,18,11,.97);
+        box-shadow:var(--shadow);
+      }
+
+      .nav-links.show{
+        display:flex;
+      }
+
+      .nav-links a{
+        padding:12px 13px;
+      }
+
+      .nav-actions{
+        margin-left:auto;
+      }
+
+      .featured-grid{
+        grid-template-columns:1fr;
+      }
+
+      .resource-stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:620px){
+
+      .container{
+        width:min(100% - 22px,1180px);
+      }
+
+      .page{
+        padding:28px 0 55px;
+      }
+
+      .page-hero{
+        padding:25px 20px;
+        border-radius:23px;
+      }
+
+      h1{
+        font-size:37px;
+      }
+
+      .resource-grid{
+        grid-template-columns:1fr;
+      }
+
+      .resource-stats{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .section-head{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:5px;
+      }
+
+      .categories{
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        padding-bottom:5px;
+        scrollbar-width:none;
+      }
+
+      .categories::-webkit-scrollbar{
+        display:none;
+      }
+
+      .category-btn{
+        white-space:nowrap;
+      }
+
+      .featured-card{
+        min-height:auto;
+        padding:22px;
+      }
+
+      .featured-card h3{
+        font-size:21px;
+      }
+
+      .featured-actions{
+        flex-wrap:wrap;
+      }
+
+      .featured-actions .btn{
+        flex:1;
+      }
+
+      .footer-inner{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:430px){
+
+      .brand-text{
+        display:none;
+      }
+
+      .resource-stats{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .modal-card{
+        padding:23px;
+      }
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVBAR
+  ========================== -->
+
+  <header class="navbar">
+    <div class="container nav-inner">
+
+      <a href="../index.html" class="brand">
+
+        <div class="brand-logo">
+          SNK
+        </div>
+
+        <div class="brand-text">
+          <strong>SNK AI Academy</strong>
+          <span>Student Portal</span>
+        </div>
+
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+
+        <a href="../index.html">
+          Home
+        </a>
+
+        <a href="../student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="../courses.html">
+          My Course
+        </a>
+
+        <a href="../assignments.html">
+          Assignment
+        </a>
+
+        <a href="../quiz.html">
+          Quiz
+        </a>
+
+        <a href="../results.html">
+          Result
+        </a>
+
+        <a href="../student-attendance/index.html">
+          Attendance
+        </a>
+
+        <a href="index.html" class="active">
+          Resources
+        </a>
+
+      </nav>
+
+      <div class="nav-actions">
+
+        <button
+          class="nav-icon"
+          id="mobileToggle"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="page">
+
+    <div class="container">
+
+      <!-- Breadcrumb -->
+
+      <div class="breadcrumb">
+
+        <a href="../index.html">
+          Home
+        </a>
+
+        <span>›</span>
+
+        <span>Resources</span>
+
+      </div>
+
+
+      <!-- Hero -->
+
+      <section class="page-hero">
+
+        <div class="hero-content">
+
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Student Learning Library
+          </div>
+
+          <h1>
+            Resources
+          </h1>
+
+          <p>
+            Everything you need for your learning journey —
+            class notes, PDFs, Figma resources, templates,
+            videos and practical class materials in one place.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- Search -->
+
+      <section class="search-section">
+
+        <div class="search-box">
+
+          <div class="search-icon">
+            ⌕
+          </div>
+
+          <input
+            type="search"
+            id="resourceSearch"
+            placeholder="Search resources, notes, Figma files, templates..."
+            autocomplete="off"
+          >
+
+          <button
+            class="search-clear"
+            id="searchClear"
+            aria-label="Clear search"
+          >
+            ×
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- Categories -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div>
+            <h2 class="section-title">
+              Browse Resources
+            </h2>
+
+            <p class="section-subtitle">
+              Choose a category to quickly find your materials.
+            </p>
+          </div>
+
+          <div class="resource-count" id="resourceCount">
+            8 Resources
+          </div>
+
+        </div>
+
+
+        <div class="categories" id="categories">
+
+          <button
+            class="category-btn active"
+            data-category="all"
+          >
+            All
+          </button>
+
+          <button
+            class="category-btn"
+            data-category="notes"
+          >
+            📝 Notes
+          </button>
+
+          <button
+            class="category-btn"
+            data-category="pdf"
+          >
+            📄 PDFs
+          </button>
+
+          <button
+            class="category-btn"
+            data-category="figma"
+          >
+            🎨 Figma
+          </button>
+
+          <button
+            class="category-btn"
+            data-category="template"
+          >
+            🧩 Templates
+          </button>
+
+          <button
+            class="category-btn"
+            data-category="video"
+          >
+            🎥 Videos
+          </button>
+
+          <button
+            class="category-btn"
+            data-category="material"
+          >
+            📦 Class Materials
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- Featured -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div>
+            <h2 class="section-title">
+              ⭐ Featured Resource
+            </h2>
+
+            <p class="section-subtitle">
+              Start here for the most important learning material.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="featured-grid">
+
+          <article class="featured-card">
+
+            <div class="featured-content">
+
+              <span class="resource-type">
+                ✦ Featured PDF
+              </span>
+
+              <h3>
+                Complete UI/UX Design Roadmap
+              </h3>
+
+              <p>
+                A practical roadmap covering UX research,
+                information architecture, wireframing,
+                UI design, Figma and interactive prototyping.
+              </p>
+
+              <div class="resource-meta">
+
+                <span>
+                  📄 PDF
+                </span>
+
+                <span>
+                  42 Pages
+                </span>
+
+                <span>
+                  Updated Sep 2026
+                </span>
+
+              </div>
+
+              <div class="featured-actions">
+
+                <button
+                  class="btn btn-primary"
+                  onclick="openResource('Complete UI/UX Design Roadmap')"
+                >
+                  Open Resource
+                </button>
+
+                <button
+                  class="btn btn-secondary"
+                  onclick="downloadResource('Complete UI/UX Design Roadmap')"
+                >
+                  Download
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="featured-card">
+
+            <div class="featured-content">
+
+              <span class="resource-type">
+                🎨 Figma
+              </span>
+
+              <h3>
+                UI Design Starter Kit
+              </h3>
+
+              <p>
+                Starter components, layouts and interface
+                patterns for your upcoming practical projects.
+              </p>
+
+              <div class="resource-meta">
+
+                <span>
+                  🎨 Figma
+                </span>
+
+                <span>
+                  Components
+                </span>
+
+                <span>
+                  Batch 01
+                </span>
+
+              </div>
+
+              <div class="featured-actions">
+
+                <button
+                  class="btn btn-primary"
+                  onclick="openResource('UI Design Starter Kit')"
+                >
+                  Open File
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- Resource Stats -->
+
+      <section class="resource-stats">
+
+        <div class="mini-stat">
+
+          <div class="mini-stat-label">
+            Total Resources
+          </div>
+
+          <div class="mini-stat-value">
+            08
+          </div>
+
+        </div>
+
+        <div class="mini-stat">
+
+          <div class="mini-stat-label">
+            PDFs & Notes
+          </div>
+
+          <div class="mini-stat-value">
+            03
+          </div>
+
+        </div>
+
+        <div class="mini-stat">
+
+          <div class="mini-stat-label">
+            Design Files
+          </div>
+
+          <div class="mini-stat-value">
+            02
+          </div>
+
+        </div>
+
+        <div class="mini-stat">
+
+          <div class="mini-stat-label">
+            Videos
+          </div>
+
+          <div class="mini-stat-value">
+            03
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- All Resources -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div>
+            <h2 class="section-title">
+              All Resources
+            </h2>
+
+            <p class="section-subtitle">
+              Your complete student learning library.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="resource-grid" id="resourceGrid">
+
+
+          <!-- Resource 1 -->
+
+          <article
+            class="resource-card"
+            data-category="notes"
+            data-search="ux research notes user research interview persona"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                📝
+              </div>
+
+              <span class="file-badge">
+                NOTES
+              </span>
+
+            </div>
+
+            <h3>
+              UX Research Class Notes
+            </h3>
+
+            <p>
+              Research methods, user interviews,
+              observation and research planning notes.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                18 Pages
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('UX Research Class Notes')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- Resource 2 -->
+
+          <article
+            class="resource-card"
+            data-category="pdf"
+            data-search="information architecture pdf sitemap user flow"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                📄
+              </div>
+
+              <span class="file-badge">
+                PDF
+              </span>
+
+            </div>
+
+            <h3>
+              Information Architecture Guide
+            </h3>
+
+            <p>
+              Learn sitemap, navigation structure,
+              content hierarchy and user flow basics.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                24 Pages
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('Information Architecture Guide')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- Resource 3 -->
+
+          <article
+            class="resource-card"
+            data-category="figma"
+            data-search="figma components ui design design system"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                🎨
+              </div>
+
+              <span class="file-badge">
+                FIGMA
+              </span>
+
+            </div>
+
+            <h3>
+              Figma Components Practice File
+            </h3>
+
+            <p>
+              Practice buttons, cards, inputs,
+              navigation and reusable components.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                Practice File
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('Figma Components Practice File')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- Resource 4 -->
+
+          <article
+            class="resource-card"
+            data-category="template"
+            data-search="user persona template ux persona template"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                🧩
+              </div>
+
+              <span class="file-badge">
+                TEMPLATE
+              </span>
+
+            </div>
+
+            <h3>
+              User Persona Template
+            </h3>
+
+            <p>
+              Ready-to-use persona structure for
+              practical UX research assignments.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                Figma Template
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('User Persona Template')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- Resource 5 -->
+
+          <article
+            class="resource-card"
+            data-category="video"
+            data-search="figma auto layout video tutorial"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                🎥
+              </div>
+
+              <span class="file-badge">
+                VIDEO
+              </span>
+
+            </div>
+
+            <h3>
+              Figma Auto Layout Masterclass
+            </h3>
+
+            <p>
+              Practical walkthrough of auto layout,
+              spacing, resizing and responsive components.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                38 min
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('Figma Auto Layout Masterclass')"
+              >
+                Watch →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- Resource 6 -->
+
+          <article
+            class="resource-card"
+            data-category="material"
+            data-search="class material wireframe mobile app"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                📦
+              </div>
+
+              <span class="file-badge">
+                MATERIAL
+              </span>
+
+            </div>
+
+            <h3>
+              Mobile App Wireframe Kit
+            </h3>
+
+            <p>
+              Practical wireframe screens for mobile
+              application design exercises.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                15 Screens
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('Mobile App Wireframe Kit')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- Resource 7 -->
+
+          <article
+            class="resource-card"
+            data-category="video"
+            data-search="prototype interaction figma video"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                🎥
+              </div>
+
+              <span class="file-badge">
+                VIDEO
+              </span>
+
+            </div>
+
+            <h3>
+              Interactive Prototype Tutorial
+            </h3>
+
+            <p>
+              Learn practical interactions, transitions
+              and prototype testing in Figma.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                31 min
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('Interactive Prototype Tutorial')"
+              >
+                Watch →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- Resource 8 -->
+
+          <article
+            class="resource-card"
+            data-category="video"
+            data-search="ui design visual hierarchy video"
+          >
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                🎥
+              </div>
+
+              <span class="file-badge">
+                VIDEO
+              </span>
+
+            </div>
+
+            <h3>
+              Visual Hierarchy in UI Design
+            </h3>
+
+            <p>
+              Typography, spacing, contrast and hierarchy
+              explained through practical examples.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                26 min
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('Visual Hierarchy in UI Design')"
+              >
+                Watch →
+              </button>
+
+            </div>
+
+          </article>
+
+
+        </div>
+
+
+        <!-- Empty Search -->
+
+        <div
+          class="empty-state"
+          id="emptyState"
+        >
+
+          <div class="empty-icon">
+            🔍
+          </div>
+
+          <h3>
+            No resources found
+          </h3>
+
+          <p>
+            Try another keyword or choose a different category.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- Recent -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div>
+            <h2 class="section-title">
+              🕘 Recently Added
+            </h2>
+
+            <p class="section-subtitle">
+              Latest materials added for Batch 01 students.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="resource-grid">
+
+          <article class="resource-card">
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                ✨
+              </div>
+
+              <span class="file-badge">
+                NEW
+              </span>
+
+            </div>
+
+            <h3>
+              Responsive UI Design Notes
+            </h3>
+
+            <p>
+              Latest notes from the responsive interface
+              design practical class.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                30 Sep 2026
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('Responsive UI Design Notes')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <article class="resource-card">
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                🎨
+              </div>
+
+              <span class="file-badge">
+                NEW
+              </span>
+
+            </div>
+
+            <h3>
+              UI Design System Practice
+            </h3>
+
+            <p>
+              Components, tokens and layout practice
+              for the current design module.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                29 Sep 2026
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('UI Design System Practice')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <article class="resource-card">
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                🧠
+              </div>
+
+              <span class="file-badge">
+                NEW
+              </span>
+
+            </div>
+
+            <h3>
+              UX Case Study Checklist
+            </h3>
+
+            <p>
+              A simple checklist to help structure
+              your UX case study assignment.
+            </p>
+
+            <div class="card-footer">
+
+              <span class="card-info">
+                27 Sep 2026
+              </span>
+
+              <button
+                class="open-btn"
+                onclick="openResource('UX Case Study Checklist')"
+              >
+                Open →
+              </button>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- Learning Tip -->
+
+      <section class="section">
+
+        <div class="featured-card">
+
+          <div class="featured-content">
+
+            <span class="resource-type">
+              💡 Learning Tip
+            </span>
+
+            <h3>
+              Don't just download — practice.
+            </h3>
+
+            <p>
+              Use the notes to understand the concept,
+              open the practical files, complete the exercises,
+              and then apply the same process to your own project.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div class="footer-brand">
+        © 2026 SNK AI Academy · Student Portal
+      </div>
+
+      <div class="footer-links">
+
+        <a href="../index.html">
+          Home
+        </a>
+
+        <a href="../student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="../student-contact/index.html">
+          Contact
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       LOGIN MODAL
+  ========================== -->
+
+  <div
+    class="modal"
+    id="loginModal"
+  >
+
+    <div class="modal-card">
+
+      <div class="modal-icon">
+        🔐
+      </div>
+
+      <h3>
+        Student Login Required
+      </h3>
+
+      <p>
+        Please login to access your private student resources.
+      </p>
+
+      <div class="modal-actions">
+
+        <button
+          class="btn btn-secondary"
+          onclick="closeLoginModal()"
+        >
+          Continue Demo
+        </button>
+
+        <button
+          class="btn btn-primary"
+          onclick="goToLogin()"
+        >
+          Login
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       TOAST
+  ========================== -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script>
+
+    /* =========================
+       STUDENT DATA
+    ========================== */
+
+    const studentName =
+      localStorage.getItem("snkStudentName") || "Student";
+
+    const studentId =
+      localStorage.getItem("snkStudentId") || "SNK-0001";
+
+    const studentCourse =
+      localStorage.getItem("snkStudentCourse") ||
+      "AI-Powered UI/UX Design";
+
+
+    /* =========================
+       MOBILE MENU
+    ========================== */
+
+    const mobileToggle =
+      document.getElementById("mobileToggle");
+
+    const navLinks =
+      document.getElementById("navLinks");
+
+    mobileToggle.addEventListener("click", () => {
+
+      navLinks.classList.toggle("show");
+
+    });
+
+
+    document.addEventListener("click", (event) => {
+
+      if(
+        !navLinks.contains(event.target) &&
+        !mobileToggle.contains(event.target)
+      ){
+
+        navLinks.classList.remove("show");
+
+      }
+
+    });
+
+
+    /* =========================
+       RESOURCE FILTER
+    ========================== */
+
+    const searchInput =
+      document.getElementById("resourceSearch");
+
+    const searchClear =
+      document.getElementById("searchClear");
+
+    const resourceCards =
+      [...document.querySelectorAll(
+        "#resourceGrid .resource-card"
+      )];
+
+    const categoryButtons =
+      [...document.querySelectorAll(
+        ".category-btn"
+      )];
+
+    const resourceCount =
+      document.getElementById("resourceCount");
+
+    const emptyState =
+      document.getElementById("emptyState");
+
+
+    let activeCategory = "all";
+
+
+    function filterResources(){
+
+      const query =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+      let visible = 0;
+
+
+      resourceCards.forEach(card => {
+
+        const category =
+          card.dataset.category || "";
+
+        const searchableText =
+          (
+            card.dataset.search ||
+            card.innerText ||
+            ""
+          ).toLowerCase();
+
+
+        const categoryMatch =
+          activeCategory === "all" ||
+          category === activeCategory;
+
+
+        const searchMatch =
+          !query ||
+          searchableText.includes(query);
+
+
+        const shouldShow =
+          categoryMatch && searchMatch;
+
+
+        card.style.display =
+          shouldShow ? "flex" : "none";
+
+
+        if(shouldShow){
+
+          visible++;
+
+        }
+
+      });
+
+
+      resourceCount.textContent =
+        `${visible} Resource${visible === 1 ? "" : "s"}`;
+
+
+      emptyState.classList.toggle(
+        "show",
+        visible === 0
+      );
+
+
+      searchClear.classList.toggle(
+        "show",
+        Boolean(query)
+      );
+
+    }
+
+
+    searchInput.addEventListener(
+      "input",
+      filterResources
+    );
+
+
+    searchClear.addEventListener(
+      "click",
+      () => {
+
+        searchInput.value = "";
+
+        filterResources();
+
+        searchInput.focus();
+
+      }
+    );
+
+
+    categoryButtons.forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          categoryButtons.forEach(btn => {
+
+            btn.classList.remove("active");
+
+          });
+
+
+          button.classList.add("active");
+
+
+          activeCategory =
+            button.dataset.category;
+
+
+          filterResources();
+
+        }
+      );
+
+    });
+
+
+    /* =========================
+       RESOURCE ACTIONS
+    ========================== */
+
+    function openResource(name){
+
+      showToast(
+        `Opening "${name}" — demo resource`
+      );
+
+    }
+
+
+    function downloadResource(name){
+
+      showToast(
+        `"${name}" download will be connected later.`
+      );
+
+    }
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    let toastTimer;
+
+
+    function showToast(message){
+
+      const toast =
+        document.getElementById("toast");
+
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add("show");
+
+
+      clearTimeout(toastTimer);
+
+
+      toastTimer =
+        setTimeout(() => {
+
+          toast.classList.remove("show");
+
+        },3200);
+
+    }
+
+
+    /* =========================
+       LOGIN PROTECTION
+    ========================== */
+
+    const isLoggedIn =
+      localStorage.getItem(
+        "snkStudentLoggedIn"
+      ) === "true" ||
+      sessionStorage.getItem(
+        "snkStudentLoggedIn"
+      ) === "true";
+
+
+    /*
+      Change to false if you want
+      the resource page to open
+      without login.
+    */
+
+    const REQUIRE_LOGIN = true;
+
+
+    const loginModal =
+      document.getElementById("loginModal");
+
+
+    if(!isLoggedIn && REQUIRE_LOGIN){
+
+      loginModal.classList.add("show");
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+    function closeLoginModal(){
+
+      loginModal.classList.remove("show");
+
+      document.body.style.overflow =
+        "";
+
+      showToast(
+        "Demo mode enabled."
+      );
+
+    }
+
+
+    function goToLogin(){
+
+      window.location.href =
+        "../login.html";
+
+    }
+
+
+    /* =========================
+       MODAL OUTSIDE CLICK
+    ========================== */
+
+    loginModal.addEventListener(
+      "click",
+      event => {
+
+        if(
+          event.target === loginModal
+        ){
+
+          closeLoginModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       ESCAPE KEY
+    ========================== */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(event.key === "Escape"){
+
+          navLinks.classList.remove(
+            "show"
+          );
+
+          if(
+            loginModal.classList.contains(
+              "show"
+            )
+          ){
+
+            closeLoginModal();
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       INITIAL FILTER
+    ========================== */
+
+    filterResources();
+
+
+    /* =========================
+       OPTIONAL CONSOLE INFO
+    ========================== */
+
+    console.log(
+      "SNK AI Academy Resources loaded for:",
+      studentName,
+      studentId,
+      studentCourse
+    );
+
+  </script>
+
+</body>
+</html>

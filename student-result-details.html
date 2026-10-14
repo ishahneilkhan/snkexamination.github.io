@@ -1,0 +1,3368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Student Result Details | SNK AI Academy</title>
+
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="SNK AI Academy Student Result Details and Printable Marksheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#050505;
+      --bg2:#0a0a0a;
+      --card:rgba(20,20,20,.88);
+      --card2:#181818;
+      --text:#ffffff;
+      --muted:#999999;
+      --border:rgba(183,255,0,.16);
+      --primary:#b7ff00;
+      --primary2:#06b6d4;
+      --success:#22c55e;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --shadow:0 20px 60px rgba(0,0,0,.5);
+      --radius:22px;
+    }
+
+    body.light{
+      --bg:#f3f6fb;
+      --bg2:#eef2f7;
+      --card:#ffffff;
+      --card2:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --primary:#5a8a00;
+      --border:rgba(15,23,42,.10);
+      --shadow:0 18px 50px rgba(15,23,42,.10);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Inter","Noto Sans Bengali",sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%,rgba(183,255,0,.14),transparent 28%),
+        radial-gradient(circle at 85% 15%,rgba(6,182,212,.10),transparent 25%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .app{
+      min-height:100vh;
+    }
+
+    /* =========================
+       TOP NAV
+    ========================= */
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      height:72px;
+      border-bottom:1px solid var(--border);
+      background:rgba(7,11,22,.84);
+      backdrop-filter:blur(18px);
+    }
+
+    body.light .topbar{
+      background:rgba(255,255,255,.88);
+    }
+
+    .topbar-inner{
+      width:min(1180px,calc(100% - 32px));
+      height:100%;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-logo{
+      width:44px;
+      height:44px;
+      border-radius:13px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#b7ff00;
+      color:#050505;
+      font-weight:900;
+      font-size:14px;
+      box-shadow:0 8px 25px rgba(0,0,0,.18);
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-weight:900;
+      font-size:15px;
+      white-space:nowrap;
+    }
+
+    .brand-subtitle{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:2px;
+      white-space:nowrap;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .nav-btn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      min-height:40px;
+      padding:0 13px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      font-weight:700;
+      font-size:13px;
+      transition:.2s ease;
+    }
+
+    .nav-btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(183,255,0,.4);
+    }
+
+    .nav-btn.primary{
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      border:none;
+      color:#050505;
+      font-weight:800;
+    }
+
+    .mobile-menu{
+      display:none;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main{
+      width:min(1180px,calc(100% - 32px));
+      margin:0 auto;
+      padding:38px 0 70px;
+    }
+
+    .breadcrumb{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:20px;
+    }
+
+    .breadcrumb a:hover{
+      color:var(--text);
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:30px;
+      background:
+        radial-gradient(circle at 80% 20%,rgba(6,182,212,.14),transparent 30%),
+        radial-gradient(circle at 20% 100%,rgba(183,255,0,.16),transparent 35%),
+        var(--card);
+      box-shadow:var(--shadow);
+      margin-bottom:24px;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      right:-90px;
+      top:-90px;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:
+        0 0 0 35px rgba(255,255,255,.015),
+        0 0 0 70px rgba(255,255,255,.01);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:7px 11px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,.25);
+      background:rgba(34,197,94,.09);
+      color:#86efac;
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      margin-bottom:14px;
+    }
+
+    body.light .eyebrow{
+      color:#15803d;
+    }
+
+    .hero h1{
+      font-size:clamp(26px,4vw,42px);
+      line-height:1.12;
+      letter-spacing:-.04em;
+      margin-bottom:10px;
+    }
+
+    .hero p{
+      max-width:720px;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .hero-actions{
+      margin-top:22px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    /* =========================
+       RESULT HEADER
+    ========================= */
+
+    .student-header{
+      display:grid;
+      grid-template-columns:1.3fr .7fr;
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .student-card,
+    .status-card,
+    .panel,
+    .stat-card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .student-card{
+      padding:25px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+
+    .student-avatar{
+      width:72px;
+      height:72px;
+      flex:0 0 72px;
+      border-radius:20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:25px;
+      font-weight:900;
+      color:#050505;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      overflow:hidden;
+    }
+
+    .student-avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:none;
+    }
+
+    .student-info h2{
+      font-size:21px;
+      margin-bottom:5px;
+    }
+
+    .student-info p{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:3px;
+    }
+
+    .student-id{
+      display:inline-flex;
+      margin-top:9px;
+      padding:6px 9px;
+      border-radius:8px;
+      background:rgba(183,255,0,.12);
+      color:#c4b5fd;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    body.light .student-id{
+      color:#6d28d9;
+    }
+
+    .status-card{
+      padding:25px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .status-label{
+      color:var(--muted);
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .result-status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:9px 13px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .result-status.pass{
+      background:rgba(34,197,94,.12);
+      color:#86efac;
+      border:1px solid rgba(34,197,94,.22);
+    }
+
+    .result-status.fail{
+      background:rgba(239,68,68,.12);
+      color:#fca5a5;
+      border:1px solid rgba(239,68,68,.22);
+    }
+
+    .result-status.pending{
+      background:rgba(245,158,11,.12);
+      color:#fcd34d;
+      border:1px solid rgba(245,158,11,.22);
+    }
+
+    body.light .result-status.pass{
+      color:#15803d;
+    }
+
+    body.light .result-status.fail{
+      color:#b91c1c;
+    }
+
+    body.light .result-status.pending{
+      color:#b45309;
+    }
+
+    /* =========================
+       EXAM INFO
+    ========================= */
+
+    .panel{
+      padding:25px;
+      margin-bottom:18px;
+    }
+
+    .panel-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-bottom:20px;
+    }
+
+    .panel-title{
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .panel-subtitle{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .verified-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(59,130,246,.12);
+      border:1px solid rgba(59,130,246,.25);
+      color:#93c5fd;
+      font-size:11px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    body.light .verified-badge{
+      color:#1d4ed8;
+    }
+
+    .exam-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .info-box{
+      padding:15px;
+      border-radius:15px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.025);
+    }
+
+    body.light .info-box{
+      background:#f8fafc;
+    }
+
+    .info-label{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .info-value{
+      font-size:14px;
+      font-weight:800;
+      word-break:break-word;
+    }
+
+    /* =========================
+       MARKS
+    ========================= */
+
+    .marks-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .stat-card{
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .stat-card::after{
+      content:"";
+      position:absolute;
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      right:-35px;
+      bottom:-40px;
+      background:rgba(183,255,0,.08);
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      margin-bottom:9px;
+    }
+
+    .stat-value{
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:-.04em;
+    }
+
+    .stat-small{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:5px;
+    }
+
+    .score-panel{
+      display:grid;
+      grid-template-columns:280px 1fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .score-circle{
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      background:
+        conic-gradient(var(--primary) var(--percentage,0%),rgba(148,163,184,.14) 0);
+    }
+
+    .score-circle::before{
+      content:"";
+      position:absolute;
+      inset:13px;
+      border-radius:50%;
+      background:var(--card2);
+      border:1px solid var(--border);
+    }
+
+    .score-center{
+      position:relative;
+      z-index:2;
+      text-align:center;
+    }
+
+    .score-percent{
+      font-size:40px;
+      font-weight:900;
+      letter-spacing:-.05em;
+    }
+
+    .score-caption{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    .progress-area{
+      min-width:0;
+    }
+
+    .progress-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:9px;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .progress-track{
+      width:100%;
+      height:12px;
+      border-radius:999px;
+      background:rgba(148,163,184,.14);
+      overflow:hidden;
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0;
+      border-radius:inherit;
+      background:linear-gradient(90deg,var(--primary),var(--primary2));
+      transition:width .6s ease;
+    }
+
+    .score-explanation{
+      margin-top:18px;
+      padding:15px;
+      border-radius:15px;
+      border:1px solid var(--border);
+      background:rgba(183,255,0,.05);
+      color:var(--muted);
+      line-height:1.7;
+      font-size:13px;
+    }
+
+    /* =========================
+       NOTE
+    ========================= */
+
+    .note-box{
+      padding:17px;
+      border-left:4px solid var(--primary);
+      background:rgba(183,255,0,.07);
+      border-radius:12px;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:13px;
+    }
+
+    .note-box strong{
+      color:var(--text);
+    }
+
+    /* =========================
+       ACTIONS
+    ========================= */
+
+    .action-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      min-height:44px;
+      padding:0 16px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-size:13px;
+      font-weight:800;
+      transition:.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      color:#050505;
+      font-weight:800;
+      border:none;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+    }
+
+    .btn-success{
+      color:#fff;
+      border:none;
+      background:linear-gradient(135deg,#16a34a,#22c55e);
+    }
+
+    .btn-danger{
+      color:#fff;
+      border:none;
+      background:linear-gradient(135deg,#dc2626,#ef4444);
+    }
+
+    .btn:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    /* =========================
+       EMPTY / ERROR
+    ========================= */
+
+    .state{
+      display:none;
+      text-align:center;
+      padding:70px 20px;
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .state.show{
+      display:block;
+    }
+
+    .state-icon{
+      width:68px;
+      height:68px;
+      border-radius:20px;
+      margin:0 auto 18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      background:rgba(245,158,11,.12);
+      border:1px solid rgba(245,158,11,.2);
+    }
+
+    .state h2{
+      font-size:21px;
+      margin-bottom:8px;
+    }
+
+    .state p{
+      max-width:550px;
+      margin:0 auto;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:13px;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:25px;
+      transform:translate(-50%,20px);
+      z-index:9999;
+      min-width:260px;
+      max-width:calc(100% - 30px);
+      padding:13px 16px;
+      border-radius:13px;
+      border:1px solid var(--border);
+      background:#111827;
+      color:#fff;
+      box-shadow:0 18px 45px rgba(0,0,0,.35);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s ease;
+      text-align:center;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer{
+      width:min(1180px,calc(100% - 32px));
+      margin:0 auto;
+      padding:0 0 35px;
+      color:var(--muted);
+      text-align:center;
+      font-size:12px;
+    }
+
+    /* =========================
+       PRINT MARKSHEET
+    ========================= */
+
+    .print-only{
+      display:none;
+    }
+
+    @media print{
+      @page{
+        size:A4;
+        margin:10mm;
+      }
+
+      body{
+        background:#fff !important;
+        color:#111 !important;
+      }
+
+      body *{
+        visibility:hidden;
+      }
+
+      #printSheet,
+      #printSheet *{
+        visibility:visible;
+      }
+
+      #printSheet{
+        display:block !important;
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+        color:#111;
+        background:#fff;
+        font-family:"Inter","Noto Sans Bengali",sans-serif;
+      }
+
+      .print-sheet{
+        width:100%;
+        border:2px solid #111;
+        padding:22px;
+        min-height:270mm;
+        position:relative;
+      }
+
+      .print-header{
+        text-align:center;
+        border-bottom:2px solid #111;
+        padding-bottom:16px;
+        margin-bottom:18px;
+      }
+
+      .print-logo{
+        width:70px;
+        height:70px;
+        object-fit:contain;
+        margin-bottom:8px;
+      }
+
+      .print-institute{
+        font-size:23px;
+        font-weight:900;
+        margin-bottom:3px;
+      }
+
+      .print-subtitle{
+        font-size:12px;
+        color:#444;
+      }
+
+      .print-title{
+        margin-top:15px;
+        font-size:20px;
+        font-weight:900;
+        text-transform:uppercase;
+        letter-spacing:.04em;
+      }
+
+      .print-exam{
+        font-size:12px;
+        margin-top:4px;
+        color:#444;
+      }
+
+      .print-student-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:8px 25px;
+        margin-bottom:20px;
+        border:1px solid #bbb;
+        padding:12px;
+      }
+
+      .print-field{
+        display:flex;
+        gap:8px;
+        font-size:12px;
+        padding:5px 0;
+      }
+
+      .print-field span:first-child{
+        font-weight:800;
+        min-width:105px;
+      }
+
+      .print-field span:last-child{
+        font-weight:600;
+      }
+
+      .print-table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:12px;
+      }
+
+      .print-table th,
+      .print-table td{
+        border:1px solid #222;
+        padding:11px 9px;
+        text-align:left;
+        font-size:12px;
+      }
+
+      .print-table th{
+        background:#f1f1f1;
+        font-weight:900;
+      }
+
+      .print-table td:nth-child(2),
+      .print-table td:nth-child(3),
+      .print-table td:nth-child(4),
+      .print-table td:nth-child(5){
+        text-align:center;
+      }
+
+      .print-summary{
+        margin-top:20px;
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        border:1px solid #222;
+      }
+
+      .print-summary-box{
+        padding:12px;
+        border-right:1px solid #222;
+        text-align:center;
+      }
+
+      .print-summary-box:last-child{
+        border-right:none;
+      }
+
+      .print-summary-label{
+        font-size:10px;
+        color:#555;
+        margin-bottom:4px;
+      }
+
+      .print-summary-value{
+        font-size:17px;
+        font-weight:900;
+      }
+
+      .print-result{
+        margin-top:18px;
+        padding:13px;
+        border:1px solid #222;
+        text-align:center;
+        font-size:16px;
+        font-weight:900;
+      }
+
+      .print-note{
+        margin-top:16px;
+        padding:10px;
+        border:1px solid #bbb;
+        font-size:11px;
+        line-height:1.6;
+      }
+
+      .print-signatures{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:80px;
+        margin-top:75px;
+      }
+
+      .signature{
+        text-align:center;
+        padding-top:8px;
+        border-top:1px solid #222;
+        font-size:11px;
+      }
+
+      .print-footer{
+        position:absolute;
+        bottom:18px;
+        left:22px;
+        right:22px;
+        border-top:1px solid #aaa;
+        padding-top:8px;
+        text-align:center;
+        font-size:9px;
+        color:#555;
+      }
+
+      .no-print{
+        display:none !important;
+      }
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media(max-width:900px){
+      .student-header{
+        grid-template-columns:1fr;
+      }
+
+      .exam-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .marks-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .score-panel{
+        grid-template-columns:1fr;
+      }
+
+      .score-circle{
+        width:190px;
+        height:190px;
+      }
+    }
+
+    @media(max-width:700px){
+      .topbar{
+        height:64px;
+      }
+
+      .topbar-inner{
+        width:min(100% - 20px,1180px);
+      }
+
+      .brand-subtitle{
+        display:none;
+      }
+
+      .nav-actions .hide-mobile{
+        display:none;
+      }
+
+      .mobile-menu{
+        display:inline-flex;
+      }
+
+      main{
+        width:min(100% - 20px,1180px);
+        padding-top:25px;
+      }
+
+      .hero{
+        padding:23px;
+        border-radius:22px;
+      }
+
+      .student-card{
+        padding:20px;
+      }
+
+      .student-avatar{
+        width:60px;
+        height:60px;
+        flex-basis:60px;
+      }
+
+      .panel{
+        padding:20px;
+      }
+
+      .exam-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .marks-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .panel-header{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .action-row .btn{
+        flex:1 1 150px;
+      }
+    }
+
+    @media(max-width:480px){
+      .brand-title{
+        font-size:13px;
+      }
+
+      .brand-logo{
+        width:38px;
+        height:38px;
+      }
+
+      .nav-btn{
+        min-height:38px;
+        padding:0 10px;
+        font-size:12px;
+      }
+
+      .hero h1{
+        font-size:27px;
+      }
+
+      .student-card{
+        align-items:flex-start;
+      }
+
+      .student-info h2{
+        font-size:18px;
+      }
+
+      .exam-grid,
+      .marks-grid{
+        grid-template-columns:1fr;
+      }
+
+      .score-percent{
+        font-size:34px;
+      }
+
+      .action-row{
+        flex-direction:column;
+      }
+
+      .action-row .btn{
+        width:100%;
+      }
+    }
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- =========================
+       TOP NAV
+  ========================== -->
+  <header class="topbar no-print">
+    <div class="topbar-inner">
+
+      <a href="admin-dashboard.html" class="brand">
+        <div class="brand-logo">SNK</div>
+
+        <div class="brand-text">
+          <div class="brand-title">SNK AI Academy</div>
+          <div class="brand-subtitle">Admin • Student Result Details</div>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+
+        <a href="admin-dashboard.html" class="nav-btn hide-mobile">
+          ← Admin
+        </a>
+
+        <a href="results.html" class="nav-btn hide-mobile">
+          Student Result
+        </a>
+
+        <button class="nav-btn" id="themeBtn" type="button">
+          ◐ Theme
+        </button>
+
+        <button class="nav-btn primary" id="printBtn" type="button">
+          🖨 Print
+        </button>
+
+        <button class="nav-btn mobile-menu" id="mobileMenuBtn" type="button">
+          ☰
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb no-print">
+      <a href="admin-dashboard.html">Admin</a>
+      <span>›</span>
+      <a href="results.html">Student Results</a>
+      <span>›</span>
+      <span>Result Details</span>
+    </div>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+    <section class="hero no-print">
+
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          ✓ ADMIN RESULT VIEW
+        </div>
+
+        <h1>Student Result Details</h1>
+
+        <p>
+          View complete examination information, marks, percentage,
+          pass/fail status and generate an official printable marksheet.
+        </p>
+
+        <div class="hero-actions">
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="heroPrintBtn"
+          >
+            🖨 Print Marksheet
+          </button>
+
+          <button
+            type="button"
+            class="btn"
+            id="refreshBtn"
+          >
+            ↻ Refresh Result
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ERROR / EMPTY STATE
+    ========================== -->
+
+    <section class="state" id="stateBox">
+
+      <div class="state-icon">📋</div>
+
+      <h2 id="stateTitle">
+        Result Not Found
+      </h2>
+
+      <p id="stateMessage">
+        No published result was found for this student.
+      </p>
+
+      <div class="action-row no-print" style="justify-content:center;">
+
+        <a href="admin-dashboard.html" class="btn btn-primary">
+          ← Back to Admin
+        </a>
+
+        <a href="results.html" class="btn">
+          View Results
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         RESULT CONTENT
+    ========================== -->
+
+    <div id="resultContent" style="display:none;">
+
+
+      <!-- STUDENT + STATUS -->
+
+      <section class="student-header">
+
+        <div class="student-card">
+
+          <div class="student-avatar" id="avatarBox">
+            <span id="avatarText">S</span>
+
+            <img id="avatarImage" alt="Student Photo">
+          </div>
+
+          <div class="student-info">
+
+            <h2 id="studentName">
+              Student
+            </h2>
+
+            <p id="studentCourse">
+              আপনার কোর্স
+            </p>
+
+            <p id="studentBatch">
+              Batch 01
+            </p>
+
+            <span class="student-id" id="studentId">
+              SNK-1001
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+          <div class="status-label">
+            RESULT STATUS
+          </div>
+
+          <div
+            class="result-status pending"
+            id="resultStatus"
+          >
+            ● Pending
+          </div>
+
+          <div
+            id="publishStatus"
+            style="
+              color:var(--muted);
+              font-size:11px;
+              margin-top:9px;
+            "
+          >
+            Published result
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           EXAM INFORMATION
+      ========================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+            <div class="panel-title">
+              Examination Information
+            </div>
+
+            <div class="panel-subtitle">
+              Official examination details
+            </div>
+          </div>
+
+          <div class="verified-badge">
+            ✓ Admin Verified Result
+          </div>
+
+        </div>
+
+
+        <div class="exam-grid">
+
+          <div class="info-box">
+            <div class="info-label">Exam Name</div>
+            <div class="info-value" id="examName">
+              Course Exam
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Exam Date</div>
+            <div class="info-value" id="examDate">
+              08 September 2026
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Course</div>
+            <div class="info-value" id="examCourse">
+              আপনার কোর্স
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Batch</div>
+            <div class="info-value" id="examBatch">
+              Batch 01
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           MARKS SUMMARY
+      ========================== -->
+
+      <section class="marks-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Obtained Marks
+          </div>
+
+          <div class="stat-value" id="obtainedMarks">
+            0
+          </div>
+
+          <div class="stat-small">
+            Out of <span id="totalMarksSmall">100</span>
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Total Marks
+          </div>
+
+          <div class="stat-value" id="totalMarks">
+            100
+          </div>
+
+          <div class="stat-small">
+            Full marks
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Percentage
+          </div>
+
+          <div class="stat-value" id="percentageValue">
+            0%
+          </div>
+
+          <div class="stat-small">
+            Calculated score
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Pass Mark
+          </div>
+
+          <div class="stat-value" id="passMark">
+            40
+          </div>
+
+          <div class="stat-small">
+            Minimum required
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           PERFORMANCE
+      ========================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+            <div class="panel-title">
+              Performance Overview
+            </div>
+
+            <div class="panel-subtitle">
+              Student examination performance
+            </div>
+          </div>
+
+          <div
+            id="performanceLabel"
+            style="
+              font-size:13px;
+              font-weight:900;
+            "
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="score-panel">
+
+          <div>
+
+            <div
+              class="score-circle"
+              id="scoreCircle"
+              style="--percentage:0%;"
+            >
+
+              <div class="score-center">
+
+                <div
+                  class="score-percent"
+                  id="scorePercent"
+                >
+                  0%
+                </div>
+
+                <div class="score-caption">
+                  Final Score
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="progress-area">
+
+            <div class="progress-title">
+              <span>Marks Progress</span>
+
+              <span id="progressText">
+                0 / 100
+              </span>
+            </div>
+
+            <div class="progress-track">
+
+              <div
+                class="progress-fill"
+                id="progressFill"
+              ></div>
+
+            </div>
+
+
+            <div class="score-explanation" id="scoreExplanation">
+              Result performance will appear here.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           ADMIN NOTE
+      ========================== -->
+
+      <section
+        class="panel"
+        id="notePanel"
+        style="display:none;"
+      >
+
+        <div class="panel-header">
+
+          <div>
+            <div class="panel-title">
+              Admin Note
+            </div>
+
+            <div class="panel-subtitle">
+              Note attached to this result
+            </div>
+          </div>
+
+        </div>
+
+        <div class="note-box">
+          <strong>Note:</strong>
+          <span id="adminNote"></span>
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           RESULT META
+      ========================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+            <div class="panel-title">
+              Result Record
+            </div>
+
+            <div class="panel-subtitle">
+              Result publication and update information
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="exam-grid">
+
+          <div class="info-box">
+
+            <div class="info-label">
+              Result ID
+            </div>
+
+            <div class="info-value" id="resultId">
+              —
+            </div>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-label">
+              Published
+            </div>
+
+            <div class="info-value" id="publishedValue">
+              Yes
+            </div>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-label">
+              Created At
+            </div>
+
+            <div class="info-value" id="createdAt">
+              —
+            </div>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-label">
+              Last Updated
+            </div>
+
+            <div class="info-value" id="updatedAt">
+              —
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="action-row no-print">
+
+          <button
+            type="button"
+            class="btn btn-success"
+            id="printMarksBtn"
+          >
+            🖨 Print Official Marksheet
+          </button>
+
+          <button
+            type="button"
+            class="btn"
+            id="backBtn"
+          >
+            ← Back to Admin
+          </button>
+
+          <button
+            type="button"
+            class="btn"
+            id="studentPortalBtn"
+          >
+            Student Result Page →
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <footer class="no-print">
+    © <span id="year"></span> SNK AI Academy • Student Result System
+  </footer>
+
+
+  <!-- =========================
+       PRINT SHEET
+  ========================== -->
+
+  <div id="printSheet" class="print-only">
+
+    <div class="print-sheet">
+
+      <div class="print-header">
+
+        <div class="print-institute">
+          SNK AI Academy
+        </div>
+
+        <div class="print-subtitle">
+          Student Examination & Academic Management System
+        </div>
+
+        <div class="print-title">
+          Official Marksheet
+        </div>
+
+        <div class="print-exam">
+          Course Exam • 08 September 2026
+        </div>
+
+      </div>
+
+
+      <div class="print-student-grid">
+
+        <div class="print-field">
+          <span>Student Name:</span>
+          <span id="printStudentName">—</span>
+        </div>
+
+        <div class="print-field">
+          <span>Student ID:</span>
+          <span id="printStudentId">—</span>
+        </div>
+
+        <div class="print-field">
+          <span>Course:</span>
+          <span id="printCourse">—</span>
+        </div>
+
+        <div class="print-field">
+          <span>Batch:</span>
+          <span id="printBatch">—</span>
+        </div>
+
+        <div class="print-field">
+          <span>Exam Date:</span>
+          <span id="printExamDate">—</span>
+        </div>
+
+        <div class="print-field">
+          <span>Result ID:</span>
+          <span id="printResultId">—</span>
+        </div>
+
+      </div>
+
+
+      <table class="print-table">
+
+        <thead>
+          <tr>
+            <th>Subject / Examination</th>
+            <th>Total Marks</th>
+            <th>Obtained</th>
+            <th>Percentage</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td id="printExamName">
+              Course Exam
+            </td>
+
+            <td id="printTotalMarks">
+              100
+            </td>
+
+            <td id="printObtainedMarks">
+              0
+            </td>
+
+            <td id="printPercentage">
+              0%
+            </td>
+
+            <td id="printResult">
+              —
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+      <div class="print-summary">
+
+        <div class="print-summary-box">
+
+          <div class="print-summary-label">
+            TOTAL MARKS
+          </div>
+
+          <div
+            class="print-summary-value"
+            id="printSummaryTotal"
+          >
+            100
+          </div>
+
+        </div>
+
+
+        <div class="print-summary-box">
+
+          <div class="print-summary-label">
+            OBTAINED MARKS
+          </div>
+
+          <div
+            class="print-summary-value"
+            id="printSummaryObtained"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div class="print-summary-box">
+
+          <div class="print-summary-label">
+            PASS MARK
+          </div>
+
+          <div
+            class="print-summary-value"
+            id="printSummaryPass"
+          >
+            40
+          </div>
+
+        </div>
+
+
+        <div class="print-summary-box">
+
+          <div class="print-summary-label">
+            PERCENTAGE
+          </div>
+
+          <div
+            class="print-summary-value"
+            id="printSummaryPercentage"
+          >
+            0%
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="print-result"
+        id="printResultBanner"
+      >
+        RESULT: —
+      </div>
+
+
+      <div
+        class="print-note"
+        id="printNoteBox"
+        style="display:none;"
+      >
+        <strong>Admin Note:</strong>
+        <span id="printNote">—</span>
+      </div>
+
+
+      <div class="print-signatures">
+
+        <div class="signature">
+          Student / Guardian Signature
+        </div>
+
+        <div class="signature">
+          Authorized Signature
+        </div>
+
+      </div>
+
+
+      <div class="print-footer">
+        This marksheet is generated from the SNK AI Academy Student
+        Examination Management System. Result shown here is based on the
+        published examination record.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="toast" id="toast"></div>
+
+
+  <script>
+
+    /* =========================================================
+       STEP 2.4
+       SNK AI ACADEMY
+       ADMIN STUDENT RESULT DETAILS + PRINTABLE MARKSHEET
+    ========================================================= */
+
+
+    /* =========================
+       STORAGE
+    ========================== */
+
+    const STORAGE = {
+
+      adminSession: "snkAdminLoggedIn",
+
+      results: "snkAdminExamResultsV21",
+
+      theme: "snkTheme",
+
+      studentProfile: "snkStudentProfile",
+
+      studentId: "snkStudentId",
+
+      studentName: "snkStudentName",
+
+      studentCourse: "snkStudentCourse",
+
+      studentBatch: "snkStudentBatch"
+
+    };
+
+
+    /* =========================
+       EXAM
+    ========================== */
+
+    const EXAM = {
+
+      id: "SNK-EXAM-2026-09-08",
+
+      name: "Course Exam",
+
+      course: "আপনার কোর্স",
+
+      batch: "Batch 01",
+
+      date: "08 September 2026",
+
+      isoDate: "2026-09-08",
+
+      totalMarks: 100,
+
+      passMark: 40
+
+    };
+
+
+    /* =========================
+       DOM
+    ========================== */
+
+    const $ = (id) => document.getElementById(id);
+
+
+    /* =========================
+       STATE
+    ========================== */
+
+    let currentResult = null;
+
+
+    /* =========================
+       SAFE JSON
+    ========================== */
+
+    function safeJSON(value, fallback){
+
+      try{
+
+        return JSON.parse(value);
+
+      }catch(error){
+
+        return fallback;
+
+      }
+
+    }
+
+
+    /* =========================
+       NORMALIZE
+    ========================== */
+
+    function normalize(value){
+
+      return String(value ?? "")
+        .trim()
+        .toLowerCase();
+
+    }
+
+
+    /* =========================
+       ESCAPE HTML
+    ========================== */
+
+    function escapeHTML(value){
+
+      return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+    }
+
+
+    /* =========================
+       NUMBER
+    ========================== */
+
+    function numberValue(value, fallback = 0){
+
+      const n = Number(value);
+
+      return Number.isFinite(n) ? n : fallback;
+
+    }
+
+
+    /* =========================
+       GET STUDENT DATA
+    ========================== */
+
+    function getStudentData(){
+
+      const sessionId =
+        sessionStorage.getItem(STORAGE.studentId);
+
+      const sessionName =
+        sessionStorage.getItem(STORAGE.studentName);
+
+      const sessionCourse =
+        sessionStorage.getItem(STORAGE.studentCourse);
+
+      const sessionBatch =
+        sessionStorage.getItem(STORAGE.studentBatch);
+
+
+      const profile =
+        safeJSON(
+          localStorage.getItem(STORAGE.studentProfile),
+          {}
+        ) || {};
+
+
+      const localId =
+        localStorage.getItem(STORAGE.studentId);
+
+      const localName =
+        localStorage.getItem(STORAGE.studentName);
+
+      const localCourse =
+        localStorage.getItem(STORAGE.studentCourse);
+
+      const localBatch =
+        localStorage.getItem(STORAGE.studentBatch);
+
+
+      return {
+
+        id:
+          sessionId ||
+          localId ||
+          profile.studentId ||
+          profile.id ||
+          "SNK-1001",
+
+        name:
+          sessionName ||
+          localName ||
+          profile.name ||
+          profile.studentName ||
+          "Student",
+
+        course:
+          sessionCourse ||
+          localCourse ||
+          profile.course ||
+          profile.studentCourse ||
+          EXAM.course,
+
+        batch:
+          sessionBatch ||
+          localBatch ||
+          profile.batch ||
+          profile.studentBatch ||
+          EXAM.batch
+
+      };
+
+    }
+
+
+    /* =========================
+       GET RESULTS
+    ========================== */
+
+    function getResults(){
+
+      const raw =
+        localStorage.getItem(STORAGE.results);
+
+      if(!raw){
+
+        return [];
+
+      }
+
+
+      const parsed = safeJSON(raw, []);
+
+
+      if(Array.isArray(parsed)){
+
+        return parsed;
+
+      }
+
+
+      if(parsed && Array.isArray(parsed.results)){
+
+        return parsed.results;
+
+      }
+
+
+      if(parsed && Array.isArray(parsed.data)){
+
+        return parsed.data;
+
+      }
+
+
+      return [];
+
+    }
+
+
+    /* =========================
+       GET TARGET STUDENT
+    ========================== */
+
+    function getTargetStudentId(){
+
+      const params =
+        new URLSearchParams(window.location.search);
+
+
+      const queryId =
+        params.get("studentId") ||
+        params.get("id");
+
+
+      return (
+
+        queryId ||
+
+        sessionStorage.getItem(STORAGE.studentId) ||
+
+        localStorage.getItem(STORAGE.studentId) ||
+
+        "SNK-1001"
+
+      ).trim();
+
+    }
+
+
+    /* =========================
+       FIND RESULT
+    ========================== */
+
+    function findResult(){
+
+      const targetId =
+        normalize(getTargetStudentId());
+
+
+      const results =
+        getResults();
+
+
+      const matching =
+        results.filter(item => {
+
+          if(!item) return false;
+
+          const itemStudentId =
+            normalize(
+              item.studentId ||
+              item.studentID ||
+              item.student_id
+            );
+
+
+          const itemExamId =
+            normalize(item.examId);
+
+
+          if(itemExamId &&
+             itemExamId !== normalize(EXAM.id)){
+
+            return false;
+
+          }
+
+
+          return itemStudentId === targetId;
+
+        });
+
+
+      if(!matching.length){
+
+        return null;
+
+      }
+
+
+      /* Only published result is displayed */
+      const published =
+        matching.filter(
+          item => item.published === true
+        );
+
+
+      if(!published.length){
+
+        return null;
+
+      }
+
+
+      published.sort((a,b) => {
+
+        const aTime =
+          new Date(
+            a.updatedAt ||
+            a.createdAt ||
+            0
+          ).getTime();
+
+        const bTime =
+          new Date(
+            b.updatedAt ||
+            b.createdAt ||
+            0
+          ).getTime();
+
+        return bTime - aTime;
+
+      });
+
+
+      return published[0];
+
+    }
+
+
+    /* =========================
+       FORMAT DATE
+    ========================== */
+
+    function formatDate(value){
+
+      if(!value){
+
+        return "—";
+
+      }
+
+
+      const date =
+        new Date(value);
+
+
+      if(Number.isNaN(date.getTime())){
+
+        return String(value);
+
+      }
+
+
+      return date.toLocaleString(
+        "en-GB",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric",
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      );
+
+    }
+
+
+    /* =========================
+       FORMAT MARKS
+    ========================== */
+
+    function formatMarks(value){
+
+      const n =
+        numberValue(value,0);
+
+
+      return Number.isInteger(n)
+        ? String(n)
+        : n.toFixed(2);
+
+    }
+
+
+    /* =========================
+       CALCULATE PERCENTAGE
+    ========================== */
+
+    function calculatePercentage(result){
+
+      const total =
+        numberValue(
+          result.totalMarks,
+          EXAM.totalMarks
+        );
+
+
+      const marks =
+        numberValue(
+          result.marks,
+          0
+        );
+
+
+      if(total <= 0){
+
+        return 0;
+
+      }
+
+
+      if(
+        result.percentage !== undefined &&
+        result.percentage !== null &&
+        Number.isFinite(Number(result.percentage))
+      ){
+
+        return Math.max(
+          0,
+          Math.min(
+            100,
+            Number(result.percentage)
+          )
+        );
+
+      }
+
+
+      return Math.max(
+        0,
+        Math.min(
+          100,
+          (marks / total) * 100
+        )
+      );
+
+    }
+
+
+    /* =========================
+       RESULT STATUS
+    ========================== */
+
+    function getResultStatus(result){
+
+      const percentage =
+        calculatePercentage(result);
+
+
+      const marks =
+        numberValue(
+          result.marks,
+          0
+        );
+
+
+      const passMark =
+        numberValue(
+          result.passMark,
+          EXAM.passMark
+        );
+
+
+      if(
+        normalize(result.result) === "pass" ||
+        marks >= passMark ||
+        percentage >= (passMark / EXAM.totalMarks) * 100
+      ){
+
+        return "Pass";
+
+      }
+
+
+      return "Fail";
+
+    }
+
+
+    /* =========================
+       PERFORMANCE
+    ========================== */
+
+    function getPerformance(percentage){
+
+      if(percentage >= 80){
+
+        return {
+          title:"Excellent Performance",
+          text:
+            "Excellent result. The student has demonstrated strong performance in the examination."
+        };
+
+      }
+
+
+      if(percentage >= 60){
+
+        return {
+          title:"Good Performance",
+          text:
+            "Good result. The student has achieved a satisfactory level of performance."
+        };
+
+      }
+
+
+      if(percentage >= 40){
+
+        return {
+          title:"Passed",
+          text:
+            "The student has passed the examination by achieving the required pass mark."
+        };
+
+      }
+
+
+      return {
+        title:"Needs Improvement",
+        text:
+          "The result is below the required pass mark. More practice and preparation are recommended."
+      };
+
+    }
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    let toastTimer = null;
+
+
+    function toast(message){
+
+      const box = $("toast");
+
+      if(!box) return;
+
+
+      box.textContent =
+        message;
+
+
+      box.classList.add("show");
+
+
+      clearTimeout(toastTimer);
+
+
+      toastTimer =
+        setTimeout(
+          () => box.classList.remove("show"),
+          2600
+        );
+
+    }
+
+
+    /* =========================
+       THEME
+    ========================== */
+
+    function applyTheme(){
+
+      const theme =
+        localStorage.getItem(
+          STORAGE.theme
+        ) || "dark";
+
+
+      if(theme === "light"){
+
+        document.body.classList.add("light");
+
+      }else{
+
+        document.body.classList.remove("light");
+
+      }
+
+    }
+
+
+    function toggleTheme(){
+
+      const isLight =
+        document.body.classList.contains("light");
+
+
+      localStorage.setItem(
+        STORAGE.theme,
+        isLight ? "dark" : "light"
+      );
+
+
+      applyTheme();
+
+    }
+
+
+    /* =========================
+       SET STATE
+    ========================== */
+
+    function showState(
+      title,
+      message
+    ){
+
+      $("resultContent").style.display =
+        "none";
+
+
+      $("stateBox").classList.add("show");
+
+
+      $("stateTitle").textContent =
+        title;
+
+
+      $("stateMessage").textContent =
+        message;
+
+    }
+
+
+    function hideState(){
+
+      $("stateBox").classList.remove(
+        "show"
+      );
+
+
+      $("resultContent").style.display =
+        "block";
+
+    }
+
+
+    /* =========================
+       LOAD STUDENT AVATAR
+    ========================== */
+
+    function loadStudentAvatar(){
+
+      const profile =
+        safeJSON(
+          localStorage.getItem(
+            STORAGE.studentProfile
+          ),
+          {}
+        ) || {};
+
+
+      const photo =
+        profile.photo ||
+        profile.photoUrl ||
+        profile.image ||
+        "";
+
+
+      if(photo){
+
+        $("avatarImage").src =
+          photo;
+
+        $("avatarImage").style.display =
+          "block";
+
+        $("avatarText").style.display =
+          "none";
+
+        $("avatarImage").onerror =
+          function(){
+
+            this.style.display = "none";
+
+            $("avatarText").style.display =
+              "block";
+
+          };
+
+      }
+
+    }
+
+
+    /* =========================
+       UPDATE PRINT SHEET
+    ========================== */
+
+    function updatePrintSheet(result){
+
+      const student =
+        getStudentData();
+
+
+      const marks =
+        numberValue(
+          result.marks,
+          0
+        );
+
+
+      const total =
+        numberValue(
+          result.totalMarks,
+          EXAM.totalMarks
+        );
+
+
+      const pass =
+        numberValue(
+          result.passMark,
+          EXAM.passMark
+        );
+
+
+      const percentage =
+        calculatePercentage(result);
+
+
+      const status =
+        getResultStatus(result);
+
+
+      $("printStudentName").textContent =
+        result.studentName ||
+        student.name ||
+        "Student";
+
+
+      $("printStudentId").textContent =
+        result.studentId ||
+        student.id ||
+        "SNK-1001";
+
+
+      $("printCourse").textContent =
+        result.course ||
+        student.course ||
+        EXAM.course;
+
+
+      $("printBatch").textContent =
+        result.batch ||
+        student.batch ||
+        EXAM.batch;
+
+
+      $("printExamDate").textContent =
+        result.examDate ||
+        EXAM.date;
+
+
+      $("printResultId").textContent =
+        result.id ||
+        "—";
+
+
+      $("printExamName").textContent =
+        result.examName ||
+        EXAM.name;
+
+
+      $("printTotalMarks").textContent =
+        formatMarks(total);
+
+
+      $("printObtainedMarks").textContent =
+        formatMarks(marks);
+
+
+      $("printPercentage").textContent =
+        percentage.toFixed(2) + "%";
+
+
+      $("printResult").textContent =
+        status;
+
+
+      $("printSummaryTotal").textContent =
+        formatMarks(total);
+
+
+      $("printSummaryObtained").textContent =
+        formatMarks(marks);
+
+
+      $("printSummaryPass").textContent =
+        formatMarks(pass);
+
+
+      $("printSummaryPercentage").textContent =
+        percentage.toFixed(2) + "%";
+
+
+      $("printResultBanner").textContent =
+        "RESULT: " + status.toUpperCase();
+
+
+      if(result.note){
+
+        $("printNoteBox").style.display =
+          "block";
+
+        $("printNote").textContent =
+          result.note;
+
+      }else{
+
+        $("printNoteBox").style.display =
+          "none";
+
+      }
+
+    }
+
+
+    /* =========================
+       RENDER RESULT
+    ========================== */
+
+    function renderResult(result){
+
+      currentResult =
+        result;
+
+
+      const student =
+        getStudentData();
+
+
+      const marks =
+        numberValue(
+          result.marks,
+          0
+        );
+
+
+      const total =
+        numberValue(
+          result.totalMarks,
+          EXAM.totalMarks
+        );
+
+
+      const passMark =
+        numberValue(
+          result.passMark,
+          EXAM.passMark
+        );
+
+
+      const percentage =
+        calculatePercentage(result);
+
+
+      const status =
+        getResultStatus(result);
+
+
+      const performance =
+        getPerformance(percentage);
+
+
+      /* Student */
+
+      $("studentName").textContent =
+        result.studentName ||
+        student.name ||
+        "Student";
+
+
+      $("studentCourse").textContent =
+        result.course ||
+        student.course ||
+        EXAM.course;
+
+
+      $("studentBatch").textContent =
+        result.batch ||
+        student.batch ||
+        EXAM.batch;
+
+
+      $("studentId").textContent =
+        result.studentId ||
+        student.id ||
+        "SNK-1001";
+
+
+      const firstLetter =
+        String(
+          result.studentName ||
+          student.name ||
+          "S"
+        ).trim().charAt(0).toUpperCase();
+
+
+      $("avatarText").textContent =
+        firstLetter || "S";
+
+
+      loadStudentAvatar();
+
+
+      /* Status */
+
+      $("resultStatus").className =
+        "result-status " +
+        (
+          status === "Pass"
+            ? "pass"
+            : "fail"
+        );
+
+
+      $("resultStatus").textContent =
+        status === "Pass"
+          ? "● PASS"
+          : "● FAIL";
+
+
+      $("publishStatus").textContent =
+        "Published • Admin Verified";
+
+
+      /* Exam */
+
+      $("examName").textContent =
+        result.examName ||
+        EXAM.name;
+
+
+      $("examDate").textContent =
+        result.examDate ||
+        EXAM.date;
+
+
+      $("examCourse").textContent =
+        result.course ||
+        EXAM.course;
+
+
+      $("examBatch").textContent =
+        result.batch ||
+        EXAM.batch;
+
+
+      /* Marks */
+
+      $("obtainedMarks").textContent =
+        formatMarks(marks);
+
+
+      $("totalMarks").textContent =
+        formatMarks(total);
+
+
+      $("totalMarksSmall").textContent =
+        formatMarks(total);
+
+
+      $("percentageValue").textContent =
+        percentage.toFixed(2) + "%";
+
+
+      $("passMark").textContent =
+        formatMarks(passMark);
+
+
+      /* Score */
+
+      $("scorePercent").textContent =
+        percentage.toFixed(2) + "%";
+
+
+      $("scoreCircle").style.setProperty(
+        "--percentage",
+        percentage + "%"
+      );
+
+
+      $("progressFill").style.width =
+        percentage + "%";
+
+
+      $("progressText").textContent =
+        formatMarks(marks) +
+        " / " +
+        formatMarks(total);
+
+
+      $("performanceLabel").textContent =
+        performance.title;
+
+
+      $("scoreExplanation").textContent =
+        performance.text;
+
+
+      /* Note */
+
+      if(result.note){
+
+        $("notePanel").style.display =
+          "block";
+
+        $("adminNote").textContent =
+          result.note;
+
+      }else{
+
+        $("notePanel").style.display =
+          "none";
+
+      }
+
+
+      /* Meta */
+
+      $("resultId").textContent =
+        result.id ||
+        "—";
+
+
+      $("publishedValue").textContent =
+        result.published === true
+          ? "Yes"
+          : "No";
+
+
+      $("createdAt").textContent =
+        formatDate(result.createdAt);
+
+
+      $("updatedAt").textContent =
+        formatDate(
+          result.updatedAt ||
+          result.createdAt
+        );
+
+
+      updatePrintSheet(result);
+
+
+      hideState();
+
+    }
+
+
+    /* =========================
+       LOAD
+    ========================== */
+
+    function loadResult(){
+
+      const result =
+        findResult();
+
+
+      if(!result){
+
+        showState(
+          "Published Result Not Found",
+          "No published result was found for this student. Please check the Student ID, exam result entry, and publication status from the Admin Dashboard."
+        );
+
+
+        return;
+
+      }
+
+
+      renderResult(result);
+
+    }
+
+
+    /* =========================
+       PRINT
+    ========================== */
+
+    function printMarksheet(){
+
+      if(!currentResult){
+
+        toast(
+          "No result available for printing."
+        );
+
+        return;
+
+      }
+
+
+      updatePrintSheet(
+        currentResult
+      );
+
+
+      setTimeout(
+        () => window.print(),
+        100
+      );
+
+    }
+
+
+    /* =========================
+       ADMIN SESSION
+    ========================== */
+
+    function checkAdminSession(){
+
+      /*
+        This page supports the same admin session key
+        used by admin-dashboard.html.
+
+        If admin session exists:
+        normal admin workflow continues.
+
+        If not:
+        result can still be viewed for demo/local
+        development compatibility.
+      */
+
+      const loggedIn =
+        sessionStorage.getItem(
+          STORAGE.adminSession
+        ) === "true";
+
+
+      const shoppingMelaSession =
+        sessionStorage.getItem(
+          "shoppingMelaAdminLoggedIn"
+        ) === "true";
+
+
+      if(!loggedIn && !shoppingMelaSession){
+
+        /*
+          Demo/local compatibility:
+          Do not hard-block the page.
+        */
+
+        console.warn(
+          "Admin session not detected. Continuing in local/demo mode."
+        );
+
+      }
+
+    }
+
+
+    /* =========================
+       EVENTS
+    ========================== */
+
+    $("themeBtn").addEventListener(
+      "click",
+      toggleTheme
+    );
+
+
+    $("printBtn").addEventListener(
+      "click",
+      printMarksheet
+    );
+
+
+    $("heroPrintBtn").addEventListener(
+      "click",
+      printMarksheet
+    );
+
+
+    $("printMarksBtn").addEventListener(
+      "click",
+      printMarksheet
+    );
+
+
+    $("refreshBtn").addEventListener(
+      "click",
+      () => {
+
+        loadResult();
+
+        toast(
+          "Result data refreshed."
+        );
+
+      }
+    );
+
+
+    $("backBtn").addEventListener(
+      "click",
+      () => {
+
+        window.location.href =
+          "admin-dashboard.html";
+
+      }
+    );
+
+
+    $("studentPortalBtn").addEventListener(
+      "click",
+      () => {
+
+        window.location.href =
+          "results.html";
+
+      }
+    );
+
+
+    $("mobileMenuBtn").addEventListener(
+      "click",
+      () => {
+
+        toast(
+          "Use the navigation buttons above to continue."
+        );
+
+      }
+    );
+
+
+    /* =========================
+       STORAGE SYNC
+    ========================== */
+
+    window.addEventListener(
+      "storage",
+      event => {
+
+        if(
+          event.key === STORAGE.results ||
+          event.key === STORAGE.studentProfile ||
+          event.key === STORAGE.theme
+        ){
+
+          applyTheme();
+
+          loadResult();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       VISIBILITY SYNC
+    ========================== */
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+
+        if(
+          document.visibilityState === "visible"
+        ){
+
+          applyTheme();
+
+          loadResult();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       KEYBOARD
+    ========================== */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.ctrlKey &&
+          event.key.toLowerCase() === "p"
+        ){
+
+          event.preventDefault();
+
+          printMarksheet();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       IMAGE FALLBACK
+    ========================== */
+
+    document.querySelectorAll("img")
+      .forEach(img => {
+
+        img.addEventListener(
+          "error",
+          () => {
+
+            if(img.id === "avatarImage"){
+
+              img.style.display =
+                "none";
+
+              $("avatarText").style.display =
+                "block";
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /* =========================
+       YEAR
+    ========================== */
+
+    $("year").textContent =
+      new Date().getFullYear();
+
+
+    /* =========================
+       INIT
+    ========================== */
+
+    (function init(){
+
+      applyTheme();
+
+      checkAdminSession();
+
+      loadResult();
+
+    })();
+
+
+    /* =========================
+       PUBLIC API
+    ========================== */
+
+    window.SNKAdminStudentResult = {
+
+      exam: EXAM,
+
+      getResults,
+
+      getCurrentResult: () =>
+        currentResult,
+
+      refresh: loadResult,
+
+      print: printMarksheet
+
+    };
+
+  </script>
+
+</div>
+
+</body>
+</html>
+```

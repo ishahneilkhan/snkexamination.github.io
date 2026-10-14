@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Class | SNK AI Academy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#667085;
+      --primary:#5a8a00;
+      --primary-dark:#3d6600;
+      --border:#e5e7eb;
+      --green:#16a34a;
+      --green-bg:#ecfdf3;
+      --orange:#f59e0b;
+      --orange-bg:#fffbeb;
+      --red:#dc2626;
+      --shadow:0 12px 35px rgba(15,23,42,.08);
+      --radius:18px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Noto Sans Bengali",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    body.dark{
+      --bg:#0b1120;
+      --card:#111827;
+      --text:#f3f4f6;
+      --muted:#9ca3af;
+      --border:#263244;
+      --green-bg:#0b2818;
+      --orange-bg:#2a2108;
+      --shadow:0 12px 35px rgba(0,0,0,.28);
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input,
+    select{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    /* =========================
+       TOP BAR
+    ========================== */
+
+    .topbar{
+      background:linear-gradient(135deg,#3d6600,#5a8a00);
+      color:#fff;
+      text-align:center;
+      padding:8px 15px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+
+    body.dark .header{
+      background:rgba(17,24,39,.94);
+    }
+
+    .nav{
+      width:min(1200px,calc(100% - 30px));
+      min-height:72px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:47px;
+      height:47px;
+      object-fit:contain;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:4px;
+    }
+
+.brand-badge{width:45px;height:45px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:14px;flex-shrink:0}
+
+    .brand-title{
+      font-size:18px;
+      font-weight:800;
+      line-height:1.2;
+    }
+
+    .brand-subtitle{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-btn{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      border-radius:10px;
+      padding:9px 12px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .nav-btn:hover{
+      border-color:var(--primary);
+      color:var(--primary);
+    }
+
+    .logout{
+      background:#fee2e2;
+      border-color:#fecaca;
+      color:#b91c1c;
+    }
+
+    body.dark .logout{
+      background:#3a1717;
+      border-color:#5b2424;
+      color:#fca5a5;
+    }
+
+    /* =========================
+       CONTAINER
+    ========================== */
+
+    .container{
+      width:min(1200px,calc(100% - 30px));
+      margin:auto;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero{
+      margin:28px 0 22px;
+      padding:40px 30px;
+      border-radius:24px;
+      color:#fff;
+      background:
+        radial-gradient(circle at 85% 15%,rgba(255,255,255,.18),transparent 25%),
+        linear-gradient(135deg,#3d6600,#5a8a00 55%,#0ea5e9);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      right:-75px;
+      bottom:-110px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:760px;
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+
+    .hero h1{
+      font-size:clamp(28px,5vw,44px);
+      line-height:1.15;
+      margin-bottom:10px;
+      font-weight:800;
+    }
+
+    .hero p{
+      font-size:14px;
+      opacity:.94;
+      max-width:700px;
+    }
+
+    /* =========================
+       CLASS STATUS
+    ========================== */
+
+    .status-banner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-left:5px solid var(--green);
+      border-radius:16px;
+      padding:17px 19px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+    }
+
+    .status-left{
+      display:flex;
+      align-items:center;
+      gap:13px;
+    }
+
+    .status-icon{
+      width:46px;
+      height:46px;
+      flex:0 0 46px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:var(--green-bg);
+      font-size:21px;
+    }
+
+    .status-title{
+      font-weight:800;
+      font-size:16px;
+    }
+
+    .status-text{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .live-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 11px;
+      border-radius:999px;
+      background:var(--green-bg);
+      color:var(--green);
+      font-size:11px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .live-dot{
+      width:7px;
+      height:7px;
+      background:var(--green);
+      border-radius:50%;
+      animation:pulse 1.5s infinite;
+    }
+
+    @keyframes pulse{
+      0%,100%{
+        opacity:1;
+        transform:scale(1);
+      }
+      50%{
+        opacity:.45;
+        transform:scale(.75);
+      }
+    }
+
+    /* =========================
+       STATS
+    ========================== */
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:15px;
+      margin-bottom:24px;
+    }
+
+    .stat{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .stat-icon{
+      font-size:22px;
+      margin-bottom:7px;
+    }
+
+    .stat-value{
+      font-size:21px;
+      font-weight:800;
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* =========================
+       MAIN GRID
+    ========================== */
+
+    .main-grid{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .panel-title{
+      font-size:21px;
+      font-weight:800;
+      margin-bottom:4px;
+    }
+
+    .panel-sub{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:20px;
+    }
+
+    /* =========================
+       NEXT CLASS CARD
+    ========================== */
+
+    .next-class{
+      border:1px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+
+    .next-class-head{
+      padding:16px 18px;
+      background:linear-gradient(135deg,#f1ffdd,#f8fbff);
+      border-bottom:1px solid var(--border);
+    }
+
+    body.dark .next-class-head{
+      background:#1c2e00;
+    }
+
+    .next-label{
+      color:var(--primary);
+      font-size:11px;
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .next-class-title{
+      font-size:20px;
+      font-weight:800;
+    }
+
+    .next-class-body{
+      padding:18px;
+    }
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .detail{
+      padding:13px;
+      background:var(--bg);
+      border:1px solid var(--border);
+      border-radius:12px;
+    }
+
+    .detail-label{
+      color:var(--muted);
+      font-size:11px;
+      margin-bottom:3px;
+    }
+
+    .detail-value{
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .class-actions{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      margin-top:17px;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+      border-radius:10px;
+      padding:10px 14px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .primary-btn{
+      background:var(--primary);
+      color:#fff;
+      border:1px solid var(--primary);
+    }
+
+    .primary-btn:hover{
+      background:var(--primary-dark);
+    }
+
+    .secondary-btn{
+      background:var(--card);
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+
+    /* =========================
+       WEEKLY SCHEDULE
+    ========================== */
+
+    .schedule-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .schedule-item{
+      display:grid;
+      grid-template-columns:80px 1fr auto;
+      align-items:center;
+      gap:14px;
+      border:1px solid var(--border);
+      border-radius:13px;
+      padding:13px;
+    }
+
+    .schedule-day{
+      font-size:12px;
+      font-weight:800;
+      color:var(--primary);
+    }
+
+    .schedule-course{
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .schedule-info{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .schedule-time{
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    /* =========================
+       COURSE PANEL
+    ========================== */
+
+    .course-card{
+      border:1px solid var(--border);
+      border-radius:15px;
+      padding:17px;
+      margin-bottom:12px;
+    }
+
+    .course-name{
+      font-size:17px;
+      font-weight:800;
+      margin-bottom:3px;
+    }
+
+    .course-meta{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:13px;
+    }
+
+    .course-tags{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .tag{
+      background:#f1ffdd;
+      color:#3d6600;
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:10px;
+      font-weight:800;
+    }
+
+    body.dark .tag{
+      background:#1c2e00;
+      color:#93c5fd;
+    }
+
+    /* =========================
+       MODULES
+    ========================== */
+
+    .modules{
+      display:grid;
+      gap:8px;
+    }
+
+    .module{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid var(--border);
+      border-radius:11px;
+      padding:10px 12px;
+    }
+
+    .module-icon{
+      width:30px;
+      height:30px;
+      border-radius:8px;
+      background:var(--bg);
+      display:grid;
+      place-items:center;
+      font-size:14px;
+    }
+
+    .module-name{
+      font-size:12px;
+      font-weight:700;
+    }
+
+    /* =========================
+       INFO BOX
+    ========================== */
+
+    .info-box{
+      padding:15px;
+      background:var(--orange-bg);
+      border:1px solid #fde68a;
+      border-radius:13px;
+      margin-top:15px;
+    }
+
+    body.dark .info-box{
+      border-color:#5a4710;
+    }
+
+    .info-box-title{
+      color:#92400e;
+      font-weight:800;
+      font-size:13px;
+      margin-bottom:3px;
+    }
+
+    body.dark .info-box-title{
+      color:#fcd34d;
+    }
+
+    .info-box-text{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    /* =========================
+       QUICK LINKS
+    ========================== */
+
+    .quick-links{
+      display:grid;
+      gap:9px;
+    }
+
+    .quick-link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 13px;
+      border:1px solid var(--border);
+      border-radius:11px;
+      transition:.2s;
+    }
+
+    .quick-link:hover{
+      border-color:var(--primary);
+      transform:translateX(2px);
+    }
+
+    .quick-link-left{
+      display:flex;
+      align-items:center;
+      gap:9px;
+    }
+
+    .quick-link-icon{
+      font-size:17px;
+    }
+
+    .quick-link-name{
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .arrow{
+      color:var(--muted);
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer{
+      margin-top:40px;
+      border-top:1px solid var(--border);
+      padding:28px 15px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .footer-title{
+      color:var(--text);
+      font-weight:800;
+      margin-bottom:4px;
+    }
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:2000;
+      background:#111827;
+      color:#fff;
+      padding:12px 16px;
+      border-radius:11px;
+      font-size:12px;
+      box-shadow:0 12px 30px rgba(0,0,0,.22);
+      transform:translateY(100px);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media(max-width:1000px){
+
+      .main-grid{
+        grid-template-columns:1fr;
+      }
+
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:700px){
+
+      .nav{
+        width:calc(100% - 20px);
+        min-height:64px;
+      }
+
+      .brand img{
+        width:41px;
+        height:41px;
+      }
+
+      .brand-title{
+        font-size:15px;
+      }
+
+      .brand-subtitle{
+        display:none;
+      }
+
+      .nav-actions{
+        gap:4px;
+      }
+
+      .nav-btn{
+        padding:8px 9px;
+        font-size:10px;
+      }
+
+      .nav-actions a:first-child{
+        display:none;
+      }
+
+      .hero{
+        margin-top:18px;
+        padding:30px 21px;
+      }
+
+      .hero h1{
+        font-size:29px;
+      }
+
+      .status-banner{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+      }
+
+      .stat{
+        padding:15px;
+      }
+
+      .stat-value{
+        font-size:18px;
+      }
+
+      .panel{
+        padding:18px;
+      }
+
+      .detail-grid{
+        grid-template-columns:1fr;
+      }
+
+      .schedule-item{
+        grid-template-columns:70px 1fr;
+      }
+
+      .schedule-time{
+        grid-column:2;
+      }
+    }
+
+    @media(max-width:450px){
+
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .class-actions{
+        flex-direction:column;
+      }
+
+      .primary-btn,
+      .secondary-btn{
+        width:100%;
+        text-align:center;
+      }
+    }
+
+    /* =========================
+       PRINT
+    ========================== */
+
+    @media print{
+
+      .topbar,
+      .header,
+      .hero,
+      .class-actions,
+      .quick-links,
+      .toast{
+        display:none!important;
+      }
+
+      body{
+        background:#fff!important;
+        color:#000!important;
+      }
+
+      .panel,
+      .stat,
+      .status-banner{
+        box-shadow:none!important;
+      }
+    }
+
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+
+  <div class="topbar">
+    🎓 SNK AI Academy Student Portal • Free Course
+  </div>
+
+
+  <!-- HEADER -->
+
+  <header class="header">
+
+    <nav class="nav">
+
+      <a href="student-dashboard.html" class="brand">
+
+        <div class="brand-badge">SNK</div>
+
+        <div>
+          <div class="brand-title">
+            SNK AI Academy
+          </div>
+
+          <div class="brand-subtitle">
+            Student Portal
+          </div>
+        </div>
+
+      </a>
+
+
+      <div class="nav-actions">
+
+        <a
+          href="student-dashboard.html"
+          class="nav-btn"
+        >
+          🏠 Dashboard
+        </a>
+
+        <a
+          href="student-timetable.html"
+          class="nav-btn"
+        >
+          📅 Timetable
+        </a>
+
+        <button
+          id="themeBtn"
+          class="nav-btn"
+          type="button"
+        >
+          🌙
+        </button>
+
+        <button
+          id="logoutBtn"
+          class="nav-btn logout"
+          type="button"
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+
+  <main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="hero-badge">
+          🧑‍🏫 My Class
+        </div>
+
+        <h1>
+          আমার ক্লাস
+        </h1>
+
+        <p>
+          আপনার বর্তমান আপনার কোর্স course-এর
+          class schedule, next class, instructor এবং প্রয়োজনীয়
+          class information এখানে একসাথে দেখতে পারবেন।
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- STATUS -->
+
+    <section class="status-banner">
+
+      <div class="status-left">
+
+        <div class="status-icon">
+          🎓
+        </div>
+
+        <div>
+
+          <div class="status-title">
+            Free Course • Batch 01
+          </div>
+
+          <div class="status-text">
+            Class Start: 08 September 2026
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        Course Active
+      </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          📚
+        </div>
+
+        <div class="stat-value">
+          6 Months
+        </div>
+
+        <div class="stat-label">
+          Course Duration
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          🗓️
+        </div>
+
+        <div class="stat-value">
+          3 Days
+        </div>
+
+        <div class="stat-label">
+          Weekly Class
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          ⏰
+        </div>
+
+        <div class="stat-value">
+          4–6 PM
+        </div>
+
+        <div class="stat-label">
+          Class Time
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-icon">
+          🏫
+        </div>
+
+        <div class="stat-value">
+          Offline
+        </div>
+
+        <div class="stat-label">
+          Class Mode
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- MAIN -->
+
+    <section class="main-grid">
+
+
+      <!-- LEFT -->
+
+      <div>
+
+
+        <!-- NEXT CLASS -->
+
+        <div class="panel">
+
+          <div class="panel-title">
+            📌 Next Class
+          </div>
+
+          <div class="panel-sub">
+            আপনার পরবর্তী class-এর information।
+          </div>
+
+
+          <div class="next-class">
+
+            <div class="next-class-head">
+
+              <div class="next-label">
+                COURSE START
+              </div>
+
+              <div class="next-class-title">
+                Computer Basics
+              </div>
+
+            </div>
+
+
+            <div class="next-class-body">
+
+              <div class="detail-grid">
+
+
+                <div class="detail">
+
+                  <div class="detail-label">
+                    📅 Date
+                  </div>
+
+                  <div class="detail-value">
+                    08 September 2026
+                  </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                  <div class="detail-label">
+                    🗓️ Day
+                  </div>
+
+                  <div class="detail-value">
+                    Tuesday
+                  </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                  <div class="detail-label">
+                    ⏰ Time
+                  </div>
+
+                  <div class="detail-value">
+                    4:00 PM – 6:00 PM
+                  </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                  <div class="detail-label">
+                    🧑‍🏫 Instructor
+                  </div>
+
+                  <div class="detail-value">
+                    SNK AI Instructor
+                  </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                  <div class="detail-label">
+                    🏫 Mode
+                  </div>
+
+                  <div class="detail-value">
+                    Offline
+                  </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                  <div class="detail-label">
+                    👥 Batch
+                  </div>
+
+                  <div class="detail-value">
+                    Batch 01
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="class-actions">
+
+                <button
+                  type="button"
+                  class="primary-btn"
+                  id="classReadyBtn"
+                >
+                  ✅ I'm Ready
+                </button>
+
+                <button
+                  type="button"
+                  class="secondary-btn"
+                  onclick="window.print()"
+                >
+                  🖨️ Print
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-box-title">
+              ℹ️ Important
+            </div>
+
+            <div class="info-box-text">
+              Course-এর regular weekly routine Saturday–Monday।
+              08 September 2026 হলো Batch 01-এর course start date।
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- WEEKLY ROUTINE -->
+
+        <div class="panel" style="margin-top:20px;">
+
+          <div class="panel-title">
+            🗓️ Weekly Class Routine
+          </div>
+
+          <div class="panel-sub">
+            প্রতি সপ্তাহের regular class schedule।
+          </div>
+
+
+          <div class="schedule-list">
+
+
+            <div class="schedule-item">
+
+              <div class="schedule-day">
+                SATURDAY
+              </div>
+
+              <div>
+
+                <div class="schedule-course">
+                  Computer Basics
+                </div>
+
+                <div class="schedule-info">
+                  Computer fundamentals & practical
+                </div>
+
+              </div>
+
+              <div class="schedule-time">
+                4:00–6:00 PM
+              </div>
+
+            </div>
+
+
+            <div class="schedule-item">
+
+              <div class="schedule-day">
+                SUNDAY
+              </div>
+
+              <div>
+
+                <div class="schedule-course">
+                  Windows & File Management
+                </div>
+
+                <div class="schedule-info">
+                  Windows, folders & file management
+                </div>
+
+              </div>
+
+              <div class="schedule-time">
+                4:00–6:00 PM
+              </div>
+
+            </div>
+
+
+            <div class="schedule-item">
+
+              <div class="schedule-day">
+                MONDAY
+              </div>
+
+              <div>
+
+                <div class="schedule-course">
+                  MS Word & Practical
+                </div>
+
+                <div class="schedule-info">
+                  Word document creation & practice
+                </div>
+
+              </div>
+
+              <div class="schedule-time">
+                4:00–6:00 PM
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT -->
+
+      <div>
+
+
+        <!-- COURSE -->
+
+        <div class="panel">
+
+          <div class="panel-title">
+            📚 My Course
+          </div>
+
+          <div class="panel-sub">
+            Current enrollment information।
+          </div>
+
+
+          <div class="course-card">
+
+            <div class="course-name">
+              আপনার কোর্স
+            </div>
+
+            <div class="course-meta">
+              SNK AI Academy • Batch 01
+            </div>
+
+            <div class="course-tags">
+
+              <span class="tag">
+                Free
+              </span>
+
+              <span class="tag">
+                Offline
+              </span>
+
+              <span class="tag">
+                6 Months
+              </span>
+
+              <span class="tag">
+                Active
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="detail-grid">
+
+            <div class="detail">
+
+              <div class="detail-label">
+                Student
+              </div>
+
+              <div
+                class="detail-value"
+                id="studentName"
+              >
+                Demo Student
+              </div>
+
+            </div>
+
+            <div class="detail">
+
+              <div class="detail-label">
+                Student ID
+              </div>
+
+              <div
+                class="detail-value"
+                id="studentId"
+              >
+                SNK-1001
+              </div>
+
+            </div>
+
+            <div class="detail">
+
+              <div class="detail-label">
+                Start Date
+              </div>
+
+              <div class="detail-value">
+                08 Sep 2026
+              </div>
+
+            </div>
+
+            <div class="detail">
+
+              <div class="detail-label">
+                Instructor
+              </div>
+
+              <div class="detail-value">
+                SNK AI Instructor
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- MODULES -->
+
+        <div class="panel" style="margin-top:20px;">
+
+          <div class="panel-title">
+            🧩 Course Modules
+          </div>
+
+          <div class="panel-sub">
+            Course-এ যেসব বিষয় শেখানো হবে।
+          </div>
+
+
+          <div class="modules">
+
+            <div class="module">
+
+              <div class="module-icon">
+                💻
+              </div>
+
+              <div class="module-name">
+                Computer Basics
+              </div>
+
+            </div>
+
+
+            <div class="module">
+
+              <div class="module-icon">
+                🪟
+              </div>
+
+              <div class="module-name">
+                Windows & File Management
+              </div>
+
+            </div>
+
+
+            <div class="module">
+
+              <div class="module-icon">
+                📝
+              </div>
+
+              <div class="module-name">
+                MS Word
+              </div>
+
+            </div>
+
+
+            <div class="module">
+
+              <div class="module-icon">
+                📊
+              </div>
+
+              <div class="module-name">
+                MS Excel
+              </div>
+
+            </div>
+
+
+            <div class="module">
+
+              <div class="module-icon">
+                📽️
+              </div>
+
+              <div class="module-name">
+                MS PowerPoint
+              </div>
+
+            </div>
+
+
+            <div class="module">
+
+              <div class="module-icon">
+                🌐
+              </div>
+
+              <div class="module-name">
+                Internet & Online Skills
+              </div>
+
+            </div>
+
+
+            <div class="module">
+
+              <div class="module-icon">
+                ⌨️
+              </div>
+
+              <div class="module-name">
+                Typing Practice
+              </div>
+
+            </div>
+
+
+            <div class="module">
+
+              <div class="module-icon">
+                🧪
+              </div>
+
+              <div class="module-name">
+                Practical Project
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="panel" style="margin-top:20px;">
+
+          <div class="panel-title">
+            ⚡ Quick Links
+          </div>
+
+          <div class="panel-sub">
+            Student Portal-এর গুরুত্বপূর্ণ pages।
+          </div>
+
+
+          <div class="quick-links">
+
+
+            <a
+              href="courses.html"
+              class="quick-link"
+            >
+
+              <div class="quick-link-left">
+
+                <span class="quick-link-icon">
+                  📚
+                </span>
+
+                <span class="quick-link-name">
+                  My Course
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+
+            <a
+              href="student-timetable.html"
+              class="quick-link"
+            >
+
+              <div class="quick-link-left">
+
+                <span class="quick-link-icon">
+                  📅
+                </span>
+
+                <span class="quick-link-name">
+                  Timetable
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+
+            <a
+              href="assignments.html"
+              class="quick-link"
+            >
+
+              <div class="quick-link-left">
+
+                <span class="quick-link-icon">
+                  📝
+                </span>
+
+                <span class="quick-link-name">
+                  Assignments
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+
+            <a
+              href="student-resources.html"
+              class="quick-link"
+            >
+
+              <div class="quick-link-left">
+
+                <span class="quick-link-icon">
+                  📂
+                </span>
+
+                <span class="quick-link-name">
+                  Resources
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+
+            <a
+              href="student-attendance.html"
+              class="quick-link"
+            >
+
+              <div class="quick-link-left">
+
+                <span class="quick-link-icon">
+                  📊
+                </span>
+
+                <span class="quick-link-name">
+                  Attendance
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+
+            <a
+              href="student-support.html"
+              class="quick-link"
+            >
+
+              <div class="quick-link-left">
+
+                <span class="quick-link-icon">
+                  🆘
+                </span>
+
+                <span class="quick-link-name">
+                  Student Support
+                </span>
+
+              </div>
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-title">
+      SNK AI Academy — Student Portal
+    </div>
+
+    <div>
+      আপনার কোর্স • Batch 01 • Free Course
+    </div>
+
+    <div style="margin-top:5px;">
+      © 2026 SNK AI Academy. Student Portal Demo.
+    </div>
+
+  </footer>
+
+
+  <!-- TOAST -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script>
+
+    /* =========================
+       SESSION PROTECTION
+    ========================== */
+
+    if(
+      sessionStorage.getItem("snkStudentLoggedIn") !== "true"
+    ){
+      window.location.replace("login.html");
+    }
+
+
+    /* =========================
+       STUDENT DATA
+    ========================== */
+
+    const studentId =
+      sessionStorage.getItem("snkStudentId") ||
+      "SNK-1001";
+
+    const studentName =
+      sessionStorage.getItem("snkStudentName") ||
+      "Demo Student";
+
+
+    document.getElementById(
+      "studentId"
+    ).textContent = studentId;
+
+
+    document.getElementById(
+      "studentName"
+    ).textContent = studentName;
+
+
+    /* =========================
+       THEME
+    ========================== */
+
+    const themeBtn =
+      document.getElementById("themeBtn");
+
+
+    function applyTheme(){
+
+      const savedTheme =
+        localStorage.getItem("snkTheme") ||
+        "light";
+
+      document.body.classList.toggle(
+        "dark",
+        savedTheme === "dark"
+      );
+
+      themeBtn.textContent =
+        savedTheme === "dark"
+          ? "☀️"
+          : "🌙";
+    }
+
+
+    applyTheme();
+
+
+    themeBtn.addEventListener(
+      "click",
+      function(){
+
+        const current =
+          localStorage.getItem("snkTheme") ||
+          "light";
+
+        const next =
+          current === "dark"
+            ? "light"
+            : "dark";
+
+        localStorage.setItem(
+          "snkTheme",
+          next
+        );
+
+        applyTheme();
+
+        showToast(
+          next === "dark"
+            ? "Dark mode চালু হয়েছে"
+            : "Light mode চালু হয়েছে"
+        );
+
+      }
+    );
+
+
+    /* =========================
+       LOGOUT
+    ========================== */
+
+    document
+      .getElementById("logoutBtn")
+      .addEventListener(
+        "click",
+        function(){
+
+          if(
+            !confirm("আপনি কি Logout করতে চান?")
+          ){
+            return;
+          }
+
+          sessionStorage.removeItem(
+            "snkStudentLoggedIn"
+          );
+
+          sessionStorage.removeItem(
+            "snkStudentId"
+          );
+
+          sessionStorage.removeItem(
+            "snkStudentName"
+          );
+
+          sessionStorage.removeItem(
+            "snkStudentCourse"
+          );
+
+          window.location.href =
+            "login.html";
+
+        }
+      );
+
+
+    /* =========================
+       I'M READY
+    ========================== */
+
+    document
+      .getElementById("classReadyBtn")
+      .addEventListener(
+        "click",
+        function(){
+
+          localStorage.setItem(
+            "snkClassReady",
+            JSON.stringify({
+              studentId:studentId,
+              className:"Computer Basics",
+              date:"2026-09-08",
+              time:"4:00 PM – 6:00 PM",
+              updatedAt:new Date().toISOString()
+            })
+          );
+
+          showToast(
+            "Great! Class-এর জন্য আপনি Ready হিসেবে mark হয়েছেন। 🎓"
+          );
+
+        }
+      );
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    const toast =
+      document.getElementById("toast");
+
+    let toastTimer;
+
+
+    function showToast(message){
+
+      toast.textContent =
+        message;
+
+      toast.classList.add(
+        "show"
+      );
+
+      clearTimeout(
+        toastTimer
+      );
+
+      toastTimer =
+        setTimeout(
+          function(){
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          3000
+        );
+    }
+
+
+    /* =========================
+       STORAGE REFRESH
+    ========================== */
+
+    window.addEventListener(
+      "storage",
+      function(){
+
+        applyTheme();
+
+      }
+    );
+
+
+    document.addEventListener(
+      "visibilitychange",
+      function(){
+
+        if(
+          document.visibilityState ===
+          "visible"
+        ){
+
+          applyTheme();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       SYSTEM THEME
+    ========================== */
+
+    const systemTheme =
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+
+
+    systemTheme.addEventListener(
+      "change",
+      function(){
+
+        const saved =
+          localStorage.getItem("snkTheme");
+
+        if(!saved){
+
+          document.body.classList.toggle(
+            "dark",
+            systemTheme.matches
+          );
+
+          themeBtn.textContent =
+            systemTheme.matches
+              ? "☀️"
+              : "🌙";
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
+```

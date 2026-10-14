@@ -1,0 +1,2685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Support | SNK AI Academy</title>
+
+  <meta
+    name="description"
+    content="SNK AI Academy Student Support — Get help with classes, assignments, quizzes, resources and student portal issues."
+  >
+
+  <meta name="theme-color" content="#06120b">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root{
+      --green-950:#06120b;
+      --green-900:#071a0e;
+      --green-850:#092413;
+      --green-800:#0b3018;
+      --green-700:#15803d;
+      --green-600:#16a34a;
+      --green-500:#22c55e;
+      --green-400:#4ade80;
+      --green-300:#86efac;
+      --emerald:#10b981;
+      --lime:#a3e635;
+
+      --white:#f0fdf4;
+      --text:#dcfce7;
+      --muted:#94a3b8;
+
+      --border:rgba(134,239,172,.13);
+      --shadow:0 20px 60px rgba(0,0,0,.25);
+      --radius:24px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      font-family:"Inter",sans-serif;
+      color:var(--text);
+
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(34,197,94,.12),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(163,230,53,.08),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 50% 100%,
+          rgba(16,185,129,.08),
+          transparent 30%
+        ),
+        var(--green-950);
+
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.035;
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,.5) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.5) 1px,
+          transparent 1px
+        );
+
+      background-size:40px 40px;
+
+      mask-image:
+        linear-gradient(
+          to bottom,
+          black,
+          transparent
+        );
+
+      z-index:-1;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .container{
+      width:min(
+        1180px,
+        calc(100% - 32px)
+      );
+
+      margin:auto;
+    }
+
+
+    /* =========================
+       NAVBAR
+    ========================== */
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+
+      background:
+        rgba(6,18,11,.76);
+
+      border-bottom:
+        1px solid var(--border);
+    }
+
+    .nav-inner{
+      min-height:76px;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+
+      min-width:max-content;
+    }
+
+    .brand-logo{
+      width:42px;
+      height:42px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:14px;
+
+      color:#06120b;
+
+      font-family:"Space Grotesk",sans-serif;
+      font-weight:900;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      box-shadow:
+        0 0 0 5px rgba(163,230,53,.06),
+        0 10px 30px rgba(34,197,94,.2);
+    }
+
+    .brand-text strong{
+      display:block;
+
+      color:var(--white);
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:15px;
+    }
+
+    .brand-text span{
+      display:block;
+
+      margin-top:2px;
+
+      color:var(--muted);
+
+      font-size:11px;
+
+      letter-spacing:.08em;
+
+      text-transform:uppercase;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .nav-links a{
+      padding:10px 11px;
+
+      border-radius:12px;
+
+      color:#a7b8ac;
+
+      font-size:13px;
+      font-weight:600;
+
+      transition:.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:var(--white);
+
+      background:
+        rgba(34,197,94,.10);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .nav-icon{
+      width:40px;
+      height:40px;
+
+      display:grid;
+      place-items:center;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:12px;
+
+      color:var(--text);
+
+      background:
+        rgba(255,255,255,.025);
+    }
+
+    .mobile-toggle{
+      display:none;
+    }
+
+
+    /* =========================
+       PAGE
+    ========================== */
+
+    .page{
+      padding:46px 0 80px;
+    }
+
+    .breadcrumb{
+      display:flex;
+      align-items:center;
+      gap:8px;
+
+      margin-bottom:20px;
+
+      color:var(--muted);
+
+      font-size:13px;
+    }
+
+    .breadcrumb a:hover{
+      color:var(--green-300);
+    }
+
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .page-hero{
+      position:relative;
+
+      overflow:hidden;
+
+      padding:38px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:30px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(21,128,61,.23),
+          rgba(9,36,19,.75) 45%,
+          rgba(6,18,11,.88)
+        );
+
+      box-shadow:var(--shadow);
+    }
+
+    .page-hero::after{
+      content:"";
+
+      position:absolute;
+
+      width:280px;
+      height:280px;
+
+      right:-100px;
+      top:-110px;
+
+      border-radius:50%;
+
+      background:
+        rgba(163,230,53,.09);
+
+      filter:blur(12px);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+
+      max-width:720px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+
+      padding:7px 11px;
+
+      border:
+        1px solid rgba(134,239,172,.14);
+
+      border-radius:999px;
+
+      color:var(--green-300);
+
+      background:
+        rgba(34,197,94,.08);
+
+      font-size:12px;
+      font-weight:700;
+
+      margin-bottom:15px;
+    }
+
+    .eyebrow-dot{
+      width:7px;
+      height:7px;
+
+      border-radius:50%;
+
+      background:var(--lime);
+
+      box-shadow:
+        0 0 12px var(--lime);
+    }
+
+    h1{
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:
+        clamp(34px,5vw,58px);
+
+      line-height:1;
+
+      letter-spacing:-.045em;
+
+      color:var(--white);
+
+      margin-bottom:14px;
+    }
+
+    .hero-content p{
+      color:#a7b8ac;
+
+      max-width:680px;
+
+      font-size:15px;
+
+      line-height:1.7;
+    }
+
+
+    /* =========================
+       SUPPORT OPTIONS
+    ========================== */
+
+    .section{
+      margin-top:34px;
+    }
+
+    .section-head{
+      display:flex;
+
+      align-items:end;
+      justify-content:space-between;
+
+      gap:16px;
+
+      margin-bottom:17px;
+    }
+
+    .section-title{
+      color:var(--white);
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:24px;
+
+      letter-spacing:-.02em;
+    }
+
+    .section-subtitle{
+      margin-top:5px;
+
+      color:var(--muted);
+
+      font-size:13px;
+    }
+
+    .support-grid{
+      display:grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap:16px;
+    }
+
+    .support-card{
+      position:relative;
+
+      overflow:hidden;
+
+      padding:23px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(9,36,19,.82),
+          rgba(7,26,14,.68)
+        );
+
+      transition:.28s ease;
+    }
+
+    .support-card:hover{
+      transform:translateY(-5px);
+
+      border-color:
+        rgba(134,239,172,.25);
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,.24);
+    }
+
+    .support-icon{
+      width:50px;
+      height:50px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:16px;
+
+      color:var(--green-300);
+
+      background:
+        rgba(34,197,94,.09);
+
+      border:
+        1px solid rgba(134,239,172,.10);
+
+      font-size:22px;
+    }
+
+    .support-card h3{
+      margin-top:17px;
+
+      color:var(--white);
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:18px;
+    }
+
+    .support-card p{
+      margin-top:7px;
+
+      color:#84978b;
+
+      font-size:12px;
+
+      line-height:1.65;
+    }
+
+    .support-link{
+      display:inline-flex;
+
+      margin-top:16px;
+
+      padding:8px 11px;
+
+      border:
+        1px solid rgba(134,239,172,.13);
+
+      border-radius:10px;
+
+      color:var(--green-300);
+
+      background:
+        rgba(34,197,94,.05);
+
+      font-size:10px;
+      font-weight:800;
+
+      transition:.2s ease;
+    }
+
+    .support-link:hover{
+      color:#06120b;
+
+      background:var(--lime);
+
+      border-color:var(--lime);
+    }
+
+
+    /* =========================
+       FORM + FAQ
+    ========================== */
+
+    .two-column{
+      display:grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:18px;
+    }
+
+    .panel{
+      padding:24px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:23px;
+
+      background:
+        rgba(9,36,19,.62);
+    }
+
+    .panel-title{
+      color:var(--white);
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:20px;
+
+      margin-bottom:5px;
+    }
+
+    .panel-subtitle{
+      color:var(--muted);
+
+      font-size:12px;
+
+      line-height:1.6;
+
+      margin-bottom:20px;
+    }
+
+
+    /* FORM */
+
+    .form-group{
+      margin-bottom:14px;
+    }
+
+    .form-label{
+      display:block;
+
+      margin-bottom:7px;
+
+      color:#a6b7ab;
+
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea{
+      width:100%;
+
+      outline:none;
+
+      color:var(--white);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:13px;
+
+      background:
+        rgba(255,255,255,.025);
+
+      padding:12px 13px;
+
+      font-size:12px;
+
+      transition:.2s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus{
+      border-color:
+        rgba(74,222,128,.38);
+
+      box-shadow:
+        0 0 0 4px rgba(34,197,94,.05);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder{
+      color:#607268;
+    }
+
+    .form-select{
+      appearance:auto;
+    }
+
+    .form-textarea{
+      min-height:125px;
+
+      resize:vertical;
+    }
+
+    .submit-btn{
+      width:100%;
+
+      border:0;
+
+      border-radius:13px;
+
+      padding:13px;
+
+      color:#06120b;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      font-size:12px;
+      font-weight:900;
+
+      box-shadow:
+        0 10px 25px rgba(34,197,94,.16);
+
+      transition:.25s ease;
+    }
+
+    .submit-btn:hover{
+      transform:translateY(-2px);
+
+      box-shadow:
+        0 15px 32px rgba(34,197,94,.24);
+    }
+
+
+    /* =========================
+       FAQ
+    ========================== */
+
+    .faq-list{
+      display:grid;
+
+      gap:9px;
+    }
+
+    .faq-item{
+      overflow:hidden;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:15px;
+
+      background:
+        rgba(255,255,255,.018);
+    }
+
+    .faq-question{
+      width:100%;
+
+      display:flex;
+
+      align-items:center;
+      justify-content:space-between;
+
+      gap:14px;
+
+      padding:15px;
+
+      border:0;
+
+      color:var(--text);
+
+      background:transparent;
+
+      text-align:left;
+
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .faq-plus{
+      flex:0 0 auto;
+
+      color:var(--green-300);
+
+      font-size:18px;
+
+      transition:.25s ease;
+    }
+
+    .faq-answer{
+      display:grid;
+
+      grid-template-rows:0fr;
+
+      transition:
+        grid-template-rows .3s ease;
+    }
+
+    .faq-answer-inner{
+      overflow:hidden;
+
+      color:#7f9286;
+
+      font-size:11px;
+
+      line-height:1.7;
+
+      padding:0 15px;
+    }
+
+    .faq-item.open .faq-answer{
+      grid-template-rows:1fr;
+    }
+
+    .faq-item.open .faq-answer-inner{
+      padding-bottom:15px;
+    }
+
+    .faq-item.open .faq-plus{
+      transform:rotate(45deg);
+    }
+
+
+    /* =========================
+       STUDENT INFO
+    ========================== */
+
+    .student-panel{
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:20px;
+
+      padding:22px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:22px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(21,128,61,.13),
+          rgba(9,36,19,.58)
+        );
+    }
+
+    .student-info{
+      display:flex;
+
+      align-items:center;
+
+      gap:13px;
+    }
+
+    .student-avatar{
+      width:50px;
+      height:50px;
+
+      display:grid;
+      place-items:center;
+
+      border-radius:15px;
+
+      color:#06120b;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-weight:900;
+    }
+
+    .student-info h3{
+      color:var(--white);
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:16px;
+    }
+
+    .student-info p{
+      margin-top:3px;
+
+      color:var(--muted);
+
+      font-size:10px;
+    }
+
+    .course-badge{
+      padding:9px 12px;
+
+      border:
+        1px solid rgba(134,239,172,.13);
+
+      border-radius:11px;
+
+      color:var(--green-300);
+
+      background:
+        rgba(34,197,94,.06);
+
+      font-size:10px;
+      font-weight:800;
+
+      text-align:right;
+    }
+
+    .course-badge span{
+      display:block;
+
+      color:#607268;
+
+      font-size:9px;
+
+      margin-bottom:2px;
+    }
+
+
+    /* =========================
+       CONTACT CARD
+    ========================== */
+
+    .contact-card{
+      display:grid;
+
+      grid-template-columns:
+        1.2fr .8fr;
+
+      gap:18px;
+
+      padding:25px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:23px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(9,36,19,.78),
+          rgba(7,26,14,.66)
+        );
+    }
+
+    .contact-content h3{
+      color:var(--white);
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:21px;
+    }
+
+    .contact-content p{
+      max-width:650px;
+
+      margin-top:7px;
+
+      color:#87998d;
+
+      font-size:12px;
+
+      line-height:1.7;
+    }
+
+    .contact-actions{
+      display:flex;
+
+      align-items:center;
+      justify-content:flex-end;
+
+      gap:9px;
+
+      flex-wrap:wrap;
+    }
+
+    .contact-btn{
+      border:
+        1px solid var(--border);
+
+      border-radius:11px;
+
+      padding:11px 14px;
+
+      color:var(--green-300);
+
+      background:
+        rgba(34,197,94,.06);
+
+      font-size:11px;
+      font-weight:800;
+
+      transition:.2s ease;
+    }
+
+    .contact-btn:hover{
+      color:#06120b;
+
+      background:var(--lime);
+
+      border-color:var(--lime);
+    }
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    .toast{
+      position:fixed;
+
+      right:22px;
+      bottom:22px;
+
+      z-index:7000;
+
+      max-width:340px;
+
+      padding:14px 17px;
+
+      border:
+        1px solid rgba(134,239,172,.17);
+
+      border-radius:15px;
+
+      color:var(--white);
+
+      background:
+        rgba(7,26,14,.95);
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+
+      transform:
+        translateY(30px);
+
+      opacity:0;
+
+      pointer-events:none;
+
+      transition:.3s ease;
+
+      font-size:12px;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+
+      opacity:1;
+    }
+
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    .modal{
+      position:fixed;
+
+      inset:0;
+
+      z-index:5000;
+
+      display:none;
+
+      place-items:center;
+
+      padding:20px;
+
+      background:
+        rgba(0,0,0,.72);
+
+      backdrop-filter:blur(12px);
+    }
+
+    .modal.show{
+      display:grid;
+    }
+
+    .modal-card{
+      width:min(430px,100%);
+
+      padding:28px;
+
+      border:
+        1px solid rgba(134,239,172,.16);
+
+      border-radius:26px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(9,36,19,.98),
+          rgba(6,18,11,.98)
+        );
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.55);
+
+      text-align:center;
+    }
+
+    .modal-icon{
+      width:58px;
+      height:58px;
+
+      display:grid;
+      place-items:center;
+
+      margin:0 auto 16px;
+
+      border-radius:18px;
+
+      color:#06120b;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+
+      font-size:23px;
+    }
+
+    .modal-card h3{
+      color:var(--white);
+
+      font-family:"Space Grotesk",sans-serif;
+
+      font-size:22px;
+
+      margin-bottom:8px;
+    }
+
+    .modal-card p{
+      color:var(--muted);
+
+      font-size:13px;
+
+      line-height:1.6;
+    }
+
+    .modal-actions{
+      display:flex;
+
+      gap:9px;
+
+      margin-top:21px;
+    }
+
+    .modal-btn{
+      flex:1;
+
+      border:0;
+
+      border-radius:12px;
+
+      padding:11px;
+
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .modal-btn.primary{
+      color:#06120b;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--lime),
+          var(--green-400)
+        );
+    }
+
+    .modal-btn.secondary{
+      color:var(--text);
+
+      border:
+        1px solid var(--border);
+
+      background:
+        rgba(255,255,255,.045);
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer{
+      padding:28px 0 35px;
+
+      border-top:
+        1px solid var(--border);
+
+      color:#64766b;
+
+      font-size:11px;
+    }
+
+    .footer-inner{
+      display:flex;
+
+      align-items:center;
+      justify-content:space-between;
+
+      gap:20px;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:16px;
+    }
+
+    .footer-links a:hover{
+      color:var(--green-300);
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media(max-width:1050px){
+
+      .nav-links a{
+        padding:9px 7px;
+        font-size:12px;
+      }
+
+    }
+
+
+    @media(max-width:820px){
+
+      .mobile-toggle{
+        display:grid;
+      }
+
+      .nav-links{
+        position:absolute;
+
+        left:16px;
+        right:16px;
+        top:82px;
+
+        display:none;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        padding:10px;
+
+        border:
+          1px solid var(--border);
+
+        border-radius:18px;
+
+        background:
+          rgba(6,18,11,.97);
+
+        box-shadow:var(--shadow);
+      }
+
+      .nav-links.show{
+        display:flex;
+      }
+
+      .nav-links a{
+        padding:12px 13px;
+      }
+
+      .support-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .two-column{
+        grid-template-columns:1fr;
+      }
+
+      .contact-card{
+        grid-template-columns:1fr;
+      }
+
+      .contact-actions{
+        justify-content:flex-start;
+      }
+
+    }
+
+
+    @media(max-width:620px){
+
+      .container{
+        width:
+          min(
+            100% - 22px,
+            1180px
+          );
+      }
+
+      .page{
+        padding:28px 0 55px;
+      }
+
+      .page-hero{
+        padding:25px 20px;
+
+        border-radius:23px;
+      }
+
+      h1{
+        font-size:37px;
+      }
+
+      .support-grid{
+        grid-template-columns:1fr;
+      }
+
+      .student-panel{
+        align-items:flex-start;
+
+        flex-direction:column;
+      }
+
+      .course-badge{
+        width:100%;
+
+        text-align:left;
+      }
+
+      .footer-inner{
+        flex-direction:column;
+
+        align-items:flex-start;
+      }
+
+    }
+
+
+    @media(max-width:430px){
+
+      .brand-text{
+        display:none;
+      }
+
+      .modal-card{
+        padding:23px;
+      }
+
+    }
+
+  </style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+
+  <!-- =========================
+       NAVBAR
+  ========================== -->
+
+  <header class="navbar">
+
+    <div class="container nav-inner">
+
+      <a
+        href="../index.html"
+        class="brand"
+      >
+
+        <div class="brand-logo">
+          SNK
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            SNK AI Academy
+          </strong>
+
+          <span>
+            Student Portal
+          </span>
+
+        </div>
+
+      </a>
+
+
+      <nav
+        class="nav-links"
+        id="navLinks"
+      >
+
+        <a href="../index.html">
+          Home
+        </a>
+
+        <a href="../student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="../courses.html">
+          My Course
+        </a>
+
+        <a href="../assignments.html">
+          Assignment
+        </a>
+
+        <a href="../quiz.html">
+          Quiz
+        </a>
+
+        <a href="../results.html">
+          Result
+        </a>
+
+        <a href="../student-attendance/index.html">
+          Attendance
+        </a>
+
+        <a href="../student-resources/index.html">
+          Resources
+        </a>
+
+        <a href="../student-notifications/index.html">
+          Notifications
+        </a>
+
+        <a
+          href="index.html"
+          class="active"
+        >
+          Support
+        </a>
+
+      </nav>
+
+
+      <div class="nav-actions">
+
+        <button
+          class="nav-icon mobile-toggle"
+          id="mobileToggle"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
+  <main class="page">
+
+    <div class="container">
+
+
+      <!-- Breadcrumb -->
+
+      <div class="breadcrumb">
+
+        <a href="../index.html">
+          Home
+        </a>
+
+        <span>›</span>
+
+        <span>
+          Support
+        </span>
+
+      </div>
+
+
+      <!-- Hero -->
+
+      <section class="page-hero">
+
+        <div class="hero-content">
+
+          <div class="eyebrow">
+
+            <span class="eyebrow-dot"></span>
+
+            Student Help Center
+
+          </div>
+
+
+          <h1>
+            How can we help?
+          </h1>
+
+
+          <p>
+            Need help with your class, assignment,
+            quiz, resources or student portal?
+            Find the right support option below.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- Student Info -->
+
+      <section class="section">
+
+        <div class="student-panel">
+
+          <div class="student-info">
+
+            <div
+              class="student-avatar"
+              id="studentAvatar"
+            >
+              SN
+            </div>
+
+            <div>
+
+              <h3 id="studentName">
+                Student
+              </h3>
+
+              <p id="studentId">
+                Student ID: SNK-0001
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="course-badge">
+
+            <span>
+              CURRENT COURSE
+            </span>
+
+            <strong id="studentCourse">
+              AI-Powered UI/UX Design
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- Support Options -->
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div>
+
+            <h2 class="section-title">
+              Get Support
+            </h2>
+
+            <p class="section-subtitle">
+              Choose what you need help with.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="support-grid">
+
+
+          <!-- Card 1 -->
+
+          <article class="support-card">
+
+            <div class="support-icon">
+              📚
+            </div>
+
+            <h3>
+              Course Help
+            </h3>
+
+            <p>
+              Questions about your modules,
+              classes, lessons or course progress?
+            </p>
+
+            <a
+              href="../student-class/index.html"
+              class="support-link"
+            >
+              Class Help →
+            </a>
+
+          </article>
+
+
+          <!-- Card 2 -->
+
+          <article class="support-card">
+
+            <div class="support-icon">
+              📝
+            </div>
+
+            <h3>
+              Assignment Help
+            </h3>
+
+            <p>
+              Need help understanding an assignment,
+              submission or deadline?
+            </p>
+
+            <a
+              href="../assignments.html"
+              class="support-link"
+            >
+              Assignments →
+            </a>
+
+          </article>
+
+
+          <!-- Card 3 -->
+
+          <article class="support-card">
+
+            <div class="support-icon">
+              🧠
+            </div>
+
+            <h3>
+              Quiz & Result
+            </h3>
+
+            <p>
+              Having questions about quizzes,
+              marks or your academic results?
+            </p>
+
+            <a
+              href="../results.html"
+              class="support-link"
+            >
+              View Results →
+            </a>
+
+          </article>
+
+
+          <!-- Card 4 -->
+
+          <article class="support-card">
+
+            <div class="support-icon">
+              📦
+            </div>
+
+            <h3>
+              Resource Help
+            </h3>
+
+            <p>
+              Can't find notes, PDFs, Figma files,
+              templates or class materials?
+            </p>
+
+            <a
+              href="../student-resources/index.html"
+              class="support-link"
+            >
+              Resources →
+            </a>
+
+          </article>
+
+
+          <!-- Card 5 -->
+
+          <article class="support-card">
+
+            <div class="support-icon">
+              🕐
+            </div>
+
+            <h3>
+              Attendance Help
+            </h3>
+
+            <p>
+              Check attendance records,
+              class history or attendance information.
+            </p>
+
+            <a
+              href="../student-attendance/index.html"
+              class="support-link"
+            >
+              Attendance →
+            </a>
+
+          </article>
+
+
+          <!-- Card 6 -->
+
+          <article class="support-card">
+
+            <div class="support-icon">
+              🔐
+            </div>
+
+            <h3>
+              Portal Problem
+            </h3>
+
+            <p>
+              Login issue, page problem or another
+              technical issue with the student portal?
+            </p>
+
+            <button
+              class="support-link"
+              onclick="focusSupportForm()"
+            >
+              Report Issue →
+            </button>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- Form + FAQ -->
+
+      <section class="section">
+
+        <div class="two-column">
+
+
+          <!-- Support Form -->
+
+          <div
+            class="panel"
+            id="supportFormPanel"
+          >
+
+            <h2 class="panel-title">
+              Contact Support
+            </h2>
+
+            <p class="panel-subtitle">
+              Tell us what you need help with.
+              This demo form will be connected to the
+              live support system later.
+            </p>
+
+
+            <form id="supportForm">
+
+
+              <div class="form-group">
+
+                <label class="form-label">
+                  Your Name
+                </label>
+
+                <input
+                  class="form-input"
+                  id="formName"
+                  type="text"
+                  placeholder="Enter your name"
+                  required
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label class="form-label">
+                  Support Category
+                </label>
+
+                <select
+                  class="form-select"
+                  id="formCategory"
+                  required
+                >
+
+                  <option value="">
+                    Select a category
+                  </option>
+
+                  <option value="class">
+                    Class / Course
+                  </option>
+
+                  <option value="assignment">
+                    Assignment
+                  </option>
+
+                  <option value="quiz">
+                    Quiz / Result
+                  </option>
+
+                  <option value="resources">
+                    Resources
+                  </option>
+
+                  <option value="attendance">
+                    Attendance
+                  </option>
+
+                  <option value="technical">
+                    Technical / Portal
+                  </option>
+
+                  <option value="other">
+                    Other
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label class="form-label">
+                  Message
+                </label>
+
+                <textarea
+                  class="form-textarea"
+                  id="formMessage"
+                  placeholder="Describe your problem..."
+                  required
+                ></textarea>
+
+              </div>
+
+
+              <button
+                class="submit-btn"
+                type="submit"
+              >
+                Send Support Request
+              </button>
+
+            </form>
+
+          </div>
+
+
+          <!-- FAQ -->
+
+          <div class="panel">
+
+            <h2 class="panel-title">
+              Frequently Asked Questions
+            </h2>
+
+            <p class="panel-subtitle">
+              Quick answers to common student questions.
+            </p>
+
+
+            <div class="faq-list">
+
+
+              <div class="faq-item">
+
+                <button
+                  class="faq-question"
+                  type="button"
+                >
+
+                  <span>
+                    How do I submit an assignment?
+                  </span>
+
+                  <span class="faq-plus">
+                    +
+                  </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                  <div class="faq-answer-inner">
+
+                    Open the Assignment page,
+                    select the pending assignment,
+                    upload your file and submit it.
+                    Your submission status will then
+                    appear in the assignment list.
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="faq-item">
+
+                <button
+                  class="faq-question"
+                  type="button"
+                >
+
+                  <span>
+                    Where can I find class resources?
+                  </span>
+
+                  <span class="faq-plus">
+                    +
+                  </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                  <div class="faq-answer-inner">
+
+                    Go to the Resources section.
+                    You can browse notes, PDFs,
+                    Figma files, templates, videos
+                    and other class materials.
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="faq-item">
+
+                <button
+                  class="faq-question"
+                  type="button"
+                >
+
+                  <span>
+                    Where can I check my attendance?
+                  </span>
+
+                  <span class="faq-plus">
+                    +
+                  </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                  <div class="faq-answer-inner">
+
+                    Open the Attendance page from
+                    the student portal navigation.
+                    You can view your overall percentage,
+                    calendar and recent attendance history.
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="faq-item">
+
+                <button
+                  class="faq-question"
+                  type="button"
+                >
+
+                  <span>
+                    How can I see my results?
+                  </span>
+
+                  <span class="faq-plus">
+                    +
+                  </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                  <div class="faq-answer-inner">
+
+                    Open the Result page to see your
+                    overall score, module performance,
+                    recent results and current grade.
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="faq-item">
+
+                <button
+                  class="faq-question"
+                  type="button"
+                >
+
+                  <span>
+                    What should I do if the portal has a problem?
+                  </span>
+
+                  <span class="faq-plus">
+                    +
+                  </span>
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                  <div class="faq-answer-inner">
+
+                    Submit a support request using
+                    the form on this page and describe
+                    the problem clearly. Include the
+                    page name and what happened.
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- Direct Contact -->
+
+      <section class="section">
+
+        <div class="contact-card">
+
+          <div class="contact-content">
+
+            <h3>
+              Still need help?
+            </h3>
+
+            <p>
+              If your issue is not covered above,
+              contact the academy directly. Keep your
+              Student ID ready so the support team can
+              identify your student account quickly.
+            </p>
+
+          </div>
+
+
+          <div class="contact-actions">
+
+            <a
+              href="../student-contact/index.html"
+              class="contact-btn"
+            >
+              Contact Academy →
+            </a>
+
+            <button
+              class="contact-btn"
+              onclick="showToast('Direct support channel will be connected later.')"
+            >
+              💬 Live Support
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div>
+        © 2026 SNK AI Academy · Student Portal
+      </div>
+
+      <div class="footer-links">
+
+        <a href="../index.html">
+          Home
+        </a>
+
+        <a href="../student-dashboard.html">
+          Dashboard
+        </a>
+
+        <a href="../student-resources/index.html">
+          Resources
+        </a>
+
+        <a href="../student-contact/index.html">
+          Contact
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       LOGIN MODAL
+  ========================== -->
+
+  <div
+    class="modal"
+    id="loginModal"
+  >
+
+    <div class="modal-card">
+
+      <div class="modal-icon">
+        🔐
+      </div>
+
+      <h3>
+        Student Login Required
+      </h3>
+
+      <p>
+        Please login to access your private
+        student support area.
+      </p>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="modal-btn secondary"
+          onclick="continueDemo()"
+        >
+          Continue Demo
+        </button>
+
+        <button
+          class="modal-btn primary"
+          onclick="goToLogin()"
+        >
+          Login
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       TOAST
+  ========================== -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script>
+
+    /* =========================
+       STUDENT DATA
+    ========================== */
+
+    const studentName =
+      localStorage.getItem(
+        "snkStudentName"
+      ) || "Student";
+
+    const studentId =
+      localStorage.getItem(
+        "snkStudentId"
+      ) || "SNK-0001";
+
+    const studentCourse =
+      localStorage.getItem(
+        "snkStudentCourse"
+      ) ||
+      "AI-Powered UI/UX Design";
+
+
+    /* =========================
+       STUDENT UI
+    ========================== */
+
+    document.getElementById(
+      "studentName"
+    ).textContent =
+      studentName;
+
+
+    document.getElementById(
+      "studentId"
+    ).textContent =
+      "Student ID: " + studentId;
+
+
+    document.getElementById(
+      "studentCourse"
+    ).textContent =
+      studentCourse;
+
+
+    function getInitials(name){
+
+      return name
+        .trim()
+        .split(/\s+/)
+        .slice(0,2)
+        .map(
+          word =>
+            word.charAt(0).toUpperCase()
+        )
+        .join("");
+
+    }
+
+
+    document.getElementById(
+      "studentAvatar"
+    ).textContent =
+      getInitials(studentName) || "SN";
+
+
+    /* =========================
+       MOBILE MENU
+    ========================== */
+
+    const mobileToggle =
+      document.getElementById(
+        "mobileToggle"
+      );
+
+    const navLinks =
+      document.getElementById(
+        "navLinks"
+      );
+
+
+    mobileToggle.addEventListener(
+      "click",
+      () => {
+
+        navLinks.classList.toggle(
+          "show"
+        );
+
+      }
+    );
+
+
+    document.addEventListener(
+      "click",
+      event => {
+
+        if(
+          !navLinks.contains(
+            event.target
+          ) &&
+          !mobileToggle.contains(
+            event.target
+          )
+        ){
+
+          navLinks.classList.remove(
+            "show"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       FAQ
+    ========================== */
+
+    const faqQuestions =
+      document.querySelectorAll(
+        ".faq-question"
+      );
+
+
+    faqQuestions.forEach(
+      question => {
+
+        question.addEventListener(
+          "click",
+          () => {
+
+            const item =
+              question.closest(
+                ".faq-item"
+              );
+
+
+            const isOpen =
+              item.classList.contains(
+                "open"
+              );
+
+
+            document
+              .querySelectorAll(
+                ".faq-item"
+              )
+              .forEach(
+                faq =>
+                  faq.classList.remove(
+                    "open"
+                  )
+              );
+
+
+            if(!isOpen){
+
+              item.classList.add(
+                "open"
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================
+       SUPPORT FORM
+    ========================== */
+
+    const supportForm =
+      document.getElementById(
+        "supportForm"
+      );
+
+
+    supportForm.addEventListener(
+      "submit",
+      event => {
+
+        event.preventDefault();
+
+
+        const category =
+          document.getElementById(
+            "formCategory"
+          ).value;
+
+        const message =
+          document.getElementById(
+            "formMessage"
+          ).value.trim();
+
+
+        if(!category || !message){
+
+          showToast(
+            "Please complete the support form."
+          );
+
+          return;
+
+        }
+
+
+        /*
+          Demo-only storage.
+
+          Firebase / Firestore will be
+          connected later.
+        */
+
+        const request = {
+
+          name: studentName,
+
+          studentId: studentId,
+
+          course: studentCourse,
+
+          category: category,
+
+          message: message,
+
+          createdAt:
+            new Date().toISOString()
+
+        };
+
+
+        localStorage.setItem(
+          "snkLastSupportRequest",
+          JSON.stringify(request)
+        );
+
+
+        supportForm.reset();
+
+
+        document.getElementById(
+          "formName"
+        ).value =
+          studentName;
+
+
+        showToast(
+          "Support request saved in demo mode."
+        );
+
+      }
+    );
+
+
+    /* =========================
+       FOCUS SUPPORT FORM
+    ========================== */
+
+    function focusSupportForm(){
+
+      const panel =
+        document.getElementById(
+          "supportFormPanel"
+        );
+
+
+      panel.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+
+      setTimeout(
+        () => {
+
+          document.getElementById(
+            "formCategory"
+          ).focus();
+
+        },
+        500
+      );
+
+    }
+
+
+    /* =========================
+       TOAST
+    ========================== */
+
+    let toastTimer;
+
+
+    function showToast(message){
+
+      const toast =
+        document.getElementById(
+          "toast"
+        );
+
+
+      toast.textContent =
+        message;
+
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toastTimer =
+        setTimeout(
+          () => {
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          3200
+        );
+
+    }
+
+
+    /* =========================
+       LOGIN PROTECTION
+    ========================== */
+
+    const isLoggedIn =
+      localStorage.getItem(
+        "snkStudentLoggedIn"
+      ) === "true" ||
+      sessionStorage.getItem(
+        "snkStudentLoggedIn"
+      ) === "true";
+
+
+    const REQUIRE_LOGIN = true;
+
+
+    const loginModal =
+      document.getElementById(
+        "loginModal"
+      );
+
+
+    if(
+      !isLoggedIn &&
+      REQUIRE_LOGIN
+    ){
+
+      loginModal.classList.add(
+        "show"
+      );
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+    function continueDemo(){
+
+      loginModal.classList.remove(
+        "show"
+      );
+
+      document.body.style.overflow =
+        "";
+
+      showToast(
+        "Demo mode enabled."
+      );
+
+    }
+
+
+    function goToLogin(){
+
+      window.location.href =
+        "../login.html";
+
+    }
+
+
+    /* =========================
+       MODAL CLICK
+    ========================== */
+
+    loginModal.addEventListener(
+      "click",
+      event => {
+
+        if(
+          event.target === loginModal
+        ){
+
+          continueDemo();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       ESCAPE
+    ========================== */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if(
+          event.key === "Escape"
+        ){
+
+          navLinks.classList.remove(
+            "show"
+          );
+
+
+          if(
+            loginModal.classList.contains(
+              "show"
+            )
+          ){
+
+            continueDemo();
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       FORM DEFAULT NAME
+    ========================== */
+
+    document.getElementById(
+      "formName"
+    ).value =
+      studentName;
+
+
+    console.log(
+      "SNK AI Academy Support loaded:",
+      studentName,
+      studentId
+    );
+
+  </script>
+
+</body>
+</html>
