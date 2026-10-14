@@ -1,0 +1,4090 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Attendance Data Recovery | 1.53</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+    --purple:#7c3aed;
+
+    --soft:#f1ffdd;
+    --soft-success:#f0fdf4;
+    --soft-warning:#fffbeb;
+    --soft-danger:#fef2f2;
+
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --soft:#1c2e00;
+    --soft-success:#052e16;
+    --soft-warning:#451a03;
+    --soft-danger:#450a0a;
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:70px;
+
+    padding:12px 25px;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:13px}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.main{
+    width:min(1400px,100%);
+    margin:auto;
+    padding:28px 20px 60px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.page-title h1{
+    font-size:25px;
+    line-height:1.2;
+    margin-bottom:5px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.btn{
+    min-height:40px;
+    padding:0 14px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:var(--card);
+    color:var(--text);
+
+    font-size:8px;
+    font-weight:900;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    border-color:var(--primary);
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn.success{
+    background:var(--success);
+    border-color:var(--success);
+    color:#fff;
+}
+
+.btn.danger{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+.btn.warning{
+    background:var(--warning);
+    border-color:var(--warning);
+    color:#fff;
+}
+
+.btn.purple{
+    background:var(--purple);
+    border-color:var(--purple);
+    color:#fff;
+}
+
+.btn.small{
+    min-height:32px;
+    padding:0 10px;
+    font-size:7px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:15px;
+}
+
+.card-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.card-header h2{
+    font-size:12px;
+}
+
+.card-header p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    padding:15px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+.stat-value{
+    font-size:22px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.stat.success{
+    border-color:#bbf7d0;
+}
+
+.stat.warning{
+    border-color:#fde68a;
+}
+
+.stat.danger{
+    border-color:#fecaca;
+}
+
+.stat.purple{
+    border-color:#ddd6fe;
+}
+
+.upload-box{
+    padding:25px;
+
+    border:2px dashed var(--primary);
+    border-radius:14px;
+
+    background:var(--soft);
+
+    text-align:center;
+
+    transition:.2s;
+}
+
+.upload-box.dragover{
+    transform:scale(1.01);
+    border-style:solid;
+}
+
+.upload-icon{
+    font-size:45px;
+    margin-bottom:8px;
+}
+
+.upload-box h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.upload-box p{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.7;
+    margin-bottom:13px;
+}
+
+.file-input{
+    display:none;
+}
+
+.file-name{
+    margin-top:10px;
+    font-size:8px;
+    font-weight:800;
+}
+
+.validation{
+    margin-top:12px;
+    padding:12px;
+
+    border-radius:10px;
+
+    display:none;
+}
+
+.validation.show{
+    display:block;
+}
+
+.validation.success{
+    background:var(--soft-success);
+    border:1px solid #bbf7d0;
+}
+
+.validation.error{
+    background:var(--soft-danger);
+    border:1px solid #fecaca;
+}
+
+.validation.warning{
+    background:var(--soft-warning);
+    border:1px solid #fde68a;
+}
+
+.validation strong{
+    font-size:8px;
+}
+
+.validation p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:4px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.info-item{
+    padding:13px;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.info-item .label{
+    color:var(--muted);
+    font-size:7px;
+    margin-bottom:3px;
+}
+
+.info-item .value{
+    font-size:10px;
+    font-weight:900;
+    word-break:break-word;
+}
+
+.table-wrap{
+    width:100%;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:950px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:10px 9px;
+    border-bottom:1px solid var(--border);
+
+    text-align:left;
+    vertical-align:middle;
+
+    font-size:7.5px;
+}
+
+th{
+    background:var(--soft);
+    font-weight:900;
+    white-space:nowrap;
+}
+
+tr:hover td{
+    background:rgba(90,138,0,.025);
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+
+    padding:4px 8px;
+
+    border-radius:999px;
+
+    font-size:6.5px;
+    font-weight:900;
+}
+
+.badge.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge.warning{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.badge.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.badge.info{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+body.dark .badge.success{
+    background:#052e16;
+    color:#86efac;
+}
+
+body.dark .badge.warning{
+    background:#451a03;
+    color:#fcd34d;
+}
+
+body.dark .badge.danger{
+    background:#450a0a;
+    color:#fca5a5;
+}
+
+body.dark .badge.info{
+    background:#1c2e00;
+    color:#93c5fd;
+}
+
+.warning-box{
+    padding:13px;
+
+    background:var(--soft-warning);
+
+    border:1px solid #fde68a;
+    border-radius:10px;
+
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+}
+
+.warning-box .icon{
+    font-size:20px;
+}
+
+.warning-box strong{
+    display:block;
+    font-size:9px;
+    margin-bottom:3px;
+}
+
+.warning-box p{
+    color:var(--muted);
+    font-size:7px;
+    line-height:1.7;
+}
+
+.restore-panel{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px;
+
+    background:var(--soft-success);
+
+    border:1px solid #bbf7d0;
+
+    border-radius:11px;
+}
+
+.restore-panel strong{
+    font-size:9px;
+}
+
+.restore-panel span{
+    display:block;
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.restore-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.empty-state{
+    padding:45px 20px;
+    text-align:center;
+}
+
+.empty-state .icon{
+    font-size:42px;
+    margin-bottom:8px;
+}
+
+.empty-state h3{
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.empty-state p{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+}
+
+.quick-link{
+    min-height:70px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    color:var(--text);
+    text-decoration:none;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    transition:.2s;
+}
+
+.quick-link:hover{
+    background:var(--soft);
+    border-color:var(--primary);
+}
+
+.quick-link .icon{
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.quick-link strong{
+    font-size:6.5px;
+}
+
+.quick-link span{
+    color:var(--muted);
+    font-size:5.5px;
+}
+
+.progress{
+    display:none;
+    margin-top:13px;
+}
+
+.progress.show{
+    display:block;
+}
+
+.progress-track{
+    width:100%;
+    height:9px;
+
+    background:var(--border);
+
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+
+    background:var(--primary);
+
+    transition:.2s;
+}
+
+.progress-text{
+    color:var(--muted);
+    text-align:center;
+    font-size:7px;
+    margin-top:5px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    z-index:3000;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+}
+
+.modal-box{
+    width:min(550px,100%);
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:var(--card);
+
+    border-radius:15px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.modal-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.modal-header h2{
+    font-size:12px;
+}
+
+.modal-body{
+    padding:15px;
+}
+
+.modal-body p{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.8;
+}
+
+.modal-footer{
+    padding:12px 15px;
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+}
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    z-index:5000;
+
+    max-width:350px;
+
+    padding:11px 15px;
+
+    background:#111827;
+    color:#fff;
+
+    border-radius:9px;
+
+    font-size:8px;
+
+    opacity:0;
+    transform:translateY(20px);
+
+    pointer-events:none;
+
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.footer{
+    padding:20px;
+    text-align:center;
+    color:var(--muted);
+    font-size:8px;
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 12px 40px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .restore-panel{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:430px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media print{
+
+    .header,
+    .actions,
+    .upload-box,
+    .restore-panel,
+    .quick-grid,
+    .footer{
+        display:none!important;
+    }
+
+    .main{
+        max-width:none;
+        padding:0;
+    }
+
+    .card,
+    .stat{
+        box-shadow:none;
+    }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Attendance Data Recovery • 1.53
+            </small>
+
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+        >
+            🌙
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+
+<!-- PAGE HEADER -->
+
+<section class="page-header">
+
+    <div class="page-title">
+
+        <h1>
+            ♻️ Attendance Data Recovery
+        </h1>
+
+        <p>
+            JSON backup থেকে Attendance data preview, validate এবং safely restore করুন।
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="btn"
+            onclick="window.print()"
+        >
+            🖨️ Print
+        </button>
+
+        <button
+            class="btn"
+            onclick="clearRecovery()"
+        >
+            🧹 Clear
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-icon">
+            📦
+        </div>
+
+        <div
+            class="stat-value"
+            id="backupKeys"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Backup Keys
+        </div>
+
+    </div>
+
+
+    <div class="stat purple">
+
+        <div class="stat-icon">
+            📋
+        </div>
+
+        <div
+            class="stat-value"
+            id="backupRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Backup Records
+        </div>
+
+    </div>
+
+
+    <div class="stat success">
+
+        <div class="stat-icon">
+            ✓
+        </div>
+
+        <div
+            class="stat-value"
+            id="validBackupRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Valid Records
+        </div>
+
+    </div>
+
+
+    <div class="stat warning">
+
+        <div class="stat-icon">
+            ⚠️
+        </div>
+
+        <div
+            class="stat-value"
+            id="warningRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Warning Records
+        </div>
+
+    </div>
+
+
+    <div class="stat danger">
+
+        <div class="stat-icon">
+            ❌
+        </div>
+
+        <div
+            class="stat-value"
+            id="errorRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Error Records
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- UPLOAD -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                📤 Upload Attendance Backup
+            </h2>
+
+            <p>
+                1.52 cleanup বা অন্য backup page থেকে নেওয়া JSON backup নির্বাচন করুন।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div
+            class="upload-box"
+            id="uploadBox"
+        >
+
+            <div class="upload-icon">
+                📁
+            </div>
+
+            <h3>
+                Backup JSON এখানে নির্বাচন করুন
+            </h3>
+
+            <p>
+                শুধু JSON backup file ব্যবহার করুন।
+                File browser-এ রাখা থাকবে না; এই page local processing ব্যবহার করে।
+            </p>
+
+            <input
+                type="file"
+                id="backupFile"
+                class="file-input"
+                accept=".json,application/json"
+                onchange="handleFile(this.files[0])"
+            >
+
+            <button
+                class="btn primary"
+                onclick="document.getElementById('backupFile').click()"
+            >
+                📂 Choose JSON Backup
+            </button>
+
+            <div
+                class="file-name"
+                id="fileName"
+            >
+                কোনো file নির্বাচন করা হয়নি।
+            </div>
+
+        </div>
+
+
+        <div
+            class="validation"
+            id="validationBox"
+        >
+
+            <strong id="validationTitle">
+                Validation
+            </strong>
+
+            <p id="validationMessage">
+                —
+            </p>
+
+        </div>
+
+
+        <div
+            class="progress"
+            id="progressBox"
+        >
+
+            <div class="progress-track">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+
+            </div>
+
+            <div
+                class="progress-text"
+                id="progressText"
+            >
+                Processing...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BACKUP INFO -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                ℹ️ Backup Information
+            </h2>
+
+            <p>
+                Selected backup file-এর metadata
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="info-grid">
+
+            <div class="info-item">
+
+                <div class="label">
+                    Application
+                </div>
+
+                <div
+                    class="value"
+                    id="infoApplication"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="label">
+                    Module
+                </div>
+
+                <div
+                    class="value"
+                    id="infoModule"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="label">
+                    Version
+                </div>
+
+                <div
+                    class="value"
+                    id="infoVersion"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="label">
+                    Created At
+                </div>
+
+                <div
+                    class="value"
+                    id="infoCreated"
+                >
+                    —
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SAFETY WARNING -->
+
+<section class="card">
+
+    <div class="card-body">
+
+        <div class="warning-box">
+
+            <div class="icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <strong>
+                    Restore করার আগে সতর্কতা
+                </strong>
+
+                <p>
+                    Restore করলে একই localStorage key-এর বর্তমান data backup করে তারপর নতুন backup data লেখা হবে।
+                    ভুল backup restore করলে পুরনো data replace হতে পারে।
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESTORE PANEL -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                ♻️ Restore Control
+            </h2>
+
+            <p>
+                Validation সফল হলে restore button ব্যবহার করুন।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="restore-panel">
+
+            <div>
+
+                <strong>
+                    Ready to Restore:
+                    <span id="restoreStatus">
+                        No backup
+                    </span>
+                </strong>
+
+                <span id="restoreHint">
+                    প্রথমে একটি valid JSON backup upload করুন।
+                </span>
+
+            </div>
+
+
+            <div class="restore-actions">
+
+                <button
+                    class="btn small"
+                    onclick="createCurrentStorageBackup()"
+                >
+                    💾 Current Backup
+                </button>
+
+                <button
+                    class="btn small"
+                    onclick="downloadPreview()"
+                >
+                    📥 Download Preview
+                </button>
+
+                <button
+                    class="btn small success"
+                    id="restoreBtn"
+                    onclick="requestRestore()"
+                    disabled
+                >
+                    ♻️ Restore Backup
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PREVIEW -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                👀 Attendance Backup Preview
+            </h2>
+
+            <p id="previewText">
+                Backup upload করলে records এখানে দেখা যাবে।
+            </p>
+
+        </div>
+
+        <button
+            class="btn small"
+            onclick="exportRecoveryReport()"
+        >
+            📤 Recovery Report
+        </button>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div
+            class="table-wrap"
+            id="previewContainer"
+        >
+
+            <div class="empty-state">
+
+                <div class="icon">
+                    📭
+                </div>
+
+                <h3>
+                    Preview empty
+                </h3>
+
+                <p>
+                    একটি JSON backup upload করুন।
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUICK ACCESS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                ⚡ Attendance Quick Access
+            </h2>
+
+            <p>
+                Attendance module-এর অন্যান্য pages
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="quick-grid">
+
+            <a
+                class="quick-link"
+                href="attendance-dashboard.html"
+            >
+                <div class="icon">📊</div>
+                <strong>Dashboard</strong>
+                <span>Overview</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="student-attendance.html"
+            >
+                <div class="icon">📝</div>
+                <strong>Student Attendance</strong>
+                <span>Mark</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-reports.html"
+            >
+                <div class="icon">📋</div>
+                <strong>Reports</strong>
+                <span>Reports</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-student-history.html"
+            >
+                <div class="icon">📚</div>
+                <strong>Student History</strong>
+                <span>History</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-calendar.html"
+            >
+                <div class="icon">📅</div>
+                <strong>Calendar</strong>
+                <span>Calendar</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-summary.html"
+            >
+                <div class="icon">📈</div>
+                <strong>Summary</strong>
+                <span>Summary</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-alerts.html"
+            >
+                <div class="icon">🚨</div>
+                <strong>Alerts</strong>
+                <span>Alerts</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-notifications.html"
+            >
+                <div class="icon">🔔</div>
+                <strong>Notifications</strong>
+                <span>Notifications</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-export.html"
+            >
+                <div class="icon">📤</div>
+                <strong>Export</strong>
+                <span>Export</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-settings.html"
+            >
+                <div class="icon">⚙️</div>
+                <strong>Settings</strong>
+                <span>Settings</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-audit-log.html"
+            >
+                <div class="icon">🛡️</div>
+                <strong>Audit Log</strong>
+                <span>Activity</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-data-cleanup.html"
+            >
+                <div class="icon">🧹</div>
+                <strong>Data Cleanup</strong>
+                <span>Cleanup</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-data-manager.html"
+            >
+                <div class="icon">🗂️</div>
+                <strong>Data Manager</strong>
+                <span>Manage</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    © 2026 SNK AI Academy
+    • Attendance Data Recovery
+    • Version 1.53
+
+</footer>
+
+</main>
+
+
+<!-- CONFIRM MODAL -->
+
+<div
+    class="modal hidden"
+    id="confirmModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                ⚠️ Confirm Restore
+            </h2>
+
+            <button
+                class="btn small"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <p id="confirmMessage">
+                Restore করতে চান?
+            </p>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn success"
+                onclick="confirmRestore()"
+            >
+                ♻️ Yes, Restore
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =========================================================
+   1.53 ATTENDANCE DATA RECOVERY
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   STORAGE KEYS
+--------------------------------------------------------- */
+
+const ATTENDANCE_KEYS = [
+
+    "snkStudentAttendance",
+
+    "snkAttendanceRecords",
+
+    "snkAttendance",
+
+    "attendanceRecords",
+
+    "studentAttendance",
+
+    "studentAttendanceRecords",
+
+    "attendanceData",
+
+    "attendance"
+
+];
+
+
+/* ---------------------------------------------------------
+   STATE
+--------------------------------------------------------- */
+
+let recoveryData = null;
+
+let recoveryRecords = [];
+
+let recoveryKeys = [];
+
+let recoveryValid = false;
+
+let toastTimer = null;
+
+
+/* ---------------------------------------------------------
+   INIT
+--------------------------------------------------------- */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        setupDragDrop();
+
+    }
+);
+
+
+/* =========================================================
+   DRAG & DROP
+========================================================= */
+
+function setupDragDrop(){
+
+    const box =
+        document.getElementById(
+            "uploadBox"
+        );
+
+
+    [
+        "dragenter",
+        "dragover"
+    ].forEach(
+        function(eventName){
+
+            box.addEventListener(
+                eventName,
+                function(event){
+
+                    event.preventDefault();
+
+                    box.classList.add(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    [
+        "dragleave",
+        "drop"
+    ].forEach(
+        function(eventName){
+
+            box.addEventListener(
+                eventName,
+                function(event){
+
+                    event.preventDefault();
+
+                    box.classList.remove(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    box.addEventListener(
+        "drop",
+        function(event){
+
+            const files =
+                event.dataTransfer.files;
+
+
+            if(
+                files &&
+                files.length
+            ){
+
+                handleFile(
+                    files[0]
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   HANDLE FILE
+========================================================= */
+
+function handleFile(
+    file
+){
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    clearValidation();
+
+
+    document.getElementById(
+        "fileName"
+    ).textContent =
+        file.name;
+
+
+    if(
+        !file.name
+        .toLowerCase()
+        .endsWith(
+            ".json"
+        )
+    ){
+
+        showValidation(
+            "error",
+            "Invalid file",
+            "শুধু .json backup file ব্যবহার করুন।"
+        );
+
+        return;
+
+    }
+
+
+    showProgress(
+        true,
+        10,
+        "Backup file read হচ্ছে..."
+    );
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(event){
+
+            try{
+
+                showProgress(
+                    true,
+                    55,
+                    "JSON validation চলছে..."
+                );
+
+
+                const parsed =
+                    JSON.parse(
+                        event.target.result
+                    );
+
+
+                setTimeout(
+                    function(){
+
+                        processBackup(
+                            parsed
+                        );
+
+                    },
+                    250
+                );
+
+            }
+            catch(error){
+
+                showProgress(
+                    false,
+                    0,
+                    ""
+                );
+
+
+                recoveryData =
+                    null;
+
+                recoveryRecords =
+                    [];
+
+                recoveryKeys =
+                    [];
+
+                recoveryValid =
+                    false;
+
+
+                showValidation(
+                    "error",
+                    "Invalid JSON",
+                    "Backup fileটি valid JSON নয় অথবা fileটি corrupt।"
+                );
+
+
+                updateUI();
+
+            }
+
+        };
+
+
+    reader.onerror =
+        function(){
+
+            showProgress(
+                false,
+                0,
+                ""
+            );
+
+
+            showValidation(
+                "error",
+                "File Error",
+                "Backup file read করা যায়নি।"
+            );
+
+        };
+
+
+    reader.readAsText(
+        file
+    );
+
+}
+
+
+/* =========================================================
+   PROCESS BACKUP
+========================================================= */
+
+function processBackup(
+    data
+){
+
+    recoveryData =
+        data;
+
+
+    recoveryRecords =
+        [];
+
+    recoveryKeys =
+        [];
+
+    recoveryValid =
+        false;
+
+
+    showProgress(
+        true,
+        70,
+        "Attendance data analyse হচ্ছে..."
+    );
+
+
+    /*
+       Expected format from 1.52:
+       {
+          application,
+          module,
+          version,
+          createdAt,
+          storageKeys:{...}
+       }
+    */
+
+
+    if(
+        !data ||
+        typeof data !== "object"
+    ){
+
+        finishInvalid(
+            "Backup data একটি object নয়।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !data.storageKeys ||
+        typeof data.storageKeys !== "object"
+    ){
+
+        finishInvalid(
+            "এই backup-এ storageKeys পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    recoveryKeys =
+        Object.keys(
+            data.storageKeys
+        );
+
+
+    if(
+        recoveryKeys.length === 0
+    ){
+
+        finishInvalid(
+            "Backup-এর মধ্যে কোনো attendance storage key পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    extractRecoveryRecords();
+
+
+    const validation =
+        validateRecoveryData();
+
+
+    setTimeout(
+        function(){
+
+            showProgress(
+                true,
+                100,
+                "Validation complete ✓"
+            );
+
+
+            recoveryValid =
+                validation.errors === 0;
+
+
+            if(
+                validation.errors > 0
+            ){
+
+                showValidation(
+                    "error",
+                    "Backup validation failed",
+                    validation.errors +
+                    " টি সমস্যা পাওয়া গেছে। Restore করার আগে backup ঠিক করুন।"
+                );
+
+            }
+            else if(
+                validation.warnings > 0
+            ){
+
+                showValidation(
+                    "warning",
+                    "Backup valid with warnings",
+                    validation.warnings +
+                    " টি warning পাওয়া গেছে। Restore করা সম্ভব, তবে data review করুন।"
+                );
+
+            }
+            else{
+
+                showValidation(
+                    "success",
+                    "Backup validated successfully ✓",
+                    "Backup file valid এবং restore করার জন্য প্রস্তুত।"
+                );
+
+            }
+
+
+            updateUI();
+
+
+            setTimeout(
+                function(){
+
+                    showProgress(
+                        false,
+                        0,
+                        ""
+                    );
+
+                },
+                600
+            );
+
+
+        },
+        300
+    );
+
+}
+
+
+/* =========================================================
+   EXTRACT RECOVERY RECORDS
+========================================================= */
+
+function extractRecoveryRecords(){
+
+    recoveryKeys.forEach(
+        function(key){
+
+            const data =
+                recoveryData.storageKeys[
+                    key
+                ];
+
+
+            if(
+                Array.isArray(
+                    data
+                )
+            ){
+
+                data.forEach(
+                    function(item,index){
+
+                        recoveryRecords.push(
+                            normalizeRecoveryRecord(
+                                item,
+                                key,
+                                index
+                            )
+                        );
+
+                    }
+                );
+
+
+                return;
+
+            }
+
+
+            if(
+                data &&
+                typeof data === "object"
+            ){
+
+                const arrayNames = [
+
+                    "records",
+                    "attendance",
+                    "attendances",
+                    "data",
+                    "items",
+                    "students"
+
+                ];
+
+
+                let found =
+                    false;
+
+
+                for(
+                    const arrayName
+                    of arrayNames
+                ){
+
+                    if(
+                        Array.isArray(
+                            data[
+                                arrayName
+                            ]
+                        )
+                    ){
+
+                        data[
+                            arrayName
+                        ].forEach(
+                            function(item,index){
+
+                                recoveryRecords.push(
+                                    normalizeRecoveryRecord(
+                                        item,
+                                        key,
+                                        index,
+                                        arrayName
+                                    )
+                                );
+
+                            }
+                        );
+
+
+                        found =
+                            true;
+
+
+                        break;
+
+                    }
+
+                }
+
+
+                if(!found){
+
+                    recoveryRecords.push(
+                        normalizeRecoveryRecord(
+                            data,
+                            key,
+                            0
+                        )
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   NORMALIZE RECOVERY RECORD
+========================================================= */
+
+function normalizeRecoveryRecord(
+    item,
+    sourceKey,
+    index,
+    arrayName=""
+){
+
+    if(
+        !item ||
+        typeof item !== "object"
+    ){
+
+        return {
+
+            name:"",
+            studentId:"",
+            date:"",
+            status:"",
+            issue:"error",
+            sourceKey,
+            index,
+            arrayName
+
+        };
+
+    }
+
+
+    const name =
+        firstValue(
+            item,
+            [
+                "studentName",
+                "name",
+                "student_name",
+                "student",
+                "fullName"
+            ]
+        );
+
+
+    const studentId =
+        firstValue(
+            item,
+            [
+                "studentId",
+                "studentID",
+                "student_id",
+                "roll",
+                "rollNo",
+                "rollNumber"
+            ]
+        );
+
+
+    const date =
+        firstValue(
+            item,
+            [
+                "date",
+                "attendanceDate",
+                "attendance_date",
+                "day"
+            ]
+        );
+
+
+    const status =
+        firstValue(
+            item,
+            [
+                "status",
+                "attendanceStatus",
+                "attendance_status",
+                "presentStatus"
+            ]
+        );
+
+
+    return {
+
+        name:
+            String(
+                name ??
+                ""
+            ),
+
+        studentId:
+            String(
+                studentId ??
+                ""
+            ),
+
+        date:
+            String(
+                date ??
+                ""
+            ),
+
+        status:
+            normalizeStatus(
+                status
+            ),
+
+        issue:
+            "valid",
+
+        sourceKey:
+            sourceKey,
+
+        index:
+            index,
+
+        arrayName:
+            arrayName,
+
+        original:
+            item
+
+    };
+
+}
+
+
+/* =========================================================
+   VALIDATE
+========================================================= */
+
+function validateRecoveryData(){
+
+    let errors =
+        0;
+
+    let warnings =
+        0;
+
+
+    recoveryRecords.forEach(
+        function(record){
+
+            if(
+                !record.name &&
+                !record.studentId &&
+                !record.date &&
+                !record.status
+            ){
+
+                record.issue =
+                    "error";
+
+                errors++;
+
+                return;
+
+            }
+
+
+            if(
+                !record.name ||
+                !record.studentId
+            ){
+
+                record.issue =
+                    "warning";
+
+                warnings++;
+
+                return;
+
+            }
+
+
+            if(
+                !record.date
+            ){
+
+                record.issue =
+                    "warning";
+
+                warnings++;
+
+                return;
+
+            }
+
+
+            if(
+                ![
+                    "present",
+                    "absent",
+                    "late",
+                    "leave"
+                ].includes(
+                    record.status
+                )
+            ){
+
+                record.issue =
+                    "warning";
+
+                warnings++;
+
+                return;
+
+            }
+
+
+            record.issue =
+                "valid";
+
+        }
+    );
+
+
+    return {
+
+        errors,
+        warnings
+
+    };
+
+}
+
+
+/* =========================================================
+   UPDATE UI
+========================================================= */
+
+function updateUI(){
+
+    const valid =
+        recoveryRecords.filter(
+            r =>
+                r.issue === "valid"
+        ).length;
+
+
+    const warnings =
+        recoveryRecords.filter(
+            r =>
+                r.issue === "warning"
+        ).length;
+
+
+    const errors =
+        recoveryRecords.filter(
+            r =>
+                r.issue === "error"
+        ).length;
+
+
+    setText(
+        "backupKeys",
+        recoveryKeys.length
+    );
+
+
+    setText(
+        "backupRecords",
+        recoveryRecords.length
+    );
+
+
+    setText(
+        "validBackupRecords",
+        valid
+    );
+
+
+    setText(
+        "warningRecords",
+        warnings
+    );
+
+
+    setText(
+        "errorRecords",
+        errors
+    );
+
+
+    setText(
+        "infoApplication",
+        recoveryData?.application ||
+        "—"
+    );
+
+
+    setText(
+        "infoModule",
+        recoveryData?.module ||
+        "—"
+    );
+
+
+    setText(
+        "infoVersion",
+        recoveryData?.version ||
+        "—"
+    );
+
+
+    setText(
+        "infoCreated",
+        formatDateTime(
+            recoveryData?.createdAt
+        )
+    );
+
+
+    const restoreBtn =
+        document.getElementById(
+            "restoreBtn"
+        );
+
+
+    restoreBtn.disabled =
+        !recoveryValid;
+
+
+    setText(
+        "restoreStatus",
+        recoveryValid
+        ?
+        "Ready ✓"
+        :
+        "Not Ready"
+    );
+
+
+    setText(
+        "restoreHint",
+        recoveryValid
+        ?
+        "Backup validation সফল। Restore করার আগে current backup নেওয়া হবে।"
+        :
+        "প্রথমে একটি valid JSON backup upload করুন।"
+    );
+
+
+    renderPreview();
+
+}
+
+
+/* =========================================================
+   RENDER PREVIEW
+========================================================= */
+
+function renderPreview(){
+
+    const container =
+        document.getElementById(
+            "previewContainer"
+        );
+
+
+    if(
+        recoveryRecords.length === 0
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="icon">
+                    📭
+                </div>
+
+                <h3>
+                    কোনো attendance record নেই
+                </h3>
+
+                <p>
+                    Backup file-এ usable attendance records পাওয়া যায়নি।
+                </p>
+
+            </div>
+
+        `;
+
+
+        setText(
+            "previewText",
+            "0 টি record"
+        );
+
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Student ID
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Validation
+                    </th>
+
+                    <th>
+                        Storage Key
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    recoveryRecords.forEach(
+        function(record,index){
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${escapeHTML(
+                                record.name ||
+                                "—"
+                            )}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            record.studentId ||
+                            "—"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            record.date ||
+                            "—"
+                        )}
+                    </td>
+
+                    <td>
+                        ${statusBadge(
+                            record.status
+                        )}
+                    </td>
+
+                    <td>
+                        ${validationBadge(
+                            record.issue
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            record.sourceKey
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+
+    setText(
+        "previewText",
+        recoveryRecords.length +
+        " টি backup attendance record preview করা হচ্ছে।"
+    );
+
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function statusBadge(
+    status
+){
+
+    const labels = {
+
+        present:"✓ Present",
+
+        absent:"✕ Absent",
+
+        late:"⏰ Late",
+
+        leave:"📅 Leave"
+
+    };
+
+
+    if(
+        labels[status]
+    ){
+
+        return `
+            <span class="badge success">
+                ${labels[status]}
+            </span>
+        `;
+
+    }
+
+
+    return `
+        <span class="badge warning">
+            ? ${escapeHTML(
+                status ||
+                "Unknown"
+            )}
+        </span>
+    `;
+
+}
+
+
+/* =========================================================
+   VALIDATION BADGE
+========================================================= */
+
+function validationBadge(
+    issue
+){
+
+    if(
+        issue === "valid"
+    ){
+
+        return `
+            <span class="badge success">
+                ✓ Valid
+            </span>
+        `;
+
+    }
+
+
+    if(
+        issue === "warning"
+    ){
+
+        return `
+            <span class="badge warning">
+                ⚠ Warning
+            </span>
+        `;
+
+    }
+
+
+    return `
+        <span class="badge danger">
+            ✕ Error
+        </span>
+    `;
+
+}
+
+
+/* =========================================================
+   REQUEST RESTORE
+========================================================= */
+
+function requestRestore(){
+
+    if(
+        !recoveryData ||
+        !recoveryValid
+    ){
+
+        showToast(
+            "Valid backup ছাড়া restore করা যাবে না।"
+        );
+
+        return;
+
+    }
+
+
+    const count =
+        recoveryRecords.length;
+
+
+    const keys =
+        recoveryKeys.length;
+
+
+    document.getElementById(
+        "confirmMessage"
+    ).textContent =
+
+        keys +
+        " টি storage key এবং " +
+        count +
+        " টি attendance record restore হবে। " +
+        "Restore-এর আগে current attendance data automatic backup করা হবে। " +
+        "আপনি কি continue করতে চান?";
+
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   CONFIRM RESTORE
+========================================================= */
+
+function confirmRestore(){
+
+    closeModal();
+
+
+    performRestore();
+
+}
+
+
+/* =========================================================
+   PERFORM RESTORE
+========================================================= */
+
+function performRestore(){
+
+    if(
+        !recoveryData ||
+        !recoveryData.storageKeys
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+           Step 1:
+           Current attendance storage backup
+        */
+
+        const currentBackup =
+            collectCurrentAttendance();
+
+
+        localStorage.setItem(
+            "snkAttendanceRecoveryBeforeRestore",
+            JSON.stringify(
+                {
+
+                    application:
+                        "SNK AI Academy",
+
+                    module:
+                        "Attendance",
+
+                    version:
+                        "1.53",
+
+                    createdAt:
+                        new Date()
+                        .toISOString(),
+
+                    storageKeys:
+                        currentBackup
+
+                }
+            )
+        );
+
+
+        /*
+           Step 2:
+           Restore selected storage keys
+        */
+
+        let restoredKeys =
+            0;
+
+
+        recoveryKeys.forEach(
+            function(key){
+
+                const value =
+                    recoveryData.storageKeys[
+                        key
+                    ];
+
+
+                localStorage.setItem(
+                    key,
+                    JSON.stringify(
+                        value
+                    )
+                );
+
+
+                restoredKeys++;
+
+            }
+        );
+
+
+        /*
+           Step 3:
+           Recovery log
+        */
+
+        const log =
+            {
+
+                action:
+                    "ATTENDANCE_DATA_RESTORE",
+
+                version:
+                    "1.53",
+
+                createdAt:
+                    new Date()
+                    .toISOString(),
+
+                restoredKeys:
+                    restoredKeys,
+
+                restoredRecords:
+                    recoveryRecords.length,
+
+                sourceVersion:
+                    recoveryData.version ||
+                    "Unknown"
+
+            };
+
+
+        saveRecoveryLog(
+            log
+        );
+
+
+        showValidation(
+            "success",
+            "Restore completed successfully ✓",
+            restoredKeys +
+            " টি storage key এবং " +
+            recoveryRecords.length +
+            " টি attendance record restore করা হয়েছে। Current data-এর safety backup রাখা হয়েছে।"
+        );
+
+
+        showToast(
+            "Attendance data restore complete ✓"
+        );
+
+
+        updateUI();
+
+    }
+    catch(error){
+
+        console.error(
+            "Restore error:",
+            error
+        );
+
+
+        showValidation(
+            "error",
+            "Restore failed",
+            "Data restore করার সময় একটি error হয়েছে। Current data পরিবর্তন করার আগে রাখা backup ব্যবহার করুন।"
+        );
+
+
+        showToast(
+            "Restore failed!"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   COLLECT CURRENT ATTENDANCE
+========================================================= */
+
+function collectCurrentAttendance(){
+
+    const backup = {};
+
+
+    ATTENDANCE_KEYS.forEach(
+        function(key){
+
+            const raw =
+                localStorage.getItem(
+                    key
+                );
+
+
+            if(
+                raw !== null
+            ){
+
+                try{
+
+                    backup[key] =
+                        JSON.parse(
+                            raw
+                        );
+
+                }
+                catch(error){
+
+                    backup[key] =
+                        raw;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    return backup;
+
+}
+
+
+/* =========================================================
+   CURRENT STORAGE BACKUP
+========================================================= */
+
+function createCurrentStorageBackup(){
+
+    const data =
+        {
+
+            application:
+                "SNK AI Academy",
+
+            module:
+                "Attendance",
+
+            page:
+                "attendance-data-recovery.html",
+
+            version:
+                "1.53",
+
+            createdAt:
+                new Date()
+                .toISOString(),
+
+            storageKeys:
+                collectCurrentAttendance()
+
+        };
+
+
+    downloadJSON(
+        data,
+        "attendance-current-backup-1.53-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Current attendance backup তৈরি হয়েছে ✓"
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD PREVIEW
+========================================================= */
+
+function downloadPreview(){
+
+    if(
+        !recoveryData
+    ){
+
+        showToast(
+            "Download করার মতো preview নেই।"
+        );
+
+        return;
+
+    }
+
+
+    downloadJSON(
+        recoveryData,
+        "attendance-recovery-preview-1.53-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Backup preview downloaded ✓"
+    );
+
+}
+
+
+/* =========================================================
+   RECOVERY REPORT
+========================================================= */
+
+function exportRecoveryReport(){
+
+    const report =
+        {
+
+            application:
+                "SNK AI Academy",
+
+            module:
+                "Attendance Data Recovery",
+
+            version:
+                "1.53",
+
+            generatedAt:
+                new Date()
+                .toISOString(),
+
+            backupVersion:
+                recoveryData?.version ||
+                null,
+
+            backupCreatedAt:
+                recoveryData?.createdAt ||
+                null,
+
+            storageKeys:
+                recoveryKeys,
+
+            totalRecords:
+                recoveryRecords.length,
+
+            validRecords:
+                recoveryRecords.filter(
+                    r =>
+                        r.issue ===
+                        "valid"
+                ).length,
+
+            warningRecords:
+                recoveryRecords.filter(
+                    r =>
+                        r.issue ===
+                        "warning"
+                ).length,
+
+            errorRecords:
+                recoveryRecords.filter(
+                    r =>
+                        r.issue ===
+                        "error"
+                ).length,
+
+            records:
+                recoveryRecords.map(
+                    function(record){
+
+                        return {
+
+                            studentName:
+                                record.name,
+
+                            studentId:
+                                record.studentId,
+
+                            date:
+                                record.date,
+
+                            status:
+                                record.status,
+
+                            validation:
+                                record.issue,
+
+                            storageKey:
+                                record.sourceKey
+
+                        };
+
+                    }
+                )
+
+        };
+
+
+    downloadJSON(
+        report,
+        "attendance-recovery-report-1.53-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Recovery report exported ✓"
+    );
+
+}
+
+
+/* =========================================================
+   SAVE RECOVERY LOG
+========================================================= */
+
+function saveRecoveryLog(
+    log
+){
+
+    const key =
+        "snkAttendanceRecoveryLogs";
+
+
+    let logs = [];
+
+
+    try{
+
+        logs =
+            JSON.parse(
+                localStorage.getItem(
+                    key
+                )
+            ) || [];
+
+    }
+    catch(error){
+
+        logs =
+            [];
+
+    }
+
+
+    logs.unshift(
+        log
+    );
+
+
+    /*
+       Keep latest 100 recovery logs
+    */
+
+    logs =
+        logs.slice(
+            0,
+            100
+        );
+
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(
+            logs
+        )
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR RECOVERY
+========================================================= */
+
+function clearRecovery(){
+
+    recoveryData =
+        null;
+
+    recoveryRecords =
+        [];
+
+    recoveryKeys =
+        [];
+
+    recoveryValid =
+        false;
+
+
+    document.getElementById(
+        "backupFile"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "fileName"
+    ).textContent =
+        "কোনো file নির্বাচন করা হয়নি।";
+
+
+    clearValidation();
+
+
+    updateUI();
+
+
+    setText(
+        "infoApplication",
+        "—"
+    );
+
+    setText(
+        "infoModule",
+        "—"
+    );
+
+    setText(
+        "infoVersion",
+        "—"
+    );
+
+    setText(
+        "infoCreated",
+        "—"
+    );
+
+
+    showToast(
+        "Recovery preview cleared।"
+    );
+
+}
+
+
+/* =========================================================
+   VALIDATION UI
+========================================================= */
+
+function showValidation(
+    type,
+    title,
+    message
+){
+
+    const box =
+        document.getElementById(
+            "validationBox"
+        );
+
+
+    box.className =
+        "validation show " +
+        type;
+
+
+    document.getElementById(
+        "validationTitle"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "validationMessage"
+    ).textContent =
+        message;
+
+}
+
+
+function clearValidation(){
+
+    const box =
+        document.getElementById(
+            "validationBox"
+        );
+
+
+    box.className =
+        "validation";
+
+}
+
+
+/* =========================================================
+   INVALID
+========================================================= */
+
+function finishInvalid(
+    message
+){
+
+    recoveryValid =
+        false;
+
+
+    showValidation(
+        "error",
+        "Backup validation failed",
+        message
+    );
+
+
+    updateUI();
+
+
+    showProgress(
+        false,
+        0,
+        ""
+    );
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function showProgress(
+    visible,
+    percent,
+    text
+){
+
+    const box =
+        document.getElementById(
+            "progressBox"
+        );
+
+
+    const bar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    const textElement =
+        document.getElementById(
+            "progressText"
+        );
+
+
+    if(!visible){
+
+        box.classList.remove(
+            "show"
+        );
+
+        return;
+
+    }
+
+
+    box.classList.add(
+        "show"
+    );
+
+
+    bar.style.width =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                percent
+            )
+        ) +
+        "%";
+
+
+    textElement.textContent =
+        text;
+
+}
+
+
+/* =========================================================
+   FIRST VALUE
+========================================================= */
+
+function firstValue(
+    object,
+    keys
+){
+
+    for(
+        const key of keys
+    ){
+
+        if(
+            object[key] !== undefined &&
+            object[key] !== null &&
+            object[key] !== ""
+        ){
+
+            return object[key];
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   STATUS NORMALIZER
+========================================================= */
+
+function normalizeStatus(
+    value
+){
+
+    const text =
+        String(
+            value ||
+            ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    if(
+        [
+            "present",
+            "p",
+            "yes",
+            "1",
+            "attended"
+        ].includes(
+            text
+        )
+    ){
+
+        return "present";
+
+    }
+
+
+    if(
+        [
+            "absent",
+            "a",
+            "no",
+            "0"
+        ].includes(
+            text
+        )
+    ){
+
+        return "absent";
+
+    }
+
+
+    if(
+        [
+            "late",
+            "l",
+            "delay"
+        ].includes(
+            text
+        )
+    ){
+
+        return "late";
+
+    }
+
+
+    if(
+        [
+            "leave",
+            "holiday",
+            "excused"
+        ].includes(
+            text
+        )
+    ){
+
+        return "leave";
+
+    }
+
+
+    return text;
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function dateStamp(){
+
+    const date =
+        new Date();
+
+
+    return (
+
+        date.getFullYear() +
+        "-" +
+        String(
+            date.getMonth()+1
+        ).padStart(
+            2,
+            "0"
+        ) +
+        "-" +
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   DATETIME
+========================================================= */
+
+function formatDateTime(
+    value
+){
+
+    if(!value){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleString(
+        "en-GB",
+        {
+            dateStyle:"medium",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD JSON
+========================================================= */
+
+function downloadJSON(
+    data,
+    filename
+){
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        filename;
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(){
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.add(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+const THEME_KEY =
+    "snkAttendanceDataRecoveryTheme";
+
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function loadTheme(){
+
+    if(
+        localStorage.getItem(
+            THEME_KEY
+        ) ===
+        "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+    }
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+
+        document.body.classList.contains(
+            "dark"
+        )
+
+        ?
+        "☀️"
+        :
+        "🌙";
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "attendance-data-cleanup.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   SET TEXT
+========================================================= */
+
+function setText(
+    id,
+    value
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(element){
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ??
+        ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+}
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
+========================================================= */
+
+document.getElementById(
+    "confirmModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

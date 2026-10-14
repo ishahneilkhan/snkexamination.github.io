@@ -1,0 +1,3878 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Attendance Import</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --primary-soft:#f1ffdd;
+
+    --success:#16a34a;
+    --success-soft:#f0fdf4;
+
+    --danger:#dc2626;
+    --danger-soft:#fef2f2;
+
+    --warning:#d97706;
+    --warning-soft:#fffbeb;
+
+    --purple:#7c3aed;
+    --purple-soft:#f5f3ff;
+
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --primary-soft:#1c2e00;
+    --success-soft:#052e16;
+    --danger-soft:#450a0a;
+    --warning-soft:#451a03;
+    --purple-soft:#2e1065;
+
+    --shadow:0 10px 30px rgba(0,0,0,.30);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:70px;
+    padding:12px 25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    box-shadow:0 4px 20px rgba(15,23,42,.05);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:13px}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    gap:7px;
+}
+
+.btn{
+    min-height:38px;
+    padding:0 13px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:var(--card);
+    color:var(--text);
+
+    font-size:8px;
+    font-weight:900;
+}
+
+.btn:hover{
+    border-color:var(--primary);
+}
+
+.btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn.success{
+    background:var(--success);
+    border-color:var(--success);
+    color:#fff;
+}
+
+.btn.danger{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+.btn.warning{
+    background:var(--warning);
+    border-color:var(--warning);
+    color:#fff;
+}
+
+.btn.small{
+    min-height:32px;
+    padding:0 10px;
+    font-size:7px;
+}
+
+.main{
+    max-width:1250px;
+    margin:auto;
+    padding:28px 20px 50px;
+}
+
+.page-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.page-title h1{
+    font-size:24px;
+    margin-bottom:4px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:15px;
+}
+
+.card-header{
+    padding:14px 15px;
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.card-header h2{
+    font-size:12px;
+}
+
+.card-header p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:35px;
+    height:35px;
+    border-radius:9px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-bottom:8px;
+    font-size:16px;
+}
+
+.stat-card.blue .stat-icon{
+    background:var(--primary-soft);
+}
+
+.stat-card.green .stat-icon{
+    background:var(--success-soft);
+}
+
+.stat-card.red .stat-icon{
+    background:var(--danger-soft);
+}
+
+.stat-card.yellow .stat-icon{
+    background:var(--warning-soft);
+}
+
+.stat-card.purple .stat-icon{
+    background:var(--purple-soft);
+}
+
+.stat-number{
+    font-size:21px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.stat-card.green .stat-number{
+    color:var(--success);
+}
+
+.stat-card.red .stat-number{
+    color:var(--danger);
+}
+
+.stat-card.yellow .stat-number{
+    color:var(--warning);
+}
+
+.stat-card.purple .stat-number{
+    color:var(--purple);
+}
+
+.upload-zone{
+    border:2px dashed var(--border);
+    border-radius:14px;
+    padding:35px 20px;
+
+    text-align:center;
+
+    background:var(--bg);
+
+    transition:.2s;
+}
+
+.upload-zone.dragover{
+    border-color:var(--primary);
+    background:var(--primary-soft);
+}
+
+.upload-icon{
+    font-size:45px;
+    margin-bottom:8px;
+}
+
+.upload-zone h3{
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.upload-zone p{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+.file-name{
+    margin-top:10px;
+    color:var(--primary);
+    font-size:8px;
+    font-weight:900;
+}
+
+input[type="file"]{
+    display:none;
+}
+
+.info{
+    padding:12px 14px;
+
+    background:var(--primary-soft);
+    border:1px solid rgba(90,138,0,.15);
+
+    border-radius:11px;
+
+    font-size:8px;
+    line-height:1.7;
+
+    margin-bottom:15px;
+}
+
+.info strong{
+    display:block;
+    font-size:9px;
+    margin-bottom:3px;
+}
+
+.format-box{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.format-item{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+    background:var(--bg);
+}
+
+.format-item strong{
+    display:block;
+    font-size:8px;
+    margin-bottom:3px;
+}
+
+.format-item span{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.filter-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+}
+
+.field label{
+    display:block;
+    color:var(--muted);
+    font-size:7px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    height:39px;
+
+    padding:0 10px;
+
+    border:1px solid var(--border);
+    border-radius:8px;
+
+    background:var(--card);
+    color:var(--text);
+
+    outline:none;
+
+    font-size:8px;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--primary);
+}
+
+.preview-wrap{
+    width:100%;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:900px;
+    border-collapse:collapse;
+}
+
+thead{
+    background:var(--bg);
+}
+
+th{
+    text-align:left;
+    color:var(--muted);
+
+    font-size:7px;
+    font-weight:900;
+
+    padding:11px;
+
+    border-bottom:1px solid var(--border);
+
+    white-space:nowrap;
+}
+
+td{
+    padding:10px 11px;
+    font-size:8px;
+
+    border-bottom:1px solid var(--border);
+}
+
+tbody tr:hover{
+    background:var(--primary-soft);
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:3px;
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    font-size:6.5px;
+    font-weight:900;
+}
+
+.badge.valid{
+    color:var(--success);
+    background:var(--success-soft);
+}
+
+.badge.invalid{
+    color:var(--danger);
+    background:var(--danger-soft);
+}
+
+.badge.duplicate{
+    color:var(--warning);
+    background:var(--warning-soft);
+}
+
+.badge.skip{
+    color:var(--muted);
+    background:var(--bg);
+}
+
+.status-select{
+    height:30px;
+    border:1px solid var(--border);
+    border-radius:7px;
+
+    background:var(--card);
+    color:var(--text);
+
+    padding:0 7px;
+
+    font-size:7px;
+}
+
+.empty{
+    padding:50px 20px;
+    text-align:center;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.empty-icon{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.summary-item{
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+}
+
+.summary-item .number{
+    font-size:20px;
+    font-weight:900;
+}
+
+.summary-item .label{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:2px;
+}
+
+.summary-item.valid .number{
+    color:var(--success);
+}
+
+.summary-item.invalid .number{
+    color:var(--danger);
+}
+
+.summary-item.duplicate .number{
+    color:var(--warning);
+}
+
+.summary-item.total .number{
+    color:var(--primary);
+}
+
+.action-row{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.progress{
+    width:100%;
+    height:8px;
+    background:var(--bg);
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:var(--primary);
+    transition:.3s;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:5000;
+
+    background:#111827;
+    color:#fff;
+
+    padding:11px 15px;
+
+    border-radius:9px;
+
+    font-size:8px;
+
+    opacity:0;
+    transform:translateY(20px);
+
+    pointer-events:none;
+
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    background:rgba(15,23,42,.65);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:4000;
+
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:480px;
+
+    background:var(--card);
+
+    border-radius:15px;
+
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+
+    overflow:hidden;
+}
+
+.modal-header{
+    padding:15px;
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.modal-header h3{
+    font-size:12px;
+}
+
+.modal-body{
+    padding:18px;
+
+    font-size:8px;
+    line-height:1.8;
+}
+
+.modal-footer{
+    padding:12px 15px;
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+}
+
+.close-btn{
+    width:30px;
+    height:30px;
+
+    border:1px solid var(--border);
+    border-radius:7px;
+
+    background:var(--card);
+    color:var(--text);
+}
+
+@media(max-width:1050px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .format-box{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .filter-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 13px 35px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .actions{
+        width:100%;
+    }
+
+    .actions .btn{
+        flex:1;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .format-box,
+    .filter-grid,
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:450px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+}
+
+@media print{
+
+    .header,
+    .actions,
+    .upload-card,
+    .format-card,
+    .filter-card,
+    .import-actions,
+    .toast,
+    .modal{
+        display:none !important;
+    }
+
+    body{
+        background:#fff !important;
+        color:#000 !important;
+    }
+
+    .main{
+        max-width:none;
+        padding:0;
+    }
+
+    .card{
+        box-shadow:none;
+    }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Attendance Import & Data Management
+            </small>
+
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+        >
+            🌙
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+    <section class="page-header">
+
+        <div class="page-title">
+
+            <h1>
+                📥 Attendance Import
+            </h1>
+
+            <p>
+                CSV file থেকে attendance data import করুন।
+            </p>
+
+        </div>
+
+        <div class="actions">
+
+            <button
+                class="btn"
+                onclick="downloadTemplate()"
+            >
+                📄 Template
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="refreshPageData()"
+            >
+                ↻ Refresh
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="stats">
+
+        <div class="stat-card blue">
+
+            <div class="stat-icon">
+                📄
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalRows"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Imported Rows
+            </div>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div
+                class="stat-number"
+                id="validRows"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Valid Rows
+            </div>
+
+        </div>
+
+
+        <div class="stat-card red">
+
+            <div class="stat-icon">
+                ❌
+            </div>
+
+            <div
+                class="stat-number"
+                id="invalidRows"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Invalid Rows
+            </div>
+
+        </div>
+
+
+        <div class="stat-card yellow">
+
+            <div class="stat-icon">
+                ⚠️
+            </div>
+
+            <div
+                class="stat-number"
+                id="duplicateRows"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Duplicates
+            </div>
+
+        </div>
+
+
+        <div class="stat-card purple">
+
+            <div class="stat-icon">
+                👨‍🎓
+            </div>
+
+            <div
+                class="stat-number"
+                id="matchedStudents"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                Matched Students
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="info">
+
+        <strong>
+            💡 গুরুত্বপূর্ণ
+        </strong>
+
+        CSV import করার আগে Student ID অবশ্যই আপনার existing
+        <b>snkStudents</b> data-এর Student ID-এর সঙ্গে match করতে হবে।
+        Import successful হলে attendance data
+        <b>snkStudentAttendance</b> LocalStorage-এ save হবে।
+
+    </div>
+
+
+    <section class="card upload-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    📂 Upload Attendance CSV
+                </h2>
+
+                <p>
+                    CSV file select করুন অথবা drag & drop করুন।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div
+                class="upload-zone"
+                id="uploadZone"
+                onclick="document.getElementById('csvFile').click()"
+            >
+
+                <div class="upload-icon">
+                    📁
+                </div>
+
+                <h3>
+                    CSV File এখানে দিন
+                </h3>
+
+                <p>
+                    Click করে file select করুন অথবা CSV file drag & drop করুন।
+                    <br>
+                    Maximum recommended size: 5 MB
+                </p>
+
+                <button
+                    type="button"
+                    class="btn primary"
+                    onclick="event.stopPropagation(); document.getElementById('csvFile').click()"
+                >
+                    📂 Choose CSV File
+                </button>
+
+                <input
+                    type="file"
+                    id="csvFile"
+                    accept=".csv,text/csv"
+                    onchange="handleFile(this.files[0])"
+                >
+
+                <div
+                    class="file-name"
+                    id="fileName"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="card format-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    📋 CSV Format
+                </h2>
+
+                <p>
+                    Recommended column format
+                </p>
+
+            </div>
+
+            <button
+                class="btn small"
+                onclick="downloadTemplate()"
+            >
+                ⬇ Download Template
+            </button>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="format-box">
+
+                <div class="format-item">
+
+                    <strong>
+                        Date
+                    </strong>
+
+                    <span>
+                        2026-09-03
+                    </span>
+
+                </div>
+
+
+                <div class="format-item">
+
+                    <strong>
+                        Student ID
+                    </strong>
+
+                    <span>
+                        ST001
+                    </span>
+
+                </div>
+
+
+                <div class="format-item">
+
+                    <strong>
+                        Status
+                    </strong>
+
+                    <span>
+                        present / absent / late
+                    </span>
+
+                </div>
+
+
+                <div class="format-item">
+
+                    <strong>
+                        Note
+                    </strong>
+
+                    <span>
+                        Optional
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="card filter-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    🔎 Preview Filter
+                </h2>
+
+                <p>
+                    Imported rows search করুন।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="filter-grid">
+
+                <div class="field">
+
+                    <label>
+                        Search
+                    </label>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Student ID / Name / Date"
+                        oninput="renderPreview()"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Status
+                    </label>
+
+                    <select
+                        id="statusFilter"
+                        onchange="renderPreview()"
+                    >
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="present">
+                            Present
+                        </option>
+
+                        <option value="absent">
+                            Absent
+                        </option>
+
+                        <option value="late">
+                            Late
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Validation
+                    </label>
+
+                    <select
+                        id="validationFilter"
+                        onchange="renderPreview()"
+                    >
+
+                        <option value="all">
+                            All Rows
+                        </option>
+
+                        <option value="valid">
+                            Valid Only
+                        </option>
+
+                        <option value="invalid">
+                            Invalid Only
+                        </option>
+
+                        <option value="duplicate">
+                            Duplicate Only
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    👀 Import Preview
+                </h2>
+
+                <p>
+                    Save করার আগে সব row যাচাই করুন।
+                </p>
+
+            </div>
+
+            <span
+                class="badge valid"
+                id="previewCount"
+            >
+                0 Rows
+            </span>
+
+        </div>
+
+
+        <div class="preview-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Student ID
+                        </th>
+
+                        <th>
+                            Student Name
+                        </th>
+
+                        <th>
+                            Course
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Validation
+                        </th>
+
+                        <th>
+                            Message
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="previewBody"
+                ></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    📊 Import Summary
+                </h2>
+
+                <p>
+                    Current CSV-এর validation summary
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="summary-grid">
+
+                <div class="summary-item total">
+
+                    <div
+                        class="number"
+                        id="summaryTotal"
+                    >
+                        0
+                    </div>
+
+                    <div class="label">
+                        Total Rows
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item valid">
+
+                    <div
+                        class="number"
+                        id="summaryValid"
+                    >
+                        0
+                    </div>
+
+                    <div class="label">
+                        Ready to Import
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item invalid">
+
+                    <div
+                        class="number"
+                        id="summaryInvalid"
+                    >
+                        0
+                    </div>
+
+                    <div class="label">
+                        Invalid Rows
+                    </div>
+
+                </div>
+
+
+                <div class="summary-item duplicate">
+
+                    <div
+                        class="number"
+                        id="summaryDuplicate"
+                    >
+                        0
+                    </div>
+
+                    <div class="label">
+                        Duplicate Rows
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="progress"
+                title="Import validation progress"
+            >
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="card import-actions">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    💾 Save Attendance
+                </h2>
+
+                <p>
+                    Valid rows LocalStorage-এ import করুন।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="action-row">
+
+                <button
+                    class="btn"
+                    onclick="clearImport()"
+                >
+                    🗑 Clear
+                </button>
+
+                <button
+                    class="btn warning"
+                    onclick="skipInvalidAndImport()"
+                >
+                    ⚠ Import Valid Only
+                </button>
+
+                <button
+                    class="btn primary"
+                    onclick="openImportConfirm()"
+                >
+                    💾 Import All Valid
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="window.print()"
+                >
+                    🖨 Print Preview
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer
+        style="
+            text-align:center;
+            color:var(--muted);
+            font-size:8px;
+            padding:20px;
+        "
+    >
+
+        © 2026 SNK AI Academy • Attendance Import & Data Management
+
+    </footer>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<div
+    class="modal"
+    id="confirmModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h3>
+                ⚠️ Confirm Attendance Import
+            </h3>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-body"
+            id="confirmMessage"
+        >
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="confirmImport()"
+            >
+                Yes, Import
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   1.40 ATTENDANCE IMPORT
+   Compatible with:
+   snkStudents
+   snkStudentAttendance
+========================================================= */
+
+
+const STUDENTS_KEY =
+    "snkStudents";
+
+const ATTENDANCE_KEY =
+    "snkStudentAttendance";
+
+const THEME_KEY =
+    "snkAttendanceImportTheme";
+
+
+let students = [];
+
+let attendance = {};
+
+let importRows = [];
+
+let pendingImportMode = "valid";
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        loadData();
+
+        setupDragDrop();
+
+        renderPreview();
+
+    }
+);
+
+
+/* =========================================================
+   LOAD EXISTING DATA
+========================================================= */
+
+function loadData(){
+
+    try{
+
+        const studentRaw =
+            localStorage.getItem(
+                STUDENTS_KEY
+            );
+
+        const attendanceRaw =
+            localStorage.getItem(
+                ATTENDANCE_KEY
+            );
+
+
+        students =
+            studentRaw
+            ?
+            JSON.parse(studentRaw)
+            :
+            [];
+
+
+        attendance =
+            attendanceRaw
+            ?
+            JSON.parse(attendanceRaw)
+            :
+            {};
+
+    }
+    catch(error){
+
+        students = [];
+
+        attendance = {};
+
+        showToast(
+            "Existing data load করা যায়নি।"
+        );
+
+    }
+
+
+    if(
+        !Array.isArray(students)
+    ){
+
+        students = [];
+
+    }
+
+
+    if(
+        typeof attendance !== "object" ||
+        attendance === null ||
+        Array.isArray(attendance)
+    ){
+
+        attendance = {};
+
+    }
+
+}
+
+
+/* =========================================================
+   DRAG DROP
+========================================================= */
+
+function setupDragDrop(){
+
+    const zone =
+        document.getElementById(
+            "uploadZone"
+        );
+
+
+    [
+        "dragenter",
+        "dragover"
+    ]
+    .forEach(
+        eventName => {
+
+            zone.addEventListener(
+                eventName,
+                function(event){
+
+                    event.preventDefault();
+
+                    zone.classList.add(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    [
+        "dragleave",
+        "drop"
+    ]
+    .forEach(
+        eventName => {
+
+            zone.addEventListener(
+                eventName,
+                function(event){
+
+                    event.preventDefault();
+
+                    zone.classList.remove(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    zone.addEventListener(
+        "drop",
+        function(event){
+
+            const files =
+                event.dataTransfer.files;
+
+
+            if(
+                files &&
+                files.length
+            ){
+
+                handleFile(
+                    files[0]
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FILE HANDLING
+========================================================= */
+
+function handleFile(file){
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    if(
+        !file.name
+        .toLowerCase()
+        .endsWith(".csv")
+    ){
+
+        showToast(
+            "শুধুমাত্র CSV file ব্যবহার করুন।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        file.size >
+        5 * 1024 * 1024
+    ){
+
+        showToast(
+            "File size 5 MB-এর বেশি।"
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "fileName"
+    ).textContent =
+        "📄 " +
+        file.name;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(event){
+
+            try{
+
+                parseCSV(
+                    event.target.result
+                );
+
+            }
+            catch(error){
+
+                console.error(error);
+
+                showToast(
+                    "CSV file পড়তে সমস্যা হয়েছে।"
+                );
+
+            }
+
+        };
+
+
+    reader.onerror =
+        function(){
+
+            showToast(
+                "File read করা যায়নি।"
+            );
+
+        };
+
+
+    reader.readAsText(
+        file,
+        "UTF-8"
+    );
+
+}
+
+
+/* =========================================================
+   CSV PARSER
+========================================================= */
+
+function parseCSV(text){
+
+    text =
+        String(text || "")
+        .replace(
+            /^\uFEFF/,
+            ""
+        );
+
+
+    const rows =
+        csvToRows(text);
+
+
+    if(
+        rows.length < 2
+    ){
+
+        importRows = [];
+
+        renderPreview();
+
+        showToast(
+            "CSV-তে পর্যাপ্ত data নেই।"
+        );
+
+        return;
+
+    }
+
+
+    const headers =
+        rows[0]
+        .map(
+            normalizeHeader
+        );
+
+
+    const columnMap =
+        detectColumns(
+            headers
+        );
+
+
+    if(
+        columnMap.date === -1
+    ){
+
+        showToast(
+            "Date column পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        columnMap.studentId === -1
+    ){
+
+        showToast(
+            "Student ID column পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        columnMap.status === -1
+    ){
+
+        showToast(
+            "Status column পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    importRows = [];
+
+
+    for(
+        let i = 1;
+        i < rows.length;
+        i++
+    ){
+
+        const row =
+            rows[i];
+
+
+        if(
+            !row ||
+            row.every(
+                cell =>
+                    String(cell)
+                    .trim() === ""
+            )
+        ){
+
+            continue;
+
+        }
+
+
+        const date =
+            cleanValue(
+                row[
+                    columnMap.date
+                ]
+            );
+
+
+        const studentId =
+            cleanValue(
+                row[
+                    columnMap.studentId
+                ]
+            );
+
+
+        const status =
+            normalizeStatus(
+                row[
+                    columnMap.status
+                ]
+            );
+
+
+        const note =
+            columnMap.note >= 0
+            ?
+            cleanValue(
+                row[
+                    columnMap.note
+                ]
+            )
+            :
+            "";
+
+
+        const result =
+            validateRow(
+                date,
+                studentId,
+                status
+            );
+
+
+        importRows.push({
+
+            rowNumber:
+                i + 1,
+
+            date,
+
+            studentId,
+
+            status,
+
+            note,
+
+            valid:
+                result.valid,
+
+            duplicate:
+                result.duplicate,
+
+            message:
+                result.message,
+
+            student:
+                result.student || null
+
+        });
+
+    }
+
+
+    renderPreview();
+
+    showToast(
+        importRows.length +
+        "টি row loaded হয়েছে ✓"
+    );
+
+}
+
+
+/* =========================================================
+   CSV TO ROWS
+========================================================= */
+
+function csvToRows(text){
+
+    const rows = [];
+
+    let row = [];
+
+    let value = "";
+
+    let insideQuotes = false;
+
+
+    for(
+        let i = 0;
+        i < text.length;
+        i++
+    ){
+
+        const char =
+            text[i];
+
+        const next =
+            text[i + 1];
+
+
+        if(
+            char === '"'
+        ){
+
+            if(
+                insideQuotes &&
+                next === '"'
+            ){
+
+                value += '"';
+
+                i++;
+
+            }
+            else{
+
+                insideQuotes =
+                    !insideQuotes;
+
+            }
+
+        }
+        else if(
+            char === "," &&
+            !insideQuotes
+        ){
+
+            row.push(
+                value
+            );
+
+            value = "";
+
+        }
+        else if(
+            (
+                char === "\n" ||
+                char === "\r"
+            ) &&
+            !insideQuotes
+        ){
+
+            if(
+                char === "\r" &&
+                next === "\n"
+            ){
+
+                i++;
+
+            }
+
+
+            row.push(
+                value
+            );
+
+            rows.push(
+                row
+            );
+
+            row = [];
+
+            value = "";
+
+        }
+        else{
+
+            value += char;
+
+        }
+
+    }
+
+
+    if(
+        value !== "" ||
+        row.length
+    ){
+
+        row.push(
+            value
+        );
+
+        rows.push(
+            row
+        );
+
+    }
+
+
+    return rows;
+
+}
+
+
+/* =========================================================
+   HEADER NORMALIZATION
+========================================================= */
+
+function normalizeHeader(value){
+
+    return String(
+        value || ""
+    )
+    .trim()
+    .toLowerCase()
+    .replace(
+        /[\s_\-]+/g,
+        ""
+    );
+
+}
+
+
+function detectColumns(headers){
+
+    const find =
+        aliases => {
+
+            for(
+                const alias of aliases
+            ){
+
+                const index =
+                    headers.indexOf(
+                        alias
+                    );
+
+
+                if(
+                    index >= 0
+                ){
+
+                    return index;
+
+                }
+
+            }
+
+
+            return -1;
+
+        };
+
+
+    return {
+
+        date:
+            find([
+                "date",
+                "attendance_date",
+                "attendancedate"
+            ].map(normalizeHeader)),
+
+        studentId:
+            find([
+                "studentid",
+                "student_id",
+                "id",
+                "student"
+            ].map(normalizeHeader)),
+
+        status:
+            find([
+                "status",
+                "attendance",
+                "attendancestatus"
+            ].map(normalizeHeader)),
+
+        note:
+            find([
+                "note",
+                "notes",
+                "remark",
+                "remarks"
+            ].map(normalizeHeader))
+
+    };
+
+}
+
+
+/* =========================================================
+   VALUE HELPERS
+========================================================= */
+
+function cleanValue(value){
+
+    return String(
+        value == null
+        ?
+        ""
+        :
+        value
+    )
+    .trim();
+
+}
+
+
+function normalizeStatus(value){
+
+    const status =
+        cleanValue(
+            value
+        )
+        .toLowerCase();
+
+
+    if(
+        [
+            "present",
+            "p",
+            "yes",
+            "1",
+            "প্রেজেন্ট",
+            "উপস্থিত"
+        ]
+        .includes(status)
+    ){
+
+        return "present";
+
+    }
+
+
+    if(
+        [
+            "absent",
+            "a",
+            "no",
+            "0",
+            "অনুপস্থিত"
+        ]
+        .includes(status)
+    ){
+
+        return "absent";
+
+    }
+
+
+    if(
+        [
+            "late",
+            "l",
+            "লেট",
+            "দেরি"
+        ]
+        .includes(status)
+    ){
+
+        return "late";
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   DATE VALIDATION
+========================================================= */
+
+function normalizeDate(value){
+
+    const raw =
+        cleanValue(
+            value
+        );
+
+
+    if(
+        /^\d{4}-\d{2}-\d{2}$/
+        .test(raw)
+    ){
+
+        const date =
+            new Date(
+                raw +
+                "T00:00:00"
+            );
+
+
+        if(
+            !Number.isNaN(
+                date.getTime()
+            )
+        ){
+
+            return raw;
+
+        }
+
+    }
+
+
+    const slash =
+        raw.match(
+            /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/
+        );
+
+
+    if(
+        slash
+    ){
+
+        const day =
+            slash[1]
+            .padStart(2,"0");
+
+
+        const month =
+            slash[2]
+            .padStart(2,"0");
+
+
+        const year =
+            slash[3];
+
+
+        const normalized =
+            year +
+            "-" +
+            month +
+            "-" +
+            day;
+
+
+        const date =
+            new Date(
+                normalized +
+                "T00:00:00"
+            );
+
+
+        if(
+            !Number.isNaN(
+                date.getTime()
+            )
+        ){
+
+            return normalized;
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   FIND STUDENT
+========================================================= */
+
+function findStudent(
+    studentId
+){
+
+    const wanted =
+        String(
+            studentId
+        )
+        .trim()
+        .toLowerCase();
+
+
+    return students.find(
+        student => {
+
+            const id =
+                String(
+                    student.id ||
+                    student.studentId ||
+                    student.studentID ||
+                    ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            return (
+                id === wanted
+            );
+
+        }
+    ) || null;
+
+}
+
+
+/* =========================================================
+   VALIDATE ROW
+========================================================= */
+
+function validateRow(
+    date,
+    studentId,
+    status
+){
+
+    const normalizedDate =
+        normalizeDate(
+            date
+        );
+
+
+    if(
+        !normalizedDate
+    ){
+
+        return {
+
+            valid:false,
+            duplicate:false,
+            message:"Invalid date"
+
+        };
+
+    }
+
+
+    if(
+        !studentId
+    ){
+
+        return {
+
+            valid:false,
+            duplicate:false,
+            message:"Student ID missing"
+
+        };
+
+    }
+
+
+    const student =
+        findStudent(
+            studentId
+        );
+
+
+    if(
+        !student
+    ){
+
+        return {
+
+            valid:false,
+            duplicate:false,
+            message:"Student ID not found"
+
+        };
+
+    }
+
+
+    if(
+        !status
+    ){
+
+        return {
+
+            valid:false,
+            duplicate:false,
+            message:"Invalid status"
+
+        };
+
+    }
+
+
+    const duplicate =
+        hasExistingAttendance(
+            normalizedDate,
+            studentId
+        );
+
+
+    if(
+        duplicate
+    ){
+
+        return {
+
+            valid:true,
+            duplicate:true,
+            message:"Existing attendance will be updated",
+            student
+
+        };
+
+    }
+
+
+    return {
+
+        valid:true,
+        duplicate:false,
+        message:"Ready to import",
+        student
+
+    };
+
+}
+
+
+/* =========================================================
+   CHECK EXISTING ATTENDANCE
+========================================================= */
+
+function hasExistingAttendance(
+    date,
+    studentId
+){
+
+    const day =
+        attendance[
+            date
+        ];
+
+
+    if(
+        !day ||
+        typeof day !== "object"
+    ){
+
+        return false;
+
+    }
+
+
+    return Object.prototype.hasOwnProperty.call(
+        day,
+        String(studentId)
+    );
+
+}
+
+
+/* =========================================================
+   RENDER PREVIEW
+========================================================= */
+
+function renderPreview(){
+
+    const body =
+        document.getElementById(
+            "previewBody"
+        );
+
+
+    const search =
+        (
+            document.getElementById(
+                "searchInput"
+            )?.value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        )?.value ||
+        "all";
+
+
+    const validationFilter =
+        document.getElementById(
+            "validationFilter"
+        )?.value ||
+        "all";
+
+
+    const rows =
+        importRows.filter(
+            row => {
+
+                const studentName =
+                    row.student
+                    ?
+                    getStudentName(
+                        row.student
+                    )
+                    .toLowerCase()
+                    :
+                    "";
+
+
+                const searchMatch =
+                    !search ||
+                    row.date
+                    .toLowerCase()
+                    .includes(search) ||
+                    row.studentId
+                    .toLowerCase()
+                    .includes(search) ||
+                    studentName.includes(search);
+
+
+                const statusMatch =
+                    statusFilter === "all" ||
+                    row.status ===
+                        statusFilter;
+
+
+                let validationMatch =
+                    true;
+
+
+                if(
+                    validationFilter ===
+                    "valid"
+                ){
+
+                    validationMatch =
+                        row.valid &&
+                        !row.duplicate;
+
+                }
+
+
+                if(
+                    validationFilter ===
+                    "invalid"
+                ){
+
+                    validationMatch =
+                        !row.valid;
+
+                }
+
+
+                if(
+                    validationFilter ===
+                    "duplicate"
+                ){
+
+                    validationMatch =
+                        row.duplicate;
+
+                }
+
+
+                return (
+                    searchMatch &&
+                    statusMatch &&
+                    validationMatch
+                );
+
+            }
+        );
+
+
+    body.innerHTML = "";
+
+
+    if(
+        rows.length === 0
+    ){
+
+        body.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    style="padding:0;"
+                >
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            📭
+                        </div>
+
+                        <strong>
+                            কোনো import row পাওয়া যায়নি
+                        </strong>
+
+                        <div
+                            style="
+                                margin-top:5px;
+                                font-size:7px;
+                            "
+                        >
+                            CSV upload করলে এখানে preview দেখা যাবে।
+                        </div>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+    else{
+
+        rows.forEach(
+            (row,index) => {
+
+                const tr =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const validationBadge =
+                    !row.valid
+                    ?
+                    `
+                    <span class="badge invalid">
+                        ❌ Invalid
+                    </span>
+                    `
+                    :
+                    row.duplicate
+                    ?
+                    `
+                    <span class="badge duplicate">
+                        ⚠ Duplicate
+                    </span>
+                    `
+                    :
+                    `
+                    <span class="badge valid">
+                        ✅ Ready
+                    </span>
+                    `;
+
+
+                tr.innerHTML = `
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            row.date || "-"
+                        )}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(
+                                row.studentId || "-"
+                            )}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            row.student
+                            ?
+                            getStudentName(
+                                row.student
+                            )
+                            :
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            row.student
+                            ?
+                            getCourse(
+                                row.student
+                            )
+                            :
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        ${statusBadge(
+                            row.status
+                        )}
+                    </td>
+
+                    <td>
+                        ${validationBadge}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            row.message || ""
+                        )}
+                    </td>
+
+                `;
+
+
+                body.appendChild(
+                    tr
+                );
+
+            }
+        );
+
+    }
+
+
+    updateSummary();
+
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function statusBadge(
+    status
+){
+
+    if(
+        status === "present"
+    ){
+
+        return `
+            <span class="badge valid">
+                🟢 Present
+            </span>
+        `;
+
+    }
+
+
+    if(
+        status === "absent"
+    ){
+
+        return `
+            <span class="badge invalid">
+                🔴 Absent
+            </span>
+        `;
+
+    }
+
+
+    if(
+        status === "late"
+    ){
+
+        return `
+            <span class="badge duplicate">
+                🟡 Late
+            </span>
+        `;
+
+    }
+
+
+    return `
+        <span class="badge invalid">
+            ❌ Unknown
+        </span>
+    `;
+
+}
+
+
+/* =========================================================
+   STUDENT HELPERS
+========================================================= */
+
+function getStudentName(
+    student
+){
+
+    return (
+        student.name ||
+        student.studentName ||
+        "Student"
+    );
+
+}
+
+
+function getCourse(
+    student
+){
+
+    return (
+        student.course ||
+        student.courseName ||
+        "-"
+    );
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function updateSummary(){
+
+    const total =
+        importRows.length;
+
+
+    const valid =
+        importRows.filter(
+            row =>
+                row.valid &&
+                !row.duplicate
+        ).length;
+
+
+    const invalid =
+        importRows.filter(
+            row =>
+                !row.valid
+        ).length;
+
+
+    const duplicate =
+        importRows.filter(
+            row =>
+                row.duplicate
+        ).length;
+
+
+    const matched =
+        new Set(
+            importRows
+            .filter(
+                row =>
+                    row.student
+            )
+            .map(
+                row =>
+                    row.studentId
+            )
+        )
+        .size;
+
+
+    document.getElementById(
+        "totalRows"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "validRows"
+    ).textContent =
+        valid;
+
+
+    document.getElementById(
+        "invalidRows"
+    ).textContent =
+        invalid;
+
+
+    document.getElementById(
+        "duplicateRows"
+    ).textContent =
+        duplicate;
+
+
+    document.getElementById(
+        "matchedStudents"
+    ).textContent =
+        matched;
+
+
+    document.getElementById(
+        "summaryTotal"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "summaryValid"
+    ).textContent =
+        valid;
+
+
+    document.getElementById(
+        "summaryInvalid"
+    ).textContent =
+        invalid;
+
+
+    document.getElementById(
+        "summaryDuplicate"
+    ).textContent =
+        duplicate;
+
+
+    document.getElementById(
+        "previewCount"
+    ).textContent =
+        document
+        .querySelectorAll(
+            "#previewBody tr"
+        ).length +
+        " Rows";
+
+
+    const progress =
+        total > 0
+        ?
+        (
+            (
+                valid +
+                duplicate
+            ) /
+            total
+        ) *
+        100
+        :
+        0;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        Math.min(
+            100,
+            progress
+        ) +
+        "%";
+
+}
+
+
+/* =========================================================
+   IMPORT CONFIRM
+========================================================= */
+
+function openImportConfirm(){
+
+    if(
+        importRows.length === 0
+    ){
+
+        showToast(
+            "Import করার জন্য CSV data নেই।"
+        );
+
+        return;
+
+    }
+
+
+    pendingImportMode =
+        "valid";
+
+
+    const valid =
+        importRows.filter(
+            row =>
+                row.valid
+        ).length;
+
+
+    const invalid =
+        importRows.filter(
+            row =>
+                !row.valid
+        ).length;
+
+
+    document.getElementById(
+        "confirmMessage"
+    ).innerHTML = `
+
+        আপনি মোট
+        <strong>${importRows.length}</strong>
+        টি row upload করেছেন।
+
+        <br><br>
+
+        ✅ Valid:
+        <strong>${valid}</strong>
+
+        <br>
+
+        ❌ Invalid:
+        <strong>${invalid}</strong>
+
+        <br><br>
+
+        Valid rows-এর attendance data
+        <strong>snkStudentAttendance</strong>
+        LocalStorage-এ save হবে।
+
+        <br><br>
+
+        আপনি কি import করতে চান?
+
+    `;
+
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   CONFIRM IMPORT
+========================================================= */
+
+function confirmImport(){
+
+    closeModal();
+
+    importAttendance(
+        "valid"
+    );
+
+}
+
+
+/* =========================================================
+   IMPORT VALID ONLY
+========================================================= */
+
+function skipInvalidAndImport(){
+
+    if(
+        importRows.length === 0
+    ){
+
+        showToast(
+            "Import করার data নেই।"
+        );
+
+        return;
+
+    }
+
+
+    const valid =
+        importRows.filter(
+            row =>
+                row.valid
+        );
+
+
+    if(
+        valid.length === 0
+    ){
+
+        showToast(
+            "কোনো valid row নেই।"
+        );
+
+        return;
+
+    }
+
+
+    pendingImportMode =
+        "valid";
+
+
+    importAttendance(
+        "valid"
+    );
+
+}
+
+
+/* =========================================================
+   SAVE ATTENDANCE
+========================================================= */
+
+function importAttendance(
+    mode
+){
+
+    const rows =
+        importRows.filter(
+            row =>
+                row.valid
+        );
+
+
+    if(
+        rows.length === 0
+    ){
+
+        showToast(
+            "Valid attendance data পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    let added = 0;
+
+    let updated = 0;
+
+
+    rows.forEach(
+        row => {
+
+            const date =
+                normalizeDate(
+                    row.date
+                );
+
+
+            if(
+                !date
+            ){
+
+                return;
+
+            }
+
+
+            if(
+                !attendance[date] ||
+                typeof attendance[date] !==
+                    "object"
+            ){
+
+                attendance[date] = {};
+
+            }
+
+
+            const studentId =
+                String(
+                    row.studentId
+                );
+
+
+            const existed =
+                Object.prototype.hasOwnProperty.call(
+                    attendance[date],
+                    studentId
+                );
+
+
+            attendance[date][studentId] =
+                row.status;
+
+
+            if(
+                existed
+            ){
+
+                updated++;
+
+            }
+            else{
+
+                added++;
+
+            }
+
+
+            /*
+             Optional note storage.
+             Kept separately so it does not break
+             the attendance status structure.
+            */
+
+            if(
+                row.note
+            ){
+
+                saveAttendanceNote(
+                    date,
+                    studentId,
+                    row.note
+                );
+
+            }
+
+        }
+    );
+
+
+    try{
+
+        localStorage.setItem(
+            ATTENDANCE_KEY,
+            JSON.stringify(
+                attendance
+            )
+        );
+
+
+        showToast(
+            "Attendance imported successfully ✓"
+        );
+
+
+        setTimeout(
+            function(){
+
+                clearImport();
+
+                loadData();
+
+            },
+            700
+        );
+
+
+        console.log(
+            "Attendance Import:",
+            {
+                added,
+                updated
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Attendance save করা যায়নি।"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   OPTIONAL NOTES
+========================================================= */
+
+function saveAttendanceNote(
+    date,
+    studentId,
+    note
+){
+
+    const NOTES_KEY =
+        "snkAttendanceNotes";
+
+
+    let notes = {};
+
+
+    try{
+
+        notes =
+            JSON.parse(
+                localStorage.getItem(
+                    NOTES_KEY
+                ) || "{}"
+            );
+
+    }
+    catch(error){
+
+        notes = {};
+
+    }
+
+
+    if(
+        !notes[date]
+    ){
+
+        notes[date] = {};
+
+    }
+
+
+    notes[date][
+        String(studentId)
+    ] =
+        note;
+
+
+    localStorage.setItem(
+        NOTES_KEY,
+        JSON.stringify(
+            notes
+        )
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR IMPORT
+========================================================= */
+
+function clearImport(){
+
+    importRows = [];
+
+
+    document.getElementById(
+        "csvFile"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "fileName"
+    ).textContent =
+        "";
+
+
+    document.getElementById(
+        "searchInput"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "statusFilter"
+    ).value =
+        "all";
+
+
+    document.getElementById(
+        "validationFilter"
+    ).value =
+        "all";
+
+
+    renderPreview();
+
+
+    showToast(
+        "Import preview cleared ✓"
+    );
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshPageData(){
+
+    loadData();
+
+    renderPreview();
+
+    showToast(
+        "Latest data loaded ✓"
+    );
+
+}
+
+
+/* =========================================================
+   TEMPLATE
+========================================================= */
+
+function downloadTemplate(){
+
+    const csv =
+        [
+            "Date,Student ID,Status,Note",
+            "2026-09-03,ST001,present,",
+            "2026-09-03,ST002,absent,",
+            "2026-09-03,ST003,late,Late arrival"
+        ]
+        .join("\n");
+
+
+    const blob =
+        new Blob(
+            [
+                "\uFEFF" +
+                csv
+            ],
+            {
+                type:
+                    "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        "snk-attendance-import-template.csv";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    showToast(
+        "CSV template downloaded ✓"
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem(
+            THEME_KEY
+        );
+
+
+    if(
+        theme === "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+    }
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+        dark
+        ?
+        "☀️"
+        :
+        "🌙";
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(){
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+document.getElementById(
+    "confirmModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "admin.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2600
+        );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+        ?
+        ""
+        :
+        String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   STORAGE SYNC
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key ===
+                STUDENTS_KEY ||
+            event.key ===
+                ATTENDANCE_KEY
+        ){
+
+            loadData();
+
+            renderPreview();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

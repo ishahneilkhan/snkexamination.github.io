@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Attendance Settings</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --primary-soft:#f1ffdd;
+
+    --success:#16a34a;
+    --success-soft:#f0fdf4;
+
+    --danger:#dc2626;
+    --danger-soft:#fef2f2;
+
+    --warning:#d97706;
+    --warning-soft:#fffbeb;
+
+    --purple:#7c3aed;
+    --purple-soft:#f5f3ff;
+
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --primary-soft:#1c2e00;
+    --success-soft:#052e16;
+    --danger-soft:#450a0a;
+    --warning-soft:#451a03;
+    --purple-soft:#2e1065;
+
+    --shadow:0 10px 30px rgba(0,0,0,.30);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:70px;
+    padding:12px 25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    box-shadow:0 4px 20px rgba(15,23,42,.05);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:13px}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    gap:7px;
+}
+
+.btn{
+    min-height:38px;
+    padding:0 13px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:var(--card);
+    color:var(--text);
+
+    font-size:8px;
+    font-weight:900;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    border-color:var(--primary);
+    transform:translateY(-1px);
+}
+
+.btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn.success{
+    background:var(--success);
+    border-color:var(--success);
+    color:#fff;
+}
+
+.btn.danger{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+.btn.warning{
+    background:var(--warning);
+    border-color:var(--warning);
+    color:#fff;
+}
+
+.btn.small{
+    min-height:32px;
+    padding:0 10px;
+    font-size:7px;
+}
+
+.main{
+    max-width:1150px;
+    margin:auto;
+    padding:28px 20px 50px;
+}
+
+.page-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.page-title h1{
+    font-size:24px;
+    margin-bottom:4px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:15px;
+}
+
+.card-header{
+    padding:14px 15px;
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.card-header h2{
+    font-size:12px;
+}
+
+.card-header p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.info{
+    padding:12px 14px;
+
+    background:var(--primary-soft);
+    border:1px solid rgba(90,138,0,.15);
+
+    border-radius:11px;
+
+    font-size:8px;
+    line-height:1.8;
+
+    margin-bottom:15px;
+}
+
+.info strong{
+    display:block;
+    font-size:9px;
+    margin-bottom:3px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.form-grid.three{
+    grid-template-columns:repeat(3,1fr);
+}
+
+.field{
+    min-width:0;
+}
+
+.field.full{
+    grid-column:1 / -1;
+}
+
+.field label{
+    display:block;
+    color:var(--muted);
+    font-size:7px;
+    font-weight:900;
+    margin-bottom:6px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    height:40px;
+
+    padding:0 11px;
+
+    border:1px solid var(--border);
+    border-radius:8px;
+
+    background:var(--card);
+    color:var(--text);
+
+    outline:none;
+
+    font-size:8px;
+
+    transition:.2s;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(90,138,0,.08);
+}
+
+.field-help{
+    color:var(--muted);
+    font-size:6.5px;
+    margin-top:4px;
+    line-height:1.5;
+}
+
+.switch-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+
+    padding:12px 0;
+
+    border-bottom:1px solid var(--border);
+}
+
+.switch-row:last-child{
+    border-bottom:0;
+}
+
+.switch-info{
+    flex:1;
+}
+
+.switch-title{
+    font-size:8px;
+    font-weight:900;
+}
+
+.switch-description{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+    line-height:1.5;
+}
+
+.switch{
+    position:relative;
+    width:44px;
+    height:24px;
+    flex-shrink:0;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+
+    background:#cbd5e1;
+
+    border-radius:30px;
+
+    transition:.25s;
+}
+
+.slider:before{
+    content:"";
+
+    position:absolute;
+
+    width:18px;
+    height:18px;
+
+    left:3px;
+    top:3px;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    transition:.25s;
+
+    box-shadow:0 2px 5px rgba(0,0,0,.18);
+}
+
+.switch input:checked + .slider{
+    background:var(--primary);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(20px);
+}
+
+.status-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.status-card{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    background:var(--bg);
+}
+
+.status-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.status-name{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.status-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+}
+
+.status-dot.present{
+    background:var(--success);
+}
+
+.status-dot.absent{
+    background:var(--danger);
+}
+
+.status-dot.late{
+    background:var(--warning);
+}
+
+.status-card input{
+    width:100%;
+    height:37px;
+
+    border:1px solid var(--border);
+    border-radius:8px;
+
+    background:var(--card);
+    color:var(--text);
+
+    padding:0 9px;
+
+    outline:none;
+
+    font-size:8px;
+}
+
+.status-card input:focus{
+    border-color:var(--primary);
+}
+
+.threshold-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:12px;
+}
+
+.range-wrap{
+    padding:14px;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+
+    background:var(--bg);
+}
+
+.range-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+
+    margin-bottom:8px;
+}
+
+.range-header span{
+    font-size:8px;
+    font-weight:900;
+}
+
+.range-value{
+    color:var(--primary);
+}
+
+input[type="range"]{
+    width:100%;
+    accent-color:var(--primary);
+}
+
+.quick-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.storage-box{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:13px;
+}
+
+.storage-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:8px 0;
+    border-bottom:1px solid var(--border);
+    font-size:7px;
+}
+
+.storage-row:last-child{
+    border-bottom:0;
+}
+
+.storage-row span:first-child{
+    color:var(--muted);
+}
+
+.storage-row strong{
+    font-size:7px;
+}
+
+.bottom-actions{
+    position:sticky;
+    bottom:12px;
+    z-index:50;
+
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+
+    padding:12px;
+
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    box-shadow:0 10px 35px rgba(15,23,42,.14);
+
+    margin-top:20px;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:5000;
+
+    background:#111827;
+    color:#fff;
+
+    padding:11px 15px;
+
+    border-radius:9px;
+
+    font-size:8px;
+
+    opacity:0;
+    transform:translateY(20px);
+
+    pointer-events:none;
+
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    background:rgba(15,23,42,.65);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:4000;
+
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:450px;
+
+    background:var(--card);
+
+    border-radius:15px;
+
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+
+    overflow:hidden;
+}
+
+.modal-header{
+    padding:15px;
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.modal-header h3{
+    font-size:12px;
+}
+
+.modal-body{
+    padding:18px;
+
+    font-size:8px;
+    line-height:1.8;
+}
+
+.modal-footer{
+    padding:12px 15px;
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+}
+
+.close-btn{
+    width:30px;
+    height:30px;
+
+    border:1px solid var(--border);
+    border-radius:7px;
+
+    background:var(--card);
+    color:var(--text);
+}
+
+@media(max-width:900px){
+
+    .form-grid.three{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .status-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 13px 35px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .actions{
+        width:100%;
+    }
+
+    .actions .btn{
+        flex:1;
+    }
+
+    .form-grid,
+    .form-grid.three,
+    .status-grid,
+    .threshold-box{
+        grid-template-columns:1fr;
+    }
+
+    .bottom-actions{
+        position:static;
+        flex-direction:column;
+    }
+
+    .bottom-actions .btn{
+        width:100%;
+    }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Attendance Settings
+            </small>
+
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+        >
+            🌙
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+    <section class="page-header">
+
+        <div class="page-title">
+
+            <h1>
+                ⚙️ Attendance Settings
+            </h1>
+
+            <p>
+                Attendance system-এর default behaviour এবং preferences পরিচালনা করুন।
+            </p>
+
+        </div>
+
+        <div class="actions">
+
+            <button
+                class="btn"
+                onclick="resetSettings()"
+            >
+                ♻ Reset Default
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="saveSettings()"
+            >
+                💾 Save Settings
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div class="info">
+
+        <strong>
+            💡 Settings কীভাবে কাজ করবে?
+        </strong>
+
+        এই page-এর settings browser-এর LocalStorage-এ save হবে।
+        Attendance module-এর অন্য pages চাইলে
+        <b>snkAttendanceSettings</b> key থেকে এই settings ব্যবহার করতে পারবে।
+
+    </div>
+
+
+    <!-- GENERAL SETTINGS -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    📅 General Attendance Settings
+                </h2>
+
+                <p>
+                    Default date এবং basic attendance behaviour।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>
+                        Default Attendance Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="defaultDate"
+                    >
+
+                    <div class="field-help">
+                        Attendance page খুললে এই date default হিসেবে ব্যবহার করা যাবে।
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Default View
+                    </label>
+
+                    <select id="defaultView">
+
+                        <option value="daily">
+                            Daily Attendance
+                        </option>
+
+                        <option value="monthly">
+                            Monthly Attendance
+                        </option>
+
+                        <option value="student">
+                            Student Wise
+                        </option>
+
+                    </select>
+
+                    <div class="field-help">
+                        Attendance page-এর initial view।
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Attendance Week Start
+                    </label>
+
+                    <select id="weekStart">
+
+                        <option value="saturday">
+                            Saturday
+                        </option>
+
+                        <option value="sunday">
+                            Sunday
+                        </option>
+
+                        <option value="monday">
+                            Monday
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Date Format
+                    </label>
+
+                    <select id="dateFormat">
+
+                        <option value="YYYY-MM-DD">
+                            YYYY-MM-DD
+                        </option>
+
+                        <option value="DD-MM-YYYY">
+                            DD-MM-YYYY
+                        </option>
+
+                        <option value="DD/MM/YYYY">
+                            DD/MM/YYYY
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATUS SETTINGS -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    🟢 Attendance Status
+                </h2>
+
+                <p>
+                    Present, Absent এবং Late status-এর label customize করুন।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="status-grid">
+
+                <div class="status-card">
+
+                    <div class="status-top">
+
+                        <div class="status-name">
+
+                            <span class="status-dot present"></span>
+
+                            Present
+
+                        </div>
+
+                    </div>
+
+                    <input
+                        type="text"
+                        id="presentLabel"
+                        maxlength="30"
+                        placeholder="Present"
+                    >
+
+                </div>
+
+
+                <div class="status-card">
+
+                    <div class="status-top">
+
+                        <div class="status-name">
+
+                            <span class="status-dot absent"></span>
+
+                            Absent
+
+                        </div>
+
+                    </div>
+
+                    <input
+                        type="text"
+                        id="absentLabel"
+                        maxlength="30"
+                        placeholder="Absent"
+                    >
+
+                </div>
+
+
+                <div class="status-card">
+
+                    <div class="status-top">
+
+                        <div class="status-name">
+
+                            <span class="status-dot late"></span>
+
+                            Late
+
+                        </div>
+
+                    </div>
+
+                    <input
+                        type="text"
+                        id="lateLabel"
+                        maxlength="30"
+                        placeholder="Late"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="threshold-box">
+
+                <div class="range-wrap">
+
+                    <div class="range-header">
+
+                        <span>
+                            Late Threshold
+                        </span>
+
+                        <span
+                            class="range-value"
+                            id="lateThresholdValue"
+                        >
+                            15 মিনিট
+                        </span>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        id="lateThreshold"
+                        min="0"
+                        max="120"
+                        step="5"
+                        value="15"
+                        oninput="updateRangeValues()"
+                    >
+
+                    <div class="field-help">
+                        Class start হওয়ার কত মিনিট পর student-কে Late ধরা হবে।
+                    </div>
+
+                </div>
+
+
+                <div class="range-wrap">
+
+                    <div class="range-header">
+
+                        <span>
+                            Minimum Attendance %
+                        </span>
+
+                        <span
+                            class="range-value"
+                            id="minimumAttendanceValue"
+                        >
+                            75%
+                        </span>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        id="minimumAttendance"
+                        min="0"
+                        max="100"
+                        step="5"
+                        value="75"
+                        oninput="updateRangeValues()"
+                    >
+
+                    <div class="field-help">
+                        Attendance report-এ minimum required attendance percentage।
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- AUTOMATION -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    🤖 Automation
+                </h2>
+
+                <p>
+                    Attendance system-এর automatic behaviour।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Auto-save Attendance
+                    </div>
+
+                    <div class="switch-description">
+                        Attendance পরিবর্তনের পর automatically LocalStorage-এ save করবে।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="autoSave"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Allow Future Dates
+                    </div>
+
+                    <div class="switch-description">
+                        আজকের পরের date-এর attendance entry allow করবে।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="allowFutureDates"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Allow Editing Previous Attendance
+                    </div>
+
+                    <div class="switch-description">
+                        পুরোনো attendance record edit করার permission।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="allowPastEdit"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Auto Mark Absent
+                    </div>
+
+                    <div class="switch-description">
+                        Attendance নেওয়ার সময় missing students-কে automatically absent করার option।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="autoAbsent"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ALERT SETTINGS -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    🔔 Attendance Alerts
+                </h2>
+
+                <p>
+                    Low attendance এবং repeated absence alert settings।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Enable Attendance Alerts
+                    </div>
+
+                    <div class="switch-description">
+                        Low attendance হলে alert তৈরি করবে।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="alertsEnabled"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Low Attendance Alert
+                    </div>
+
+                    <div class="switch-description">
+                        Minimum percentage-এর নিচে গেলে warning তৈরি করবে।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="lowAttendanceAlert"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Repeated Absence Alert
+                    </div>
+
+                    <div class="switch-description">
+                        একাধিক consecutive absent থাকলে alert তৈরি করবে।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="repeatedAbsenceAlert"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>
+                        Consecutive Absence Limit
+                    </label>
+
+                    <input
+                        type="number"
+                        id="absenceLimit"
+                        min="1"
+                        max="30"
+                        step="1"
+                    >
+
+                    <div class="field-help">
+                        কত consecutive absent হলে alert হবে।
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Alert Priority
+                    </label>
+
+                    <select id="alertPriority">
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- IMPORT / EXPORT -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    📥📤 Import / Export
+                </h2>
+
+                <p>
+                    CSV data management-এর default settings।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Allow CSV Import
+                    </div>
+
+                    <div class="switch-description">
+                        Attendance CSV import page থেকে data import করার অনুমতি।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="allowImport"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Allow CSV Export
+                    </div>
+
+                    <div class="switch-description">
+                        Attendance data CSV export করার অনুমতি।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="allowExport"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Replace Duplicate Records
+                    </div>
+
+                    <div class="switch-description">
+                        একই date + student ID পাওয়া গেলে নতুন data দিয়ে existing record replace করবে।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="replaceDuplicate"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="switch-row">
+
+                <div class="switch-info">
+
+                    <div class="switch-title">
+                        Keep Import Notes
+                    </div>
+
+                    <div class="switch-description">
+                        CSV-এর Note/Remark field আলাদাভাবে save করবে।
+                    </div>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="keepNotes"
+                    >
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DATA -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    💾 Storage Information
+                </h2>
+
+                <p>
+                    বর্তমান browser storage-এর basic information।
+                </p>
+
+            </div>
+
+            <button
+                class="btn small"
+                onclick="refreshStorageInfo()"
+            >
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="storage-box">
+
+                <div class="storage-row">
+
+                    <span>
+                        Students
+                    </span>
+
+                    <strong id="studentCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="storage-row">
+
+                    <span>
+                        Attendance Dates
+                    </span>
+
+                    <strong id="attendanceDateCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="storage-row">
+
+                    <span>
+                        Attendance Records
+                    </span>
+
+                    <strong id="attendanceRecordCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="storage-row">
+
+                    <span>
+                        Settings Storage Key
+                    </span>
+
+                    <strong>
+                        snkAttendanceSettings
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    ⚡ Quick Actions
+                </h2>
+
+                <p>
+                    Attendance module-এর related pages দ্রুত খুলুন।
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="quick-actions">
+
+                <button
+                    class="btn primary"
+                    onclick="openPage('student-attendance.html')"
+                >
+                    📝 Student Attendance
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="openPage('attendance-reports.html')"
+                >
+                    📊 Attendance Reports
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="openPage('attendance-alerts.html')"
+                >
+                    ⚠ Attendance Alerts
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="openPage('attendance-notifications.html')"
+                >
+                    🔔 Notifications
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="openPage('attendance-import.html')"
+                >
+                    📥 Import
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="openPage('attendance-export.html')"
+                >
+                    📤 Export
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="bottom-actions">
+
+        <button
+            class="btn danger"
+            onclick="resetSettings()"
+        >
+            ♻ Reset Defaults
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+        <button
+            class="btn primary"
+            onclick="saveSettings()"
+        >
+            💾 Save Attendance Settings
+        </button>
+
+    </div>
+
+
+    <footer
+        style="
+            text-align:center;
+            color:var(--muted);
+            font-size:8px;
+            padding:20px;
+        "
+    >
+
+        © 2026 SNK AI Academy • Attendance Settings
+
+    </footer>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<div
+    class="modal"
+    id="resetModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h3>
+                ♻ Reset Settings
+            </h3>
+
+            <button
+                class="close-btn"
+                onclick="closeResetModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            আপনি কি Attendance Settings-এর সব values
+            default অবস্থায় ফিরিয়ে নিতে চান?
+
+            <br><br>
+
+            ⚠️ এতে attendance records delete হবে না।
+            শুধু settings reset হবে।
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn"
+                onclick="closeResetModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn danger"
+                onclick="confirmReset()"
+            >
+                Yes, Reset
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   1.41 ATTENDANCE SETTINGS
+========================================================= */
+
+const SETTINGS_KEY =
+    "snkAttendanceSettings";
+
+const STUDENTS_KEY =
+    "snkStudents";
+
+const ATTENDANCE_KEY =
+    "snkStudentAttendance";
+
+const THEME_KEY =
+    "snkAttendanceSettingsTheme";
+
+
+const DEFAULT_SETTINGS = {
+
+    defaultDate:
+        getToday(),
+
+    defaultView:
+        "daily",
+
+    weekStart:
+        "saturday",
+
+    dateFormat:
+        "YYYY-MM-DD",
+
+    presentLabel:
+        "Present",
+
+    absentLabel:
+        "Absent",
+
+    lateLabel:
+        "Late",
+
+    lateThreshold:
+        15,
+
+    minimumAttendance:
+        75,
+
+    autoSave:
+        true,
+
+    allowFutureDates:
+        false,
+
+    allowPastEdit:
+        true,
+
+    autoAbsent:
+        false,
+
+    alertsEnabled:
+        true,
+
+    lowAttendanceAlert:
+        true,
+
+    repeatedAbsenceAlert:
+        true,
+
+    absenceLimit:
+        3,
+
+    alertPriority:
+        "medium",
+
+    allowImport:
+        true,
+
+    allowExport:
+        true,
+
+    replaceDuplicate:
+        true,
+
+    keepNotes:
+        true,
+
+    updatedAt:
+        null
+
+};
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        loadSettings();
+
+        refreshStorageInfo();
+
+        updateRangeValues();
+
+    }
+);
+
+
+/* =========================================================
+   TODAY
+========================================================= */
+
+function getToday(){
+
+    const date =
+        new Date();
+
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        )
+        .padStart(2,"0");
+
+
+    const day =
+        String(
+            date.getDate()
+        )
+        .padStart(2,"0");
+
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+/* =========================================================
+   GET ELEMENT
+========================================================= */
+
+function $(id){
+
+    return document.getElementById(
+        id
+    );
+
+}
+
+
+/* =========================================================
+   LOAD SETTINGS
+========================================================= */
+
+function loadSettings(){
+
+    let saved = {};
+
+
+    try{
+
+        saved =
+            JSON.parse(
+                localStorage.getItem(
+                    SETTINGS_KEY
+                ) || "{}"
+            );
+
+    }
+    catch(error){
+
+        saved = {};
+
+    }
+
+
+    const settings = {
+
+        ...DEFAULT_SETTINGS,
+        ...saved
+
+    };
+
+
+    $("defaultDate").value =
+        settings.defaultDate ||
+        getToday();
+
+
+    $("defaultView").value =
+        settings.defaultView;
+
+
+    $("weekStart").value =
+        settings.weekStart;
+
+
+    $("dateFormat").value =
+        settings.dateFormat;
+
+
+    $("presentLabel").value =
+        settings.presentLabel;
+
+
+    $("absentLabel").value =
+        settings.absentLabel;
+
+
+    $("lateLabel").value =
+        settings.lateLabel;
+
+
+    $("lateThreshold").value =
+        settings.lateThreshold;
+
+
+    $("minimumAttendance").value =
+        settings.minimumAttendance;
+
+
+    $("autoSave").checked =
+        Boolean(
+            settings.autoSave
+        );
+
+
+    $("allowFutureDates").checked =
+        Boolean(
+            settings.allowFutureDates
+        );
+
+
+    $("allowPastEdit").checked =
+        Boolean(
+            settings.allowPastEdit
+        );
+
+
+    $("autoAbsent").checked =
+        Boolean(
+            settings.autoAbsent
+        );
+
+
+    $("alertsEnabled").checked =
+        Boolean(
+            settings.alertsEnabled
+        );
+
+
+    $("lowAttendanceAlert").checked =
+        Boolean(
+            settings.lowAttendanceAlert
+        );
+
+
+    $("repeatedAbsenceAlert").checked =
+        Boolean(
+            settings.repeatedAbsenceAlert
+        );
+
+
+    $("absenceLimit").value =
+        settings.absenceLimit;
+
+
+    $("alertPriority").value =
+        settings.alertPriority;
+
+
+    $("allowImport").checked =
+        Boolean(
+            settings.allowImport
+        );
+
+
+    $("allowExport").checked =
+        Boolean(
+            settings.allowExport
+        );
+
+
+    $("replaceDuplicate").checked =
+        Boolean(
+            settings.replaceDuplicate
+        );
+
+
+    $("keepNotes").checked =
+        Boolean(
+            settings.keepNotes
+        );
+
+
+    updateRangeValues();
+
+}
+
+
+/* =========================================================
+   COLLECT SETTINGS
+========================================================= */
+
+function collectSettings(){
+
+    return {
+
+        defaultDate:
+            $("defaultDate").value ||
+            getToday(),
+
+        defaultView:
+            $("defaultView").value,
+
+        weekStart:
+            $("weekStart").value,
+
+        dateFormat:
+            $("dateFormat").value,
+
+        presentLabel:
+            cleanText(
+                $("presentLabel").value
+            ) ||
+            "Present",
+
+        absentLabel:
+            cleanText(
+                $("absentLabel").value
+            ) ||
+            "Absent",
+
+        lateLabel:
+            cleanText(
+                $("lateLabel").value
+            ) ||
+            "Late",
+
+        lateThreshold:
+            clamp(
+                Number(
+                    $("lateThreshold").value
+                ),
+                0,
+                120
+            ),
+
+        minimumAttendance:
+            clamp(
+                Number(
+                    $("minimumAttendance").value
+                ),
+                0,
+                100
+            ),
+
+        autoSave:
+            $("autoSave").checked,
+
+        allowFutureDates:
+            $("allowFutureDates").checked,
+
+        allowPastEdit:
+            $("allowPastEdit").checked,
+
+        autoAbsent:
+            $("autoAbsent").checked,
+
+        alertsEnabled:
+            $("alertsEnabled").checked,
+
+        lowAttendanceAlert:
+            $("lowAttendanceAlert").checked,
+
+        repeatedAbsenceAlert:
+            $("repeatedAbsenceAlert").checked,
+
+        absenceLimit:
+            clamp(
+                Number(
+                    $("absenceLimit").value
+                ),
+                1,
+                30
+            ),
+
+        alertPriority:
+            $("alertPriority").value,
+
+        allowImport:
+            $("allowImport").checked,
+
+        allowExport:
+            $("allowExport").checked,
+
+        replaceDuplicate:
+            $("replaceDuplicate").checked,
+
+        keepNotes:
+            $("keepNotes").checked,
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+}
+
+
+/* =========================================================
+   SAVE SETTINGS
+========================================================= */
+
+function saveSettings(){
+
+    const settings =
+        collectSettings();
+
+
+    try{
+
+        localStorage.setItem(
+            SETTINGS_KEY,
+            JSON.stringify(
+                settings
+            )
+        );
+
+
+        showToast(
+            "Attendance Settings saved successfully ✓"
+        );
+
+
+        refreshStorageInfo();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Settings save করা যায়নি।"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetSettings(){
+
+    $("resetModal")
+        .classList
+        .add("show");
+
+}
+
+
+function closeResetModal(){
+
+    $("resetModal")
+        .classList
+        .remove("show");
+
+}
+
+
+function confirmReset(){
+
+    try{
+
+        localStorage.setItem(
+            SETTINGS_KEY,
+            JSON.stringify(
+                {
+                    ...DEFAULT_SETTINGS,
+                    updatedAt:
+                        new Date().toISOString()
+                }
+            )
+        );
+
+
+        loadSettings();
+
+        closeResetModal();
+
+        showToast(
+            "Default settings restored ✓"
+        );
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Settings reset করা যায়নি।"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RANGE VALUES
+========================================================= */
+
+function updateRangeValues(){
+
+    const late =
+        Number(
+            $("lateThreshold").value
+        );
+
+
+    const minimum =
+        Number(
+            $("minimumAttendance").value
+        );
+
+
+    $("lateThresholdValue")
+        .textContent =
+        late +
+        " মিনিট";
+
+
+    $("minimumAttendanceValue")
+        .textContent =
+        minimum +
+        "%";
+
+}
+
+
+/* =========================================================
+   STORAGE INFO
+========================================================= */
+
+function refreshStorageInfo(){
+
+    let students = [];
+
+    let attendance = {};
+
+
+    try{
+
+        students =
+            JSON.parse(
+                localStorage.getItem(
+                    STUDENTS_KEY
+                ) || "[]"
+            );
+
+    }
+    catch(error){
+
+        students = [];
+
+    }
+
+
+    try{
+
+        attendance =
+            JSON.parse(
+                localStorage.getItem(
+                    ATTENDANCE_KEY
+                ) || "{}"
+            );
+
+    }
+    catch(error){
+
+        attendance = {};
+
+    }
+
+
+    if(
+        !Array.isArray(
+            students
+        )
+    ){
+
+        students = [];
+
+    }
+
+
+    if(
+        typeof attendance !== "object" ||
+        attendance === null ||
+        Array.isArray(attendance)
+    ){
+
+        attendance = {};
+
+    }
+
+
+    let records = 0;
+
+
+    Object.keys(
+        attendance
+    )
+    .forEach(
+        date => {
+
+            if(
+                attendance[date] &&
+                typeof attendance[date] ===
+                    "object"
+            ){
+
+                records +=
+                    Object.keys(
+                        attendance[date]
+                    ).length;
+
+            }
+
+        }
+    );
+
+
+    $("studentCount")
+        .textContent =
+        students.length;
+
+
+    $("attendanceDateCount")
+        .textContent =
+        Object.keys(
+            attendance
+        ).length;
+
+
+    $("attendanceRecordCount")
+        .textContent =
+        records;
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem(
+            THEME_KEY
+        );
+
+
+    if(
+        theme === "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+    }
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    $("themeBtn")
+        .textContent =
+        document.body.classList.contains(
+            "dark"
+        )
+        ?
+        "☀️"
+        :
+        "🌙";
+
+}
+
+
+/* =========================================================
+   OPEN PAGE
+========================================================= */
+
+function openPage(
+    page
+){
+
+    window.location.href =
+        page;
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "admin.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function cleanText(
+    value
+){
+
+    return String(
+        value || ""
+    )
+    .trim();
+
+}
+
+
+function clamp(
+    value,
+    min,
+    max
+){
+
+    if(
+        Number.isNaN(
+            value
+        )
+    ){
+
+        return min;
+
+    }
+
+
+    return Math.min(
+        max,
+        Math.max(
+            min,
+            value
+        )
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        $("toast");
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2800
+        );
+
+}
+
+
+/* =========================================================
+   MODAL CLICK OUTSIDE
+========================================================= */
+
+$("resetModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                this
+            ){
+
+                closeResetModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   STORAGE SYNC
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key ===
+                STUDENTS_KEY ||
+            event.key ===
+                ATTENDANCE_KEY
+        ){
+
+            refreshStorageInfo();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

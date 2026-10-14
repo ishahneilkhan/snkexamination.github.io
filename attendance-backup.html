@@ -1,0 +1,2437 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Attendance Backup</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+    --soft:#f1ffdd;
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+    --soft:#1c2e00;
+    --shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    min-height:70px;
+    padding:12px 25px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    box-shadow:0 4px 20px rgba(15,23,42,.05);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:13px}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.btn{
+    min-height:40px;
+    padding:0 14px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:var(--card);
+    color:var(--text);
+    font-size:8px;
+    font-weight:900;
+    transition:.2s;
+}
+
+.btn:hover{
+    border-color:var(--primary);
+    transform:translateY(-1px);
+}
+
+.btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn.success{
+    background:var(--success);
+    border-color:var(--success);
+    color:#fff;
+}
+
+.btn.danger{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+.btn.warning{
+    background:var(--warning);
+    border-color:var(--warning);
+    color:#fff;
+}
+
+.btn.small{
+    min-height:33px;
+    padding:0 10px;
+    font-size:7px;
+}
+
+.main{
+    max-width:1250px;
+    margin:auto;
+    padding:28px 20px 50px;
+}
+
+.page-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.page-title h1{
+    font-size:25px;
+    margin-bottom:4px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    margin-bottom:15px;
+    overflow:hidden;
+}
+
+.card-header{
+    padding:15px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.card-header h2{
+    font-size:12px;
+}
+
+.card-header p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.info-box{
+    padding:15px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:13px;
+    box-shadow:var(--shadow);
+}
+
+.info-icon{
+    font-size:20px;
+    margin-bottom:6px;
+}
+
+.info-value{
+    font-size:20px;
+    font-weight:900;
+}
+
+.info-label{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:2px;
+}
+
+.backup-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.backup-option{
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:var(--card);
+}
+
+.option-icon{
+    width:50px;
+    height:50px;
+    border-radius:13px;
+    background:var(--soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    margin-bottom:12px;
+}
+
+.backup-option h3{
+    font-size:13px;
+    margin-bottom:5px;
+}
+
+.backup-option p{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.7;
+    margin-bottom:14px;
+}
+
+.option-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.drop-zone{
+    border:2px dashed var(--border);
+    border-radius:12px;
+    padding:30px 15px;
+    text-align:center;
+    transition:.2s;
+}
+
+.drop-zone.dragover{
+    border-color:var(--primary);
+    background:var(--soft);
+}
+
+.drop-icon{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+.drop-zone h3{
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.drop-zone p{
+    color:var(--muted);
+    font-size:7px;
+    margin-bottom:12px;
+}
+
+.file-name{
+    margin-top:10px;
+    color:var(--primary);
+    font-size:7px;
+    font-weight:900;
+}
+
+.preview{
+    max-height:400px;
+    overflow:auto;
+    border:1px solid var(--border);
+    border-radius:10px;
+}
+
+pre{
+    padding:15px;
+    margin:0;
+    font-family:Consolas,monospace;
+    font-size:7px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    word-break:break-word;
+    color:var(--text);
+}
+
+.warning-box{
+    padding:13px;
+    border-radius:10px;
+    background:#fffbeb;
+    border:1px solid #fde68a;
+    color:#92400e;
+    font-size:7.5px;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+body.dark .warning-box{
+    background:#451a03;
+    border-color:#78350f;
+    color:#fbbf24;
+}
+
+.success-box{
+    padding:13px;
+    border-radius:10px;
+    background:#f0fdf4;
+    border:1px solid #bbf7d0;
+    color:#166534;
+    font-size:7.5px;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+body.dark .success-box{
+    background:#052e16;
+    border-color:#166534;
+    color:#86efac;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.status-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--success);
+}
+
+.status strong{
+    font-size:8px;
+}
+
+.status span{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+
+.quick-link{
+    min-height:70px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    text-decoration:none;
+    color:var(--text);
+    background:var(--card);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transition:.2s;
+}
+
+.quick-link:hover{
+    border-color:var(--primary);
+    background:var(--soft);
+    transform:translateY(-2px);
+}
+
+.quick-link .icon{
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.quick-link strong{
+    font-size:6.5px;
+}
+
+.quick-link span{
+    color:var(--muted);
+    font-size:5.5px;
+    margin-top:2px;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:5000;
+    background:#111827;
+    color:#fff;
+    padding:11px 15px;
+    border-radius:9px;
+    font-size:8px;
+    opacity:0;
+    transform:translateY(20px);
+    pointer-events:none;
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.hidden{
+    display:none !important;
+}
+
+@media(max-width:1000px){
+
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:750px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 12px 35px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .actions{
+        width:100%;
+    }
+
+    .actions .btn{
+        flex:1;
+    }
+
+    .backup-grid{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:450px){
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title h1{
+        font-size:21px;
+    }
+}
+
+@media print{
+
+    @page{
+        size:A4;
+        margin:10mm;
+    }
+
+    .header,
+    .actions,
+    .backup-grid,
+    .quick-grid,
+    .drop-zone,
+    .toast{
+        display:none !important;
+    }
+
+    .main{
+        max-width:none;
+        padding:0;
+    }
+
+    .card,
+    .info-box{
+        box-shadow:none;
+    }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+            SNK AI Academy
+            <small>Attendance Backup • 1.50</small>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+        >
+            🌙
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+<section class="page-header">
+
+    <div class="page-title">
+
+        <h1>💾 Attendance Backup</h1>
+
+        <p>
+            Attendance ও student data নিরাপদে backup এবং restore করুন।
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="btn"
+            onclick="refreshInfo()"
+        >
+            ↻ Refresh
+        </button>
+
+        <button
+            class="btn primary"
+            onclick="window.print()"
+        >
+            🖨️ Print
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- STATUS -->
+
+<div class="status">
+
+    <div class="status-dot"></div>
+
+    <div>
+        <strong id="statusTitle">
+            Backup system ready
+        </strong>
+
+        <span id="statusText">
+            Local browser storage থেকে data check করা হচ্ছে...
+        </span>
+    </div>
+
+</div>
+
+
+<!-- INFORMATION -->
+
+<section class="info-grid">
+
+    <div class="info-box">
+
+        <div class="info-icon">
+            👨‍🎓
+        </div>
+
+        <div
+            class="info-value"
+            id="studentCount"
+        >
+            0
+        </div>
+
+        <div class="info-label">
+            Student Records
+        </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <div class="info-icon">
+            📝
+        </div>
+
+        <div
+            class="info-value"
+            id="attendanceCount"
+        >
+            0
+        </div>
+
+        <div class="info-label">
+            Attendance Records
+        </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <div class="info-icon">
+            💾
+        </div>
+
+        <div
+            class="info-value"
+            id="storageCount"
+        >
+            0
+        </div>
+
+        <div class="info-label">
+            Attendance Storage Keys
+        </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <div class="info-icon">
+            📦
+        </div>
+
+        <div
+            class="info-value"
+            id="backupSize"
+        >
+            0 KB
+        </div>
+
+        <div class="info-label">
+            Estimated Backup Size
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BACKUP / RESTORE -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>💾 Backup & Restore</h2>
+
+            <p>
+                আপনার browser-এর localStorage data JSON file হিসেবে সংরক্ষণ করুন।
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="warning-box">
+
+            ⚠️ <strong>গুরুত্বপূর্ণ:</strong>
+            Backup file নিরাপদ জায়গায় রাখুন।
+            Browser data clear করলে localStorage-এর data মুছে যেতে পারে।
+            Restore করার আগে বর্তমান data-এর একটি backup রাখা ভালো।
+
+        </div>
+
+
+        <div class="backup-grid">
+
+
+            <!-- CREATE BACKUP -->
+
+            <div class="backup-option">
+
+                <div class="option-icon">
+                    📥
+                </div>
+
+                <h3>
+                    Create Backup
+                </h3>
+
+                <p>
+                    Student এবং Attendance-এর বর্তমানে থাকা
+                    localStorage data একটি JSON backup file-এ export করুন।
+                </p>
+
+                <div class="option-actions">
+
+                    <button
+                        class="btn primary"
+                        onclick="createBackup()"
+                    >
+                        ⬇️ Download Backup
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="previewBackup()"
+                    >
+                        👁️ Preview
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESTORE -->
+
+            <div class="backup-option">
+
+                <div class="option-icon">
+                    📤
+                </div>
+
+                <h3>
+                    Restore Backup
+                </h3>
+
+                <p>
+                    আগে তৈরি করা JSON backup file নির্বাচন করে
+                    data আবার browser localStorage-এ restore করুন।
+                </p>
+
+                <div class="option-actions">
+
+                    <button
+                        class="btn success"
+                        onclick="document.getElementById('backupFile').click()"
+                    >
+                        📂 Select Backup
+                    </button>
+
+                    <input
+                        type="file"
+                        id="backupFile"
+                        accept=".json,application/json"
+                        class="hidden"
+                        onchange="handleBackupFile(event)"
+                    >
+
+                </div>
+
+                <div
+                    class="file-name"
+                    id="selectedFile"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PREVIEW -->
+
+<section
+    class="card"
+    id="previewCard"
+>
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>👁️ Backup Preview</h2>
+
+            <p>
+                Backup-এর ভিতরের data দেখুন।
+            </p>
+
+        </div>
+
+        <button
+            class="btn small"
+            onclick="closePreview()"
+        >
+            ✕ Close
+        </button>
+
+    </div>
+
+    <div class="card-body">
+
+        <div
+            class="preview"
+        >
+
+            <pre
+                id="previewContent"
+            >Preview তৈরি হয়নি।</pre>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESTORE PREVIEW -->
+
+<section
+    class="card hidden"
+    id="restoreCard"
+>
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>📦 Restore Preview</h2>
+
+            <p>
+                Restore করার আগে backup-এর summary দেখুন।
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div
+            class="success-box"
+            id="restoreSummary"
+        ></div>
+
+        <div class="option-actions">
+
+            <button
+                class="btn success"
+                onclick="confirmRestore()"
+            >
+                ✅ Confirm Restore
+            </button>
+
+            <button
+                class="btn"
+                onclick="cancelRestore()"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUICK ACCESS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>⚡ Attendance Quick Access</h2>
+
+            <p>
+                Attendance module-এর অন্যান্য pages
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="quick-grid">
+
+            <a
+                class="quick-link"
+                href="attendance-dashboard.html"
+            >
+                <div class="icon">📊</div>
+                <strong>Dashboard</strong>
+                <span>Overview</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="student-attendance.html"
+            >
+                <div class="icon">📝</div>
+                <strong>Student Attendance</strong>
+                <span>Mark attendance</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-reports.html"
+            >
+                <div class="icon">📋</div>
+                <strong>Reports</strong>
+                <span>Reports</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-student-history.html"
+            >
+                <div class="icon">📚</div>
+                <strong>Student History</strong>
+                <span>History</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-calendar.html"
+            >
+                <div class="icon">📅</div>
+                <strong>Calendar</strong>
+                <span>Calendar</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-summary.html"
+            >
+                <div class="icon">📈</div>
+                <strong>Summary</strong>
+                <span>Summary</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-alerts.html"
+            >
+                <div class="icon">🚨</div>
+                <strong>Alerts</strong>
+                <span>Alerts</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-notifications.html"
+            >
+                <div class="icon">🔔</div>
+                <strong>Notifications</strong>
+                <span>Notifications</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-export.html"
+            >
+                <div class="icon">📤</div>
+                <strong>Export</strong>
+                <span>Export data</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-settings.html"
+            >
+                <div class="icon">⚙️</div>
+                <strong>Settings</strong>
+                <span>Settings</span>
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-audit-log.html"
+            >
+                <div class="icon">🛡️</div>
+                <strong>Audit Log</strong>
+                <span>Activity log</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer
+    style="
+        text-align:center;
+        color:var(--muted);
+        font-size:8px;
+        padding:20px;
+    "
+>
+    © 2026 SNK AI Academy • Attendance Backup • 1.50
+</footer>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =========================================================
+   1.50 ATTENDANCE BACKUP
+========================================================= */
+
+const STUDENT_KEYS = [
+    "snkStudents",
+    "students",
+    "studentRecords",
+    "snkStudentRecords"
+];
+
+const ATTENDANCE_KEYS = [
+    "snkStudentAttendance",
+    "snkAttendanceRecords",
+    "snkAttendance",
+    "attendanceRecords",
+    "studentAttendance",
+    "studentAttendanceRecords",
+    "attendanceData",
+    "attendance"
+];
+
+const BACKUP_KEYS = [
+    ...STUDENT_KEYS,
+    ...ATTENDANCE_KEYS
+];
+
+const THEME_KEY =
+    "snkAttendanceBackupTheme";
+
+let pendingRestoreData = null;
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        refreshInfo();
+
+        closePreview();
+
+    }
+);
+
+
+/* =========================================================
+   GET STORAGE DATA
+========================================================= */
+
+function getStorageData(){
+
+    const data = {};
+
+    BACKUP_KEYS.forEach(
+        function(key){
+
+            const value =
+                localStorage.getItem(key);
+
+            if(
+                value !== null
+            ){
+
+                data[key] =
+                    value;
+
+            }
+
+        }
+    );
+
+    return data;
+
+}
+
+
+/* =========================================================
+   PARSE ARRAY COUNT
+========================================================= */
+
+function getArrayCount(
+    keys
+){
+
+    let total = 0;
+
+    keys.forEach(
+        function(key){
+
+            const value =
+                localStorage.getItem(key);
+
+            if(!value){
+                return;
+            }
+
+            try{
+
+                const data =
+                    JSON.parse(value);
+
+                if(
+                    Array.isArray(data)
+                ){
+
+                    total +=
+                        data.length;
+
+                }
+                else if(
+                    data &&
+                    Array.isArray(
+                        data.records
+                    )
+                ){
+
+                    total +=
+                        data.records.length;
+
+                }
+                else if(
+                    data &&
+                    Array.isArray(
+                        data.students
+                    )
+                ){
+
+                    total +=
+                        data.students.length;
+
+                }
+                else if(
+                    data &&
+                    Array.isArray(
+                        data.attendance
+                    )
+                ){
+
+                    total +=
+                        data.attendance.length;
+
+                }
+
+            }catch(error){
+
+                /* Ignore invalid JSON */
+
+            }
+
+        }
+    );
+
+    return total;
+
+}
+
+
+/* =========================================================
+   STORAGE COUNT
+========================================================= */
+
+function getAttendanceStorageCount(){
+
+    let count = 0;
+
+    ATTENDANCE_KEYS.forEach(
+        function(key){
+
+            if(
+                localStorage.getItem(key)
+                !== null
+            ){
+
+                count++;
+
+            }
+
+        }
+    );
+
+    return count;
+
+}
+
+
+/* =========================================================
+   ESTIMATED SIZE
+========================================================= */
+
+function getBackupSize(data){
+
+    const json =
+        JSON.stringify(
+            data
+        );
+
+    const bytes =
+        new Blob(
+            [json]
+        ).size;
+
+    return formatBytes(bytes);
+
+}
+
+
+/* =========================================================
+   REFRESH INFO
+========================================================= */
+
+function refreshInfo(){
+
+    const data =
+        getStorageData();
+
+
+    const studentCount =
+        getArrayCount(
+            STUDENT_KEYS
+        );
+
+
+    const attendanceCount =
+        getArrayCount(
+            ATTENDANCE_KEYS
+        );
+
+
+    const storageCount =
+        getAttendanceStorageCount();
+
+
+    document.getElementById(
+        "studentCount"
+    ).textContent =
+        studentCount;
+
+
+    document.getElementById(
+        "attendanceCount"
+    ).textContent =
+        attendanceCount;
+
+
+    document.getElementById(
+        "storageCount"
+    ).textContent =
+        storageCount;
+
+
+    document.getElementById(
+        "backupSize"
+    ).textContent =
+        getBackupSize(
+            data
+        );
+
+
+    if(
+        storageCount > 0
+    ){
+
+        document.getElementById(
+            "statusTitle"
+        ).textContent =
+            "Attendance data found ✓";
+
+
+        document.getElementById(
+            "statusText"
+        ).textContent =
+            "Local browser storage-এ attendance data পাওয়া গেছে।";
+
+    }
+    else{
+
+        document.getElementById(
+            "statusTitle"
+        ).textContent =
+            "No attendance storage found";
+
+
+        document.getElementById(
+            "statusText"
+        ).textContent =
+            "বর্তমানে পরিচিত attendance storage key-এ data পাওয়া যায়নি।";
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE BACKUP
+========================================================= */
+
+function createBackup(){
+
+    const data =
+        getStorageData();
+
+
+    const keys =
+        Object.keys(data);
+
+
+    if(
+        keys.length === 0
+    ){
+
+        showToast(
+            "Backup করার মতো data পাওয়া যায়নি!"
+        );
+
+        return;
+
+    }
+
+
+    const backup = {
+
+        application:
+            "SNK AI Academy",
+
+        module:
+            "Attendance",
+
+        version:
+            "1.50",
+
+        createdAt:
+            new Date()
+            .toISOString(),
+
+        createdAtLocal:
+            new Date()
+            .toLocaleString(
+                "bn-BD"
+            ),
+
+        storageKeys:
+            keys,
+
+        data:
+            data
+
+    };
+
+
+    const json =
+        JSON.stringify(
+            backup,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [json],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    const now =
+        new Date();
+
+
+    const datePart =
+        now.getFullYear() +
+        "-" +
+        String(
+            now.getMonth() + 1
+        ).padStart(2,"0") +
+        "-" +
+        String(
+            now.getDate()
+        ).padStart(2,"0");
+
+
+    const timePart =
+        String(
+            now.getHours()
+        ).padStart(2,"0") +
+        "-" +
+        String(
+            now.getMinutes()
+        ).padStart(2,"0");
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        "snk-attendance-backup-" +
+        datePart +
+        "-" +
+        timePart +
+        ".json";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    showToast(
+        "Backup downloaded ✓"
+    );
+
+}
+
+
+/* =========================================================
+   PREVIEW BACKUP
+========================================================= */
+
+function previewBackup(){
+
+    const data =
+        getStorageData();
+
+
+    const backup = {
+
+        application:
+            "SNK AI Academy",
+
+        module:
+            "Attendance",
+
+        version:
+            "1.50",
+
+        createdAt:
+            new Date()
+            .toISOString(),
+
+        storageKeys:
+            Object.keys(data),
+
+        data:
+            data
+
+    };
+
+
+    document.getElementById(
+        "previewCard"
+    ).classList.remove(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "previewContent"
+    ).textContent =
+        JSON.stringify(
+            backup,
+            null,
+            2
+        );
+
+
+    document.getElementById(
+        "previewCard"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+/* =========================================================
+   CLOSE PREVIEW
+========================================================= */
+
+function closePreview(){
+
+    document.getElementById(
+        "previewCard"
+    ).classList.add(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   HANDLE FILE
+========================================================= */
+
+function handleBackupFile(event){
+
+    const file =
+        event.target.files[0];
+
+
+    if(!file){
+        return;
+    }
+
+
+    document.getElementById(
+        "selectedFile"
+    ).textContent =
+        "Selected: " +
+        file.name;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function(e){
+
+            try{
+
+                const backup =
+                    JSON.parse(
+                        e.target.result
+                    );
+
+
+                validateBackup(
+                    backup
+                );
+
+
+            }catch(error){
+
+                pendingRestoreData =
+                    null;
+
+
+                document.getElementById(
+                    "restoreCard"
+                ).classList.add(
+                    "hidden"
+                );
+
+
+                showToast(
+                    "Invalid JSON backup file!"
+                );
+
+                console.error(
+                    error
+                );
+
+            }
+
+        };
+
+
+    reader.readAsText(
+        file
+    );
+
+}
+
+
+/* =========================================================
+   VALIDATE BACKUP
+========================================================= */
+
+function validateBackup(
+    backup
+){
+
+    if(
+        !backup ||
+        typeof backup !== "object"
+    ){
+
+        throw new Error(
+            "Invalid backup"
+        );
+
+    }
+
+
+    if(
+        !backup.data ||
+        typeof backup.data !== "object"
+    ){
+
+        throw new Error(
+            "Backup data missing"
+        );
+
+    }
+
+
+    const keys =
+        Object.keys(
+            backup.data
+        );
+
+
+    const allowedKeys =
+        keys.filter(
+            key =>
+                BACKUP_KEYS.includes(
+                    key
+                )
+        );
+
+
+    if(
+        allowedKeys.length === 0
+    ){
+
+        throw new Error(
+            "No supported attendance/student data found"
+        );
+
+    }
+
+
+    pendingRestoreData =
+        backup;
+
+
+    const studentKeys =
+        allowedKeys.filter(
+            key =>
+                STUDENT_KEYS.includes(
+                    key
+                )
+        );
+
+
+    const attendanceKeys =
+        allowedKeys.filter(
+            key =>
+                ATTENDANCE_KEYS.includes(
+                    key
+                )
+        );
+
+
+    document.getElementById(
+        "restoreSummary"
+    ).innerHTML = `
+
+        <strong>
+            Backup file ready for restore ✓
+        </strong>
+
+        <br><br>
+
+        📦 Backup version:
+        ${escapeHTML(
+            backup.version ||
+            "Unknown"
+        )}
+
+        <br>
+
+        📅 Created:
+        ${escapeHTML(
+            backup.createdAtLocal ||
+            backup.createdAt ||
+            "Unknown"
+        )}
+
+        <br>
+
+        🔑 Supported keys:
+        ${allowedKeys.length}
+
+        <br>
+
+        👨‍🎓 Student keys:
+        ${studentKeys.length}
+
+        <br>
+
+        📝 Attendance keys:
+        ${attendanceKeys.length}
+
+        <br><br>
+
+        <strong>
+            Restore করলে একই নামের existing localStorage
+            keys overwrite হতে পারে।
+        </strong>
+
+    `;
+
+
+    document.getElementById(
+        "restoreCard"
+    ).classList.remove(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "restoreCard"
+    ).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+
+    showToast(
+        "Backup file verified ✓"
+    );
+
+}
+
+
+/* =========================================================
+   CONFIRM RESTORE
+========================================================= */
+
+function confirmRestore(){
+
+    if(
+        !pendingRestoreData ||
+        !pendingRestoreData.data
+    ){
+
+        showToast(
+            "Restore data পাওয়া যায়নি!"
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        window.confirm(
+            "আপনি কি নিশ্চিতভাবে এই backup restore করতে চান?\n\n" +
+            "Existing একই storage keys overwrite হতে পারে।"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    const data =
+        pendingRestoreData.data;
+
+
+    let restored =
+        0;
+
+
+    Object.keys(data)
+    .forEach(
+        function(key){
+
+            if(
+                !BACKUP_KEYS.includes(
+                    key
+                )
+            ){
+
+                return;
+
+            }
+
+
+            const value =
+                data[key];
+
+
+            if(
+                typeof value !==
+                "string"
+            ){
+
+                localStorage.setItem(
+                    key,
+                    JSON.stringify(
+                        value
+                    )
+                );
+
+            }
+            else{
+
+                localStorage.setItem(
+                    key,
+                    value
+                );
+
+            }
+
+
+            restored++;
+
+        }
+    );
+
+
+    pendingRestoreData =
+        null;
+
+
+    document.getElementById(
+        "restoreCard"
+    ).classList.add(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "backupFile"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "selectedFile"
+    ).textContent =
+        "";
+
+
+    refreshInfo();
+
+
+    showToast(
+        restored +
+        " storage key restored ✓"
+    );
+
+
+    setTimeout(
+        function(){
+
+            window.location.reload();
+
+        },
+        1000
+    );
+
+}
+
+
+/* =========================================================
+   CANCEL RESTORE
+========================================================= */
+
+function cancelRestore(){
+
+    pendingRestoreData =
+        null;
+
+
+    document.getElementById(
+        "restoreCard"
+    ).classList.add(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "backupFile"
+    ).value =
+        "";
+
+
+    document.getElementById(
+        "selectedFile"
+    ).textContent =
+        "";
+
+
+    showToast(
+        "Restore cancelled"
+    );
+
+}
+
+
+/* =========================================================
+   DRAG & DROP
+========================================================= */
+
+const dropZone =
+    document.createElement(
+        "div"
+    );
+
+
+/*
+   The file input is intentionally used as the
+   primary restore interface.
+   Drag & drop support is attached to the
+   existing backup option.
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        const options =
+            document.querySelectorAll(
+                ".backup-option"
+            );
+
+
+        if(
+            options.length < 2
+        ){
+            return;
+        }
+
+
+        const restoreOption =
+            options[1];
+
+
+        restoreOption.addEventListener(
+            "dragover",
+            function(event){
+
+                event.preventDefault();
+
+                restoreOption.style.borderColor =
+                    "var(--primary)";
+
+                restoreOption.style.background =
+                    "var(--soft)";
+
+            }
+        );
+
+
+        restoreOption.addEventListener(
+            "dragleave",
+            function(){
+
+                restoreOption.style.borderColor =
+                    "";
+
+                restoreOption.style.background =
+                    "";
+
+            }
+        );
+
+
+        restoreOption.addEventListener(
+            "drop",
+            function(event){
+
+                event.preventDefault();
+
+                restoreOption.style.borderColor =
+                    "";
+
+                restoreOption.style.background =
+                    "";
+
+
+                const file =
+                    event.dataTransfer
+                    .files[0];
+
+
+                if(!file){
+                    return;
+                }
+
+
+                if(
+                    !file.name
+                    .toLowerCase()
+                    .endsWith(".json")
+                ){
+
+                    showToast(
+                        "শুধু JSON backup file দিন!"
+                    );
+
+                    return;
+
+                }
+
+
+                document.getElementById(
+                    "selectedFile"
+                ).textContent =
+                    "Selected: " +
+                    file.name;
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function(e){
+
+                        try{
+
+                            const backup =
+                                JSON.parse(
+                                    e.target.result
+                                );
+
+
+                            validateBackup(
+                                backup
+                            );
+
+
+                        }catch(error){
+
+                            showToast(
+                                "Invalid backup file!"
+                            );
+
+                        }
+
+                    };
+
+
+                reader.readAsText(
+                    file
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   FORMAT BYTES
+========================================================= */
+
+function formatBytes(
+    bytes
+){
+
+    if(
+        bytes === 0
+    ){
+
+        return "0 KB";
+
+    }
+
+
+    const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+    ];
+
+
+    const index =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    const value =
+        bytes /
+        Math.pow(
+            1024,
+            index
+        );
+
+
+    return (
+        Math.max(
+            value,
+            0.01
+        ).toFixed(2) +
+        " " +
+        units[index]
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function loadTheme(){
+
+    if(
+        localStorage.getItem(
+            THEME_KEY
+        ) === "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+    }
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+        document.body.classList.contains(
+            "dark"
+        )
+        ?
+        "☀️"
+        :
+        "🌙";
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "attendance-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================================
+   STORAGE CHANGE
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            BACKUP_KEYS.includes(
+                event.key
+            )
+        ){
+
+            refreshInfo();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

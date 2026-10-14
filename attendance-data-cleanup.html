@@ -1,0 +1,4757 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Attendance Data Cleanup | 1.52</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+    --purple:#7c3aed;
+
+    --soft:#f1ffdd;
+    --soft-danger:#fef2f2;
+    --soft-warning:#fffbeb;
+    --soft-success:#f0fdf4;
+
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --soft:#1c2e00;
+    --soft-danger:#450a0a;
+    --soft-warning:#451a03;
+    --soft-success:#052e16;
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:70px;
+
+    padding:12px 25px;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:13px}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.main{
+    width:min(1400px,100%);
+    margin:auto;
+    padding:28px 20px 60px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.page-title h1{
+    font-size:25px;
+    line-height:1.2;
+    margin-bottom:5px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.btn{
+    min-height:40px;
+
+    padding:0 14px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:var(--card);
+    color:var(--text);
+
+    font-size:8px;
+    font-weight:900;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    border-color:var(--primary);
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn.success{
+    background:var(--success);
+    border-color:var(--success);
+    color:#fff;
+}
+
+.btn.danger{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+.btn.warning{
+    background:var(--warning);
+    border-color:var(--warning);
+    color:#fff;
+}
+
+.btn.purple{
+    background:var(--purple);
+    border-color:var(--purple);
+    color:#fff;
+}
+
+.btn.small{
+    min-height:32px;
+    padding:0 10px;
+    font-size:7px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:15px;
+}
+
+.card-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.card-header h2{
+    font-size:12px;
+}
+
+.card-header p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    position:relative;
+
+    padding:15px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+.stat-value{
+    font-size:22px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.stat.danger{
+    border-color:#fecaca;
+}
+
+.stat.warning{
+    border-color:#fde68a;
+}
+
+.stat.success{
+    border-color:#bbf7d0;
+}
+
+.stat.purple{
+    border-color:#ddd6fe;
+}
+
+.scan-box{
+    padding:18px;
+
+    border:1px dashed var(--primary);
+    border-radius:12px;
+
+    background:var(--soft);
+
+    text-align:center;
+}
+
+.scan-icon{
+    font-size:36px;
+    margin-bottom:8px;
+}
+
+.scan-box h3{
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.scan-box p{
+    color:var(--muted);
+    font-size:7px;
+    margin-bottom:12px;
+}
+
+.scan-actions{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.issue-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.issue-card{
+    padding:14px;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    background:var(--card);
+}
+
+.issue-card h3{
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.issue-card p{
+    color:var(--muted);
+    font-size:7px;
+    line-height:1.6;
+}
+
+.issue-count{
+    font-size:22px;
+    font-weight:900;
+    margin-bottom:4px;
+}
+
+.issue-card.duplicate{
+    border-left:4px solid var(--purple);
+}
+
+.issue-card.invalid{
+    border-left:4px solid var(--danger);
+}
+
+.issue-card.empty{
+    border-left:4px solid var(--warning);
+}
+
+.issue-card.unknown{
+    border-left:4px solid #64748b;
+}
+
+.table-wrap{
+    width:100%;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:1050px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:10px 9px;
+
+    border-bottom:1px solid var(--border);
+
+    text-align:left;
+    vertical-align:middle;
+
+    font-size:7.5px;
+}
+
+th{
+    background:var(--soft);
+    font-weight:900;
+    white-space:nowrap;
+}
+
+tr:hover td{
+    background:rgba(90,138,0,.025);
+}
+
+.checkbox{
+    width:15px;
+    height:15px;
+    cursor:pointer;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+
+    padding:4px 8px;
+
+    border-radius:999px;
+
+    font-size:6.5px;
+    font-weight:900;
+}
+
+.badge.duplicate{
+    background:#ede9fe;
+    color:#5b21b6;
+}
+
+.badge.invalid{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.badge.empty{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.badge.unknown{
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.badge.valid{
+    background:#dcfce7;
+    color:#166534;
+}
+
+body.dark .badge.duplicate{
+    background:#2e1065;
+    color:#c4b5fd;
+}
+
+body.dark .badge.invalid{
+    background:#450a0a;
+    color:#fca5a5;
+}
+
+body.dark .badge.empty{
+    background:#451a03;
+    color:#fcd34d;
+}
+
+body.dark .badge.unknown{
+    background:#1e293b;
+    color:#cbd5e1;
+}
+
+body.dark .badge.valid{
+    background:#052e16;
+    color:#86efac;
+}
+
+.toolbar{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
+    gap:8px;
+    align-items:end;
+}
+
+.field label{
+    display:block;
+    font-size:7px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.field input,
+.field select{
+    width:100%;
+
+    min-height:40px;
+
+    padding:0 11px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    outline:none;
+
+    background:var(--card);
+    color:var(--text);
+
+    font-size:8px;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--primary);
+}
+
+.empty-state{
+    padding:45px 20px;
+    text-align:center;
+}
+
+.empty-state .icon{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.empty-state h3{
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.empty-state p{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.cleanup-panel{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+
+    padding:12px;
+
+    background:var(--soft-warning);
+
+    border:1px solid #fde68a;
+    border-radius:10px;
+}
+
+body.dark .cleanup-panel{
+    border-color:#78350f;
+}
+
+.cleanup-panel strong{
+    font-size:8px;
+}
+
+.cleanup-panel span{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.cleanup-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+.progress-box{
+    margin-top:12px;
+    display:none;
+}
+
+.progress-box.show{
+    display:block;
+}
+
+.progress-track{
+    width:100%;
+    height:9px;
+
+    background:var(--border);
+
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+
+    background:var(--primary);
+
+    transition:.2s;
+}
+
+.progress-text{
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    text-align:center;
+}
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+}
+
+.quick-link{
+    min-height:70px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    color:var(--text);
+    text-decoration:none;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    transition:.2s;
+}
+
+.quick-link:hover{
+    background:var(--soft);
+    border-color:var(--primary);
+}
+
+.quick-link .icon{
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.quick-link strong{
+    font-size:6.5px;
+}
+
+.quick-link span{
+    color:var(--muted);
+    font-size:5.5px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    z-index:3000;
+
+    background:rgba(0,0,0,.58);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+}
+
+.modal-box{
+    width:min(550px,100%);
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:var(--card);
+
+    border-radius:15px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+.modal-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header h2{
+    font-size:12px;
+}
+
+.modal-body{
+    padding:15px;
+}
+
+.modal-body p{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.7;
+}
+
+.modal-footer{
+    padding:12px 15px;
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+    justify-content:flex-end;
+
+    gap:7px;
+}
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    z-index:5000;
+
+    max-width:350px;
+
+    padding:11px 15px;
+
+    background:#111827;
+    color:#fff;
+
+    border-radius:9px;
+
+    font-size:8px;
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+    pointer-events:none;
+
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.footer{
+    padding:20px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:8px;
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .toolbar{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .issue-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 12px 40px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .toolbar{
+        grid-template-columns:1fr;
+    }
+
+    .issue-grid{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:430px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+
+    .header-actions .btn:first-child{
+        display:none;
+    }
+}
+
+@media print{
+
+    .header,
+    .actions,
+    .scan-box,
+    .toolbar,
+    .cleanup-panel,
+    .quick-grid,
+    .action-cell,
+    .footer{
+        display:none!important;
+    }
+
+    .main{
+        max-width:none;
+        padding:0;
+    }
+
+    .card,
+    .stat{
+        box-shadow:none;
+    }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Attendance Data Cleanup • 1.52
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+            title="Theme"
+        >
+            🌙
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+
+<!-- PAGE HEADER -->
+
+<section class="page-header">
+
+    <div class="page-title">
+
+        <h1>
+            🧹 Attendance Data Cleanup
+        </h1>
+
+        <p>
+            Attendance localStorage data scan করে duplicate, invalid ও empty records manage করুন।
+        </p>
+
+    </div>
+
+
+    <div class="actions">
+
+        <button
+            class="btn"
+            onclick="scanData()"
+        >
+            🔍 Scan Data
+        </button>
+
+        <button
+            class="btn"
+            onclick="window.print()"
+        >
+            🖨️ Print
+        </button>
+
+        <button
+            class="btn success"
+            onclick="createBackup()"
+        >
+            💾 Backup
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-icon">
+            📦
+        </div>
+
+        <div
+            class="stat-value"
+            id="totalRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Total Records
+        </div>
+
+    </div>
+
+
+    <div class="stat purple">
+
+        <div class="stat-icon">
+            🔁
+        </div>
+
+        <div
+            class="stat-value"
+            id="duplicateRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Duplicate Records
+        </div>
+
+    </div>
+
+
+    <div class="stat danger">
+
+        <div class="stat-icon">
+            ⚠️
+        </div>
+
+        <div
+            class="stat-value"
+            id="invalidRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Invalid Records
+        </div>
+
+    </div>
+
+
+    <div class="stat warning">
+
+        <div class="stat-icon">
+            🗑️
+        </div>
+
+        <div
+            class="stat-value"
+            id="emptyRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Empty Records
+        </div>
+
+    </div>
+
+
+    <div class="stat success">
+
+        <div class="stat-icon">
+            ✅
+        </div>
+
+        <div
+            class="stat-value"
+            id="validRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Valid Records
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SCAN -->
+
+<section class="card">
+
+    <div class="card-body">
+
+        <div class="scan-box">
+
+            <div class="scan-icon">
+                🧹
+            </div>
+
+            <h3>
+                Attendance Data Scanner
+            </h3>
+
+            <p>
+                আপনার browser-এর localStorage-এ থাকা common attendance keys scan করে সমস্যা খুঁজে বের করবে।
+            </p>
+
+            <div class="scan-actions">
+
+                <button
+                    class="btn primary"
+                    onclick="scanData()"
+                >
+                    🔍 Scan Now
+                </button>
+
+                <button
+                    class="btn"
+                    onclick="refreshPageData()"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+            <div
+                class="progress-box"
+                id="progressBox"
+            >
+
+                <div class="progress-track">
+
+                    <div
+                        class="progress-bar"
+                        id="progressBar"
+                    ></div>
+
+                </div>
+
+                <div
+                    class="progress-text"
+                    id="progressText"
+                >
+                    Preparing scan...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ISSUE SUMMARY -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                🩺 Data Health
+            </h2>
+
+            <p>
+                Attendance records-এর বর্তমান data quality summary
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="issue-grid">
+
+            <div class="issue-card duplicate">
+
+                <div
+                    class="issue-count"
+                    id="duplicateIssueCount"
+                >
+                    0
+                </div>
+
+                <h3>
+                    🔁 Duplicate
+                </h3>
+
+                <p>
+                    একই student + date + status-এর একাধিক record।
+                </p>
+
+            </div>
+
+
+            <div class="issue-card invalid">
+
+                <div
+                    class="issue-count"
+                    id="invalidIssueCount"
+                >
+                    0
+                </div>
+
+                <h3>
+                    ⚠️ Invalid
+                </h3>
+
+                <p>
+                    Student name/ID/date অথবা status-এর প্রয়োজনীয় data অনুপস্থিত বা অস্বাভাবিক।
+                </p>
+
+            </div>
+
+
+            <div class="issue-card empty">
+
+                <div
+                    class="issue-count"
+                    id="emptyIssueCount"
+                >
+                    0
+                </div>
+
+                <h3>
+                    🗑️ Empty
+                </h3>
+
+                <p>
+                    সম্পূর্ণ empty বা ব্যবহারযোগ্য তথ্যবিহীন record।
+                </p>
+
+            </div>
+
+
+            <div class="issue-card unknown">
+
+                <div
+                    class="issue-count"
+                    id="unknownIssueCount"
+                >
+                    0
+                </div>
+
+                <h3>
+                    ❔ Unknown Status
+                </h3>
+
+                <p>
+                    Present, Absent, Late বা Leave ছাড়া অন্য status।
+                </p>
+
+            </div>
+
+
+            <div class="issue-card">
+
+                <div
+                    class="issue-count"
+                    id="storageKeyCount"
+                >
+                    0
+                </div>
+
+                <h3>
+                    🗄️ Storage Keys
+                </h3>
+
+                <p>
+                    যেসব localStorage key-তে attendance data পাওয়া গেছে।
+                </p>
+
+            </div>
+
+
+            <div class="issue-card">
+
+                <div
+                    class="issue-count"
+                    id="studentCount"
+                >
+                    0
+                </div>
+
+                <h3>
+                    👨‍🎓 Students
+                </h3>
+
+                <p>
+                    Unique student ID/name-এর আনুমানিক সংখ্যা।
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FILTER -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                🔎 Filter Problem Records
+            </h2>
+
+            <p>
+                Cleanup করার আগে নির্দিষ্ট ধরনের records দেখুন।
+            </p>
+
+        </div>
+
+        <button
+            class="btn small"
+            onclick="resetFilters()"
+        >
+            Reset
+        </button>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="toolbar">
+
+            <div class="field">
+
+                <label>
+                    Search
+                </label>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Student name / ID..."
+                    oninput="applyFilters()"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Issue Type
+                </label>
+
+                <select
+                    id="issueFilter"
+                    onchange="applyFilters()"
+                >
+
+                    <option value="all">
+                        All Records
+                    </option>
+
+                    <option value="duplicate">
+                        Duplicate
+                    </option>
+
+                    <option value="invalid">
+                        Invalid
+                    </option>
+
+                    <option value="empty">
+                        Empty
+                    </option>
+
+                    <option value="unknown">
+                        Unknown Status
+                    </option>
+
+                    <option value="valid">
+                        Valid
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Storage Key
+                </label>
+
+                <select
+                    id="keyFilter"
+                    onchange="applyFilters()"
+                >
+
+                    <option value="all">
+                        All Keys
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="btn primary"
+                onclick="applyFilters()"
+            >
+                🔍 Apply
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CLEANUP PANEL -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                🧹 Cleanup Actions
+            </h2>
+
+            <p>
+                নির্বাচিত records-এর উপর action প্রয়োগ করুন।
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="cleanup-panel">
+
+            <div>
+
+                <strong>
+                    Selected:
+                    <span id="selectedCount">
+                        0
+                    </span>
+                </strong>
+
+                <br>
+
+                <span>
+                    Data delete করার আগে backup নেওয়া recommended।
+                </span>
+
+            </div>
+
+
+            <div class="cleanup-actions">
+
+                <button
+                    class="btn small"
+                    onclick="selectAllVisible()"
+                >
+                    ☑️ Select Visible
+                </button>
+
+                <button
+                    class="btn small"
+                    onclick="clearSelection()"
+                >
+                    ☐ Clear
+                </button>
+
+                <button
+                    class="btn small warning"
+                    onclick="removeSelectedDuplicates()"
+                >
+                    🔁 Remove Duplicates
+                </button>
+
+                <button
+                    class="btn small danger"
+                    onclick="deleteSelected()"
+                >
+                    🗑️ Delete Selected
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RECORD TABLE -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                📋 Cleanup Records
+            </h2>
+
+            <p id="resultText">
+                Scan করুন।
+            </p>
+
+        </div>
+
+
+        <button
+            class="btn small"
+            onclick="exportIssueReport()"
+        >
+            📤 Issue Report
+        </button>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div
+            class="table-wrap"
+            id="tableContainer"
+        >
+
+            <div class="empty-state">
+
+                <div class="icon">
+                    🔍
+                </div>
+
+                <h3>
+                    Data scan করা হয়নি
+                </h3>
+
+                <p>
+                    উপরের “Scan Now” button চাপুন।
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUICK ACCESS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                ⚡ Attendance Quick Access
+            </h2>
+
+            <p>
+                Attendance module-এর অন্যান্য pages
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="quick-grid">
+
+            <a
+                class="quick-link"
+                href="attendance-dashboard.html"
+            >
+
+                <div class="icon">
+                    📊
+                </div>
+
+                <strong>
+                    Dashboard
+                </strong>
+
+                <span>
+                    Overview
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="student-attendance.html"
+            >
+
+                <div class="icon">
+                    📝
+                </div>
+
+                <strong>
+                    Student Attendance
+                </strong>
+
+                <span>
+                    Mark
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-reports.html"
+            >
+
+                <div class="icon">
+                    📋
+                </div>
+
+                <strong>
+                    Reports
+                </strong>
+
+                <span>
+                    Reports
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-student-history.html"
+            >
+
+                <div class="icon">
+                    📚
+                </div>
+
+                <strong>
+                    Student History
+                </strong>
+
+                <span>
+                    History
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-calendar.html"
+            >
+
+                <div class="icon">
+                    📅
+                </div>
+
+                <strong>
+                    Calendar
+                </strong>
+
+                <span>
+                    Calendar
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-summary.html"
+            >
+
+                <div class="icon">
+                    📈
+                </div>
+
+                <strong>
+                    Summary
+                </strong>
+
+                <span>
+                    Summary
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-alerts.html"
+            >
+
+                <div class="icon">
+                    🚨
+                </div>
+
+                <strong>
+                    Alerts
+                </strong>
+
+                <span>
+                    Alerts
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-notifications.html"
+            >
+
+                <div class="icon">
+                    🔔
+                </div>
+
+                <strong>
+                    Notifications
+                </strong>
+
+                <span>
+                    Notifications
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-export.html"
+            >
+
+                <div class="icon">
+                    📤
+                </div>
+
+                <strong>
+                    Export
+                </strong>
+
+                <span>
+                    Export
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-settings.html"
+            >
+
+                <div class="icon">
+                    ⚙️
+                </div>
+
+                <strong>
+                    Settings
+                </strong>
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-audit-log.html"
+            >
+
+                <div class="icon">
+                    🛡️
+                </div>
+
+                <strong>
+                    Audit Log
+                </strong>
+
+                <span>
+                    Activity
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-backup.html"
+            >
+
+                <div class="icon">
+                    💾
+                </div>
+
+                <strong>
+                    Backup
+                </strong>
+
+                <span>
+                    Backup
+                </span>
+
+            </a>
+
+
+            <a
+                class="quick-link"
+                href="attendance-data-manager.html"
+            >
+
+                <div class="icon">
+                    🗂️
+                </div>
+
+                <strong>
+                    Data Manager
+                </strong>
+
+                <span>
+                    Manage
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    © 2026 SNK AI Academy
+    • Attendance Data Cleanup
+    • Version 1.52
+
+</footer>
+
+</main>
+
+
+<!-- CONFIRM MODAL -->
+
+<div
+    class="modal hidden"
+    id="confirmModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="confirmTitle">
+                Confirm Action
+            </h2>
+
+            <button
+                class="btn small"
+                onclick="closeConfirm()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <p id="confirmMessage">
+                আপনি কি নিশ্চিত?
+            </p>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn"
+                onclick="closeConfirm()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn danger"
+                id="confirmButton"
+                onclick="confirmAction()"
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =========================================================
+   1.52 ATTENDANCE DATA CLEANUP
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   STORAGE KEYS
+--------------------------------------------------------- */
+
+const ATTENDANCE_KEYS = [
+
+    "snkStudentAttendance",
+
+    "snkAttendanceRecords",
+
+    "snkAttendance",
+
+    "attendanceRecords",
+
+    "studentAttendance",
+
+    "studentAttendanceRecords",
+
+    "attendanceData",
+
+    "attendance"
+
+];
+
+
+/* ---------------------------------------------------------
+   STATE
+--------------------------------------------------------- */
+
+let allRecords = [];
+
+let filteredRecords = [];
+
+let selectedRecords = new Set();
+
+let confirmCallback = null;
+
+let toastTimer = null;
+
+
+/* ---------------------------------------------------------
+   INIT
+--------------------------------------------------------- */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        scanData();
+
+    }
+);
+
+
+/* =========================================================
+   SCAN DATA
+========================================================= */
+
+function scanData(){
+
+    showProgress(
+        true,
+        5,
+        "Attendance storage scan শুরু হচ্ছে..."
+    );
+
+
+    setTimeout(
+        function(){
+
+            allRecords = [];
+
+            selectedRecords.clear();
+
+
+            let keyIndex = 0;
+
+
+            ATTENDANCE_KEYS.forEach(
+                function(key){
+
+                    keyIndex++;
+
+                    const progress =
+                        Math.round(
+                            (
+                                keyIndex /
+                                ATTENDANCE_KEYS.length
+                            ) *
+                            80
+                        );
+
+
+                    const raw =
+                        localStorage.getItem(
+                            key
+                        );
+
+
+                    showProgress(
+                        true,
+                        progress,
+                        "Scanning: " + key
+                    );
+
+
+                    if(!raw){
+                        return;
+                    }
+
+
+                    try{
+
+                        const parsed =
+                            JSON.parse(
+                                raw
+                            );
+
+
+                        extractRecords(
+                            parsed,
+                            key
+                        );
+
+                    }
+                    catch(error){
+
+                        allRecords.push({
+
+                            recordId:
+                                "invalid-storage-" +
+                                key,
+
+                            sourceKey:
+                                key,
+
+                            name:
+                                "Storage Parse Error",
+
+                            studentId:
+                                "-",
+
+                            date:
+                                "-",
+
+                            status:
+                                "unknown",
+
+                            note:
+                                "Invalid JSON in localStorage",
+
+                            original:
+                                null,
+
+                            issue:
+                                "invalid",
+
+                            rawError:
+                                true
+
+                        });
+
+                    }
+
+                }
+            );
+
+
+            classifyRecords();
+
+            populateKeyFilter();
+
+            applyFilters();
+
+            updateHealthStats();
+
+
+            showProgress(
+                true,
+                100,
+                "Scan complete ✓"
+            );
+
+
+            setTimeout(
+                function(){
+
+                    showProgress(
+                        false,
+                        0,
+                        ""
+                    );
+
+                },
+                600
+            );
+
+
+            showToast(
+                allRecords.length +
+                " টি attendance record scan করা হয়েছে।"
+            );
+
+
+        },
+        120
+    );
+
+}
+
+
+/* =========================================================
+   EXTRACT RECORDS
+========================================================= */
+
+function extractRecords(
+    data,
+    sourceKey
+){
+
+    if(
+        Array.isArray(data)
+    ){
+
+        data.forEach(
+            function(item,index){
+
+                allRecords.push(
+                    createRecord(
+                        item,
+                        sourceKey,
+                        index
+                    )
+                );
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    if(
+        data &&
+        typeof data === "object"
+    ){
+
+        const arrays = [
+
+            {
+                name:"records",
+                value:data.records
+            },
+
+            {
+                name:"attendance",
+                value:data.attendance
+            },
+
+            {
+                name:"attendances",
+                value:data.attendances
+            },
+
+            {
+                name:"data",
+                value:data.data
+            },
+
+            {
+                name:"items",
+                value:data.items
+            },
+
+            {
+                name:"students",
+                value:data.students
+            }
+
+        ];
+
+
+        for(
+            const entry of arrays
+        ){
+
+            if(
+                Array.isArray(
+                    entry.value
+                )
+            ){
+
+                entry.value.forEach(
+                    function(item,index){
+
+                        allRecords.push(
+                            createRecord(
+                                item,
+                                sourceKey,
+                                index,
+                                entry.name
+                            )
+                        );
+
+                    }
+                );
+
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+           If object itself looks like an attendance record
+        */
+
+        if(
+            looksLikeAttendanceRecord(
+                data
+            )
+        ){
+
+            allRecords.push(
+                createRecord(
+                    data,
+                    sourceKey,
+                    0
+                )
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE RECORD
+========================================================= */
+
+function createRecord(
+    item,
+    sourceKey,
+    index,
+    arrayName=""
+){
+
+    if(
+        !item ||
+        typeof item !== "object"
+    ){
+
+        return {
+
+            recordId:
+                sourceKey +
+                "||" +
+                index,
+
+            sourceKey:
+                sourceKey,
+
+            name:
+                "",
+
+            studentId:
+                "",
+
+            date:
+                "",
+
+            status:
+                "",
+
+            note:
+                "",
+
+            original:
+                item,
+
+            index:
+                index,
+
+            arrayName:
+                arrayName,
+
+            issue:
+                "empty"
+
+        };
+
+    }
+
+
+    const name =
+        firstValue(
+            item,
+            [
+                "studentName",
+                "name",
+                "student_name",
+                "student",
+                "fullName"
+            ]
+        );
+
+
+    const studentId =
+        firstValue(
+            item,
+            [
+                "studentId",
+                "studentID",
+                "student_id",
+                "roll",
+                "rollNo",
+                "rollNumber"
+            ]
+        );
+
+
+    const date =
+        firstValue(
+            item,
+            [
+                "date",
+                "attendanceDate",
+                "attendance_date",
+                "day"
+            ]
+        );
+
+
+    const status =
+        firstValue(
+            item,
+            [
+                "status",
+                "attendanceStatus",
+                "attendance_status",
+                "presentStatus"
+            ]
+        );
+
+
+    const note =
+        firstValue(
+            item,
+            [
+                "note",
+                "remarks",
+                "remark",
+                "comment"
+            ]
+        );
+
+
+    return {
+
+        recordId:
+            sourceKey +
+            "||" +
+            arrayName +
+            "||" +
+            index,
+
+        sourceKey:
+            sourceKey,
+
+        name:
+            String(
+                name ??
+                ""
+            ),
+
+        studentId:
+            String(
+                studentId ??
+                ""
+            ),
+
+        date:
+            normalizeDate(
+                date
+            ),
+
+        status:
+            normalizeStatus(
+                status
+            ),
+
+        rawStatus:
+            String(
+                status ??
+                ""
+            ),
+
+        note:
+            String(
+                note ??
+                ""
+            ),
+
+        original:
+            item,
+
+        index:
+            index,
+
+        arrayName:
+            arrayName,
+
+        issue:
+            "valid"
+
+    };
+
+}
+
+
+/* =========================================================
+   CLASSIFY
+========================================================= */
+
+function classifyRecords(){
+
+    /*
+       First determine empty / invalid / unknown.
+    */
+
+    allRecords.forEach(
+        function(record){
+
+            if(
+                record.rawError
+            ){
+
+                record.issue =
+                    "invalid";
+
+                return;
+
+            }
+
+
+            const hasAnyValue =
+                Boolean(
+                    record.name ||
+                    record.studentId ||
+                    record.date ||
+                    record.rawStatus ||
+                    record.note
+                );
+
+
+            if(!hasAnyValue){
+
+                record.issue =
+                    "empty";
+
+                return;
+
+            }
+
+
+            const missingCore =
+                !record.name ||
+                !record.studentId ||
+                !record.date;
+
+
+            if(missingCore){
+
+                record.issue =
+                    "invalid";
+
+                return;
+
+            }
+
+
+            if(
+                ![
+                    "present",
+                    "absent",
+                    "late",
+                    "leave"
+                ].includes(
+                    record.status
+                )
+            ){
+
+                record.issue =
+                    "unknown";
+
+                return;
+
+            }
+
+
+            record.issue =
+                "valid";
+
+        }
+    );
+
+
+    /*
+       Duplicate detection.
+       We mark only later copies as duplicate,
+       keeping the first record.
+    */
+
+    const seen =
+        new Map();
+
+
+    allRecords.forEach(
+        function(record){
+
+            if(
+                record.issue === "empty" ||
+                record.issue === "invalid"
+            ){
+
+                return;
+
+            }
+
+
+            const key =
+                [
+
+                    record.studentId
+                        .trim()
+                        .toLowerCase(),
+
+                    record.name
+                        .trim()
+                        .toLowerCase(),
+
+                    record.date,
+
+                    record.status
+
+                ].join(
+                    "||"
+                );
+
+
+            if(
+                seen.has(
+                    key
+                )
+            ){
+
+                record.issue =
+                    "duplicate";
+
+            }
+            else{
+
+                seen.set(
+                    key,
+                    record.recordId
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FIRST VALUE
+========================================================= */
+
+function firstValue(
+    object,
+    keys
+){
+
+    for(
+        const key of keys
+    ){
+
+        if(
+            object[key] !== undefined &&
+            object[key] !== null &&
+            object[key] !== ""
+        ){
+
+            return object[key];
+
+        }
+
+    }
+
+    return "";
+
+}
+
+
+/* =========================================================
+   LOOKS LIKE ATTENDANCE
+========================================================= */
+
+function looksLikeAttendanceRecord(
+    object
+){
+
+    const keys =
+        Object.keys(
+            object
+        )
+        .map(
+            key =>
+                key.toLowerCase()
+        );
+
+
+    return keys.some(
+        key =>
+            key.includes(
+                "attendance"
+            ) ||
+            key.includes(
+                "student"
+            ) ||
+            key === "status" ||
+            key === "date"
+    );
+
+}
+
+
+/* =========================================================
+   NORMALIZE STATUS
+========================================================= */
+
+function normalizeStatus(
+    status
+){
+
+    const value =
+        String(
+            status ||
+            ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    if(
+        [
+            "present",
+            "p",
+            "yes",
+            "1",
+            "attended"
+        ].includes(
+            value
+        )
+    ){
+
+        return "present";
+
+    }
+
+
+    if(
+        [
+            "absent",
+            "a",
+            "no",
+            "0"
+        ].includes(
+            value
+        )
+    ){
+
+        return "absent";
+
+    }
+
+
+    if(
+        [
+            "late",
+            "l",
+            "delay"
+        ].includes(
+            value
+        )
+    ){
+
+        return "late";
+
+    }
+
+
+    if(
+        [
+            "leave",
+            "holiday",
+            "excused"
+        ].includes(
+            value
+        )
+    ){
+
+        return "leave";
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =========================================================
+   NORMALIZE DATE
+========================================================= */
+
+function normalizeDate(
+    value
+){
+
+    if(
+        value === undefined ||
+        value === null ||
+        value === ""
+    ){
+
+        return "";
+
+    }
+
+
+    const text =
+        String(
+            value
+        );
+
+
+    const match =
+        text.match(
+            /^(\d{4})-(\d{1,2})-(\d{1,2})/
+        );
+
+
+    if(match){
+
+        return (
+
+            match[1] +
+            "-" +
+            String(
+                match[2]
+            ).padStart(
+                2,
+                "0"
+            ) +
+            "-" +
+            String(
+                match[3]
+            ).padStart(
+                2,
+                "0"
+            )
+
+        );
+
+    }
+
+
+    const parsed =
+        new Date(
+            value
+        );
+
+
+    if(
+        !isNaN(
+            parsed.getTime()
+        )
+    ){
+
+        return (
+
+            parsed.getFullYear() +
+            "-" +
+            String(
+                parsed.getMonth()+1
+            ).padStart(
+                2,
+                "0"
+            ) +
+            "-" +
+            String(
+                parsed.getDate()
+            ).padStart(
+                2,
+                "0"
+            )
+
+        );
+
+    }
+
+
+    return text;
+
+}
+
+
+/* =========================================================
+   UPDATE HEALTH STATS
+========================================================= */
+
+function updateHealthStats(){
+
+    const total =
+        allRecords.length;
+
+
+    const duplicates =
+        allRecords.filter(
+            r =>
+                r.issue === "duplicate"
+        ).length;
+
+
+    const invalid =
+        allRecords.filter(
+            r =>
+                r.issue === "invalid"
+        ).length;
+
+
+    const empty =
+        allRecords.filter(
+            r =>
+                r.issue === "empty"
+        ).length;
+
+
+    const unknown =
+        allRecords.filter(
+            r =>
+                r.issue === "unknown"
+        ).length;
+
+
+    const valid =
+        allRecords.filter(
+            r =>
+                r.issue === "valid"
+        ).length;
+
+
+    const keys =
+        new Set(
+            allRecords.map(
+                r =>
+                    r.sourceKey
+            )
+        );
+
+
+    const students =
+        new Set();
+
+
+    allRecords.forEach(
+        function(record){
+
+            const id =
+                record.studentId
+                .trim()
+                .toLowerCase();
+
+
+            const name =
+                record.name
+                .trim()
+                .toLowerCase();
+
+
+            if(id){
+
+                students.add(
+                    "id:" + id
+                );
+
+            }
+            else if(name){
+
+                students.add(
+                    "name:" + name
+                );
+
+            }
+
+        }
+    );
+
+
+    setText(
+        "totalRecords",
+        total
+    );
+
+    setText(
+        "duplicateRecords",
+        duplicates
+    );
+
+    setText(
+        "invalidRecords",
+        invalid
+    );
+
+    setText(
+        "emptyRecords",
+        empty
+    );
+
+    setText(
+        "validRecords",
+        valid
+    );
+
+
+    setText(
+        "duplicateIssueCount",
+        duplicates
+    );
+
+    setText(
+        "invalidIssueCount",
+        invalid
+    );
+
+    setText(
+        "emptyIssueCount",
+        empty
+    );
+
+    setText(
+        "unknownIssueCount",
+        unknown
+    );
+
+    setText(
+        "storageKeyCount",
+        keys.size
+    );
+
+    setText(
+        "studentCount",
+        students.size
+    );
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function applyFilters(){
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const issue =
+        document.getElementById(
+            "issueFilter"
+        ).value;
+
+
+    const key =
+        document.getElementById(
+            "keyFilter"
+        ).value;
+
+
+    filteredRecords =
+        allRecords.filter(
+            function(record){
+
+                const matchesSearch =
+                    !search ||
+
+                    record.name
+                        .toLowerCase()
+                        .includes(
+                            search
+                        ) ||
+
+                    record.studentId
+                        .toLowerCase()
+                        .includes(
+                            search
+                        ) ||
+
+                    record.date
+                        .toLowerCase()
+                        .includes(
+                            search
+                        );
+
+
+                const matchesIssue =
+                    issue === "all" ||
+                    record.issue === issue;
+
+
+                const matchesKey =
+                    key === "all" ||
+                    record.sourceKey === key;
+
+
+                return (
+                    matchesSearch &&
+                    matchesIssue &&
+                    matchesKey
+                );
+
+            }
+        );
+
+
+    renderTable();
+
+    updateSelectedCount();
+
+}
+
+
+/* =========================================================
+   RESET FILTER
+========================================================= */
+
+function resetFilters(){
+
+    document.getElementById(
+        "searchInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "issueFilter"
+    ).value = "all";
+
+
+    document.getElementById(
+        "keyFilter"
+    ).value = "all";
+
+
+    applyFilters();
+
+}
+
+
+/* =========================================================
+   KEY FILTER
+========================================================= */
+
+function populateKeyFilter(){
+
+    const select =
+        document.getElementById(
+            "keyFilter"
+        );
+
+
+    const current =
+        select.value;
+
+
+    select.innerHTML = `
+
+        <option value="all">
+            All Keys
+        </option>
+
+    `;
+
+
+    const keys =
+        [
+            ...new Set(
+                allRecords.map(
+                    r =>
+                        r.sourceKey
+                )
+            )
+        ];
+
+
+    keys.sort();
+
+
+    keys.forEach(
+        function(key){
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                key;
+
+
+            option.textContent =
+                key;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    if(
+        keys.includes(
+            current
+        )
+    ){
+
+        select.value =
+            current;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER TABLE
+========================================================= */
+
+function renderTable(){
+
+    const container =
+        document.getElementById(
+            "tableContainer"
+        );
+
+
+    if(
+        filteredRecords.length === 0
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="icon">
+                    📭
+                </div>
+
+                <h3>
+                    কোনো record পাওয়া যায়নি
+                </h3>
+
+                <p>
+                    Filter পরিবর্তন করুন অথবা আবার Scan করুন।
+                </p>
+
+            </div>
+
+        `;
+
+
+        setText(
+            "resultText",
+            "0 টি record"
+        );
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        <input
+                            class="checkbox"
+                            type="checkbox"
+                            id="selectAllCheckbox"
+                            onchange="toggleSelectAllVisible(this.checked)"
+                        >
+                    </th>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Student ID
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Issue
+                    </th>
+
+                    <th>
+                        Storage Key
+                    </th>
+
+                    <th>
+                        Note
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    filteredRecords.forEach(
+        function(record,index){
+
+            const checked =
+                selectedRecords.has(
+                    record.recordId
+                )
+                ?
+                "checked"
+                :
+                "";
+
+
+            html += `
+
+                <tr>
+
+                    <td>
+
+                        <input
+                            class="checkbox record-checkbox"
+                            type="checkbox"
+                            ${checked}
+                            onchange="toggleRecordSelection('${escapeJS(record.recordId)}',this.checked)"
+                        >
+
+                    </td>
+
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${escapeHTML(
+                                record.name ||
+                                "—"
+                            )}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            record.studentId ||
+                            "—"
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            record.date ||
+                            "—"
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${statusLabel(
+                            record.status
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${issueBadge(
+                            record.issue
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            record.sourceKey
+                        )}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(
+                            record.note ||
+                            "—"
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+
+    setText(
+        "resultText",
+        filteredRecords.length +
+        " টি record দেখানো হচ্ছে"
+    );
+
+
+    updateMasterCheckbox();
+
+}
+
+
+/* =========================================================
+   STATUS LABEL
+========================================================= */
+
+function statusLabel(
+    status
+){
+
+    const labels = {
+
+        present:"✓ Present",
+
+        absent:"✕ Absent",
+
+        late:"⏰ Late",
+
+        leave:"📅 Leave"
+
+    };
+
+
+    if(
+        labels[status]
+    ){
+
+        return `
+            <span
+                class="badge valid"
+            >
+                ${labels[status]}
+            </span>
+        `;
+
+    }
+
+
+    return `
+        <span
+            class="badge unknown"
+        >
+            ? ${escapeHTML(
+                status ||
+                "Unknown"
+            )}
+        </span>
+    `;
+
+}
+
+
+/* =========================================================
+   ISSUE BADGE
+========================================================= */
+
+function issueBadge(
+    issue
+){
+
+    const labels = {
+
+        duplicate:
+            "🔁 Duplicate",
+
+        invalid:
+            "⚠️ Invalid",
+
+        empty:
+            "🗑️ Empty",
+
+        unknown:
+            "❔ Unknown",
+
+        valid:
+            "✓ Valid"
+
+    };
+
+
+    return `
+
+        <span
+            class="badge ${issue}"
+        >
+            ${labels[issue] || "Unknown"}
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   SELECT RECORD
+========================================================= */
+
+function toggleRecordSelection(
+    recordId,
+    checked
+){
+
+    if(checked){
+
+        selectedRecords.add(
+            recordId
+        );
+
+    }
+    else{
+
+        selectedRecords.delete(
+            recordId
+        );
+
+    }
+
+
+    updateSelectedCount();
+
+    updateMasterCheckbox();
+
+}
+
+
+/* =========================================================
+   SELECT ALL VISIBLE
+========================================================= */
+
+function selectAllVisible(){
+
+    filteredRecords.forEach(
+        function(record){
+
+            selectedRecords.add(
+                record.recordId
+            );
+
+        }
+    );
+
+
+    renderTable();
+
+    updateSelectedCount();
+
+
+    showToast(
+        filteredRecords.length +
+        " টি visible record select হয়েছে।"
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR SELECTION
+========================================================= */
+
+function clearSelection(){
+
+    selectedRecords.clear();
+
+    renderTable();
+
+    updateSelectedCount();
+
+
+    showToast(
+        "Selection cleared।"
+    );
+
+}
+
+
+/* =========================================================
+   TOGGLE ALL
+========================================================= */
+
+function toggleSelectAllVisible(
+    checked
+){
+
+    if(checked){
+
+        filteredRecords.forEach(
+            function(record){
+
+                selectedRecords.add(
+                    record.recordId
+                );
+
+            }
+        );
+
+    }
+    else{
+
+        filteredRecords.forEach(
+            function(record){
+
+                selectedRecords.delete(
+                    record.recordId
+                );
+
+            }
+        );
+
+    }
+
+
+    renderTable();
+
+    updateSelectedCount();
+
+}
+
+
+/* =========================================================
+   MASTER CHECKBOX
+========================================================= */
+
+function updateMasterCheckbox(){
+
+    const checkbox =
+        document.getElementById(
+            "selectAllCheckbox"
+        );
+
+
+    if(!checkbox){
+        return;
+    }
+
+
+    const visibleIds =
+        filteredRecords.map(
+            r =>
+                r.recordId
+        );
+
+
+    const selectedVisible =
+        visibleIds.filter(
+            id =>
+                selectedRecords.has(
+                    id
+                )
+        ).length;
+
+
+    checkbox.checked =
+        visibleIds.length > 0 &&
+        selectedVisible ===
+        visibleIds.length;
+
+
+    checkbox.indeterminate =
+        selectedVisible > 0 &&
+        selectedVisible <
+        visibleIds.length;
+
+}
+
+
+/* =========================================================
+   SELECTED COUNT
+========================================================= */
+
+function updateSelectedCount(){
+
+    setText(
+        "selectedCount",
+        selectedRecords.size
+    );
+
+}
+
+
+/* =========================================================
+   REMOVE SELECTED DUPLICATES
+========================================================= */
+
+function removeSelectedDuplicates(){
+
+    const duplicateSelected =
+        allRecords.filter(
+            function(record){
+
+                return (
+                    selectedRecords.has(
+                        record.recordId
+                    ) &&
+                    record.issue ===
+                    "duplicate"
+                );
+
+            }
+        );
+
+
+    if(
+        duplicateSelected.length === 0
+    ){
+
+        showToast(
+            "Selected duplicate record নেই।"
+        );
+
+        return;
+
+    }
+
+
+    openConfirm(
+        "Duplicate Records Delete",
+        duplicateSelected.length +
+        " টি duplicate record permanently delete করা হবে।\n\n" +
+        "আগে Backup নেওয়া হয়েছে কি?",
+        function(){
+
+            deleteRecords(
+                duplicateSelected
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DELETE SELECTED
+========================================================= */
+
+function deleteSelected(){
+
+    const selected =
+        allRecords.filter(
+            record =>
+                selectedRecords.has(
+                    record.recordId
+                )
+        );
+
+
+    if(
+        selected.length === 0
+    ){
+
+        showToast(
+            "কোনো record select করা হয়নি।"
+        );
+
+        return;
+
+    }
+
+
+    openConfirm(
+        "Delete Selected Records",
+        selected.length +
+        " টি record permanently delete করা হবে।\n\n" +
+        "এই action undo করা যাবে না। আগে Backup নিন।",
+        function(){
+
+            deleteRecords(
+                selected
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DELETE RECORDS
+========================================================= */
+
+function deleteRecords(
+    records
+){
+
+    const grouped =
+        groupByStorageKey(
+            records
+        );
+
+
+    let deletedCount = 0;
+
+
+    Object.keys(
+        grouped
+    ).forEach(
+        function(storageKey){
+
+            const raw =
+                localStorage.getItem(
+                    storageKey
+                );
+
+
+            if(!raw){
+                return;
+            }
+
+
+            try{
+
+                const data =
+                    JSON.parse(
+                        raw
+                    );
+
+
+                const targets =
+                    grouped[
+                        storageKey
+                    ];
+
+
+                if(
+                    Array.isArray(data)
+                ){
+
+                    const indexes =
+                        targets
+                            .map(
+                                r =>
+                                    r.index
+                            )
+                            .filter(
+                                i =>
+                                    Number.isInteger(i)
+                            )
+                            .sort(
+                                (a,b) =>
+                                    b-a
+                            );
+
+
+                    indexes.forEach(
+                        function(index){
+
+                            if(
+                                index >= 0 &&
+                                index < data.length
+                            ){
+
+                                data.splice(
+                                    index,
+                                    1
+                                );
+
+                                deletedCount++;
+
+                            }
+
+                        }
+                    );
+
+
+                    localStorage.setItem(
+                        storageKey,
+                        JSON.stringify(
+                            data
+                        )
+                    );
+
+                }
+                else{
+
+                    deletedCount +=
+                        deleteFromObjectStorage(
+                            storageKey,
+                            data,
+                            targets
+                        );
+
+                }
+
+            }
+            catch(error){
+
+                console.error(
+                    "Delete error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+    selectedRecords.clear();
+
+
+    scanData();
+
+
+    showToast(
+        deletedCount +
+        " টি record delete করা হয়েছে।"
+    );
+
+}
+
+
+/* =========================================================
+   DELETE FROM OBJECT STORAGE
+========================================================= */
+
+function deleteFromObjectStorage(
+    storageKey,
+    data,
+    targets
+){
+
+    const arrayNames = [
+
+        "records",
+        "attendance",
+        "attendances",
+        "data",
+        "items",
+        "students"
+
+    ];
+
+
+    let deleted = 0;
+
+
+    for(
+        const arrayName of arrayNames
+    ){
+
+        if(
+            !Array.isArray(
+                data[arrayName]
+            )
+        ){
+
+            continue;
+
+        }
+
+
+        const indexes =
+            targets
+                .filter(
+                    r =>
+                        r.arrayName ===
+                        arrayName
+                )
+                .map(
+                    r =>
+                        r.index
+                )
+                .filter(
+                    i =>
+                        Number.isInteger(i)
+                )
+                .sort(
+                    (a,b) =>
+                        b-a
+                );
+
+
+        indexes.forEach(
+            function(index){
+
+                if(
+                    index >= 0 &&
+                    index <
+                    data[arrayName].length
+                ){
+
+                    data[arrayName].splice(
+                        index,
+                        1
+                    );
+
+                    deleted++;
+
+                }
+
+            }
+        );
+
+
+        break;
+
+    }
+
+
+    localStorage.setItem(
+        storageKey,
+        JSON.stringify(
+            data
+        )
+    );
+
+
+    return deleted;
+
+}
+
+
+/* =========================================================
+   GROUP STORAGE
+========================================================= */
+
+function groupByStorageKey(
+    records
+){
+
+    return records.reduce(
+        function(result,record){
+
+            if(
+                !result[
+                    record.sourceKey
+                ]
+            ){
+
+                result[
+                    record.sourceKey
+                ] = [];
+
+            }
+
+
+            result[
+                record.sourceKey
+            ].push(
+                record
+            );
+
+
+            return result;
+
+        },
+        {}
+    );
+
+}
+
+
+/* =========================================================
+   BACKUP
+========================================================= */
+
+function createBackup(){
+
+    const backup = {
+
+        application:
+            "SNK AI Academy",
+
+        module:
+            "Attendance",
+
+        page:
+            "attendance-data-cleanup.html",
+
+        version:
+            "1.52",
+
+        createdAt:
+            new Date()
+            .toISOString(),
+
+        storageKeys:
+            {},
+
+        scannedRecords:
+            allRecords.length
+
+    };
+
+
+    ATTENDANCE_KEYS.forEach(
+        function(key){
+
+            const raw =
+                localStorage.getItem(
+                    key
+                );
+
+
+            if(raw !== null){
+
+                try{
+
+                    backup.storageKeys[
+                        key
+                    ] =
+                        JSON.parse(
+                            raw
+                        );
+
+                }
+                catch(error){
+
+                    backup.storageKeys[
+                        key
+                    ] =
+                        raw;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    downloadJSON(
+        backup,
+        "attendance-backup-1.52-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Attendance backup তৈরি হয়েছে ✓"
+    );
+
+}
+
+
+/* =========================================================
+   EXPORT ISSUE REPORT
+========================================================= */
+
+function exportIssueReport(){
+
+    const reportRecords =
+        filteredRecords.map(
+            function(record){
+
+                return {
+
+                    studentName:
+                        record.name,
+
+                    studentId:
+                        record.studentId,
+
+                    date:
+                        record.date,
+
+                    status:
+                        record.status,
+
+                    issue:
+                        record.issue,
+
+                    storageKey:
+                        record.sourceKey,
+
+                    note:
+                        record.note
+
+                };
+
+            }
+        );
+
+
+    const report = {
+
+        application:
+            "SNK AI Academy",
+
+        module:
+            "Attendance Data Cleanup",
+
+        version:
+            "1.52",
+
+        generatedAt:
+            new Date()
+            .toISOString(),
+
+        totalRecords:
+            reportRecords.length,
+
+        records:
+            reportRecords
+
+    };
+
+
+    downloadJSON(
+        report,
+        "attendance-issue-report-1.52-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Issue report exported ✓"
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD JSON
+========================================================= */
+
+function downloadJSON(
+    data,
+    filename
+){
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const a =
+        document.createElement(
+            "a"
+        );
+
+
+    a.href =
+        url;
+
+
+    a.download =
+        filename;
+
+
+    document.body.appendChild(
+        a
+    );
+
+
+    a.click();
+
+
+    a.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+
+/* =========================================================
+   DATE STAMP
+========================================================= */
+
+function dateStamp(){
+
+    const date =
+        new Date();
+
+
+    return (
+
+        date.getFullYear() +
+
+        "-" +
+
+        String(
+            date.getMonth()+1
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "-" +
+
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function showProgress(
+    visible,
+    percent,
+    text
+){
+
+    const box =
+        document.getElementById(
+            "progressBox"
+        );
+
+
+    const bar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    const progressText =
+        document.getElementById(
+            "progressText"
+        );
+
+
+    if(!visible){
+
+        box.classList.remove(
+            "show"
+        );
+
+        return;
+
+    }
+
+
+    box.classList.add(
+        "show"
+    );
+
+
+    bar.style.width =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                percent
+            )
+        ) +
+        "%";
+
+
+    progressText.textContent =
+        text;
+
+}
+
+
+/* =========================================================
+   CONFIRM MODAL
+========================================================= */
+
+function openConfirm(
+    title,
+    message,
+    callback
+){
+
+    document.getElementById(
+        "confirmTitle"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "confirmMessage"
+    ).textContent =
+        message;
+
+
+    confirmCallback =
+        callback;
+
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+function closeConfirm(){
+
+    confirmCallback =
+        null;
+
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.add(
+        "hidden"
+    );
+
+}
+
+
+function confirmAction(){
+
+    const callback =
+        confirmCallback;
+
+
+    closeConfirm();
+
+
+    if(
+        typeof callback ===
+        "function"
+    ){
+
+        callback();
+
+    }
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+const THEME_KEY =
+    "snkAttendanceDataCleanupTheme";
+
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function loadTheme(){
+
+    if(
+        localStorage.getItem(
+            THEME_KEY
+        ) ===
+        "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+    }
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+
+        document.body.classList.contains(
+            "dark"
+        )
+
+        ?
+
+        "☀️"
+
+        :
+
+        "🌙";
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshPageData(){
+
+    scanData();
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "attendance-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   SET TEXT
+========================================================= */
+
+function setText(
+    id,
+    value
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(element){
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ??
+        ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE JS
+========================================================= */
+
+function escapeJS(
+    value
+){
+
+    return String(
+        value ??
+        ""
+    )
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    )
+    .replace(
+        /"/g,
+        '\\"'
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2800
+        );
+
+}
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            closeConfirm();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
+========================================================= */
+
+document.getElementById(
+    "confirmModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            this
+        ){
+
+            closeConfirm();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

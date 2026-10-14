@@ -1,0 +1,3018 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Attendance Recovery History | 1.54</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#fff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+    --purple:#7c3aed;
+
+    --soft:#f1ffdd;
+    --soft-success:#f0fdf4;
+    --soft-warning:#fffbeb;
+    --soft-danger:#fef2f2;
+
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --soft:#1c2e00;
+    --soft-success:#052e16;
+    --soft-warning:#451a03;
+    --soft-danger:#450a0a;
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:70px;
+    padding:12px 25px;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:13px}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.main{
+    width:min(1400px,100%);
+    margin:auto;
+    padding:28px 20px 60px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.page-title h1{
+    font-size:25px;
+    line-height:1.2;
+    margin-bottom:5px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.btn{
+    min-height:40px;
+    padding:0 14px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:var(--card);
+    color:var(--text);
+
+    font-size:8px;
+    font-weight:900;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    border-color:var(--primary);
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn.success{
+    background:var(--success);
+    border-color:var(--success);
+    color:#fff;
+}
+
+.btn.danger{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+.btn.warning{
+    background:var(--warning);
+    border-color:var(--warning);
+    color:#fff;
+}
+
+.btn.small{
+    min-height:32px;
+    padding:0 10px;
+    font-size:7px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:15px;
+}
+
+.card-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.card-header h2{
+    font-size:12px;
+}
+
+.card-header p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    padding:15px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    font-size:19px;
+    margin-bottom:5px;
+}
+
+.stat-value{
+    font-size:22px;
+    font-weight:900;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.stat.success{
+    border-color:#bbf7d0;
+}
+
+.stat.warning{
+    border-color:#fde68a;
+}
+
+.stat.danger{
+    border-color:#fecaca;
+}
+
+.stat.purple{
+    border-color:#ddd6fe;
+}
+
+.filter-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
+    gap:8px;
+    align-items:end;
+}
+
+.field label{
+    display:block;
+    color:var(--muted);
+    font-size:7px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    min-height:39px;
+
+    padding:0 10px;
+
+    background:var(--card);
+    color:var(--text);
+
+    border:1px solid var(--border);
+    border-radius:8px;
+
+    outline:none;
+    font-size:8px;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--primary);
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.summary-box{
+    padding:13px;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.summary-box .label{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.summary-box .value{
+    font-size:18px;
+    font-weight:900;
+    margin-top:3px;
+}
+
+.table-wrap{
+    width:100%;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    min-width:1050px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:10px 9px;
+    border-bottom:1px solid var(--border);
+
+    text-align:left;
+    vertical-align:middle;
+
+    font-size:7.5px;
+}
+
+th{
+    background:var(--soft);
+    font-weight:900;
+    white-space:nowrap;
+}
+
+tr:hover td{
+    background:rgba(90,138,0,.025);
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+
+    padding:4px 8px;
+
+    border-radius:999px;
+
+    font-size:6.5px;
+    font-weight:900;
+}
+
+.badge.success{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge.warning{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.badge.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.badge.info{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+body.dark .badge.success{
+    background:#052e16;
+    color:#86efac;
+}
+
+body.dark .badge.warning{
+    background:#451a03;
+    color:#fcd34d;
+}
+
+body.dark .badge.danger{
+    background:#450a0a;
+    color:#fca5a5;
+}
+
+body.dark .badge.info{
+    background:#1c2e00;
+    color:#93c5fd;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.info-box{
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.info-box .label{
+    color:var(--muted);
+    font-size:7px;
+    margin-bottom:4px;
+}
+
+.info-box .value{
+    font-size:10px;
+    font-weight:900;
+    word-break:break-word;
+}
+
+.warning-box{
+    padding:13px;
+
+    background:var(--soft-warning);
+    border:1px solid #fde68a;
+
+    border-radius:10px;
+
+    display:flex;
+    gap:10px;
+}
+
+.warning-box .icon{
+    font-size:20px;
+}
+
+.warning-box strong{
+    display:block;
+    font-size:9px;
+    margin-bottom:3px;
+}
+
+.warning-box p{
+    color:var(--muted);
+    font-size:7px;
+    line-height:1.7;
+}
+
+.empty{
+    padding:45px 20px;
+    text-align:center;
+}
+
+.empty .icon{
+    font-size:42px;
+    margin-bottom:8px;
+}
+
+.empty h3{
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.empty p{
+    color:var(--muted);
+    font-size:8px;
+}
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+}
+
+.quick-link{
+    min-height:70px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    color:var(--text);
+    text-decoration:none;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    transition:.2s;
+}
+
+.quick-link:hover{
+    background:var(--soft);
+    border-color:var(--primary);
+}
+
+.quick-link .icon{
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.quick-link strong{
+    font-size:6.5px;
+}
+
+.quick-link span{
+    color:var(--muted);
+    font-size:5.5px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    z-index:3000;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+}
+
+.modal-box{
+    width:min(700px,100%);
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:var(--card);
+
+    border-radius:15px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.modal-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.modal-header h2{
+    font-size:12px;
+}
+
+.modal-body{
+    padding:15px;
+}
+
+.modal-body pre{
+    white-space:pre-wrap;
+    word-break:break-word;
+
+    padding:12px;
+
+    background:var(--bg);
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    color:var(--text);
+
+    font-size:7px;
+    line-height:1.7;
+}
+
+.modal-footer{
+    padding:12px 15px;
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+}
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    z-index:5000;
+
+    max-width:350px;
+
+    padding:11px 15px;
+
+    background:#111827;
+    color:#fff;
+
+    border-radius:9px;
+
+    font-size:8px;
+
+    opacity:0;
+    transform:translateY(20px);
+
+    pointer-events:none;
+
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.footer{
+    padding:20px;
+    text-align:center;
+    color:var(--muted);
+    font-size:8px;
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .filter-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 12px 40px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .filter-grid{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:430px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media print{
+
+    .header,
+    .actions,
+    .filters,
+    .quick-grid,
+    .footer,
+    .modal{
+        display:none!important;
+    }
+
+    .main{
+        max-width:none;
+        padding:0;
+    }
+
+    .card,
+    .stat{
+        box-shadow:none;
+    }
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+
+            SNK AI Academy
+
+            <small>
+                Attendance Recovery History • 1.54
+            </small>
+
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+        >
+            🌙
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+<!-- PAGE HEADER -->
+
+<section class="page-header">
+
+    <div class="page-title">
+
+        <h1>
+            🕘 Attendance Recovery History
+        </h1>
+
+        <p>
+            Attendance restore activity, recovery logs এবং pre-restore safety backup দেখুন।
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="btn primary"
+            onclick="refreshPage()"
+        >
+            🔄 Refresh
+        </button>
+
+        <button
+            class="btn"
+            onclick="exportLogs()"
+        >
+            📥 Export Logs
+        </button>
+
+        <button
+            class="btn"
+            onclick="window.print()"
+        >
+            🖨️ Print
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-icon">
+            📝
+        </div>
+
+        <div
+            class="stat-value"
+            id="totalLogs"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Total Recovery Logs
+        </div>
+
+    </div>
+
+
+    <div class="stat success">
+
+        <div class="stat-icon">
+            ✓
+        </div>
+
+        <div
+            class="stat-value"
+            id="totalRestoredKeys"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Restored Keys
+        </div>
+
+    </div>
+
+
+    <div class="stat purple">
+
+        <div class="stat-icon">
+            📋
+        </div>
+
+        <div
+            class="stat-value"
+            id="totalRestoredRecords"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Restored Records
+        </div>
+
+    </div>
+
+
+    <div class="stat warning">
+
+        <div class="stat-icon">
+            🕐
+        </div>
+
+        <div
+            class="stat-value"
+            id="latestRestore"
+        >
+            —
+        </div>
+
+        <div class="stat-label">
+            Latest Restore
+        </div>
+
+    </div>
+
+
+    <div class="stat danger">
+
+        <div class="stat-icon">
+            💾
+        </div>
+
+        <div
+            class="stat-value"
+            id="safetyBackup"
+        >
+            No
+        </div>
+
+        <div class="stat-label">
+            Safety Backup
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FILTER -->
+
+<section class="card filters">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                🔎 Search & Filter
+            </h2>
+
+            <p>
+                Recovery log দ্রুত খুঁজে বের করুন।
+            </p>
+
+        </div>
+
+        <button
+            class="btn small"
+            onclick="resetFilters()"
+        >
+            Reset
+        </button>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="filter-grid">
+
+            <div class="field">
+
+                <label>
+                    Search
+                </label>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Action, version, source..."
+                    oninput="applyFilters()"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Date From
+                </label>
+
+                <input
+                    type="date"
+                    id="dateFrom"
+                    onchange="applyFilters()"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Date To
+                </label>
+
+                <input
+                    type="date"
+                    id="dateTo"
+                    onchange="applyFilters()"
+                >
+
+            </div>
+
+
+            <button
+                class="btn primary"
+                onclick="applyFilters()"
+            >
+                🔎 Apply
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SUMMARY -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                📊 Recovery Summary
+            </h2>
+
+            <p>
+                Current filtered recovery activity
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="summary">
+
+            <div class="summary-box">
+
+                <div class="label">
+                    Filtered Logs
+                </div>
+
+                <div
+                    class="value"
+                    id="filteredLogs"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <div class="label">
+                    Keys Restored
+                </div>
+
+                <div
+                    class="value"
+                    id="filteredKeys"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <div class="label">
+                    Records Restored
+                </div>
+
+                <div
+                    class="value"
+                    id="filteredRecords"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <div class="label">
+                    Latest Source Version
+                </div>
+
+                <div
+                    class="value"
+                    id="latestSource"
+                >
+                    —
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SAFETY BACKUP -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                🛡️ Pre-Restore Safety Backup
+            </h2>
+
+            <p>
+                1.53 restore করার আগে current attendance data এখানে রাখা হয়।
+            </p>
+
+        </div>
+
+        <button
+            class="btn small"
+            onclick="downloadSafetyBackup()"
+            id="downloadSafetyBtn"
+        >
+            📥 Download Safety Backup
+        </button>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <div class="label">
+                    Backup Status
+                </div>
+
+                <div
+                    class="value"
+                    id="safetyStatus"
+                >
+                    Not Available
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="label">
+                    Created At
+                </div>
+
+                <div
+                    class="value"
+                    id="safetyCreated"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="label">
+                    Storage Keys
+                </div>
+
+                <div
+                    class="value"
+                    id="safetyKeys"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="label">
+                    Backup Version
+                </div>
+
+                <div
+                    class="value"
+                    id="safetyVersion"
+                >
+                    —
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LOG TABLE -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                📜 Recovery Activity Log
+            </h2>
+
+            <p>
+                Attendance data restore-এর সব activity।
+            </p>
+
+        </div>
+
+        <button
+            class="btn small danger"
+            onclick="requestClearLogs()"
+        >
+            🗑️ Clear Logs
+        </button>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div
+            class="table-wrap"
+            id="logTableContainer"
+        >
+
+            <div class="empty">
+
+                <div class="icon">
+                    📭
+                </div>
+
+                <h3>
+                    No recovery logs
+                </h3>
+
+                <p>
+                    এখনো কোনো attendance recovery activity পাওয়া যায়নি।
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- INFORMATION -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                ℹ️ Recovery Information
+            </h2>
+
+            <p>
+                1.54 module কীভাবে কাজ করে
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="warning-box">
+
+            <div class="icon">
+                🛡️
+            </div>
+
+            <div>
+
+                <strong>
+                    Safety First
+                </strong>
+
+                <p>
+                    Recovery log শুধুমাত্র localStorage-এ রাখা হয়।
+                    1.53-এর restore process-এর সময় current attendance data
+                    <b>snkAttendanceRecoveryBeforeRestore</b> key-তে safety backup হিসেবে রাখা হয়।
+                    এই page সেই backup এবং recovery activity দেখায়।
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUICK ACCESS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h2>
+                ⚡ Attendance Quick Access
+            </h2>
+
+            <p>
+                Attendance module-এর অন্যান্য pages
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="quick-grid">
+
+            <a class="quick-link" href="attendance-dashboard.html">
+                <div class="icon">📊</div>
+                <strong>Dashboard</strong>
+                <span>Overview</span>
+            </a>
+
+            <a class="quick-link" href="student-attendance.html">
+                <div class="icon">📝</div>
+                <strong>Student Attendance</strong>
+                <span>Mark</span>
+            </a>
+
+            <a class="quick-link" href="attendance-reports.html">
+                <div class="icon">📋</div>
+                <strong>Reports</strong>
+                <span>Reports</span>
+            </a>
+
+            <a class="quick-link" href="attendance-student-history.html">
+                <div class="icon">📚</div>
+                <strong>Student History</strong>
+                <span>History</span>
+            </a>
+
+            <a class="quick-link" href="attendance-calendar.html">
+                <div class="icon">📅</div>
+                <strong>Calendar</strong>
+                <span>Calendar</span>
+            </a>
+
+            <a class="quick-link" href="attendance-summary.html">
+                <div class="icon">📈</div>
+                <strong>Summary</strong>
+                <span>Summary</span>
+            </a>
+
+            <a class="quick-link" href="attendance-alerts.html">
+                <div class="icon">🚨</div>
+                <strong>Alerts</strong>
+                <span>Alerts</span>
+            </a>
+
+            <a class="quick-link" href="attendance-notifications.html">
+                <div class="icon">🔔</div>
+                <strong>Notifications</strong>
+                <span>Notifications</span>
+            </a>
+
+            <a class="quick-link" href="attendance-export.html">
+                <div class="icon">📤</div>
+                <strong>Export</strong>
+                <span>Export</span>
+            </a>
+
+            <a class="quick-link" href="attendance-settings.html">
+                <div class="icon">⚙️</div>
+                <strong>Settings</strong>
+                <span>Settings</span>
+            </a>
+
+            <a class="quick-link" href="attendance-audit-log.html">
+                <div class="icon">🛡️</div>
+                <strong>Audit Log</strong>
+                <span>Activity</span>
+            </a>
+
+            <a class="quick-link" href="attendance-data-cleanup.html">
+                <div class="icon">🧹</div>
+                <strong>Data Cleanup</strong>
+                <span>Cleanup</span>
+            </a>
+
+            <a class="quick-link" href="attendance-data-recovery.html">
+                <div class="icon">♻️</div>
+                <strong>Data Recovery</strong>
+                <span>Recovery</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+    © 2026 SNK AI Academy • Attendance Recovery History • Version 1.54
+</footer>
+
+</main>
+
+
+<!-- LOG DETAILS MODAL -->
+
+<div
+    class="modal hidden"
+    id="detailsModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                📜 Recovery Log Details
+            </h2>
+
+            <button
+                class="btn small"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <pre id="detailsContent"></pre>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn"
+                onclick="closeModal()"
+            >
+                Close
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="downloadSelectedLog()"
+            >
+                📥 Download
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- CONFIRM MODAL -->
+
+<div
+    class="modal hidden"
+    id="confirmModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                ⚠️ Confirm Action
+            </h2>
+
+            <button
+                class="btn small"
+                onclick="closeConfirm()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <p
+                id="confirmText"
+                style="font-size:8px;line-height:1.8;color:var(--muted);"
+            >
+                —
+            </p>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn"
+                onclick="closeConfirm()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn danger"
+                onclick="confirmClearLogs()"
+            >
+                🗑️ Yes, Clear
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =========================================================
+   1.54 ATTENDANCE RECOVERY HISTORY
+========================================================= */
+
+const LOG_KEY =
+    "snkAttendanceRecoveryLogs";
+
+const SAFETY_KEY =
+    "snkAttendanceRecoveryBeforeRestore";
+
+const THEME_KEY =
+    "snkAttendanceRecoveryHistoryTheme";
+
+
+let allLogs = [];
+
+let filteredLogs = [];
+
+let selectedLog = null;
+
+let toastTimer = null;
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        loadLogs();
+
+        loadSafetyBackup();
+
+    }
+);
+
+
+/* =========================================================
+   LOAD LOGS
+========================================================= */
+
+function loadLogs(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                LOG_KEY
+            );
+
+        if(raw){
+
+            const parsed =
+                JSON.parse(
+                    raw
+                );
+
+            allLogs =
+                Array.isArray(
+                    parsed
+                )
+                ?
+                parsed
+                :
+                [];
+
+        }
+        else{
+
+            allLogs = [];
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Log loading error:",
+            error
+        );
+
+        allLogs = [];
+
+    }
+
+
+    allLogs.sort(
+        function(a,b){
+
+            return (
+                new Date(
+                    b.createdAt ||
+                    0
+                )
+                -
+                new Date(
+                    a.createdAt ||
+                    0
+                )
+            );
+
+        }
+    );
+
+
+    filteredLogs =
+        [...allLogs];
+
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   RENDER ALL
+========================================================= */
+
+function renderAll(){
+
+    updateStats();
+
+    renderSummary();
+
+    renderTable();
+
+}
+
+
+/* =========================================================
+   UPDATE STATS
+========================================================= */
+
+function updateStats(){
+
+    const totalKeys =
+        allLogs.reduce(
+            function(total,log){
+
+                return total +
+                    Number(
+                        log.restoredKeys ||
+                        0
+                    );
+
+            },
+            0
+        );
+
+
+    const totalRecords =
+        allLogs.reduce(
+            function(total,log){
+
+                return total +
+                    Number(
+                        log.restoredRecords ||
+                        0
+                    );
+
+            },
+            0
+        );
+
+
+    setText(
+        "totalLogs",
+        allLogs.length
+    );
+
+
+    setText(
+        "totalRestoredKeys",
+        totalKeys
+    );
+
+
+    setText(
+        "totalRestoredRecords",
+        totalRecords
+    );
+
+
+    if(
+        allLogs.length
+    ){
+
+        setText(
+            "latestRestore",
+            shortDate(
+                allLogs[0].createdAt
+            )
+        );
+
+    }
+    else{
+
+        setText(
+            "latestRestore",
+            "—"
+        );
+
+    }
+
+
+    const safety =
+        getSafetyBackup();
+
+
+    setText(
+        "safetyBackup",
+        safety
+        ?
+        "Yes"
+        :
+        "No"
+    );
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function renderSummary(){
+
+    const keys =
+        filteredLogs.reduce(
+            function(total,log){
+
+                return total +
+                    Number(
+                        log.restoredKeys ||
+                        0
+                    );
+
+            },
+            0
+        );
+
+
+    const records =
+        filteredLogs.reduce(
+            function(total,log){
+
+                return total +
+                    Number(
+                        log.restoredRecords ||
+                        0
+                    );
+
+            },
+            0
+        );
+
+
+    setText(
+        "filteredLogs",
+        filteredLogs.length
+    );
+
+
+    setText(
+        "filteredKeys",
+        keys
+    );
+
+
+    setText(
+        "filteredRecords",
+        records
+    );
+
+
+    setText(
+        "latestSource",
+        filteredLogs.length
+        ?
+        (
+            filteredLogs[0]
+            .sourceVersion ||
+            "Unknown"
+        )
+        :
+        "—"
+    );
+
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+function renderTable(){
+
+    const container =
+        document.getElementById(
+            "logTableContainer"
+        );
+
+
+    if(
+        filteredLogs.length === 0
+    ){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="icon">
+                    📭
+                </div>
+
+                <h3>
+                    No recovery logs found
+                </h3>
+
+                <p>
+                    Search/filter পরিবর্তন করুন অথবা 1.53 থেকে recovery করুন।
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Date & Time</th>
+
+                    <th>Action</th>
+
+                    <th>Source Version</th>
+
+                    <th>Restored Keys</th>
+
+                    <th>Restored Records</th>
+
+                    <th>Module Version</th>
+
+                    <th>Details</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+
+    filteredLogs.forEach(
+        function(log,index){
+
+            html += `
+
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            formatDateTime(
+                                log.createdAt
+                            )
+                        )}
+                    </td>
+
+                    <td>
+                        <span class="badge success">
+                            ✓ Restore
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="badge info">
+                            ${escapeHTML(
+                                log.sourceVersion ||
+                                "Unknown"
+                            )}
+                        </span>
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${Number(
+                                log.restoredKeys ||
+                                0
+                            )}
+                        </strong>
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${Number(
+                                log.restoredRecords ||
+                                0
+                            )}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            log.version ||
+                            "1.53"
+                        )}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn small"
+                            onclick="showDetails(${index})"
+                        >
+                            👁️ View
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function applyFilters(){
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const from =
+        document.getElementById(
+            "dateFrom"
+        ).value;
+
+
+    const to =
+        document.getElementById(
+            "dateTo"
+        ).value;
+
+
+    filteredLogs =
+        allLogs.filter(
+            function(log){
+
+                const text =
+                    JSON.stringify(
+                        log
+                    )
+                    .toLowerCase();
+
+
+                if(
+                    search &&
+                    !text.includes(
+                        search
+                    )
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    from
+                ){
+
+                    const date =
+                        new Date(
+                            log.createdAt ||
+                            0
+                        );
+
+
+                    const start =
+                        new Date(
+                            from +
+                            "T00:00:00"
+                        );
+
+
+                    if(
+                        date <
+                        start
+                    ){
+
+                        return false;
+
+                    }
+
+                }
+
+
+                if(
+                    to
+                ){
+
+                    const date =
+                        new Date(
+                            log.createdAt ||
+                            0
+                        );
+
+
+                    const end =
+                        new Date(
+                            to +
+                            "T23:59:59"
+                        );
+
+
+                    if(
+                        date >
+                        end
+                    ){
+
+                        return false;
+
+                    }
+
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    renderSummary();
+
+    renderTable();
+
+}
+
+
+/* =========================================================
+   RESET FILTERS
+========================================================= */
+
+function resetFilters(){
+
+    document.getElementById(
+        "searchInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "dateFrom"
+    ).value = "";
+
+
+    document.getElementById(
+        "dateTo"
+    ).value = "";
+
+
+    filteredLogs =
+        [...allLogs];
+
+
+    renderSummary();
+
+    renderTable();
+
+
+    showToast(
+        "Filters reset ✓"
+    );
+
+}
+
+
+/* =========================================================
+   SHOW DETAILS
+========================================================= */
+
+function showDetails(
+    index
+){
+
+    selectedLog =
+        filteredLogs[index];
+
+
+    if(!selectedLog){
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "detailsContent"
+    ).textContent =
+        JSON.stringify(
+            selectedLog,
+            null,
+            2
+        );
+
+
+    document.getElementById(
+        "detailsModal"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD SELECTED LOG
+========================================================= */
+
+function downloadSelectedLog(){
+
+    if(
+        !selectedLog
+    ){
+
+        return;
+
+    }
+
+
+    downloadJSON(
+        selectedLog,
+        "attendance-recovery-log-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Recovery log downloaded ✓"
+    );
+
+}
+
+
+/* =========================================================
+   EXPORT ALL LOGS
+========================================================= */
+
+function exportLogs(){
+
+    const exportData =
+        {
+
+            application:
+                "SNK AI Academy",
+
+            module:
+                "Attendance Recovery History",
+
+            version:
+                "1.54",
+
+            exportedAt:
+                new Date()
+                .toISOString(),
+
+            totalLogs:
+                allLogs.length,
+
+            logs:
+                filteredLogs
+
+        };
+
+
+    downloadJSON(
+        exportData,
+        "attendance-recovery-history-1.54-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Recovery logs exported ✓"
+    );
+
+}
+
+
+/* =========================================================
+   SAFETY BACKUP
+========================================================= */
+
+function getSafetyBackup(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                SAFETY_KEY
+            );
+
+
+        if(!raw){
+
+            return null;
+
+        }
+
+
+        return JSON.parse(
+            raw
+        );
+
+    }
+    catch(error){
+
+        return null;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD SAFETY
+========================================================= */
+
+function loadSafetyBackup(){
+
+    const safety =
+        getSafetyBackup();
+
+
+    const button =
+        document.getElementById(
+            "downloadSafetyBtn"
+        );
+
+
+    if(!safety){
+
+        setText(
+            "safetyStatus",
+            "Not Available"
+        );
+
+        setText(
+            "safetyCreated",
+            "—"
+        );
+
+        setText(
+            "safetyKeys",
+            "0"
+        );
+
+        setText(
+            "safetyVersion",
+            "—"
+        );
+
+
+        button.disabled =
+            true;
+
+
+        return;
+
+    }
+
+
+    setText(
+        "safetyStatus",
+        "Available ✓"
+    );
+
+
+    setText(
+        "safetyCreated",
+        formatDateTime(
+            safety.createdAt
+        )
+    );
+
+
+    setText(
+        "safetyKeys",
+        Object.keys(
+            safety.storageKeys ||
+            {}
+        ).length
+    );
+
+
+    setText(
+        "safetyVersion",
+        safety.version ||
+        "Unknown"
+    );
+
+
+    button.disabled =
+        false;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD SAFETY BACKUP
+========================================================= */
+
+function downloadSafetyBackup(){
+
+    const safety =
+        getSafetyBackup();
+
+
+    if(!safety){
+
+        showToast(
+            "কোনো safety backup পাওয়া যায়নি।"
+        );
+
+        return;
+
+    }
+
+
+    downloadJSON(
+        safety,
+        "attendance-safety-backup-1.54-" +
+        dateStamp() +
+        ".json"
+    );
+
+
+    showToast(
+        "Safety backup downloaded ✓"
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR LOG REQUEST
+========================================================= */
+
+function requestClearLogs(){
+
+    if(
+        allLogs.length === 0
+    ){
+
+        showToast(
+            "Clear করার মতো কোনো log নেই।"
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "confirmText"
+    ).textContent =
+
+        "আপনি " +
+        allLogs.length +
+        " টি recovery log permanently delete করতে যাচ্ছেন। " +
+        "এই action undo করা যাবে না। Safety backup কিন্তু delete হবে না।";
+
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   CONFIRM CLEAR
+========================================================= */
+
+function confirmClearLogs(){
+
+    localStorage.removeItem(
+        LOG_KEY
+    );
+
+
+    allLogs = [];
+
+    filteredLogs = [];
+
+
+    closeConfirm();
+
+    renderAll();
+
+
+    showToast(
+        "Recovery logs cleared ✓"
+    );
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshPage(){
+
+    loadLogs();
+
+    loadSafetyBackup();
+
+
+    showToast(
+        "Recovery history refreshed ✓"
+    );
+
+}
+
+
+/* =========================================================
+   CLEAR CURRENT FILTERED VIEW
+========================================================= */
+
+function closeModal(){
+
+    document.getElementById(
+        "detailsModal"
+    ).classList.add(
+        "hidden"
+    );
+
+    selectedLog =
+        null;
+
+}
+
+
+function closeConfirm(){
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.add(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD JSON
+========================================================= */
+
+function downloadJSON(
+    data,
+    filename
+){
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        filename;
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+
+/* =========================================================
+   DATE STAMP
+========================================================= */
+
+function dateStamp(){
+
+    const d =
+        new Date();
+
+
+    return (
+
+        d.getFullYear() +
+        "-" +
+        String(
+            d.getMonth()+1
+        ).padStart(
+            2,
+            "0"
+        ) +
+        "-" +
+        String(
+            d.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDateTime(
+    value
+){
+
+    if(!value){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleString(
+        "en-GB",
+        {
+            dateStyle:"medium",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SHORT DATE
+========================================================= */
+
+function shortDate(
+    value
+){
+
+    if(!value){
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "—";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SET TEXT
+========================================================= */
+
+function setText(
+    id,
+    value
+){
+
+    const el =
+        document.getElementById(
+            id
+        );
+
+
+    if(el){
+
+        el.textContent =
+            value;
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ??
+        ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function loadTheme(){
+
+    if(
+        localStorage.getItem(
+            THEME_KEY
+        ) ===
+        "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+    }
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+
+        document.body.classList.contains(
+            "dark"
+        )
+
+        ?
+        "☀️"
+        :
+        "🌙";
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "attendance-data-recovery.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            closeModal();
+
+            closeConfirm();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   OUTSIDE MODAL CLICK
+========================================================= */
+
+document.getElementById(
+    "detailsModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "confirmModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            this
+        ){
+
+            closeConfirm();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```

@@ -1,0 +1,2501 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNK AI Academy | Attendance Recovery Settings | 1.55</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e5e7eb;
+
+    --primary:#5a8a00;
+    --primary-dark:#3d6600;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+    --purple:#7c3aed;
+
+    --soft:#f1ffdd;
+    --soft-success:#f0fdf4;
+    --soft-warning:#fffbeb;
+    --soft-danger:#fef2f2;
+
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+body.dark{
+    --bg:#080d18;
+    --card:#111827;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --border:#1f2937;
+
+    --soft:#1c2e00;
+    --soft-success:#052e16;
+    --soft-warning:#451a03;
+    --soft-danger:#450a0a;
+
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    min-height:70px;
+    padding:12px 25px;
+
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#b7ff00;color:#050505;font-weight:900;font-size:13px}
+
+.logo-text{
+    font-size:14px;
+    font-weight:900;
+}
+
+.logo-text small{
+    display:block;
+    color:var(--muted);
+    font-size:8px;
+    margin-top:2px;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.main{
+    width:min(1200px,100%);
+    margin:auto;
+    padding:28px 20px 60px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.page-title h1{
+    font-size:25px;
+    line-height:1.2;
+    margin-bottom:5px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.btn{
+    min-height:40px;
+    padding:0 14px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    background:var(--card);
+    color:var(--text);
+
+    font-size:8px;
+    font-weight:900;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    border-color:var(--primary);
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.btn.primary{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+}
+
+.btn.primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn.success{
+    background:var(--success);
+    border-color:var(--success);
+    color:#fff;
+}
+
+.btn.danger{
+    background:var(--danger);
+    border-color:var(--danger);
+    color:#fff;
+}
+
+.btn.warning{
+    background:var(--warning);
+    border-color:var(--warning);
+    color:#fff;
+}
+
+.btn.small{
+    min-height:32px;
+    padding:0 10px;
+    font-size:7px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:15px;
+}
+
+.card-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+}
+
+.card-header h2{
+    font-size:12px;
+}
+
+.card-header p{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.settings-list{
+    display:flex;
+    flex-direction:column;
+}
+
+.setting{
+    padding:15px 0;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+.setting:first-child{
+    padding-top:0;
+}
+
+.setting:last-child{
+    border-bottom:0;
+    padding-bottom:0;
+}
+
+.setting-info{
+    flex:1;
+}
+
+.setting-title{
+    font-size:9px;
+    font-weight:900;
+    margin-bottom:3px;
+}
+
+.setting-description{
+    color:var(--muted);
+    font-size:7px;
+    line-height:1.7;
+}
+
+.control{
+    flex-shrink:0;
+}
+
+.switch{
+    position:relative;
+    width:48px;
+    height:26px;
+    display:inline-block;
+}
+
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
+
+.slider{
+    position:absolute;
+    inset:0;
+
+    background:#cbd5e1;
+
+    border-radius:999px;
+
+    transition:.2s;
+}
+
+.slider:before{
+    content:"";
+
+    position:absolute;
+
+    width:20px;
+    height:20px;
+
+    left:3px;
+    top:3px;
+
+    background:white;
+
+    border-radius:50%;
+
+    transition:.2s;
+    box-shadow:0 2px 5px rgba(0,0,0,.2);
+}
+
+.switch input:checked + .slider{
+    background:var(--primary);
+}
+
+.switch input:checked + .slider:before{
+    transform:translateX(22px);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.field label{
+    display:block;
+    color:var(--muted);
+    font-size:7px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    min-height:40px;
+
+    padding:0 10px;
+
+    background:var(--card);
+    color:var(--text);
+
+    border:1px solid var(--border);
+    border-radius:8px;
+
+    outline:none;
+    font-size:8px;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:var(--primary);
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.number-control{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.number-control input{
+    max-width:110px;
+}
+
+.unit{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.info-box{
+    padding:13px;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+
+    margin-bottom:10px;
+}
+
+.info-box:last-child{
+    margin-bottom:0;
+}
+
+.info-box strong{
+    display:block;
+    font-size:8px;
+    margin-bottom:3px;
+}
+
+.info-box span{
+    color:var(--muted);
+    font-size:7px;
+    line-height:1.7;
+}
+
+.warning-box{
+    padding:13px;
+
+    background:var(--soft-warning);
+    border:1px solid #fde68a;
+
+    border-radius:10px;
+
+    display:flex;
+    gap:10px;
+}
+
+.warning-box .icon{
+    font-size:20px;
+}
+
+.warning-box strong{
+    display:block;
+    font-size:9px;
+    margin-bottom:3px;
+}
+
+.warning-box p{
+    color:var(--muted);
+    font-size:7px;
+    line-height:1.7;
+}
+
+.danger-box{
+    padding:15px;
+
+    background:var(--soft-danger);
+    border:1px solid #fecaca;
+
+    border-radius:11px;
+}
+
+.danger-box h3{
+    color:var(--danger);
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.danger-box p{
+    color:var(--muted);
+    font-size:7px;
+    line-height:1.7;
+    margin-bottom:12px;
+}
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+
+    padding:5px 9px;
+
+    border-radius:999px;
+
+    font-size:7px;
+    font-weight:900;
+}
+
+.status.on{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status.off{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+body.dark .status.on{
+    background:#052e16;
+    color:#86efac;
+}
+
+body.dark .status.off{
+    background:#450a0a;
+    color:#fca5a5;
+}
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+}
+
+.quick-link{
+    min-height:70px;
+
+    border:1px solid var(--border);
+    border-radius:9px;
+
+    color:var(--text);
+    text-decoration:none;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    transition:.2s;
+}
+
+.quick-link:hover{
+    background:var(--soft);
+    border-color:var(--primary);
+}
+
+.quick-link .icon{
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.quick-link strong{
+    font-size:6.5px;
+}
+
+.quick-link span{
+    color:var(--muted);
+    font-size:5.5px;
+}
+
+.footer{
+    padding:20px;
+    text-align:center;
+    color:var(--muted);
+    font-size:8px;
+}
+
+.toast{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    z-index:5000;
+
+    max-width:350px;
+
+    padding:11px 15px;
+
+    background:#111827;
+    color:#fff;
+
+    border-radius:9px;
+
+    font-size:8px;
+
+    opacity:0;
+    transform:translateY(20px);
+
+    pointer-events:none;
+
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    z-index:3000;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+}
+
+.modal-box{
+    width:min(520px,100%);
+
+    background:var(--card);
+
+    border-radius:15px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+
+    overflow:hidden;
+}
+
+.modal-header{
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header h2{
+    font-size:12px;
+}
+
+.modal-body{
+    padding:15px;
+}
+
+.modal-body p{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.8;
+}
+
+.modal-footer{
+    padding:12px 15px;
+
+    border-top:1px solid var(--border);
+
+    display:flex;
+    justify-content:flex-end;
+    gap:7px;
+}
+
+.hidden{
+    display:none!important;
+}
+
+@media(max-width:1000px){
+
+    .quick-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:10px 13px;
+    }
+
+    .main{
+        padding:18px 12px 40px;
+    }
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .setting{
+        align-items:flex-start;
+    }
+
+    .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:430px){
+
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+
+    .setting{
+        flex-direction:column;
+    }
+
+    .control{
+        align-self:flex-start;
+    }
+
+}
+
+@media print{
+
+    .header,
+    .actions,
+    .quick-grid,
+    .footer,
+    .btn{
+        display:none!important;
+    }
+
+    .main{
+        max-width:none;
+        padding:0;
+    }
+
+    .card{
+        box-shadow:none;
+    }
+
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#050505">
+<script src="site-shell.js" defer></script>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">SNK</div>
+
+        <div class="logo-text">
+            SNK AI Academy
+            <small>Attendance Recovery Settings • 1.55</small>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+        >
+            🌙
+        </button>
+
+        <button
+            class="btn"
+            onclick="goBack()"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="main">
+
+<section class="page-header">
+
+    <div class="page-title">
+
+        <h1>
+            ⚙️ Attendance Recovery Settings
+        </h1>
+
+        <p>
+            Recovery, safety backup, logging এবং automatic protection-এর settings নিয়ন্ত্রণ করুন।
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="btn"
+            onclick="resetSettings()"
+        >
+            ↩ Reset
+        </button>
+
+        <button
+            class="btn primary"
+            onclick="saveSettings()"
+        >
+            💾 Save Settings
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- CURRENT STATUS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+            <h2>📊 Current Recovery Status</h2>
+            <p>বর্তমান recovery configuration</p>
+        </div>
+
+        <span
+            class="status on"
+            id="systemStatus"
+        >
+            ● Active
+        </span>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <div class="info-box">
+                <strong>Module</strong>
+                <span>Attendance Data Recovery</span>
+            </div>
+
+            <div class="info-box">
+                <strong>Current Version</strong>
+                <span>1.55</span>
+            </div>
+
+            <div class="info-box">
+                <strong>Storage Mode</strong>
+                <span>Browser LocalStorage</span>
+            </div>
+
+            <div class="info-box">
+                <strong>Log Storage</strong>
+                <span id="logStatus">Enabled</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RECOVERY SETTINGS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+            <h2>♻️ Recovery Controls</h2>
+            <p>Recovery process-এর মূল settings</p>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="settings-list">
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Enable Recovery
+                    </div>
+
+                    <div class="setting-description">
+                        Attendance recovery feature চালু বা বন্ধ করুন।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="enableRecovery"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Require Safety Backup
+                    </div>
+
+                    <div class="setting-description">
+                        Restore করার আগে current attendance data-এর safety backup বাধ্যতামূলক করুন।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="requireBackup"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Recovery Activity Logging
+                    </div>
+
+                    <div class="setting-description">
+                        প্রতিটি recovery action-এর log localStorage-এ সংরক্ষণ করুন।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="enableLogging"
+                            onchange="updateLogStatus()"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Confirmation Before Restore
+                    </div>
+
+                    <div class="setting-description">
+                        Restore করার আগে confirmation message দেখান।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="confirmRestore"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Automatic Backup
+                    </div>
+
+                    <div class="setting-description">
+                        Recovery operation-এর আগে automatic safety snapshot তৈরি করুন।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="autoBackup"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BACKUP SETTINGS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+            <h2>💾 Backup Settings</h2>
+            <p>Safety backup কীভাবে সংরক্ষণ হবে</p>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <div class="field">
+
+                <label>
+                    Maximum Backup Copies
+                </label>
+
+                <div class="number-control">
+
+                    <input
+                        type="number"
+                        id="maxBackups"
+                        min="1"
+                        max="20"
+                        value="3"
+                    >
+
+                    <span class="unit">
+                        copies
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Backup Retention
+                </label>
+
+                <select id="retentionDays">
+
+                    <option value="1">1 Day</option>
+                    <option value="7">7 Days</option>
+                    <option value="14">14 Days</option>
+                    <option value="30">30 Days</option>
+                    <option value="60">60 Days</option>
+                    <option value="90">90 Days</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>
+                    Backup Storage Key
+                </label>
+
+                <input
+                    type="text"
+                    id="backupKey"
+                    value="snkAttendanceRecoveryBeforeRestore"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LOG SETTINGS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+            <h2>📜 Recovery Log Settings</h2>
+            <p>Recovery history কতদিন এবং কতটি record থাকবে</p>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <div class="field">
+
+                <label>
+                    Maximum Log Entries
+                </label>
+
+                <input
+                    type="number"
+                    id="maxLogs"
+                    min="10"
+                    max="5000"
+                    value="500"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Log Retention
+                </label>
+
+                <select id="logRetention">
+
+                    <option value="7">7 Days</option>
+                    <option value="30">30 Days</option>
+                    <option value="60">60 Days</option>
+                    <option value="90">90 Days</option>
+                    <option value="180">180 Days</option>
+                    <option value="365">1 Year</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>
+                    Recovery Log Storage Key
+                </label>
+
+                <input
+                    type="text"
+                    id="logKey"
+                    value="snkAttendanceRecoveryLogs"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ADVANCED -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+            <h2>🛠️ Advanced Options</h2>
+            <p>Advanced recovery behaviour</p>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="settings-list">
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Validate Backup Before Restore
+                    </div>
+
+                    <div class="setting-description">
+                        Backup structure valid কিনা restore-এর আগে যাচাই করবে।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="validateBackup"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Prevent Empty Restore
+                    </div>
+
+                    <div class="setting-description">
+                        Empty বা invalid backup থেকে restore আটকাবে।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="preventEmpty"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Show Recovery Notifications
+                    </div>
+
+                    <div class="setting-description">
+                        Recovery successful/failed হলে notification দেখাবে।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="notifications"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting">
+
+                <div class="setting-info">
+
+                    <div class="setting-title">
+                        Developer Debug Mode
+                    </div>
+
+                    <div class="setting-description">
+                        Browser console-এ recovery debugging information দেখাবে।
+                    </div>
+
+                </div>
+
+                <div class="control">
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="debugMode"
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WARNING -->
+
+<section class="card">
+
+    <div class="card-body">
+
+        <div class="warning-box">
+
+            <div class="icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <strong>
+                    গুরুত্বপূর্ণ সতর্কতা
+                </strong>
+
+                <p>
+                    Recovery settings পরিবর্তন করার আগে নিশ্চিত হয়ে নিন।
+                    বিশেষ করে storage key পরিবর্তন করলে আগের recovery module-এর
+                    সাথে data synchronization সমস্যা হতে পারে।
+                    Default key পরিবর্তন না করাই নিরাপদ।
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DANGER ZONE -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+            <h2>🚨 Danger Zone</h2>
+            <p>শুধুমাত্র প্রয়োজন হলে ব্যবহার করুন</p>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="danger-box">
+
+            <h3>
+                Reset Recovery Settings
+            </h3>
+
+            <p>
+                এই action করলে 1.55-এর recovery configuration default
+                settings-এ ফিরে যাবে। Attendance data বা recovery log delete হবে না।
+            </p>
+
+            <button
+                class="btn danger"
+                onclick="confirmFactoryReset()"
+            >
+                ⚠️ Restore Default Settings
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUICK ACCESS -->
+
+<section class="card">
+
+    <div class="card-header">
+
+        <div>
+            <h2>⚡ Attendance Quick Access</h2>
+            <p>Attendance module-এর অন্যান্য pages</p>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <div class="quick-grid">
+
+            <a class="quick-link" href="attendance-dashboard.html">
+                <div class="icon">📊</div>
+                <strong>Dashboard</strong>
+                <span>Overview</span>
+            </a>
+
+            <a class="quick-link" href="student-attendance.html">
+                <div class="icon">📝</div>
+                <strong>Student Attendance</strong>
+                <span>Mark</span>
+            </a>
+
+            <a class="quick-link" href="attendance-reports.html">
+                <div class="icon">📋</div>
+                <strong>Reports</strong>
+                <span>Reports</span>
+            </a>
+
+            <a class="quick-link" href="attendance-student-history.html">
+                <div class="icon">📚</div>
+                <strong>Student History</strong>
+                <span>History</span>
+            </a>
+
+            <a class="quick-link" href="attendance-calendar.html">
+                <div class="icon">📅</div>
+                <strong>Calendar</strong>
+                <span>Calendar</span>
+            </a>
+
+            <a class="quick-link" href="attendance-summary.html">
+                <div class="icon">📈</div>
+                <strong>Summary</strong>
+                <span>Summary</span>
+            </a>
+
+            <a class="quick-link" href="attendance-notifications.html">
+                <div class="icon">🔔</div>
+                <strong>Notifications</strong>
+                <span>Notifications</span>
+            </a>
+
+            <a class="quick-link" href="attendance-export.html">
+                <div class="icon">📤</div>
+                <strong>Export</strong>
+                <span>Export</span>
+            </a>
+
+            <a class="quick-link" href="attendance-settings.html">
+                <div class="icon">⚙️</div>
+                <strong>Attendance Settings</strong>
+                <span>Settings</span>
+            </a>
+
+            <a class="quick-link" href="attendance-audit-log.html">
+                <div class="icon">🛡️</div>
+                <strong>Audit Log</strong>
+                <span>Activity</span>
+            </a>
+
+            <a class="quick-link" href="attendance-data-recovery.html">
+                <div class="icon">♻️</div>
+                <strong>Data Recovery</strong>
+                <span>Recovery</span>
+            </a>
+
+            <a class="quick-link" href="attendance-recovery-history.html">
+                <div class="icon">🕘</div>
+                <strong>Recovery History</strong>
+                <span>History</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+    © 2026 SNK AI Academy • Attendance Recovery Settings • Version 1.55
+</footer>
+
+</main>
+
+
+<!-- CONFIRM MODAL -->
+
+<div
+    class="modal hidden"
+    id="confirmModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                ⚠️ Confirm
+            </h2>
+
+            <button
+                class="btn small"
+                onclick="closeModal()"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <p id="confirmMessage">
+                আপনি কি এই action করতে চান?
+            </p>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="btn"
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn danger"
+                id="confirmActionBtn"
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =========================================================
+   1.55 ATTENDANCE RECOVERY SETTINGS
+========================================================= */
+
+const SETTINGS_KEY =
+    "snkAttendanceRecoverySettings";
+
+const THEME_KEY =
+    "snkAttendanceRecoverySettingsTheme";
+
+
+const DEFAULT_SETTINGS = {
+
+    enableRecovery:true,
+
+    requireBackup:true,
+
+    enableLogging:true,
+
+    confirmRestore:true,
+
+    autoBackup:true,
+
+    maxBackups:3,
+
+    retentionDays:30,
+
+    backupKey:
+        "snkAttendanceRecoveryBeforeRestore",
+
+    maxLogs:500,
+
+    logRetention:365,
+
+    logKey:
+        "snkAttendanceRecoveryLogs",
+
+    validateBackup:true,
+
+    preventEmpty:true,
+
+    notifications:true,
+
+    debugMode:false
+
+};
+
+
+let toastTimer = null;
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadTheme();
+
+        loadSettings();
+
+        updateLogStatus();
+
+    }
+);
+
+
+/* =========================================================
+   LOAD SETTINGS
+========================================================= */
+
+function loadSettings(){
+
+    let settings =
+        getStoredSettings();
+
+
+    setChecked(
+        "enableRecovery",
+        settings.enableRecovery
+    );
+
+    setChecked(
+        "requireBackup",
+        settings.requireBackup
+    );
+
+    setChecked(
+        "enableLogging",
+        settings.enableLogging
+    );
+
+    setChecked(
+        "confirmRestore",
+        settings.confirmRestore
+    );
+
+    setChecked(
+        "autoBackup",
+        settings.autoBackup
+    );
+
+    setValue(
+        "maxBackups",
+        settings.maxBackups
+    );
+
+    setValue(
+        "retentionDays",
+        settings.retentionDays
+    );
+
+    setValue(
+        "backupKey",
+        settings.backupKey
+    );
+
+    setValue(
+        "maxLogs",
+        settings.maxLogs
+    );
+
+    setValue(
+        "logRetention",
+        settings.logRetention
+    );
+
+    setValue(
+        "logKey",
+        settings.logKey
+    );
+
+    setChecked(
+        "validateBackup",
+        settings.validateBackup
+    );
+
+    setChecked(
+        "preventEmpty",
+        settings.preventEmpty
+    );
+
+    setChecked(
+        "notifications",
+        settings.notifications
+    );
+
+    setChecked(
+        "debugMode",
+        settings.debugMode
+    );
+
+    updateSystemStatus();
+
+}
+
+
+/* =========================================================
+   GET SETTINGS
+========================================================= */
+
+function getStoredSettings(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                SETTINGS_KEY
+            );
+
+
+        if(!raw){
+
+            return {
+                ...DEFAULT_SETTINGS
+            };
+
+        }
+
+
+        const parsed =
+            JSON.parse(
+                raw
+            );
+
+
+        return {
+            ...DEFAULT_SETTINGS,
+            ...parsed
+        };
+
+    }
+    catch(error){
+
+        console.error(
+            "Settings loading error:",
+            error
+        );
+
+        return {
+            ...DEFAULT_SETTINGS
+        };
+
+    }
+
+}
+
+
+/* =========================================================
+   COLLECT SETTINGS
+========================================================= */
+
+function collectSettings(){
+
+    const maxBackups =
+        clamp(
+            Number(
+                document.getElementById(
+                    "maxBackups"
+                ).value
+            ),
+            1,
+            20
+        );
+
+
+    const maxLogs =
+        clamp(
+            Number(
+                document.getElementById(
+                    "maxLogs"
+                ).value
+            ),
+            10,
+            5000
+        );
+
+
+    return {
+
+        enableRecovery:
+            getChecked(
+                "enableRecovery"
+            ),
+
+        requireBackup:
+            getChecked(
+                "requireBackup"
+            ),
+
+        enableLogging:
+            getChecked(
+                "enableLogging"
+            ),
+
+        confirmRestore:
+            getChecked(
+                "confirmRestore"
+            ),
+
+        autoBackup:
+            getChecked(
+                "autoBackup"
+            ),
+
+        maxBackups:
+            maxBackups,
+
+        retentionDays:
+            Number(
+                document.getElementById(
+                    "retentionDays"
+                ).value
+            ),
+
+        backupKey:
+            document.getElementById(
+                "backupKey"
+            ).value.trim()
+            ||
+            DEFAULT_SETTINGS.backupKey,
+
+        maxLogs:
+            maxLogs,
+
+        logRetention:
+            Number(
+                document.getElementById(
+                    "logRetention"
+                ).value
+            ),
+
+        logKey:
+            document.getElementById(
+                "logKey"
+            ).value.trim()
+            ||
+            DEFAULT_SETTINGS.logKey,
+
+        validateBackup:
+            getChecked(
+                "validateBackup"
+            ),
+
+        preventEmpty:
+            getChecked(
+                "preventEmpty"
+            ),
+
+        notifications:
+            getChecked(
+                "notifications"
+            ),
+
+        debugMode:
+            getChecked(
+                "debugMode"
+            ),
+
+        updatedAt:
+            new Date()
+            .toISOString()
+
+    };
+
+}
+
+
+/* =========================================================
+   SAVE SETTINGS
+========================================================= */
+
+function saveSettings(){
+
+    const settings =
+        collectSettings();
+
+
+    if(
+        !settings.backupKey
+    ){
+
+        showToast(
+            "Backup key প্রয়োজন।"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !settings.logKey
+    ){
+
+        showToast(
+            "Log key প্রয়োজন।"
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        localStorage.setItem(
+            SETTINGS_KEY,
+            JSON.stringify(
+                settings
+            )
+        );
+
+
+        updateSystemStatus();
+
+        updateLogStatus();
+
+
+        showToast(
+            "Recovery settings saved ✓"
+        );
+
+
+        if(
+            settings.debugMode
+        ){
+
+            console.log(
+                "SNK Recovery Settings:",
+                settings
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        showToast(
+            "Settings save করা যায়নি।"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetSettings(){
+
+    loadSettings();
+
+    showToast(
+        "Saved settings আবার load করা হয়েছে।"
+    );
+
+}
+
+
+/* =========================================================
+   FACTORY RESET
+========================================================= */
+
+function confirmFactoryReset(){
+
+    showConfirm(
+        "Recovery settings default configuration-এ ফিরে যাবে। Attendance data এবং recovery logs delete হবে না। আপনি কি continue করতে চান?",
+        factoryReset
+    );
+
+}
+
+
+function factoryReset(){
+
+    try{
+
+        localStorage.setItem(
+            SETTINGS_KEY,
+            JSON.stringify(
+                {
+                    ...DEFAULT_SETTINGS,
+                    updatedAt:
+                        new Date()
+                        .toISOString()
+                }
+            )
+        );
+
+
+        loadSettings();
+
+        closeModal();
+
+
+        showToast(
+            "Default recovery settings restored ✓"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        showToast(
+            "Reset করা যায়নি।"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SYSTEM STATUS
+========================================================= */
+
+function updateSystemStatus(){
+
+    const enabled =
+        getChecked(
+            "enableRecovery"
+        );
+
+
+    const status =
+        document.getElementById(
+            "systemStatus"
+        );
+
+
+    if(enabled){
+
+        status.textContent =
+            "● Active";
+
+        status.className =
+            "status on";
+
+    }
+    else{
+
+        status.textContent =
+            "● Disabled";
+
+        status.className =
+            "status off";
+
+    }
+
+}
+
+
+/* =========================================================
+   LOG STATUS
+========================================================= */
+
+function updateLogStatus(){
+
+    const enabled =
+        getChecked(
+            "enableLogging"
+        );
+
+
+    const element =
+        document.getElementById(
+            "logStatus"
+        );
+
+
+    element.textContent =
+        enabled
+        ?
+        "Enabled"
+        :
+        "Disabled";
+
+}
+
+
+/* =========================================================
+   CHECKBOX HELPERS
+========================================================= */
+
+function getChecked(id){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+    return element
+        ?
+        element.checked
+        :
+        false;
+
+}
+
+
+function setChecked(
+    id,
+    value
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(element){
+
+        element.checked =
+            Boolean(
+                value
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   VALUE HELPERS
+========================================================= */
+
+function setValue(
+    id,
+    value
+){
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if(element){
+
+        element.value =
+            value;
+
+    }
+
+}
+
+
+/* =========================================================
+   CLAMP
+========================================================= */
+
+function clamp(
+    value,
+    min,
+    max
+){
+
+    if(
+        !Number.isFinite(
+            value
+        )
+    ){
+
+        return min;
+
+    }
+
+
+    return Math.min(
+        max,
+        Math.max(
+            min,
+            value
+        )
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    const dark =
+        document.body.classList.contains(
+            "dark"
+        );
+
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+
+    updateThemeButton();
+
+}
+
+
+function loadTheme(){
+
+    if(
+        localStorage.getItem(
+            THEME_KEY
+        ) ===
+        "dark"
+    ){
+
+        document.body.classList.add(
+            "dark"
+        );
+
+    }
+
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    document.getElementById(
+        "themeBtn"
+    ).textContent =
+
+        document.body.classList.contains(
+            "dark"
+        )
+        ?
+        "☀️"
+        :
+        "🌙";
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function showConfirm(
+    message,
+    action
+){
+
+    document.getElementById(
+        "confirmMessage"
+    ).textContent =
+        message;
+
+
+    const button =
+        document.getElementById(
+            "confirmActionBtn"
+        );
+
+
+    button.onclick =
+        action;
+
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+function closeModal(){
+
+    document.getElementById(
+        "confirmModal"
+    ).classList.add(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+function goBack(){
+
+    if(
+        document.referrer
+    ){
+
+        history.back();
+
+    }
+    else{
+
+        window.location.href =
+            "attendance-recovery-history.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   OUTSIDE MODAL CLICK
+========================================================= */
+
+document.getElementById(
+    "confirmModal"
+).addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            this
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LIVE STATUS
+========================================================= */
+
+document.getElementById(
+    "enableRecovery"
+).addEventListener(
+    "change",
+    updateSystemStatus
+);
+
+
+/* =========================================================
+   DEBUG
+========================================================= */
+
+if(
+    getStoredSettings().debugMode
+){
+
+    console.log(
+        "SNK Attendance Recovery Settings 1.55 loaded."
+    );
+
+}
+
+</script>
+
+</body>
+</html>
+```
